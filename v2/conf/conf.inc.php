@@ -131,7 +131,7 @@ define('MSG_DEL_OLD',30); //60 jours
 define('MSG_FLOOD_TIME',30); /* 30 secondes */
 define('MSG_MAX_MMSG',5); /* Max de multi messages */
 /* mid qui envoie le msg d'accueil cf ini/page.php */
-define('MBR_WELC', 6791 );
+define('MBR_WELC', 7203 );
 
 /* Historique */
 define('HISTO_DEL_OLD',7); //7 jours
@@ -188,18 +188,6 @@ $_races_aly = array(
 );
 
 $_css = array(14,4,3,2,1,10,11,15,16,5,6);
-$_forum_css = array(
-	1 => "marron"
-	, 2 => "metal"
-	, 3 => "classik"
-	, 4 => "zord2"
-	, 5 => "mobile"
-	, 6 => "selendia"
-	, 10 => "elficnight"
-	, 11 => "elfpower"
-	, 14 => "brown_underground"
-	, 15 => "last_hope"
-);
 $_adsense_css = array(1 => '9107849390', 2 => '2158156650', 3 => '2158156650', 
 	4 => '2158156650',5 => '9107849390', 10 => '2087210871', 11 => '2087210871', 14 => '0166103822', 
 	15 => '6454056819', 6 => '');

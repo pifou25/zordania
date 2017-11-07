@@ -84,7 +84,7 @@
 		</if>
 
         <table><tbody><tr><td>
-            <form id="untFormer" class="ajax" method="post" action="btc-use.html?btc_type={btc_type}&amp;sub=add_unt">
+            <form id="untFormer" method="post" action="btc-use.html?btc_type={btc_type}&amp;sub=add_unt">
                 <fieldset><legend>{btcopt[{_user[race]}][{btc_type}][unt]}</legend>
                     <label for="nb">
                     <zimgbtc race="{_user[race]}" type="{btc_type}"  />
@@ -95,7 +95,7 @@
                 </fieldset>
             </form>
         </td><td>
-            <form id="untPendre" class="ajax" method="post" action="unt-pend.html?unt_type={unt_type}">
+            <form id="untPendre" method="post" action="unt-pend.html?unt_type={unt_type}">
                 <fieldset><legend>Pendaison.</legend>
                     <label for="unt_nb">
                         <zimgunt race="{_user[race]}" type="{unt_type}"  /><img class="left" src="img/{_user[race]}/div/pendre.png" alt="Pendre" />
@@ -123,24 +123,21 @@
 
         <div id="output"></div>
 		<p class="infos">Les unités "disponibles" sont celles qui ne travaillent pas dans un bâtiment et qui ne sont pas dans une légion, "Total" indique la somme des unités disponibles et de celles qui ne le sont pas.</p> 
-		<table class="liste" id="showUntForm">
+		<table class="liste">
 			<tr>
 				<th>Type</th>
-				<th>Disponibles</th>
-				<th>Total</th>
+				<th>Dispo</th>
 				<th>Infos</th>
 			</tr>
             <tbody>
 			<foreach cond='{unt_dispo} as {unt_type} => {unt_array}'>
 				<tr>
 					<td>
-						<a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}">
+						<a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}" class="zrdPopUp">
 							<zimgunt race="{_user[race]}" type="{unt_type}"  />
-						</a>
-						{unt[{_user[race]}][alt][{unt_type}]}
+						{unt[{_user[race]}][alt][{unt_type}]}</a>
 					</td>
-					<td>{unt_done[vlg][{unt_type}]}</td>
-					<td>{unt_done[tot][{unt_type}]}</td>
+					<td>{unt_done[vlg][{unt_type}]} / {unt_done[tot][{unt_type}]}</td>
 					<td>
 						{roles[{unt_array[conf][role]}]}
 						

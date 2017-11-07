@@ -28,8 +28,8 @@
 	<script type="text/javascript">
 	var cfg_url = '{cfg_url}';
 	</script>
-	<script type="text/javascript" src="js/functionAddEvent.js"></script>
-	<script type="text/javascript" src="js/toolTipLib.js"></script>
+	<# script type="text/javascript" src="js/functionAddEvent.js"></script #>
+	<# script type="text/javascript" src="js/toolTipLib.js"></script #>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.10.0.custom.min.js"></script>

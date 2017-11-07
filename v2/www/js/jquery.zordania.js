@@ -7,7 +7,8 @@ $(document).ready(  function()
 	 * 	$('.menu_gauche').css('background-color', $('body').css('background-color'));
 	 * 	$('.menu_gauche ul').css('background-color', $('#module').css('background-color'));
 	 * */
-	 
+
+	/* animation pour le menu lateral - en mode mobile */
 	var isMenuOpen = false;
 
 	$('#openmenulat').click(function()
@@ -56,20 +57,7 @@ $(document).ready(  function()
 			function(txt){ $("#preview").html(txt); }
 		);
 	});
-	
-    // réponse ajax dans la page
-	// module unt, formation des unités
-	$("table#showUntForm a").each(function(){
-		$(this).click(function(){
-            $(".jqBlock").remove(); // virer l'ancienne requete ajax
-            var url = $(this).attr('href');
-            var output = $(this).parents('tr');
-            var len = output.children('td').length;
-            output.after('<tr class="jqBlock"><td id="ajaxContent" colspan="' + len + '"></td></tr>');
-			jqShowMod(url, $('#ajaxContent'));
-			return false;
-		});
-	});
+
 
     // Commerce - achat : module/fr/btc/inc/com.tpl - Lorsqu'un lien a.com est cliqué
     $("table#showComForm a").each(function(){
@@ -83,7 +71,22 @@ $(document).ready(  function()
 		});
 	});
         
-        
+	// ce script pilote le popup de confirmation (leg/act.tpl)
+	$("#make_atq").click(function(){ // au clic sur le lien
+		$("#dialog-modal").dialog({ // popup
+			buttons: [{
+				text: "Annuler", // bouton annuler
+				click: function() {
+				$( this ).dialog( "close" );}
+			},{
+				text: "Confirmer", // bouton attaquer renvoie vers le lien #make_atq
+				click: function() {
+				window.location = $("#make_atq").attr('href');}
+			}]
+		});
+		return false;
+	});
+  
 	traiterFormulaires();
     
     // réponse ajax dans une popup

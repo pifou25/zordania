@@ -42,8 +42,7 @@
 		<a href="btc-use.html" title="Gérer le village."><img src="img/acts/vlg{_user[race]}.png" /></a>
 	</li>
 	<li>
-		<a href="res.html" title="Voir les ressources."><img src="img/acts/res.png" /></a>
-		<img src="img/star.png" alt="Popup" title="Popup" onclick="myPopup('res', '', 300,550);return false;" />
+		<a href="res.html" title="Voir les ressources." class="zrdPopUp"><img src="img/acts/res.png" /></a>
 	</li>
 	<if cond='{ses_admin} OR {_user[groupe]} == {GRP_PRETRE}'><!-- link forum staff -->
 		<li>

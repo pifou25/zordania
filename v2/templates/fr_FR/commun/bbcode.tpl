@@ -24,7 +24,7 @@ include générique :
 		<foreach cond="{smileys_more} as {img} => {str}">
 			<a href="javascript:emoticon('{str}','{message}');"><img src="img/smile/{img}" alt="{str}" title="{str}" /></a>
 		</foreach>
-		<img onclick="myPopup('smileys', '', 700,550);return false;" src="img/star.png" title="Popup" alt="Popup">
+		<a href="smileys.html" title="smileys" class="zrdPopUp"><img src="img/star.png"></a>
 	</div>
 </p>
 
