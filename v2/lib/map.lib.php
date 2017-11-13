@@ -68,7 +68,7 @@ function get_cid($x, $y) {
 
 	if($x and $y){
 		$sql = "SELECT map_cid FROM ".$_sql->prebdd."map WHERE map_x=$x AND map_y=$y";
-		return $_sql->result($_sql->query($sql),0);
+		return $_sql->result($_sql->query($sql),0, 'map_cid');
 	}
 	else return false;
 }

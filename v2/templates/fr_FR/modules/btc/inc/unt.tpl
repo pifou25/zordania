@@ -67,26 +67,6 @@
 
 	<if cond='{unt_dispo}'>
 
-<script type="text/javascript">
-<!-- // jquery sur les formulaires de formation
-$(document).ready(function()
-{
-	// Lorsqu'un formulaire est soumis
-	$("form").submit(function(event) {
-
-		event.preventDefault(); 
-		var term = $(this).serialize(),
-			url = 'ajax--' + $(this).attr( 'action' );
-
-		$.post( url, term,
-			function( data ) { $( "#unt_todo" ).append( data); }
-		);
-	});
-
-});
-// -->
-</script>
-
 	<foreach cond='{unt_dispo} as {group} => {unt_dispo1}'>			
 		<table class="liste">
 			<tr>
@@ -133,7 +113,7 @@ $(document).ready(function()
 				<else>{unt_array[bad][limit_unt]}</else>
 			</if>
 
-			<p id="unt_{unt_id}_toggle">
+			<p id="unt_{unt_id}_toggle" style="display: none;">
 				<if cond="isset({unt_array[conf][vit]})">
 					<if cond='isset({unt_array[conf][atq_unt]}) OR isset({unt_array[conf][atq_btc]}) OR isset({unt_array[conf][def]})'>
 			[ <if cond='isset({unt_array[conf][atq_unt]})'>{unt_array[conf][atq_unt]} <img src="img/{_user[race]}/div/atq.png" alt="Attaque Unité" /></if>

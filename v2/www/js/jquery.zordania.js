@@ -32,7 +32,7 @@ $(document).ready(  function()
 
 	/* un élément avec id et classe 'toggle' permet
      * d'afficher / masquer un élément 'id_toggle'
-	 * tous sont masqués au chargement (fin du index.tpl)
+	 * tous sont masqués au chargement ( style="display: none;" )
 	 */
 
 	// Lorsqu'un lien a.toggle est cliqué
@@ -159,33 +159,102 @@ function showMapInfo() {
 	return false;
 }
 
-// ce script pilote les popup ajax
+// ce script pilote les - petites - popup ajax (confirmation & co)
 // unt.html
 function traiterZrdPopUp() {
-    
+    /*
     $(".zrdPopUp").each(function(){
-        
-        $(this).click(function(){ // au clic sur le lien
-
-            var url = $(this).attr('href');
-            var title = $(this).attr('title');
-            console.log('popup ' + title + ' vers url=' + url);
-            var output = $("#dialog-modal");
-            $.ajax({
-                url: cfg_url+"ajax--"+url,
-                success: function(html) {
-                    output.html(html);
-                    output.dialog({ // popup
-                        buttons: [{
-                            text: "Fermer", // bouton annuler
-                            click: function() {
-                            $( this ).dialog( "close" );}
-                        }],
-                        title: title
-                    });
-                }
-            });
-            return false;
-        });
+        $(this).click(funcZrdPopup);
     });
+	*/
+    $(".zrdPopUp").click(funcZrdPopup);
+
+	// autre popup ajax pour les modules - plus grande. specifique selon le CSS
+	/*
+    $(".zrdModPopUp").each(function(){
+        if(user_css == 6) {
+			// popup specifique
+			$(this).click(funcZrdModal);
+		}else{
+			// popup jquery-iu classique
+			$(this).click(funcZrdPopup);
+		}
+    });
+	*/
+    if(user_css == 6) {
+		// popup specifique
+		$(".zrdModPopUp").click(funcZrdModal);
+	}else{
+		// popup jquery-iu classique
+		$(".zrdModPopUp").click(funcZrdPopup);
+	}
+}
+
+var funcZrdPopup = function(){ // au clic sur le lien
+
+	var url = $(this).attr('href');
+	var title = $(this).attr('title');
+	var output = $("#dialog-modal");
+	//var width = $("#dialog-modal").width();
+	//var height = $("#dialog-modal").height();
+	//console.log('popup ' + title + '(' + width + 'x' + height + ') vers url=' + url);
+	console.log('popup ' + title + ' vers url=' + url);
+	
+	$.ajax({
+		url: cfg_url+"ajax--"+url,
+		dataType:"html",
+		success: function(html) {
+			output.html(html);
+			// remettre les memes comportements sur la reponse ajax
+			output.find(".zrdPopUp").click(funcZrdPopup);
+			if(user_css == 6) {
+				output.find(".zrdModPopUp").click(funcZrdModal);
+			}else{
+				output.find(".zrdModPopUp").click(funcZrdPopup);
+			}
+			
+			output.dialog({ // popup
+				buttons: [{
+					text: "Fermer", // bouton annuler
+					click: function() {
+					$( this ).dialog( "close" );}
+				}],
+				title: title,
+				//width: width,
+				//height:height,
+				resizable:false,
+				draggable:false
+			});
+		}
+	});
+	return false;
+}
+
+var funcZrdModal = function(){ // au clic sur le lien
+
+	var url = $(this).attr('href');
+	var title = $(this).attr('title');
+	var output = $("#dialog-module");
+	//var width = $("#dialog-modal").width();
+	//var height = $("#dialog-modal").height();
+	//console.log('popup ' + title + '(' + width + 'x' + height + ') vers url=' + url);
+	console.log('module ' + title + ' vers url=' + url);
+	var header = '<div class="header"><h3>' + title + '</h3></div><div class="close" onclick="$(\'#dialog-module\').hide();"></div>';
+	
+	$.ajax({
+		url: cfg_url+"ajax--"+url,
+		dataType:"html",
+		success: function(html) {
+			output.html(header + '<div class="centre">' + html + '</div>');
+			// remettre les memes comportements sur la reponse ajax
+			output.find(".zrdPopUp").click(funcZrdPopup);
+			if(user_css == 6) {
+				output.find(".zrdModPopUp").click(funcZrdModal);
+			}else{
+				output.find(".zrdModPopUp").click(funcZrdPopup);
+			}
+			output.show();
+		}
+	});
+	return false;
 }

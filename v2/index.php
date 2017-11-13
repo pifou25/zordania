@@ -162,6 +162,8 @@ $_tpl->set($const['user']);
 $_tpl->set("cfg_url",SITE_URL);
 $_tpl->set("cfg_style",request("style", "string", "cookie", "Marron"));
 $_tpl->set("zordlog_url",ZORDLOG_URL);
+if(!in_array($_user['design'], $_css)) // check if the current css exist
+	$_user['design'] = 4;
 $_tpl->set("adsense_code",$_adsense_css[$_user['design']]);
 
 /* Droits */

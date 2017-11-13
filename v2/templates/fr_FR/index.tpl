@@ -21,12 +21,13 @@
 	<meta name="author" content="CHARY Corentin" />
 	<link rel="browser-game-info" href="http://www.zordania.com/xml/info.xml" />
 
-	<link rel="stylesheet" type="text/css" media="screen" title="{css[{_user[design]}][1]}" href="skin/{css[{_user[design]}][0]}/style.css" />
 	<link type="text/css" href="skin/jquery/jquery-ui-1.10.0.custom.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" media="screen" title="{css[{_user[design]}][1]}" href="skin/{css[{_user[design]}][0]}/style.css" />
 	<link rel="stylesheet" media="all and (max-width: 800px)" href="skin/imports/mobile.css" />
 	
 	<script type="text/javascript">
 	var cfg_url = '{cfg_url}';
+	var user_css = {_user[design]};
 	</script>
 	<# script type="text/javascript" src="js/functionAddEvent.js"></script #>
 	<# script type="text/javascript" src="js/toolTipLib.js"></script #>
@@ -163,8 +164,8 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </else>
 
 <# div pour popup jquery #>
-<div id="dialog-modal" title="Titre" style="display:none;">
-</div>
+<div id="dialog-modal" title="Titre" style="display:none;"></div>
+<div id="dialog-module" title="Titre" style="display:none;"></div>
 
 <if cond="isset({sv_site_debug})"><include file="debug.tpl" cache="1" /></if>
 
@@ -180,11 +181,6 @@ var pageTracker = _gat._getTracker("UA-6710160-1");
 pageTracker._trackPageview();
 } catch(err) {}
 */
-
-/* jQuery: masquer tous les éléments 'toggle' */
-$(".toggle").each(function(){
-	$("#"+$(this).attr('id')+"_toggle").hide();
-});
 </script>
 </body>
 </html>

@@ -32,7 +32,7 @@
 	<p class="menu_module">
 	<a id="res_infos" href="#" class="toggle">Ressources Disponibles</a></p>
 	<if cond='{res_utils}'>
-		<table id="res_infos_toggle" class="liste">
+		<table id="res_infos_toggle" class="liste" style="display: none;">
 			<tr>
 				<th>Type</th>
 				<th>Nombre</th>
@@ -47,26 +47,6 @@
 	</if>
 
 	<if cond='{res_dispo}'>
-
-<script type="text/javascript">
-<!-- // jquery sur les formulaires de formation
-$(document).ready(function()
-{
-	// Lorsqu'un formulaire est soumis
-	$("form").submit(function(event) {
-
-		event.preventDefault(); 
-		var term = $(this).serialize(),
-			url = 'ajax--' + $(this).attr( 'action' );
-
-		$.post( url, term,
-			function( data ) { $( "#res_todo" ).append( data); }
-		);
-	});
-
-});
-// -->
-</script>
 
 		<foreach cond='{res_dispo} as {res_id} => {res_array}'>			
 			<if cond='!isset({current_group}) OR {current_group} != {res_array[conf][group]}'>

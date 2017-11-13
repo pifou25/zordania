@@ -124,11 +124,11 @@ $this->trn = array();
 /*
 *	Ressources
 *	Nom			Type				Fonction
-*	need_btc		uint				Btiment dans le quel c'est construit
+*	need_btc		uint				Batiment requis
 *	need_src		uint				A besoin de la recherche
 *	prix_res		array(uint=>uint)		Prix type => nombre
-*	group			uint				Est dans le groupe
-*	cron			bool				Ne peut tre produit que par un cron
+*	group			uint				groupe d'affichage (page de formation)
+*	cron			bool				est produit par un cron
 */
 
 //<res>
