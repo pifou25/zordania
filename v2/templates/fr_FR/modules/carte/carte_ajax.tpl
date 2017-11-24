@@ -233,9 +233,6 @@ var mapLib = {
 				document.getElementById("carte_ajax").appendChild(node);
 				node.style.position = "absolute";
 				node.title = " ";
-				if(toolTipLib) {
-					toolTipLib.attachToolTip(node);
-				}
 			}
 		}
 	
@@ -249,10 +246,7 @@ var mapLib = {
 			} else {
 				title = " X:"+x+" Y:"+y;
 			}
-			if(toolTipLib)
-				node.setAttribute("tip", title);
-			else
-				node.title = title;
+			node.title = title;
 	
 		}
 		

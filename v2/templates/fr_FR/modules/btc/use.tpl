@@ -24,36 +24,69 @@
 	</script>
 </if>
 <elseif cond='{btc_act} == "list2"'>
+	<p class="menu_module">
+		<if cond="isset({btc_conf[prod_unt]})">
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=unt" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][unt]}</a>
+		</if>
+		<if cond="isset({btc_conf[prod_src]})">
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=src" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][src]}</a>
+		</if>
+		<if cond="isset({btc_conf[prod_res]})">
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=res" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][res]}</a>
+		</if>
+		<if cond="isset({btc_conf[com]})">
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=my" class="zrdModPopUp">Vos Ventes</a> 
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ven" class="zrdModPopUp">Vendre</a> 
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ach" class="zrdModPopUp">Acheter</a> 
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours" title="Cours moyens" class="zrdModPopUp">Cours</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours_sem" title="Cours sur la semaine" class="zrdModPopUp">Cours de la Semaine</a>
+		</if>
+		<a href="btc-use.html?btc_type={btc_id}" class="zrdModPopUp">Infos</a>
+		<if cond="!isset({btc_id})">
+			<a href="btc-use.html?sub=list" title="Liste des bâtiments" class="zrdModPopUp">Liste&nbsp;complète</a>
+		</if>
+		<else>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdModPopUp">Liste</a>
+		</else>
+	</p>
+
 	<form action="alert('javascript!');" method="post" id="form_btc">
 	<dl>
-	<foreach cond='{btc_array} as {btc_vars}'>
+	<foreach cond='{btc_ar1} as {etat} => {btc_array}'>
+		<dt>{btc_etat[{etat}]}</dt>
+		<foreach cond='{btc_array} as {btc_vars}'>
 
-		<set name="btc_vie" value="{btc_conf[{btc_vars[btc_type]}][vie]}" />
-		<set name="btc_bid" value="{btc_vars[btc_id]}" />
-		<dd>
-			<label for="btc{btc_bid}"><input type="checkbox" name="bid[{btc_bid}]" id="btc{btc_bid}">
-				<zimgbtc race="{_user[race]}" type="{btc_vars[btc_type]}" />
-				{btc[{_user[race]}][alt][{btc_vars[btc_type]}]} 
-			</label>
+			<set name="btc_vie" value="{btc_conf[{btc_vars[btc_type]}][vie]}" />
+			<set name="btc_bid" value="{btc_vars[btc_id]}" />
+			<dd>
+				<label for="btc{btc_bid}">
+					<if cond="!isset({btc_id})">
+						<zimgbtc race="{_user[race]}" type="{btc_vars[btc_type]}" />
+						{btc[{_user[race]}][alt][{btc_vars[btc_type]}]} 
+					</if>
+					<input type="checkbox" name="bid[{btc_bid}]" id="btc{btc_bid}">
+					Solidité : <math oper='round(({btc_vars[btc_vie]} / ({btc_vie})*100))' /> % | <em>{btc_vars[btc_vie]}/{btc_vie}</em>
+				</label>
 
-			<a href="btc-use.html?btc_type={btc_vars[btc_type]}" title="{btc[{_user[race]}][alt][{btc_vars[btc_type]}]}">Liste
-			</a> - <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=det" title="Détruire le Bâtiment et récupérer la moitié des ressources" class="zrdPopUp">Détruire</a>
-			<if cond="{btc_vars[btc_etat]} == {BTC_ETAT_OK}">
-				- <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=des" title="Désactiver le Bâtiment">Désactiver</a>
-			</if>
-			<elseif cond="{btc_vars[btc_etat]} == {BTC_ETAT_DES} || {btc_vars[btc_etat]} == {BTC_ETAT_REP}">
-				- <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=act" title="Activer le Bâtiment">Activer</a>
-			</elseif>
-			<if cond="{btc_vars[btc_vie]} - {btc_vie} != 0 AND {btc_vars[btc_etat]} != {BTC_ETAT_REP}">
-				- <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=rep" title="Réparer le Bâtiment (le rend inutilisable durant la réparation)">Réparer</a>
-			</if>
-			Solidité : <math oper='round(({btc_vars[btc_vie]} / ({btc_vie})*100))' /> % | Etat : {btc_etat[{btc_vars[btc_etat]}]}
+				<a href="btc-use.html?btc_type={btc_vars[btc_type]}" title="{btc[{_user[race]}][alt][{btc_vars[btc_type]}]}">Liste
+				</a> - <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=det" title="Détruire le Bâtiment et récupérer la moitié des ressources" class="zrdPopUp">Détruire</a>
+				<if cond="{btc_vars[btc_etat]} == {BTC_ETAT_OK}">
+					- <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=des" title="Désactiver le Bâtiment">Désactiver</a>
+				</if>
+				<elseif cond="{btc_vars[btc_etat]} == {BTC_ETAT_DES} || {btc_vars[btc_etat]} == {BTC_ETAT_REP}">
+					- <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=act" title="Activer le Bâtiment">Activer</a>
+				</elseif>
+				<if cond="{btc_vars[btc_vie]} - {btc_vie} != 0 AND {btc_vars[btc_etat]} != {BTC_ETAT_REP}">
+					- <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=rep" title="Réparer le Bâtiment (le rend inutilisable durant la réparation)">Réparer</a>
+				</if>
 
-			<zimgba2 per="{btc_vars[btc_vie]}" max="{btc_vie}" />&nbsp;<em>{btc_vars[btc_vie]}/{btc_vie}</em>
+				<zimgba2 per="{btc_vars[btc_vie]}" max="{btc_vie}" />
 
-		</dd>
+			</dd>
+		</foreach>
 	</foreach>
 	</dl>
+
 	<!-- // URL détruire: sub = det
 	désactiver : sub = des
 	réparer : sub = rep
@@ -70,7 +103,7 @@
 		return false;
 	}
 	</script>
-	<br />
+
 	<input type="hidden" name="ok" value="oui" />
 	[ Pour la sélection : <a href="#" onclick="post_btc('det');">Détruire</a> -
 	<a href="#" onclick="post_btc('des');">Désactiver</a> -
@@ -122,39 +155,39 @@
 		<br/>Il est aussi possible que ce bâtiment soit en réparation ou inactif.</p>
 </elseif>
 <if cond='isset({btc_tpl})'>
-	<h3>
-	<zimgbtc race="{_user[race]}" type="{btc_id}" /> {btc[{_user[race]}][alt][{btc_id}]}</h3>
-	{btc[{_user[race]}][descr][{btc_id}]} <hr />
-	<br/>
+
 	<p class="menu_module">
-		<a href="btc-use.html?btc_type={btc_id}" class="zrdModPopUp">Infos</a>
-		<if cond="!isset({btc_id})">
-			- <a href="btc-use.html?sub=list" title="Liste complète de tous les bâtiments" class="zrdModPopUp">Liste&nbsp;complète</a>
-		</if>
-		<else>
-			- <a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste complète des bâtiments de ce type" class="zrdModPopUp">Liste</a>
-		</else>
-		<if cond="isset({btc_conf[prod_src]})">
-			- <a href="btc-use.html?btc_type={btc_id}&amp;sub=src" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][src]}</a>
-		</if>
 		<if cond="isset({btc_conf[prod_unt]})">
-			- <a href="btc-use.html?btc_type={btc_id}&amp;sub=unt" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][unt]}</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=unt" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][unt]}</a>
+		</if>
+		<if cond="isset({btc_conf[prod_src]})">
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=src" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][src]}</a>
 		</if>
 		<if cond="isset({btc_conf[prod_res]})">
-			- <a href="btc-use.html?btc_type={btc_id}&amp;sub=res" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][res]}</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=res" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][res]}</a>
 		</if>
 		<if cond="isset({btc_conf[com]})">
-			- <a href="btc-use.html?btc_type={btc_id}&amp;sub=my" class="zrdModPopUp">Vos Ventes</a> 
-			-
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=my" class="zrdModPopUp">Vos Ventes</a> 
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ven" class="zrdModPopUp">Vendre</a> 
-			-
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ach" class="zrdModPopUp">Acheter</a> 
-			-
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours" title="Cours moyens" class="zrdModPopUp">Cours</a>
-			-
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours_sem" title="Cours sur la semaine" class="zrdModPopUp">Cours de la Semaine</a>
 		</if>
+		<a href="btc-use.html?btc_type={btc_id}" class="zrdModPopUp">Infos</a>
+		<if cond="!isset({btc_id})">
+			<a href="btc-use.html?sub=list" title="Liste des bâtiments" class="zrdModPopUp">Liste&nbsp;complète</a>
+		</if>
+		<else>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdModPopUp">Liste</a>
+		</else>
 	</p>
+	
+	<if cond='!isset({btc_conf[prod_unt]}) && !isset({btc_conf[prod_src]}) && !isset({btc_conf[prod_res]}) && !isset({btc_conf[com]}) && {btc_act}!="infos"'>
+		<h3><zimgbtc race="{_user[race]}" type="{btc_id}" /> {btc[{_user[race]}][alt][{btc_id}]}</h3>
+		{btc[{_user[race]}][descr][{btc_id}]}
+		<include file="modules/btc/inc/info.tpl" cache="1" />
+	</if>
+
 	<include file="{btc_tpl}" cache="1" />
 	<if cond="isset({btc_conf[prod_unt]})">
 		<include file="modules/btc/inc/unt.tpl" cache="1" />
@@ -173,14 +206,17 @@
 	</if>
 </if>
 
-<br />
-
 <p class="retour_module">
-	<if cond="!isset({btc_id})">
-		<a href="btc-use.html?sub=list" title="Liste complète de tous les bâtiments">Liste&nbsp;complète</a>
+	<if cond='{_display}=="ajax"'>
+		<a href="#" title="Fermer" onclick="$('#dialog-module').hide();">Fermer</a>
 	</if>
 	<else>
- 		<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste complète des bâtiments de ce type">Liste</a>
+		<if cond="!isset({btc_id})">
+			<a href="btc-use.html?sub=list" title="Liste complète de tous les bâtiments">Liste&nbsp;complète</a>
+		</if>
+		<else>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste complète des bâtiments de ce type">Liste</a>
+		</else>
+		<a href="btc-use.html?sub=vue" title="Vue générale">Village</a>
 	</else>
-	- <a href="btc-use.html?sub=vue" title="Vue générale">Village</a>
 </p>

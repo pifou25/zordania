@@ -157,13 +157,21 @@ if($_act == 'btc')
 		$btc_type = request("btc_type", "uint", "get");
 		if(!$btc_type || !get_conf("btc", $btc_type))
 			$btc = array();
-		else
+		else{
 			$btc = array($btc_type);
+			$_tpl->set("btc_id",$btc_type);
+		}
 			
 		$etat = array(BTC_ETAT_OK, BTC_ETAT_REP, BTC_ETAT_BRU,BTC_ETAT_DES);
 		$btc_array = get_btc($_user['mid'], $btc, $etat);
 		
-		$_tpl->set("btc_array", $btc_array);
+		// regrouper les bat par etat
+		$btc_ar1 = array();
+		foreach($btc_array as $value){
+			$btc_ar1[$value['btc_etat']][] = $value;
+		}
+		
+		$_tpl->set("btc_ar1", $btc_ar1);
 		$_tpl->set("btc_conf",get_conf("btc"));
 	}
 	elseif($_sub == 'det') /* Supprime un bâtiment */
@@ -278,6 +286,9 @@ if($_act == 'btc')
 			define("INDEX_BTC",true);
 		
 			$btc_conf = get_conf("btc", $btc_type);
+			
+			$_tpl->set('man_array',array($btc_type => $btc_conf));
+			$_tpl->set('man_race',$_user['race']);
 			
 			$_tpl->set("btc_id",$btc_type);
 			$_tpl->set("btc_conf", $btc_conf);

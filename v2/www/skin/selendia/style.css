@@ -129,12 +129,54 @@ div#menu {
 	list-style-type: none;
 }
 #module table{
-	border: 1px solid #de8e2b;
-	border-radius: 4px;
-	width:100%;
+	/*border: 1px solid #de8e2b;
+	border-radius: 4px;*/
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:left;
+	border:none;
 }
-#module table tr{
+#module table th{
+	color:#de8e2b;
+}
+#module table tr:nth-child(even) td{
 	border-top: 1px solid #de8e2b;
+}
+#module table tr:nth-child(odd) td{
+	border-top: 1px solid #efc087;
+}
+
+dt, dd{
+    margin: 2px;
+    padding: 2px;
+    border-radius: 3px;	
+	border: 1px solid #de8e2b;
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:left;
+}
+
+.contenu > ul{
+	text-align:left;
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+}
+.contenu > ul ul{
+	padding-left:25px;
+    border-radius: 3px;	
+	border: 1px solid #de8e2b;
+}
+
+/*pagination*/
+.pages a{
+    margin: 2px;
+    padding: 2px;
+    border-left: solid 1px #de8e2b;
+    border-right: solid 1px #de8e2b;
+    border-radius: 3px;	
 }
 
 #module div.centre{
@@ -148,7 +190,7 @@ div#menu {
 #module img{
 	opacity:1;
 }
-.menu_module a, .retour_module a{
+.menu_module a, .retour_module a {
 	text-decoration: none;
 	border: 1px solid #de8e2b;
 	border-radius: 4px;
@@ -157,9 +199,28 @@ div#menu {
 	background-color:#f9ed97;
 }
 
+.titre_module {
+	padding-bottom:8px;
+}
+.menu_module {
+	padding-bottom:8px;
+}
+.retour_module{
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
 /*
  * forum
  */
+.head_forum, .forum h4 {
+	letter-spacing: 4px;
+	padding-bottom:8px;
+	/*font-weight: normal;*/
+}
+.head_forum a, .forum h4 a {
+	text-decoration: none;
+}
 .forum{
 	border:2px solid #de8e2b;
 	-moz-border-radius:4px 4px;
@@ -171,6 +232,71 @@ div#menu {
 	margin-right:50px;
 	margin-top:10px;
 	margin-bottom:10px;
+	text-align:left;
+}
+.forum .stat{
+	text-align:right;
+	font-size: 10px;
+}
+.forum .stat a{
+	font-size: 10px;
+}
+.forum .stat br{
+	display:none;
+}
+
+.block_forum{
+	width:90%;
+	border:1px solid #de8e2b;
+	text-align:left;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:5px;
+	padding:2px;
+}
+.block_forum .titre{
+	display:none;
+}
+.block_forum .author, .block_forum .author a{
+	font-size: 11px;
+	text-decoration: none;
+	text-align:right;
+}
+.block_forum .signature, .block_forum .signature a{
+	color:#de8e2b;
+	font-size: 11px;
+	text-decoration: none;
+	text-align:center;
+}
+
+/*
+ * alliance
+ */
+.block{
+	width:90%;
+	border:1px solid #de8e2b;
+	border-radius: 4px;
+	text-align:left;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:5px;
+	padding:2px;
+}
+.block h4, .block h4 a{
+	font-size: 11px;
+	text-decoration: none;
+	text-align:right;
+}
+.block .signature, .block .signature a{
+	color:#de8e2b;
+	font-size: 11px;
+	text-decoration: none;
+	text-align:center;
+}
+.blason {
+    float: right;
 }
 
 /* formulaires */
@@ -178,12 +304,38 @@ input, button, textarea, select{
 	text-decoration: none;
 	border: 1px solid #de8e2b;
 	background-color:#f9ed97;
-	margin:2px;
+	margin:4px;
 	padding:2px;
 	font-weight: bold;
 	border-radius: 4px;
 	min-width: 25px;
 }
+
+/* Barres */
+.barre_rouge,.barre_verte,.barre_grisec,.barre_grisef {
+    float: left;
+    height: 100%;
+}
+.barre_rouge {
+    background-image:url(img/red.png);
+}
+.barre_verte {
+    background-image:url(img/green.png);
+}
+.barres_grandes,.barres_moyennes,.barres_petites {
+    border: 1px solid #000000;
+    height: 12px;
+}
+.barres_grandes {
+    width: 300px;
+}
+.barres_moyennes {
+    width: 200px;
+}
+.barres_petites {
+    width: 100px;
+}
+
 /*
  * dialog box avec image de 770x449px
  * avec un padding de 30-30-40-45px
@@ -204,6 +356,7 @@ input, button, textarea, select{
 	max-height:374px;
 	height:374px;
 	overflow-y:auto;
+	padding-top:15px;
 }
 /* positionnement absolu du titre et du bouton close */
 #dialog-module .header{

@@ -45,8 +45,8 @@
        </if>
      <if cond="isset({btc_value[need_btc]})">
           <p>Bâtiment:
-          <foreach cond="{btc_value[need_btc]} as {btc_id}">
-               <zimgbtc type="{btc_id}" race="{man_race}" />
+          <foreach cond="{btc_value[need_btc]} as {btc_id2}">
+               <zimgbtc type="{btc_id2}" race="{man_race}" />
           </foreach></p>
      </if>
 

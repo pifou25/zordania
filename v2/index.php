@@ -82,7 +82,7 @@ if(!$_sql->con) /* Utiliser Display = module */
 * Sessions
 */
 $_ses = new session($_sql);
-$_file = request("file", "string", "get", "news");
+$_file = request("file", "string", "get", "presentation");
 $_type = request("type", "string", "get");
 $_act = request("act", "string", "get");
 $_sub = request("sub", "string", "get");

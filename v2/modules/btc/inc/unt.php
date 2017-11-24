@@ -136,12 +136,7 @@ elseif($_sub == "add_unt")
 				$_tpl->set("btc_ok", $ok);
 				if($ok) {
 					edit_unt_vlg($_user['mid'], get_conf("unt", $type, "prix_unt"), -1 * $nb);
-						// si nb vaut 1 alors on fait le calcul normal, LIGNE ORIGINAL A GARDER sans la condition
-						if ($nb == 1 ) {mod_res($_user['mid'], get_conf("unt", $type, "prix_res"), -1 * $nb);}
-						// si impaire alors 50% - 1
-						elseif ($nb&1 ) {mod_res($_user['mid'], get_conf("unt", $type, "prix_res"), -1 * $nb / 2 -1 );}
-						//si non pair donc 50%
-						else {mod_res($_user['mid'], get_conf("unt", $type, "prix_res"), -1 * $nb / 2);}
+					mod_res($_user['mid'], get_conf("unt", $type, "prix_res"), -1 * $nb);
 					scl_unt($_user['mid'], array($type =>$nb));
 					edit_mbr($_user['mid'], array('population' => count_pop($_user['mid'])));
 				}

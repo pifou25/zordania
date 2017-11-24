@@ -146,10 +146,7 @@
 		</p>
 	</elseif>
 	<elseif cond='{btc_sub} =="vente"'>
-		<if cond='{vente_ok}'>
-			<p class="ok"> Mise en vente effectuée, elle apparaîtra dans le marché dans quelques tours et sera supprimée dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
-		</if>
-		<else>
+		<if cond="{vente_ok}===false">
 			<if cond='isset({btc_max_nb})'>
 				<if cond='{btc_max_nb}==0'><p class="error">Il faut choisir un nombre de ventes.</p></if>
 				<else>
@@ -158,6 +155,22 @@
 			</if>
 			<else>
 				<p class="error">Vous n'avez pas les ressources que vous voulez mettre en vente.</p>
+			</else>
+		</if>
+		<else>
+			<if cond='is_array({vente_ok})'>
+				<if cond='isset({vente_ok[nb]})'>
+				<p class="ok">Vous avez atteind le maximum de {max_ventes} ventes permises par votre niveau; seulement {vente_ok[nb]} ventes effectuées, elles apparaîtront dans le marché dans quelques tours et seront supprimées dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
+				</if>
+				<elseif cond='isset({vente_ok[res]})'>
+				<p class="ok">Vous n'avez pas assez de ressources pour faire autant de ventes; seulement {vente_ok[res]} ventes effectuées, elles apparaîtront dans le marché dans quelques tours et seront supprimées dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
+				</elseif>
+				<else>
+					<p class="ok"> Mise en vente effectuée, elle apparaîtra dans le marché dans quelques tours et sera supprimée dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
+				</else>
+			</if>
+			<else>
+				<p class="ok"> Mise en vente effectuée, elle apparaîtra dans le marché dans quelques tours et sera supprimée dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
 			</else>
 		</else>
 	</elseif>
