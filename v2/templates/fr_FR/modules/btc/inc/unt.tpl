@@ -65,6 +65,7 @@
 	</if>
 	<else><p id="unt_infos_toggle" class="infos" style="display: none;">Aucune unité utile disponible.</p></else>
 
+	<div id="output"></div>
 	<if cond='{unt_dispo}'>
 
 	<foreach cond='{unt_dispo} as {group} => {unt_dispo1}'>			
@@ -140,7 +141,7 @@
 				</else>
 			</if>
 			<else>
-				<form action="btc-use.html?btc_type={btc_id}&sub=add_unt" method="post">
+				<form class="ajax" action="btc-use.html?btc_type={btc_id}&sub=add_unt" method="post">
 				<input type="hidden" name="type" value="{unt_id}" />
 				<input type="number" name="nb" size="1" maxlength="2" style="width:3em" />
 				<input type="submit" value="{btcopt[{_user[race]}][{btc_id}][unt]}" />

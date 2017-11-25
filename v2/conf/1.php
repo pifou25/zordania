@@ -635,7 +635,7 @@ $this->unt[U1_CHEVALIER_XP]=array(
 		"vie"	=>	19,
 		"atq_unt"	=>	19,
 		"vit"	=>	13,
-		"group"	=>	10,
+		"group"	=>	13,
 		"role"	=>	TYPE_UNT_CAVALERIE,
 		"rang" => 5,
 		"prix_res"	=>	array(R1_EPEE_LON => 1, R1_COTTE_MAILLE => 1, R1_CHEVAUX => 1, R1_B_ACIER => 1, R1_ACIER => 2),

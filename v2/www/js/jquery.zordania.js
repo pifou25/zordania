@@ -30,25 +30,10 @@ $(document).ready(  function()
 	});
 	
 
-	/* un élément avec id et classe 'toggle' permet
-     * d'afficher / masquer un élément 'id_toggle'
-	 * tous sont masqués au chargement ( style="display: none;" )
-	 */
-
-	// Lorsqu'un lien a.toggle est cliqué
-	$("a.toggle").click(function() {
-		$("#"+$(this).attr('id')+"_toggle" ).toggle('slide');
-		return false;
-	});
-	// Lorsqu'une image .toggle est cliquée
-	$("img.toggle").click(function() {
-		$("#"+$(this).attr('id')+"_toggle" ).toggle('slide');
-		var src=($(this).attr('src')==='img/plus.png'?'img/minus.png':'img/plus.png');
-		$(this).attr('src',src);
-	});
+	initToggle();
 
 	// Lorsqu'un button #preview est cliqué
-	// forum shoot et shoot diplo
+	// forum msg note shoot et shoot diplo
 	$("input#btpreview").click(function ()
 	{
 		$.post(
@@ -94,6 +79,25 @@ $(document).ready(  function()
     
 });
 
+
+function initToggle(){
+	/* un élément avec id et classe 'toggle' permet
+     * d'afficher / masquer un élément 'id_toggle'
+	 * tous sont masqués au chargement ( style="display: none;" )
+	 */
+
+	// Lorsqu'un lien a.toggle est cliqué
+	$("a.toggle").click(function() {
+		$("#"+$(this).attr('id')+"_toggle" ).toggle('slide');
+		return false;
+	});
+	// Lorsqu'une image .toggle est cliquée
+	$("img.toggle").click(function() {
+		$("#"+$(this).attr('id')+"_toggle" ).toggle('slide');
+		var src=($(this).attr('src')==='img/plus.png'?'img/minus.png':'img/plus.png');
+		$(this).attr('src',src);
+	});
+}
 
 function traiterFormulaires(){
 	$("form.ajax").each(function(){
@@ -232,6 +236,8 @@ var funcZrdModal = function(){ // au clic sur le lien
 			}else{
 				output.find(".zrdModPopUp").click(funcZrdPopup);
 			}
+			initToggle();
+			traiterFormulaires();
 			output.show();
 		}
 	});

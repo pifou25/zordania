@@ -84,7 +84,7 @@
 		</if>
 
         <table><tbody><tr><td>
-            <form id="untFormer" method="post" action="btc-use.html?btc_type={btc_type}&amp;sub=add_unt">
+            <form method="post" action="btc-use.html?btc_type={btc_type}&amp;sub=add_unt">
                 <fieldset><legend>{btcopt[{_user[race]}][{btc_type}][unt]}</legend>
                     <label for="nb">
                     <zimgbtc race="{_user[race]}" type="{btc_type}"  />
@@ -95,7 +95,7 @@
                 </fieldset>
             </form>
         </td><td>
-            <form id="untPendre" method="post" action="unt-pend.html?unt_type={unt_type}">
+            <form method="post" action="unt-pend.html?unt_type={unt_type}">
                 <fieldset><legend>Pendaison.</legend>
                     <label for="unt_nb">
                         <zimgunt race="{_user[race]}" type="{unt_type}"  /><img class="left" src="img/{_user[race]}/div/pendre.png" alt="Pendre" />

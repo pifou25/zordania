@@ -335,6 +335,9 @@ input, button, textarea, select{
 .barres_petites {
     width: 100px;
 }
+.toggle{
+	cursor:pointer;
+}
 
 /*
  * dialog box avec image de 770x449px
