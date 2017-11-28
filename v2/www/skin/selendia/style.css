@@ -98,6 +98,8 @@ div#menu {
     text-align: left;
 	font-size: 90%;
 	margin-left:10px;
+	bottom: 10px;
+    overflow-y: scroll;
 }
 .menu_gauche{
 	/*border: 1px solid #222;*/
@@ -258,12 +260,12 @@ dt, dd{
 .block_forum .titre{
 	display:none;
 }
-.block_forum .author, .block_forum .author a{
+.block_forum .author, .block_forum .author *{
 	font-size: 11px;
 	text-decoration: none;
 	text-align:right;
 }
-.block_forum .signature, .block_forum .signature a{
+.block_forum .signature, .block_forum .signature *{
 	color:#de8e2b;
 	font-size: 11px;
 	text-decoration: none;

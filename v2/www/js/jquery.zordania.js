@@ -30,6 +30,10 @@ $(document).ready(  function()
 	});
 	
 
+	/*
+	 * la class="toggle" sur un lien ou une image
+	 * affiche / masque un autre item
+	 */
 	initToggle();
 
 	// Lorsqu'un button #preview est cliqué
@@ -113,10 +117,20 @@ function traiterFormulaires(){
 			$form.attr("action", url);
 			// Send the data using post
 			$.post( url, term, function(data){
-				$("#output").html(data);
+				$("#dialog-modal").html(data)
+					.dialog({ // popup
+						buttons: [{
+							text: "Fermer", // bouton annuler
+							click: function() {
+							$( this ).dialog( "close" );}
+						}],
+						resizable:false,
+						draggable:false,
+						title:'Opération terminée',
+						hide: {effect: "fadeOut", duration: 1000}
+					}, setTimeout(function(){$("#dialog-modal").dialog("close");},3000)
+					);
 			});
-
-
 		});
 	});
 }
@@ -192,12 +206,7 @@ var funcZrdPopup = function(){ // au clic sur le lien
 		success: function(html) {
 			output.html(html);
 			// remettre les memes comportements sur la reponse ajax
-			output.find(".zrdPopUp").click(funcZrdPopup);
-			if(user_css == 6) {
-				output.find(".zrdModPopUp").click(funcZrdModal);
-			}else{
-				output.find(".zrdModPopUp").click(funcZrdPopup);
-			}
+			traiterZrdPopUp();
 			
 			output.dialog({ // popup
 				buttons: [{
@@ -209,7 +218,7 @@ var funcZrdPopup = function(){ // au clic sur le lien
 				draggable:false
 			});
 			if(title){
-				output.dialog("options", "title", title);
+				output.dialog("option", "title", title);
 			}
 		}
 	});
@@ -230,12 +239,7 @@ var funcZrdModal = function(){ // au clic sur le lien
 		success: function(html) {
 			output.html(header + '<div class="centre">' + html + '</div>');
 			// remettre les memes comportements sur la reponse ajax
-			output.find(".zrdPopUp").click(funcZrdPopup);
-			if(user_css == 6) {
-				output.find(".zrdModPopUp").click(funcZrdModal);
-			}else{
-				output.find(".zrdModPopUp").click(funcZrdPopup);
-			}
+			traiterZrdPopUp();
 			initToggle();
 			traiterFormulaires();
 			output.show();

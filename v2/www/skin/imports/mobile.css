@@ -156,11 +156,12 @@ div#actbar {
     margin:0px;
     text-align: left;
 	left:initial;
+	overflow-x:scroll;
 }
 div#actbar ul{
 	position:relative;
 	z-index:2; /* devant div#menu */
-	width: 800px;
+	width: 540px;
 }
 
 div#actbar li{
@@ -174,10 +175,10 @@ div#actbar li{
 div#actbar li:nth-child(1){
 	display:inline;
 }
-/* masquer les icones au dela de 8 */
+/* masquer les icones au dela de 8 
 div#actbar li:nth-child(n+10){
 	display:none;
-}
+}*/
 
 .block_forum{
 	border: 1px solid;

@@ -18,15 +18,15 @@
 </if>
 
 <elseif cond='{btc_act} == "unt"'>
+	<if cond='{unt_todo}'>
 	<div class="block" id="unt_todo">
 		<h4>{btcopt[{_user[race]}][{btc_id}][unt_todo]}</h4>
-		<if cond='{unt_todo}'>
-			<foreach cond='{unt_todo} as {unt_result}'>
-				<set name="unt_type" value="{unt_result[utdo_type]}" />
-				<zimgunt race="{_user[race]}" type="{unt_type}" /> {unt[{_user[race]}][alt][{unt_type}]} - {unt_result[utdo_nb]} - <a href="index.php?file=btc&act=use&btc_type={btc_id}&sub=cancel_unt&uid={unt_result[utdo_id]}">Annuler</a><br />
-			</foreach>
-		</if>
+		<foreach cond='{unt_todo} as {unt_result}'>
+			<set name="type_todo" value="{unt_result[utdo_type]}" />
+			<zimgunt race="{_user[race]}" type="{type_todo}" />&nbsp;{unt[{_user[race]}][alt][{type_todo}]}&nbsp;-&nbsp;{unt_result[utdo_nb]}&nbsp;-&nbsp;<a href="btc-use.html?btc_type={btc_id}&sub=cancel_unt&uid={unt_result[utdo_id]}" class="zrdPopUp">Annuler</a>
+		</foreach>
 	</div>
+	</if>
 	
 	<p class="infos">Les unités "disponibles" sont les unités formées qui ne travaillent pas dans un bâtiment, "Total" indique la somme des unités disponibles et de celles qui ne le sont pas.</p> 
 	

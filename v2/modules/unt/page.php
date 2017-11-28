@@ -81,7 +81,15 @@ if(!$_act) {
 	}
 
 	$_tpl->set("unt_done", $unt_done);
-    $_tpl->set('unt_todo', $mbr->unt_todo());
+	
+	// grouper les todo par bat et par type
+	$unt_todo = array();
+	foreach($mbr->unt_todo() as $val1){
+		$typ = $val1['utdo_type'];
+		$inbtc = $unt_array[$typ]['conf']['in_btc'][0];
+		$unt_todo[$inbtc][$typ][] = $val1;
+	}
+    $_tpl->set('unt_todo', $unt_todo);
 
 	if($unt_type) {
 		if ($mbr->get_conf('unt', $unt_type, 'role') == TYPE_UNT_HEROS)

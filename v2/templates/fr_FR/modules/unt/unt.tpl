@@ -111,12 +111,17 @@
     
         <if cond='{unt_todo}'>
             <div class="block" id="unt_todo">
-                    <foreach cond='{unt_todo} as {unt_result}'>
-                        <set name="type_todo" value="{unt_result[utdo_type]}" />
-                        <set name="btc_id" value="{unt_dispo[{type_todo}][conf][in_btc][0]}" />
-                        <h5>{btcopt[{_user[race]}][{btc_id}][unt_todo]} </h5>
-                        <zimgunt race="{_user[race]}" type="{type_todo}" /> {unt[{_user[race]}][alt][{type_todo}]} - {unt_result[utdo_nb]} - 
-                        <a href="index.php?file=btc&act=use&btc_type={btc_id}&sub=cancel_unt&uid={unt_result[utdo_id]}">Annuler</a><br />
+                    <foreach cond='{unt_todo} as {btc_id} => {unt_r1}'>
+						<h5>{btc[{_user[race]}][alt][{btc_id}]} : {btcopt[{_user[race]}][{btc_id}][unt_todo]}</h5>
+						<p>
+						<foreach cond='{unt_r1} as {type_todo} => {unt_r2}'>
+							<foreach cond='{unt_r2} as {unt_result}'>
+							
+<zimgunt race="{_user[race]}" type="{type_todo}" />&nbsp;{unt[{_user[race]}][alt][{type_todo}]}&nbsp;-&nbsp;{unt_result[utdo_nb]}&nbsp;-&nbsp;<a href="btc-use.html?btc_type={btc_id}&sub=cancel_unt&uid={unt_result[utdo_id]}" class="zrdPopUp">Annuler</a>
+
+							</foreach>
+						</foreach>
+						</p>
                     </foreach>
             </div>
         </if>
