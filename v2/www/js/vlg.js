@@ -22,7 +22,6 @@ var Vlg = {
 		/* positionner les batiments */
 		$.each(this.VlgCoords, function(index, value) { 
 		  if(value) {
-			console.log('btc:' + index + '=' + value[0] + "-" + value[1]);
 			var img = $("#btc_"+index);
 			if(user_css != 6){
 				img.attr('src', "img/"+ race + "/vlg/" + back + "/" + index + ".png");
@@ -225,6 +224,7 @@ var VlgV2 = {
 	w: 500,
 	h: 350,
 	VlgCoords: new Array(),
+	VlgZindex: new Array(),
 	SrcCoords: new Array(),
 	
 	init: function(race) {
@@ -235,9 +235,14 @@ var VlgV2 = {
 		/* positionner les batiments */
 		$.each(this.VlgCoords, function(index, value) { 
 		  if(value) {
-			console.log('btc:' + index + '=' + value[0] + "-" + value[1]);
 			$("#btc_"+index).css('top', value[1]+decX).css('left', value[0]+decY).css('position', 'absolute');
 		  }
+		});
+		$.each(this.VlgZindex, function(index, value) {
+			if(value) {
+			  $("#btc_"+index).css('z-index', value);
+			  console.log('btc:' + index + ' z-index=' + value);
+			}
 		});
 
 		/* positionner les recherches si y'a */
@@ -276,6 +281,13 @@ var VlgV2 = {
 			this.VlgCoords[20] = new Array(218, 322);
 			this.VlgCoords[21] = new Array(775, 464);
 			this.VlgCoords[22] = new Array(7, 80);
+			this.VlgZindex[6] = 10;
+			this.VlgZindex[7] = 5;
+			this.VlgZindex[9] = 10;
+			this.VlgZindex[10] = 10;
+			this.VlgZindex[13] = 10;
+			this.VlgZindex[14] = 5;
+			this.VlgZindex[20] = 10;
 			break;
 			
 		case 2:
@@ -347,6 +359,15 @@ var VlgV2 = {
 			this.VlgCoords[22] = new Array(742, 133);
 			this.VlgCoords[23] = new Array(4, 262);
 			this.VlgCoords[24] = new Array(628, 347);
+			this.VlgZindex[3] = 5;
+			this.VlgZindex[5] = 10;
+			this.VlgZindex[6] = 10;
+			this.VlgZindex[7] = 10;
+			this.VlgZindex[10] = 10;
+			this.VlgZindex[13] = 10;
+			this.VlgZindex[14] = 10;
+			this.VlgZindex[15] = 10;
+			this.VlgZindex[16] = 10;
 			break;
 			
 		case 5:

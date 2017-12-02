@@ -1,4 +1,16 @@
 <div id="village">
+
+<if cond="isset({sv_site_debug})">
+<style>
+#village .btc{
+    border: 1px solid #FFF;
+}
+#village .btc:hover{
+    border: 1px solid #F00;
+}
+</style>
+</if>
+
 	<img src="img/{_user[race]}/vlg/vlg.jpg" alt="village" />
 	
 	<foreach cond='{src_array} as {src_vars}'>

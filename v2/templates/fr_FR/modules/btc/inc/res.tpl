@@ -94,7 +94,7 @@
 				</div>
 				<form class="ajax" action="btc-use.html?btc_type={btc_id}&amp;sub=add_res" method="post">
 					<input type="hidden" name="type" value="{res_id}" />
-					<input type="number" name="nb" size="1" maxlength="2" style="width:3em" />
+					<input type="number" name="nb" size="1" min="0" maxlength="2" style="width:3em" />
 					<input type="submit" value="{btcopt[{_user[race]}][{btc_id}][res]}" />
 				</form>
 			</td>

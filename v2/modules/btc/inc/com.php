@@ -177,6 +177,16 @@ elseif($_sub == "ven") /* faire une vente */
 			$list_res = get_res_done($_user['mid']);
 			$list_res = clean_array_res($list_res);
 			$_tpl->set('com_list_res',$list_res[0]);
+			
+			// tous les cours
+			$cours = mch_get_cours();
+			$cours1 = array();
+			foreach($cours as $row){
+				$rid = $row['mcours_res'];
+				$value = $row['mcours_cours'];
+				$cours1[$rid] = array('min' => round($value*COM_TAUX_MIN,2), 'moy' => $value, 'max' => round($value*COM_TAUX_MAX,2));
+			}
+			$_tpl->set('com_cours',$cours1);
 		} else {
 			//Cours
 			$cours = mch_get_cours($com_type);
