@@ -7,9 +7,8 @@
 </foreach>
 
 <div class="menu_module">
-	[ <a href="admin-histo.html?mid={mbr_array[mbr_mid]}&amp;module=war&amp;sub=atq" title="Attaques de vos légions sur les autres joueurs">Attaque</a> ]
-	- 
-	[ <a href="admin-histo.html?mid={mbr_array[mbr_mid]}&amp;module=war&amp;sub=def" title="Attaques des autres joueurs sur vos légions">Défense</a> ]
+	<a href="admin-histo.html?mid={mbr_array[mbr_mid]}&amp;module=war&amp;sub=atq" title="Attaques de vos légions sur les autres joueurs">Attaque</a>
+	<a href="admin-histo.html?mid={mbr_array[mbr_mid]}&amp;module=war&amp;sub=def" title="Attaques des autres joueurs sur vos légions">Défense</a>
 </div>
 
 <if cond='{war_sub} == "def"'>
@@ -72,16 +71,8 @@ $(document).ready(  function()
 
 	<dt>
 	<a href="admin-histo.html?mid={mbr_array[mbr_mid]}&amp;module=war&amp;aid={value[atq_aid]}&amp;sub={war_sub}">Le {value[atq_date_formated]}</a>
-	<if cond="{value[atq_mid1]} == {mbr_array[mbr_mid]}">
-		Vous attaquez <a href="member-<math oper="str2url({value[mbr_pseudo2]})"/>.html?mid={value[atq_mid2]}">{value[mbr_pseudo2]}</a>
-	</if>
-	<elseif cond="{value[atq_mid2]} == {mbr_array[mbr_mid]}">
-		Vous êtes attaqué par <a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
-	</elseif>
-	<else>
-		<a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
-		attaque votre allié <a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_mid2]}">{value[atq_bilan][def][{value[atq_lid2]}][mbr_pseudo]}</a>, vous prenez sa défense
-	</else>
+	<a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a> a attaqué 
+	<a href="member-<math oper="str2url({value[mbr_pseudo2]})"/>.html?mid={value[atq_mid2]}">{value[mbr_pseudo2]}</a>
 	</dt>
 
 
@@ -148,8 +139,9 @@ $(document).ready(  function()
 		</if>
 	</foreach>
 	</dd>
-<#
-<debug print="{value}" /> #>
+
+<debug print="{value}" />
+
 	<div class="bbcodeact" id="{value[atq_aid]}"></div>
 
 

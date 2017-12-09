@@ -90,6 +90,7 @@ if(!$_act) {
 		$unt_todo[$inbtc][$typ][] = $val1;
 	}
     $_tpl->set('unt_todo', $unt_todo);
+        $_tpl->set("unt_dispo",$unt_array);
 
 	if($unt_type) {
 		if ($mbr->get_conf('unt', $unt_type, 'role') == TYPE_UNT_HEROS)
@@ -101,10 +102,6 @@ if(!$_act) {
 				$_tpl->set('btc_type',$btc[0]);
 			}
         }
-        $_tpl->set("unt_dispo",$unt_array[$unt_type]);
-    }
-    else{
-        $_tpl->set("unt_dispo",$unt_array);
     }
 }
 

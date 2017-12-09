@@ -1,9 +1,9 @@
 <p class="menu_module">
-	[ <a href="admin.html?module=member" title="Retour">Retour</a> ] -
-	[ <a href="admin-liste.html?module=member" title="Liste">Liste</a> ] -
-	[ <a href="admin-liste_online.html?module=member" title="Liste Online">Liste Online</a> ] -
-	[ <a href="admin-liste_ip.html?module=member" title="Liste IP doubles">Liste IP</a> ] -
-	[ <a href="admin-old.html?module=member" title="Vieux comptes">Vieux comptes</a> ]
+	<a href="admin.html?module=member" title="Retour">Retour</a>
+	<a href="admin-liste.html?module=member" title="Liste">Liste</a>
+	<a href="admin-liste_online.html?module=member" title="Liste Online">Liste Online</a>
+	<a href="admin-liste_ip.html?module=member" title="Liste IP doubles">Liste IP</a>
+	<a href="admin-old.html?module=member" title="Vieux comptes">Vieux comptes</a>
 </p>
 <hr />
 
@@ -159,15 +159,15 @@
 	});
 </script>
 		<p class="menu_module">
-			[<a href="#leg" class="tab active" title="Informations du compte" descr="infos_gene"> Compte </a>]
-			[<a href="#leg" class="tab" title="journal des connexions" descr="infos_ip"> Log IP </a>]
-			[<a href="#leg" class="tab" title="Légions" descr="infos_leg"> Légions </a>]
-			[<a href="#res" class="tab" title="Ressources" descr="infos_res"> Ressources </a>]
-			[<a href="#trn" class="tab" title="Terrains" descr="infos_trn"> Terrains </a>]
-			[<a href="#unt" class="tab" title="Unités" descr="infos_unt"> Unités </a>]
-			[<a href="#src" class="tab" title="Recherches" descr="infos_src"> Recherches </a>]
-			[<a href="#bat" class="tab" title="Bâtiments" descr="infos_btc"> Bâtiments </a>]
-			[<a href="admin-histo.html?mid={mbr_array[mbr_mid]}&amp;module=war" title="Journal de Guerre"> Journal </a>]
+			<a href="#leg" class="tab active" title="Informations du compte" descr="infos_gene"> Compte </a>
+			<a href="#leg" class="tab" title="journal des connexions" descr="infos_ip"> Log IP </a>
+			<a href="#leg" class="tab" title="Légions" descr="infos_leg"> Légions </a>
+			<a href="#res" class="tab" title="Ressources" descr="infos_res"> Ressources </a>
+			<a href="#trn" class="tab" title="Terrains" descr="infos_trn"> Terrains </a>
+			<a href="#unt" class="tab" title="Unités" descr="infos_unt"> Unités </a>
+			<a href="#src" class="tab" title="Recherches" descr="infos_src"> Recherches </a>
+			<a href="#bat" class="tab" title="Bâtiments" descr="infos_btc"> Bâtiments </a>
+			<a href="admin-histo.html?mid={mbr_array[mbr_mid]}&amp;module=war" title="Journal de Guerre"> Journal </a>
 		</p>
 
 		<div class="content" id="infos_gene">

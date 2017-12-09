@@ -33,6 +33,9 @@
 </tr><tr>
 <th>ATQ_LEG_IDLE </th><td>= {ATQ_LEG_IDLE} legion idle en position d'attaque - nb jours</td>
 </tr>
+</tr><tr>
+<th>DST_VIEW_MAX </th><td>= {DST_VIEW_MAX} nb de cases de vision des armées ennemies</td>
+</tr>
 </table>
 
 <if cond="{arr_tbl}">

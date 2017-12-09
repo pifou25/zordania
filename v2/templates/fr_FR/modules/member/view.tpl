@@ -35,19 +35,20 @@
 	});
 </script>
 
-	<a href="#" descr="contient_infos" class="tab active">Informations</a> -
-	<if cond="{mbr_array[mbr_descr]}"><a href="#" descr="contient_descr" class="tab active">Description</a> - </if>
+<p class="menu_module">
+	<a href="#" descr="contient_infos" class="tab active">Informations</a>
+	<if cond="{mbr_array[mbr_descr]}"><a href="#" descr="contient_descr" class="tab active">Description</a></if>
 	<a href="#" descr="contient_msg" class="tab"><img src="img/frm.png" title="Messages sur le forum"/> Messages sur le forum</a>
-	- <a href="http://{ZORDLOG_URL}/membre.html?id={mbr_array[mbr_mid]}" title="Plus d'informations sur les Archives" ><img src="img/sablier.png"/> Archives</a>
+	<a href="http://{ZORDLOG_URL}/membre.html?id={mbr_array[mbr_mid]}" title="Plus d'informations sur les Archives" ><img src="img/sablier.png"/> Archives</a>
 
-	<if cond='{mbr_array[can_def]}'> - 
+	<if cond='{mbr_array[can_def]}'>
 		<a href="leg-move.html?sub=atq&cid={mbr_array[mbr_mapcid]}" title="Soutenir {mbr_array[mbr_pseudo]}"><img src="img/{_user[race]}/div/def.png" /> Soutenir</a>
 	</if>
-	<elseif cond='{mbr_array[can_atq]}'> - 
+	<elseif cond='{mbr_array[can_atq]}'>
 		<a href="leg-move.html?sub=atq&cid={mbr_array[mbr_mapcid]}" title="Attaquer {mbr_array[mbr_pseudo]}"><img src="img/{_user[race]}/div/atq.png" /> Attaquer</a>
 	</elseif>
-	- <a href="msg-new.html?mbr_mid={mbr_array[mbr_mid]}" title="Envoyer un message à {mbr_array[mbr_pseudo]}"><img src="img/msg.png"/> Ecrire</a>
-
+	<a href="msg-new.html?mbr_mid={mbr_array[mbr_mid]}" title="Envoyer un message à {mbr_array[mbr_pseudo]}"><img src="img/msg.png"/> Ecrire</a>
+</p>
 
 <div id="contient_infos" class="content">
 
@@ -97,14 +98,14 @@
 	<div class="signature">{mbr_array[mbr_sign]}</div>
 
 	<if cond='{ses_admin} == "1"'>
-		<p class="infos">
-	   	<a href="admin-view.html?module=member&mid={mbr_array[mbr_mid]}"><img src="img/plus.png" alt="Plus d'infos Admin" /></a>
-	   	- <a href="admin-edit.html?module=member&mid={mbr_array[mbr_mid]}"><img src="img/editer.png" alt="Editer ce compte" /></a>
+		<p class="retour_module">
+	   	<a href="admin-view.html?module=member&mid={mbr_array[mbr_mid]}"><img src="img/plus.png" alt="Plus d'infos Admin" /> Informations</a>
+	   	<a href="admin-edit.html?module=member&mid={mbr_array[mbr_mid]}"><img src="img/editer.png" alt="Editer ce compte" /> Editer</a>
 		<if cond="!empty({mbr_surv})">
-			<a class="error" href="admin-view.html?module=surv&act=view&sid={mbr_surv[surv_id]}">Surveillance en cours</a>
+			<a class="error" href="admin-view.html?module=surv&act=view&sid={mbr_surv[surv_id]}"> Surveillance en cours</a>
 		</if>
-		<else>- <a href="admin-new.html?module=surv&mid={mbr_array[mbr_mid]}"><img src="img/groupes/9.png" alt="Surveiller ce compte" /></a></else>
-	   	- <a href="admin-histo.html?module=war&mid={mbr_array[mbr_mid]}"><img src="img/info.png" alt="Journal" /></a>
+		<else><a href="admin-new.html?module=surv&mid={mbr_array[mbr_mid]}"><img src="img/groupes/9.png" alt="Surveiller ce compte" /> Surveiller</a></else>
+	   	<a href="admin-histo.html?module=war&mid={mbr_array[mbr_mid]}"><img src="img/info.png" alt="Journal" /> Journal</a>
 		</p>
 	</if>
 	
@@ -188,6 +189,6 @@
 	<p class="error">Ce membre n'existe pas.</p>
 
 	<if cond='{ses_admin} == "1"'>
-		<p class="infos"><a href="admin-old.html?module=member&mid={mbr_mid}">Recherche Admin</a></p>
+		<p class="retour_module"><a href="admin-old.html?module=member&mid={mbr_mid}">Recherche Admin</a></p>
 	</if>
 </else>

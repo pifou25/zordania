@@ -76,7 +76,7 @@
 			{unt[{_user[race]}][descr][{unt_type}]}
 		</p>
 
-		<if cond='{unt_dispo[conf][role]} == {TYPE_UNT_HEROS}'>
+		<if cond='isset({unt_dispo[conf][role]}) && {unt_dispo[conf][role]} == {TYPE_UNT_HEROS}'>
 			<if cond="{_user[hro_id]}">Vous avez déjà un héros.</if>
 			<else>
 				<a href="leg-hero.html?sub=form&id_hro={unt_type}" title="Former un héros !" />Former un héros !</a>
@@ -138,7 +138,7 @@
 			<foreach cond='{unt_dispo} as {unt_type} => {unt_array}'>
 				<tr>
 					<td>
-						<a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}" class="zrdPopUp">
+						<a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}" class="zrdModPopUp">
 							<zimgunt race="{_user[race]}" type="{unt_type}"  />
 						{unt[{_user[race]}][alt][{unt_type}]}</a>
 					</td>

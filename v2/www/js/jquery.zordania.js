@@ -129,7 +129,7 @@ function traiterFormulaires(){
 						title:'Opération terminée',
 						hide: {effect: "fadeOut", duration: 1000}
 					}, setTimeout(function(){$("#dialog-modal").dialog("close");},3000)
-					);
+				);
 			});
 		});
 	});
@@ -181,15 +181,19 @@ function showMapInfo() {
 // unt.html
 function traiterZrdPopUp() {
 
-    $(".zrdPopUp").click(funcZrdPopup);
+    $("#dialog-modal .zrdPopUp").click(funcZrdPopup);
 
 	// autre popup ajax pour les modules - plus grande. specifique selon le CSS
     if(user_css == 6) {
 		// popup specifique
-		$(".zrdModPopUp").click(funcZrdModal);
+		$("#village .zrdModPopUp").click(funcZrdModal);
+		$(".liste .zrdModPopUp").click(funcZrdModal);
+		$("#dialog-modal .zrdModPopUp").click(funcZrdModal);
 	}else{
 		// popup jquery-iu classique
-		$(".zrdModPopUp").click(funcZrdPopup);
+		$("#village .zrdModPopUp").click(funcZrdPopup);
+		$(".liste .zrdModPopUp").click(funcZrdPopup);
+		$("#dialog-modal .zrdModPopUp").click(funcZrdPopup);
 	}
 }
 
@@ -215,7 +219,8 @@ var funcZrdPopup = function(){ // au clic sur le lien
 					$( this ).dialog( "close" );}
 				}],
 				resizable:false,
-				draggable:false
+				draggable:false,
+				width: 500
 			});
 			if(title){
 				output.dialog("option", "title", title);
