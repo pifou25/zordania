@@ -322,9 +322,7 @@ Pour regagner des points de vie, votre héros doit impérativement être dans vo
 </table>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&type=unt">Précédent : Caractéristiques des Unités</a>  ]
--
-[ <a href="manual.html?race={man_race}" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&type=comp">Suivant : Compétences des héros</a> ]
+<a href="manual.html?race={man_race}&type=unt">Précédent : Caractéristiques des Unités</a>
+<a href="manual.html?race={man_race}" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&type=comp">Suivant : Compétences des héros</a>
 </p>

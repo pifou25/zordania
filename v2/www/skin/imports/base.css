@@ -191,6 +191,9 @@ z-index: 5;
 	cursor: pointer;
 }
 
+#dialog-modal{
+	z-index:101;
+}
 #dialog-modal table, #dialog-modal form{
 	border:none;
 }

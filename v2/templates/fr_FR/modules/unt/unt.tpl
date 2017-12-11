@@ -138,7 +138,7 @@
 			<foreach cond='{unt_dispo} as {unt_type} => {unt_array}'>
 				<tr>
 					<td>
-						<a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}" class="zrdModPopUp">
+						<a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}" class="zrdPopUp">
 							<zimgunt race="{_user[race]}" type="{unt_type}"  />
 						{unt[{_user[race]}][alt][{unt_type}]}</a>
 					</td>

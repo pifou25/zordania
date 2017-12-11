@@ -27,9 +27,7 @@
 
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&page=16">Précédent : Déroulement d'un Combat</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=20">Suivant : Spécificités du Village</a> ]
+<a href="manual.html?race={man_race}&page=16">Précédent : Déroulement d'un Combat</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=20">Suivant : Spécificités du Village</a>
 </p>

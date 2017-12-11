@@ -33,7 +33,7 @@ var Vlg = {
 		/* positionner les recherches si y'a */
 		$.each(this.SrcCoords, function(index, value) { 
 		  if(value) {
-			console.log('recherche:' + index + '=' + value[0] + "-" + value[1]);
+			//console.log('recherche:' + index + '=' + value[0] + "-" + value[1]);
 			var img = $("#src_"+index);
 			img.attr('src', "img/"+ race + "/vlg/src/" + index + ".png");
 			img.css('top', value[1] + decX).css('left', value[0] + decY).css('position', 'absolute');
@@ -241,14 +241,14 @@ var VlgV2 = {
 		$.each(this.VlgZindex, function(index, value) {
 			if(value) {
 			  $("#btc_"+index).css('z-index', value);
-			  console.log('btc:' + index + ' z-index=' + value);
+			  //console.log('btc:' + index + ' z-index=' + value);
 			}
 		});
 
 		/* positionner les recherches si y'a */
 		$.each(this.SrcCoords, function(index, value) { 
 		  if(value) {
-			console.log('recherche:' + index + '=' + value[0] + "-" + value[1]);
+			//console.log('recherche:' + index + '=' + value[0] + "-" + value[1]);
 			$("#src_"+index).css('top', value[1] + decX).css('left', value[0] + decY).css('position', 'absolute');
 		  }
 		});

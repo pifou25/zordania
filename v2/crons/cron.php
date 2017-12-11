@@ -82,6 +82,8 @@ if(!($_m % 5))
 	$_c = "5m";
 if(!($_m % 10)) /* Toutes les dix minutes */
 	$_c = "10m";
+if(!($_m % 15)) /* Toutes les 15 minutes */
+	$_c = "15m";
 if(!($_m % 30))
 	$_c = "30m";
 if($_m == 0)  /* Toutes les heures */
@@ -104,6 +106,10 @@ case ZORD_SPEED_FAST:
 	if (in_array($_c,array('5m','10m','30m','1h','6h','12h','24h')))
 		$lockfile = SITE_DIR."logs/cron.lock";
     break;
+case ZORD_SPEED_MEDIUM:
+	if (in_array($_c,array('15m','1h','6h','12h','24h')))
+		$lockfile = SITE_DIR."logs/cron.lock";
+	break;
 case ZORD_SPEED_NORMAL:
 	if (in_array($_c,array('30m','1h','6h','12h','24h')))
 		$lockfile = SITE_DIR."logs/cron.lock";

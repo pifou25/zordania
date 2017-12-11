@@ -32,9 +32,7 @@ Quand vous subirez des attaques, vos assaillants endommageront parfois vos bâti
 </p>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&page=6">Précédent : Le Monde de Zordania</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&type=btc">Suivant : Bâtiments (Caractéristiques)</a> ]
+<a href="manual.html?race={man_race}&page=6">Précédent : Le Monde de Zordania</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&type=btc">Suivant : Bâtiments (Caractéristiques)</a>
 </p>

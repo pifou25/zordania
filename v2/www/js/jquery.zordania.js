@@ -181,19 +181,17 @@ function showMapInfo() {
 // unt.html
 function traiterZrdPopUp() {
 
-    $("#dialog-modal .zrdPopUp").click(funcZrdPopup);
-
 	// autre popup ajax pour les modules - plus grande. specifique selon le CSS
     if(user_css == 6) {
 		// popup specifique
-		$("#village .zrdModPopUp").click(funcZrdModal);
-		$(".liste .zrdModPopUp").click(funcZrdModal);
-		$("#dialog-modal .zrdModPopUp").click(funcZrdModal);
+		$("#village .zrdPopUp").click(funcZrdModal);
+		$(".liste .zrdPopUp").click(funcZrdModal);
+		$("#dialog-modal .zrdPopUp").click(funcZrdModal);
 	}else{
 		// popup jquery-iu classique
-		$("#village .zrdModPopUp").click(funcZrdPopup);
-		$(".liste .zrdModPopUp").click(funcZrdPopup);
-		$("#dialog-modal .zrdModPopUp").click(funcZrdPopup);
+		$("#village .zrdPopUp").click(funcZrdPopup);
+		$(".liste .zrdPopUp").click(funcZrdPopup);
+		$("#dialog-modal .zrdPopUp").click(funcZrdPopup);
 	}
 }
 
@@ -225,6 +223,7 @@ var funcZrdPopup = function(){ // au clic sur le lien
 			if(title){
 				output.dialog("option", "title", title);
 			}
+			output.dialog('moveToTop');
 		}
 	});
 	return false;
@@ -234,12 +233,12 @@ var funcZrdModal = function(){ // au clic sur le lien
 
 	var url = $(this).attr('href');
 	var title = $(this).attr('title');
-	var output = $("#dialog-module");
+	var output = $("#dialog-modal");
 	console.log('module ' + title + ' vers url=' + url);
-	var header = '<div class="header"><h3>' + title + '</h3></div><div class="close" onclick="$(\'#dialog-module\').hide();"></div>';
+	var header = '<div class="header"><h3>' + title + '</h3></div><div class="close" onclick="$(\'#dialog-modal\').hide();"></div>';
 	
 	$.ajax({
-		url: cfg_url+"ajax--"+url,
+		url: cfg_url+"module--"+url,
 		dataType:"html",
 		success: function(html) {
 			output.html(header + '<div class="centre">' + html + '</div>');

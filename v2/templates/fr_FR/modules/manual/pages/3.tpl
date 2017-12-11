@@ -29,9 +29,7 @@ Les légions qui ne sont plus au village se nourrissent sur leur propre réserve
 </p>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&type=btc">Précédent : Bâtiments (Caractéristiques)</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&type=unt">Suivant : Unités (Caractéristiques)</a> ]
+<a href="manual.html?race={man_race}&type=btc">Précédent : Bâtiments (Caractéristiques)</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&type=unt">Suivant : Unités (Caractéristiques)</a>
 </p>

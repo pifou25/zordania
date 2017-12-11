@@ -62,9 +62,7 @@ Les cours changent donc quasiment tous les jours. Le prix conseillé de chaque r
 
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&page=10">Précédent : Diplomatie</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual-res.html?race={man_race}">Suivant : Tableau des armes</a> ]
+<a href="manual.html?race={man_race}&page=10">Précédent : Diplomatie</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual-res.html?race={man_race}">Suivant : Tableau des armes</a>
 </p>

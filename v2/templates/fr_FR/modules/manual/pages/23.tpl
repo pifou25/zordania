@@ -14,7 +14,9 @@ Les seuls habitants à l'année sont les commerçants et quelques dignitaires. P
 
 <ul>
 <em>
-A cette époque, on ne pouvait plus distinguer nuages et fumés des bûchers. Depuis l'arrivée des orcs sur les terres zordaniennes, nous n'avions pas subi pareil dégâts. Nous ignorions d'où ils venaient, nous savions juste qu'ils s'appelaient les <strong>DRAKS DOVARS</strong>. Ils étaient plus grands, plus forts, nombreux et mené par <strong>Kast Fullier</strong> la fierté de sa race. Il se vantait de n'avoir raté aucunes conquêtes. Devant la faiblesse des réactions face à leur arrivée et leurs victoires écrasantes. Il décida de frapper au c'ur. Bien mal lui en fit. Il partit avec deux de ses alliers, <strong>Maw</strong> et <strong>Ilum</strong>. Trois seigneurs pour prendre Egeria. L'idée est belle, la réalité est tout autre.<br />
+A cette époque, on ne pouvait plus distinguer nuages et fumés des bûchers. Depuis l'arrivée des orcs sur les terres zordaniennes, nous n'avions pas subi pareil dégâts. Nous ignorions d'où ils venaient, nous savions juste qu'ils s'appelaient les <strong>DRAKS DOVARS</strong>. Ils étaient plus grands, plus forts, nombreux et mené par <strong>Kast Fullier</strong> la fierté de sa race. Il se vantait de n'avoir raté aucunes conquêtes. Devant la faiblesse des réactions face à leur arrivée et leurs victoires écrasantes. Il décida de frapper au c'ur. Bien mal lui en fit. Il partit avec deux de ses alliers, <strong>Maw</strong> et <strong>Ilum</strong>. Trois seigneurs pour prendre Egeria. L'idée est belle, la réalité est tout autre.
+</em>
+<br />
 
 <br />
 La terrible nouvelle arriva bien vite. La fuite eut été la solution la plus réfléchie mais les habitants, même de passages ne voulaient pas abandonner cette ville au pillage. Et pour la première fois toutes les races s'unirent face à l'envahisseur. Les nains ramenèrent leurs armées et aidèrent à consolider les murs. Les humains et les Elfes partirent rejoindre leurs armées. Les drows, orcs et autres brigands partirent à la rencontre des féroces Draks. Ces derniers furent les premiers à rentrer en action. Ils montèrent des embuscades, ils volaient la nourriture des ennemis à la faveur de la nuit, ils se cachaient à la lisière des forêts pour tirer quelques volées de flèches et s'enfuir au coeur des arbres où ils devenaient invisibles.</ul>
@@ -44,9 +46,7 @@ Les trois seigneurs de l'étoile noire partirent. Ils avançaient à grande vite
 
 
 <p align="center" class="menu_module">
-[ <a href="manual-res.html?race={man_race}">Précédent : Tableau des armes</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=9">Suivant : Titres et Récompenses</a> ]
+<a href="manual-res.html?race={man_race}">Précédent : Tableau des armes</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=9">Suivant : Titres et Récompenses</a>
 </p>

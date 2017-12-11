@@ -1,28 +1,28 @@
-<if cond='isset({btc_tpl}) || {btc_act} == "list2"'>
+<if cond='isset({btc_tpl}) || {btc_act} == "list2" || {_display}=="ajax"'>
 
 	<p class="menu_module">
 		<if cond="isset({btc_conf[prod_unt]})">
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=unt" title="Unités" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][unt]}</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=unt" title="Unités" class="zrdPopUp">{btcopt[{_user[race]}][{btc_id}][unt]}</a>
 		</if>
 		<if cond="isset({btc_conf[prod_src]})">
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=src" title="Recherches" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][src]}</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=src" title="Recherches" class="zrdPopUp">{btcopt[{_user[race]}][{btc_id}][src]}</a>
 		</if>
 		<if cond="isset({btc_conf[prod_res]})">
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=res" title="Ressources" class="zrdModPopUp">{btcopt[{_user[race]}][{btc_id}][res]}</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=res" title="Ressources" class="zrdPopUp">{btcopt[{_user[race]}][{btc_id}][res]}</a>
 		</if>
 		<if cond="isset({btc_conf[com]})">
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=my" title="Ventes" class="zrdModPopUp">Vos Ventes</a> 
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ven" title="Vendre" class="zrdModPopUp">Vendre</a> 
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ach" title="Acheter" class="zrdModPopUp">Acheter</a> 
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours" title="Cours moyens" class="zrdModPopUp">Cours</a>
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours_sem" title="Cours sur la semaine" class="zrdModPopUp">Cours de la Semaine</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=my" title="Ventes" class="zrdPopUp">Vos Ventes</a> 
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ven" title="Vendre" class="zrdPopUp">Vendre</a> 
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ach" title="Acheter" class="zrdPopUp">Acheter</a> 
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours" title="Cours moyens" class="zrdPopUp">Cours</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours_sem" title="Cours sur la semaine" class="zrdPopUp">Cours de la Semaine</a>
 		</if>
-		<a href="btc-use.html?btc_type={btc_id}" title="Infos" class="zrdModPopUp">Infos</a>
+		<a href="btc-use.html?btc_type={btc_id}" title="Infos" class="zrdPopUp">Infos</a>
 		<if cond="!isset({btc_id})">
-			<a href="btc-use.html?sub=list" title="Liste des bâtiments" class="zrdModPopUp">Liste&nbsp;complète</a>
+			<a href="btc-use.html?sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste&nbsp;complète</a>
 		</if>
 		<else>
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdModPopUp">Liste</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste</a>
 		</else>
 	</p>
 
@@ -57,7 +57,7 @@
 				<script type="text/javascript">fortif = 1;</script>
 			</if>
 			<else>
-			<a href="btc-use.html?btc_type={btc_vars[btc_type]}" class="zrdModPopUp" title="{btc[{_user[race]}][alt][{btc_vars[btc_type]}]}"><zimgbtc race="{_user[race]}" type="{btc_vars[btc_type]}" class="btc" id="btc_{btc_vars[btc_type]}" /></a>
+			<a href="btc-use.html?btc_type={btc_vars[btc_type]}" class="zrdPopUp" title="{btc[{_user[race]}][alt][{btc_vars[btc_type]}]}"><zimgbtc race="{_user[race]}" type="{btc_vars[btc_type]}" class="btc" id="btc_{btc_vars[btc_type]}" /></a>
 			</else>
 		</foreach>
 	</div>
@@ -201,7 +201,7 @@
 
 <p class="retour_module">
 	<if cond='{_display}=="ajax"'>
-		<a href="#" title="Fermer" onclick="$('#dialog-module').hide();">Fermer</a>
+		<a href="#" title="Fermer" onclick="$('#dialog-modal').hide();">Fermer</a>
 	</if>
 	<else>
 		<if cond="!isset({btc_id})">

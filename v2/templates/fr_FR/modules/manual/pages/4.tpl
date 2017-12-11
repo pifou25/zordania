@@ -7,9 +7,7 @@ Une fois disponible vous pouvez la retrouver dans l'onglet "<a href="btc-use.htm
 </p>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&type=comp">Précédent : Compétences des Héros (Caractéristiques)</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&type=src">Suivant : Recherches (Caractéristiques)</a> ]
+<a href="manual.html?race={man_race}&type=comp">Précédent : Compétences des Héros (Caractéristiques)</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&type=src">Suivant : Recherches (Caractéristiques)</a>
 </p>

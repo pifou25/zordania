@@ -34,9 +34,7 @@ La signature d'un pacte a un prix, qui est prélevé dans le grenier des deux al
 </dl>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&page=">Précédent : Alliances</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=7">Suivant : Commerce</a> ]
+<a href="manual.html?race={man_race}&page=">Précédent : Alliances</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=7">Suivant : Commerce</a>
 </p>

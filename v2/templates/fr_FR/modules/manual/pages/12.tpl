@@ -46,9 +46,7 @@ Dans tout les cas, vous devez garder en mémoire que les constructions et recher
 </p>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&type=trn">Précédent : Terrains (Caractéristiques)</a> ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=8">Suivant : L'Art de la Guerre</a> ]
+<a href="manual.html?race={man_race}&type=trn">Précédent : Terrains (Caractéristiques)</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=8">Suivant : L'Art de la Guerre</a>
 </p>

@@ -346,7 +346,7 @@ input, button, textarea, select{
  * avec un padding de 30-30-40-45px
  * interieur=695x374
  */
-#dialog-module{
+#dialog-modal{
 	background:url(img/fond-pop-up.png) no-repeat;
 	left: 50%;
 	width:695px;
@@ -357,14 +357,14 @@ input, button, textarea, select{
 	top: 90px;
 	/*border: 1px solid #000;*/
 }
-#dialog-module div.centre{
+#dialog-modal div.centre{
 	max-height:374px;
 	height:374px;
 	overflow-y:auto;
 	padding-top:15px;
 }
 /* positionnement absolu du titre et du bouton close */
-#dialog-module .header{
+#dialog-modal .header{
 	/*border: 1px solid #000;*/
 	position:absolute;
 	top: 3px;
@@ -372,10 +372,10 @@ input, button, textarea, select{
 	height: 25px;
 	left: 88px;
 }
-#dialog-module .close:hover{
+#dialog-modal .close:hover{
 	cursor:pointer;
 }
-#dialog-module .close{
+#dialog-modal .close{
 	/*border: 1px solid #000;*/
 	position:absolute;
 	top: 15px;
