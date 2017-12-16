@@ -17,7 +17,7 @@ $host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "www.zordania.c
 define('SITE_URL', "http://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");
-define('ZORDLOG_URL', 'archives.zordania.com'); // URL des archives
+define('ZORDLOG_URL', 'zordania.free.fr'); // URL des archives
 
 define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.com');
 define('SITE_CHARSET', 'utf-8'); // iso-8859-1, utf-8, ...

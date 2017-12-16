@@ -103,7 +103,7 @@ case ZORD_SPEED_VFAST:
 	$lockfile = SITE_DIR."logs/cron.lock";
 	break;
 case ZORD_SPEED_FAST:
-	if (in_array($_c,array('5m','10m','30m','1h','6h','12h','24h')))
+	if (in_array($_c,array('5m','10m','15m','30m','1h','6h','12h','24h')))
 		$lockfile = SITE_DIR."logs/cron.lock";
     break;
 case ZORD_SPEED_MEDIUM:
@@ -171,7 +171,7 @@ function scl($key, $type, $array) {
 
 function clean_scl() {
 	global $acts;
-	$times = array("10s","30s","1m","2m","5m","10m","30m","1h","6h","12h","24h");
+	$times = array("10s","30s","1m","2m","5m","10m","15m","30m","1h","6h","12h","24h");
 	$types = array("glob", "mbr");
 
 	foreach($types as $type) {
@@ -211,6 +211,15 @@ case ZORD_SPEED_NORMAL:
 	scl("5m", "glob", array("cache", "com"));
 	scl("30m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl'));
 	scl("6h", "glob", array("aly", "mbr", "pts"));
+
+	scl("24h", "glob", array("stats"));
+	break;
+case ZORD_SPEED_MEDIUM:
+	scl("15m", "mbr", array("res", "unt", "btc", "src", "mbr"));
+
+	scl("5m", "glob", array("cache", "com"));
+	scl("15m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl'));
+	scl("1h", "glob", array("aly", "mbr", "pts"));
 
 	scl("24h", "glob", array("stats"));
 	break;

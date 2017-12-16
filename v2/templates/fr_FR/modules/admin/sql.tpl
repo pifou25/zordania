@@ -1,8 +1,8 @@
 <p class="menu_module">
 <foreach cond="{arr_rep} as {rep}">
-	[ <a href="admin-log.html?module=admin&amp;sub={rep}">{rep}</a> ]
+	<a href="admin-log.html?module=admin&amp;sub={rep}">{rep}</a>
 </foreach>
-[ <a href="admin-sql.html?module=admin">Autres infos</a> ]
+	<a href="admin-sql.html?module=admin">Autres infos</a>
 </p>
 
 <h3>Configuration des combats</h3>

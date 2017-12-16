@@ -1,8 +1,8 @@
 <p class="menu_module">
 <foreach cond="{arr_rep} as {rep}">
-	[ <a href="admin-log.html?module=admin&amp;sub={rep}">{rep}</a> ]
+	<a href="admin-log.html?module=admin&amp;sub={rep}">{rep}</a>
 </foreach>
-[ <a href="admin-sql.html?module=admin">Autres infos</a> ]
+	<a href="admin-sql.html?module=admin">Autres infos</a>
 </p>
 
 <if cond="isset({sub})">
@@ -10,7 +10,7 @@
 
 	<if cond="!empty({arr_sub})"><p class="menu_module">
 		<foreach cond="{arr_sub} as {rep}">
-			[ <a href="admin-log.html?module=admin&amp;sub={sub}/{rep}">{rep}</a> ]
+			<a href="admin-log.html?module=admin&amp;sub={sub}/{rep}">{rep}</a>
 		</foreach>
 	</p></if>
 

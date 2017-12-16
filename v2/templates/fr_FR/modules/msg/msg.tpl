@@ -50,7 +50,7 @@
 
 <elseif cond='{msg_act} == "del_env" OR {msg_act} == "del_rec"'>
 	<if cond='isset({msg_need_conf})'>
-		<form action="msg-{msg_act}.html?msg_id={msg_id}" method="post" class="infos">
+		<form action="msg-{msg_act}.html" method="post" class="infos">
 		Voulez-vous supprimer
 		<if cond='is_array({msg_id})'>
 			<foreach cond='{msg_id} as {id} => {value}'>
@@ -58,7 +58,9 @@
 			</foreach>
 			les <math oper="count({msg_id})" /> messages sélectionnés
 		</if>
-		<elseif cond='{msg_id}!=0'> le message sélectionné </elseif>
+		<elseif cond='{msg_id}!=0'> le message sélectionné
+		<input type="hidden" name="msg_id" value="{msg_id}" />
+		</elseif>
 		<else> tous les messages </else>
 		dans la boîte
 		<if cond='{msg_act} == "del_env"'> d'envoi </if><else> de réception </else> ?

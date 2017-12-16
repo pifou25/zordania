@@ -20,3 +20,4 @@ v2/cache/admin.cache.php
 v2/cache/global.cache.php
 
 Thumbs.db
+*.gz

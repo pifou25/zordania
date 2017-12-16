@@ -27,11 +27,13 @@ div#menu {
 	top: 58px;
 	border: none;
 	padding-top:0px;
+	margin-top:0px;
 	position:fixed;
 	overflow: hidden;
 	transition: 1s max-height 0.3s;
 	transition: 1s max-width 0.3s;
 	z-index:99;
+	bottom: inherit; /* reset default */
 }
 
 div#menu ul{
