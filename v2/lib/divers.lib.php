@@ -11,7 +11,7 @@ function mailto($from, $to, $sujet, $message, $html=FALSE)
 	if($html) {
 	  		$from ="From: Zordania <".$from."> \n"; 
 	  		$from .= "MIME-Version: 1.0\n";
-			$from .= "Content-type: text/html; charset=iso-8859-1\n";
+			$from .= "Content-type: text/html; charset=utf-8\n";
 	 }else
 		$from="From: $from <$from>";
 

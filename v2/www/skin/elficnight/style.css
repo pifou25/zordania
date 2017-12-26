@@ -47,24 +47,6 @@ a.bonus:hover
 color: #F5F5F5; 
 text-decoration: underline;
  }
-
-a.evidence
-{ 
-color: #5A6D8B; 
-font-weight: bold;
- }
- 
-a.evidence:link, a.evidence:visited, a.evidence:active 
-{ 
-color: #394166; 
-text-decoration: none;
- }
- 
-a.evidence:hover 
-{ 
-color: #F5F5F5; 
-text-decoration: underline;
- }
  
 dd
 {
@@ -332,7 +314,10 @@ height:0px;
 	border: 1px #AFBDC9 solid; padding: 5px;
 }
 
-
+.menu_module a, .retour_module a{
+	border-left: solid 1px #3E498A;
+    border-right: solid 1px #3E498A;
+}
 
 
 /*** btc pas constructible ***/
@@ -400,8 +385,7 @@ border-width: 1px; border-color: #000000;
  
 .menu_gauche h2
 { 
-	background-color: #000000; 
-	background-image: url(img/entete.png); 
+	background: #50575f url(img/entete.png) no-repeat right; 
 	border-bottom: 1px #E6EAEE solid; 
 	color: white; 
 	color: #FCFCFC; 
@@ -421,6 +405,7 @@ border-width: 1px; border-color: #000000;
 {
 	margin-left: 10px ; 
 	padding-bottom: 3px;
+	background: #a7a7a7; 
  }
  
 .menu_gauche ul
@@ -847,8 +832,8 @@ visibility: hidden;
 	background-repeat: repeat-y ;
 	height: 35px;
 	filter:alpha(opacity=80); -moz-opacity:0.8; opacity: 0.8;
-	}
- 
+}
+
 #actbar li {
 padding-left: 3px;
 padding-right: 3px;

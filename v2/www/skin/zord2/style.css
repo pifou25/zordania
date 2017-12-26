@@ -329,7 +329,12 @@ margin: 2px;
 }
 
 .menu_gauche h2{
+	background: #E7DAC5
 
+}
+
+.menu_gauche li {
+	background: #E7DAC5
 }
 
 .menu_gauche li a {

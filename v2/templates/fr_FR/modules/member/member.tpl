@@ -27,11 +27,7 @@
 		</foreach>
 	</if>
 	</p>
-	<h4>Description</h4>
-	<p>
-	{mbr_array[mbr_descr]}
-	</p>
-	
+
 	<hr />
 	<div class="infos">L'apparence du site peut être complètement modifiée en choisissant une autre feuille de style ! Les designs seront aussi appliqués au forum !</div>
 	<script type="text/javascript">
@@ -62,11 +58,18 @@
 		<input type="submit" value="Sauvegarder" />
 	</form>
 	<hr/>
+	
 	<if cond='{vld_array}'>
 	<strong>Vous avez une action en cours de validation  ({vldacts[{vld_array[0][vld_act]}]}),
 	<a href="member-edit.html?sub=del_vld">Annuler</a>.</strong>
 	<hr/>
 	</if>
+
+	<h4>Description</h4>
+	<p>
+	{mbr_array[mbr_descr]}
+	</p>
+	
 	<p class="menu_module">
 	<a href="parrain.html" title="Parrainer.">Parrainage</a>
 	<a href="zzz.html" title="Mise en veille du compte.">Mise&amp;en&amp;veille</a>

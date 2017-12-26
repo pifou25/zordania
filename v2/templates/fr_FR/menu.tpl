@@ -33,7 +33,11 @@
 		<# <li><a href="votes.html" title="Votez pour Zordania !" class="votes">Votes</a></li> #>
 
 	</if>
+	<else>
+		<li><a href="ini.html" title="Initialiser!">Compte non initialisé !</a></li>
+	</else>
 	</if>
+	<else><li>Visiteur</li></else>
 	<if cond='!{ses_can_play} OR !{ses_mbr_etat_ok}'>
 		<li><a href="presentation.html" title="Présentation.">Accueil</a></li>
 	</if>

@@ -2,7 +2,7 @@
 
 *{
 	font-family: "DejaVu Sans", Verdana,Tahoma,Arial,sans-serif;
-    font-size: 16px;
+    font-size: 13px;
 	margin:0;
 	padding:0;
 	border: none;
@@ -13,7 +13,7 @@ div#logo {display:none;}
 div#stats {display:none;}
 div#espace_menu_centre {display:none;}
 div#skyscraper {display:none;}
-.cleaner {display:none;}
+/* .cleaner {display:none;} */
 
 a{
 	text-decoration: none;
@@ -22,7 +22,7 @@ a{
 
 /* 1er niveau de menu */
 div#menu {
-	width: 182px;
+	width: 202px;
 	left: -270px;
 	top: 58px;
 	border: none;
@@ -47,6 +47,9 @@ div#menu li{
 .menu_gauche {
 	margin:0px;
 	opacity:1;
+	width: unset;
+	background-color: unset;
+	border: none;
 }
 .menu_gauche a{
   text-decoration: none;
@@ -78,6 +81,10 @@ div#menu li{
     padding: 0px;
 	margin: 0px;
     transition: all 0.25s ease-in-out;
+	/*
+	border: 1px solid;
+	*/
+    border-radius: 5px;
 }
 .menu_gauche input:checked + ul li {
     padding: 0.2em 0.3em;
@@ -114,6 +121,8 @@ div#contenu{
 	width:100%;
 	border:none;
 }
+
+
 div#contenu li{
 	margin-left:20px;
 	list-style:circle;
@@ -160,6 +169,10 @@ div#actbar {
 	left:initial;
 	overflow-x:scroll;
 }
+div#actbar::-webkit-scrollbar {
+	display: none;
+}
+
 div#actbar ul{
 	position:relative;
 	z-index:2; /* devant div#menu */
@@ -206,7 +219,8 @@ div.block_forum p.author, div.block_forum p.author *{
 	text-align: center;
 }
 .menu_module a, .retour_module a{
-	border: 1px solid;
+	border-width: 1px;
+	border-style: solid;
     border-radius: 8px;
     padding:2px;
 	text-decoration: none;

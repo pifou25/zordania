@@ -27,7 +27,7 @@ $_sql->query($sql);
 echo "\nupdate map ... raz villages ..." . $_sql->affected_rows();
 
 $sql = 'UPDATE '. $_sql->prebdd.'mbr SET mbr_etat='.MBR_ETAT_INI.', mbr_race=0, mbr_mapcid=0, 
-  mbr_place=0, mbr_population=0, mbr_points=0, mbr_pts_armee=0, mbr_atq_nb=0
+  mbr_place=0, mbr_population=0, mbr_points=0, mbr_pts_armee=0, mbr_atq_nb=0, mbr_pseudo = ""
   WHERE mbr_etat IN('.MBR_ETAT_OK.','.MBR_ETAT_ZZZ.') AND mbr_mid <> ' . MBR_WELC;
 $_sql->query($sql);
 echo "\nupdate mbr ... reinit ..." . $_sql->affected_rows();

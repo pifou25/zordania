@@ -113,7 +113,10 @@
 			  <p class="infos">Vous n'avez pas les droits nécessaires pour voir cette partie du site.</p>
 			  </elseif>
 			  <elseif cond='isset({module_tpl})'>
-			  <h2 class="titre_module">{pages[{module}]}</h2>
+				<h2 class="titre_module">{pages[{module}]}</h2>
+				<if cond="{_user[etat]} == MBR_ETAT_INI">
+					<p class="infos">{_user[pseudo]} : Compte non initialisé : <a href="ini.html" title="Initialiser!">initialiser</a></p>
+				</if>
 				<if cond='{_user[mid]} == 1'>
 					<include file="modules/session/connect.tpl" cache="1" />
 				</if>

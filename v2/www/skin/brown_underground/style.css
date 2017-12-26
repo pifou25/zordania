@@ -402,6 +402,7 @@ div#toolTip p em {
 	color: #E6C5A3; 
 	background-image : url(img/menu.png);	
 	background-repeat: repeat-x ;
+	Background-color: #000000;
 	display: table-cell;
 	font-size: 120%;
 	font-style: italic;
@@ -413,6 +414,7 @@ div#toolTip p em {
 }
  
 .menu_gauche li {
+	Background-color: #000000;
 	padding-left: 30px;
 	padding-bottom: 5px;
 
