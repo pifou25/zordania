@@ -149,6 +149,13 @@ function jqShowMod(module, output) {
 			// gérer les nouveaux formulaires & popup
 			traiterFormulaires();
             traiterZrdPopUp();
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			output.html('<p class="error">Erreur : ' + textStatus + ' sur le module ' + module + ' - ' + errorThrown + '</p>');
+		},
+		complete: function(jqXHR, textStatus){
+			if(textStatus != 'success')
+				output.append('<p class="infos">' + textStatus + '</p>');
 		}
 	});
 	return false;
