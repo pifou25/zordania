@@ -13,7 +13,7 @@ define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
 define('SITE_MAX_CONNECTED', 300);
 define('SITE_MAX_INSCRITS', 10000);
 
-$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "www.zordania.com";
+$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "www.zordania.fr";
 define('SITE_URL', "http://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");
@@ -61,7 +61,7 @@ define('MBR_NIV_1',7000);
 define('MBR_NIV_2',35000);
 
 /* Alliance */
-define('ALL_MAX',6); // Nombre maximum de joueurs
+define('ALL_MAX',12); // Nombre maximum de joueurs
 define('ALL_MIN_PTS', 4000); // Points pour entrer
 define('ALL_MIN_ADM_PTS', 7000); // Points pour créer une alliance
 define('ALL_CREATE_PRICE', 1000); // Prix pour créer une alliance
@@ -242,7 +242,7 @@ $_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif',
 $_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
 		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
 
-define('SITE_DEBUG',true);
+define('SITE_DEBUG',false);
 define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
 define('CRON', substr(php_sapi_name(), 0, 3) == 'cli');

@@ -3,7 +3,7 @@ session_start();
 ignore_user_abort();
 error_reporting (E_ALL | E_STRICT | E_RECOVERABLE_ERROR);
 date_default_timezone_set("Europe/Paris");
-define("_INDEX_",true);
+
 
 /* Fonctions de Bench */
 function mtime()
@@ -47,6 +47,7 @@ mark('lib');
 */
 $_tpl = new Template();
 $_tpl->set_dir('../templates');
+$_tpl->set("charset", SITE_CHARSET);
 
 /* display : xhtml - module - ajax - popup - xml */
 $_display = request("display", "string", "get", "xhtml"); /* Type d'affichage */
@@ -72,6 +73,7 @@ if(!$_sql->con) /* Utiliser Display = module */
 {
 	$_tpl->set_lang('all');
 	$_tpl->set('page','mysql_error.tpl');
+	$_tpl->set('error',$_sql->err);
 	if(!$_display != "xml")
 		echo $_tpl->get('index.tpl',1);
 
@@ -126,7 +128,7 @@ if(SITE_TRAVAUX && !can_d(DROIT_ADM_TRAV))
 	$_tpl->set('sv_site_debug', false);
 	$_tpl->set("cfg_url",SITE_URL);
 	$_tpl->set_lang('all');
-	$_tpl->set('page','tests.tpl');
+	$_tpl->set('page','test.tpl');
 	echo $_tpl->get('index.tpl',1);
 	exit;
 }
@@ -181,7 +183,6 @@ if(preg_match("/(http|ftp|\/|\.)/i",$_file))
 
 /* header utf-8 pour tout le site */
 $charset = SITE_CHARSET; // iso-8859-1, utf-8, ...
-$_tpl->set("charset", $charset);
 
 if($_display == "xml") { /* Sortie en XML */
 	header("Content-Type: application/xml; charset=$charset");
@@ -324,7 +325,4 @@ if(!empty($_error)) { // log des erreurs PHP
 	//$err_log->close();
 }
 
-/* Fin de la page */
-//$_histo->flush();
-//$_sql->close();
 ?>

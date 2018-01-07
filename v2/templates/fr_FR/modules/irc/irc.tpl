@@ -15,12 +15,16 @@
 
 	<a href="http://twitter.com/share" class="twitter-share-button" data-url="{SITE_URL}inscr.html?parrain={_user[mid]}" data-text="Je suis devenu le maitre sur Zordania, viendra-tu te mesurer à moi?" data-count="horizontal" data-via="Zordania" data-lang="fr">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 
+	<br/>
+	
+	<p class="infos">NEW : la communauté se retrouve maintenant sur Discord, suivez le lien d'invitation: <a href="https://discord.gg/fjGXrkY" title="for the gamers">Discord app</a></p>
+	
 	<hr/>
 
 	<p class="infos">
-	<strong>Serveur:</strong> irc.quakenet.org
-	<strong>Port:</strong> 6667
-	<strong>Chan:</strong> #zordania
+	<strong>Serveur:</strong> irc.quakenet.org<br/>
+	<strong>Port:</strong> 6667<br/>
+	<strong>Chan:</strong> #zordania<br/>
 	</p>
 	<p>
 	Pour accéder au chat vous devez disposer d'un logiciel permettant de vous connecter à l'IRC comme <a href="http://mirc.com">mIRC</a>, <a href="http://www.xchat.org">xchat</a>.
@@ -29,7 +33,7 @@
 	<div class="menu_module">
 	<a href="module--irc-webchat.html" target="_blank" title="Aucune installation nécessaire !">Utiliser l'interface web</a>
 	- <a href="irc://irc.quakenet.org/zordania" title="Rejoindre le chat avec mon logiciel habituel">Utiliser mon logiciel habituel</a>
-	- <a href="https://discord.gg/Sm7Eb9a" title="for the gamers">Discord app</a>
+	- <a href="https://discord.gg/fjGXrkY" title="for the gamers">Discord app</a>
 	</div>
 </if>
 
