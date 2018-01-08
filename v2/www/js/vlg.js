@@ -291,24 +291,24 @@ var VlgV2 = {
 			break;
 			
 		case 2:
-			this.VlgCoords[1] = new Array(245,143);
-			this.VlgCoords[2] = new Array(316,32);
-			this.VlgCoords[3] = new Array(102,19);
-			this.VlgCoords[4] = new Array(178,168);
-			this.VlgCoords[5] = new Array(231,82);
-			this.VlgCoords[6] = new Array(122,211);
-			this.VlgCoords[7] = new Array(140,267);
-			this.VlgCoords[8] = new Array(268,225);
-			this.VlgCoords[9] = new Array(92,161);
-			this.VlgCoords[10] = new Array(59,112);
-			this.VlgCoords[11] = new Array(426,265);
-			this.VlgCoords[12] = new Array(297,81);
-			this.VlgCoords[13] = new Array(341,133);
-			this.VlgCoords[14] = new Array(179,26);
-			this.VlgCoords[15] = new Array(61,273);
-			this.VlgCoords[16] = new Array(235,185);
-			this.VlgCoords[17] = new Array(133,94);
-			this.VlgCoords[18] = new Array(187,122);
+			this.VlgCoords[1] = new Array(706, 185);
+			this.VlgCoords[2] = new Array(678, 117);
+			this.VlgCoords[3] = new Array(206, 531);
+			this.VlgCoords[4] = new Array(297, 431);
+			this.VlgCoords[5] = new Array(850, 139);
+			this.VlgCoords[6] = new Array(292, 363);
+			this.VlgCoords[7] = new Array(473, 584);
+			this.VlgCoords[8] = new Array(350, 113);
+			this.VlgCoords[9] = new Array(73, 250);
+			this.VlgCoords[10] = new Array(724, 333);
+			this.VlgCoords[11] = new Array(559, 502);
+			this.VlgCoords[12] = new Array(20, 486);
+			this.VlgCoords[13] = new Array(554, 112);
+			this.VlgCoords[14] = new Array(268, 96);
+			this.VlgCoords[15] = new Array(350, 516);
+			this.VlgCoords[16] = new Array(523, 223);
+			this.VlgCoords[17] = new Array(121, 355);
+			//this.VlgCoords[18] = new Array(187,122);
 			break;
 		case 3:
 		

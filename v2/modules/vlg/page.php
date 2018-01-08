@@ -7,16 +7,32 @@ if(!can_d(DROIT_PLAY)){
 require_once("lib/btc.lib.php");
 require_once("lib/src.lib.php");
 
-// TODO
+if($_user['race'] == 2){
+	// la forteresse est une img de fond specifique
+	$forteresse = get_conf('race_cfg', 'btc_nb');
+}else{
+	// la forteresse est un batiment normal
+	$forteresse = false;
+}
+$btc_array = get_nb_btc_done($_user['mid']);
+$imgvlg = 'vlg.jpg';
+if($forteresse !== false){
+	foreach($btc_array as $value){
+		if($value['btc_type'] == $forteresse){
+			$imgvlg = 'vlgf.jpg';
+			break;
+		}
+	}
+}
 $_tpl->set("module_tpl","modules/vlg/vlg.tpl");
 
-$btc_array = get_nb_btc_done($_user['mid']);
 $_tpl->set("btc_max", get_conf("race_cfg", "btc_nb"));
 $_tpl->set("btc_conf", get_conf("btc"));
 $_tpl->set("src_conf", get_conf("src"));
 $_tpl->set("src_array", get_src_done($_user['mid']));
 $_tpl->set("btc_array", $btc_array);
-
+$_tpl->set("forteresse", $forteresse);
+$_tpl->set("imgvlg", $imgvlg);
 
 }
 ?>

@@ -128,7 +128,7 @@ if(SITE_TRAVAUX && !can_d(DROIT_ADM_TRAV))
 	$_tpl->set('sv_site_debug', false);
 	$_tpl->set("cfg_url",SITE_URL);
 	$_tpl->set_lang('all');
-	$_tpl->set('page','test.tpl');
+	$_tpl->set('page','tests.tpl');
 	echo $_tpl->get('index.tpl',1);
 	exit;
 }

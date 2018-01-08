@@ -10,6 +10,10 @@
 <else>{mbr_mail}</else>
 </strong></p>
 
+<p>Info : suite à des changements de serveur, l'adresse actuelle du jeu 
+est : 
+<a href="{cfg_url}">{cfg_url}</a></p>
+
 <p>Le monde a traversé une période noire, mais personne n'a oublié 
 Zordania. Aujourd'hui c'est officiel, Zordania is back! Pour le
  meilleur, et seulement pour le meilleur. Vous vous êtes inscrit 
@@ -30,6 +34,9 @@ domination du monde, et parmi les nouveautés c'est aussi un nouveau
 Suivez-nous aussi pour nous encourager sur @FB :
 <a href="https://www.facebook.com/zordania2015/">
 https://www.facebook.com/zordania2015/</a>
+<br/>
+Et - nouveau! - sur le chat Discord 
+<a href="https://discord.gg/fjGXrkY">https://discord.gg/fjGXrkY</a>
 </p>
 
 <p>
