@@ -233,14 +233,13 @@ case 'post' : // valider le formulaire & créer le topic / message
 					$_tpl->set('close', close($tid, ($sub == 'close'? 1:0)));
 			}
 		}
-
+/* pas de suppression de msg
 		//Suppression de message : confirmation
 		else if ($sub == 'conf')
 		{
 			$_tpl->set('conf',true);
 			$_tpl->set('pid',$pid);
 		}
-
 		else if ($sub == 'del' && isset($_POST['Oui']))
 		{
 			if (($pst['poster_id'] <> $mid) && !$is_modo)//on vérifie qu'on a le droit
@@ -257,7 +256,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 				//sinon on réalimente les infos
 			}
 		}
-
+*/
 	}
 
 	//et enfin l'affichage de message
