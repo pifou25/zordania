@@ -10,8 +10,8 @@ $_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 
 set_time_limit(0);
-$sql = "SELECT mbr_pseudo,mbr_mail,mbr_mid FROM zrd_mbr" . (!empty($mid) ? " WHERE mbr_mid >= $mid" : '');
-//$sql = "SELECT mbr_pseudo,mbr_mail, mbr_mid FROM zrd_mbr" . (!empty($mid) ? " LIMIT $mid, 1000" : '');
+//$sql = "SELECT mbr_pseudo,mbr_mail,mbr_mid FROM zrd_mbr" . (!empty($mid) ? " WHERE mbr_mid = $mid" : ' WHERE mbr_etat = 3');
+$sql = "SELECT mbr_pseudo,mbr_mail, mbr_mid FROM zrd_mbr" . (!empty($mid) ? " LIMIT $mid, 1000" : '');
 $mbr_array = $_sql->make_array($sql);
 
 $_tpl = new Template();

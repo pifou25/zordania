@@ -2187,4 +2187,3 @@ $this->race_cfg = array(
 }
 
 ?>
-

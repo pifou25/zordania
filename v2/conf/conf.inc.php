@@ -195,10 +195,10 @@ $_adsense_css = array(1 => '9107849390', 2 => '2158156650', 3 => '2158156650',
 
 
 $_regions = array(1=> array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
-	2 => array(1=>10, 2=>20, 3=>40, 4=>20, 5=>20, 6=>0, 7=>20, 8=>0),
+	2 => array(1=>10, 2=>20, 3=>40, 4=>20, 5=>20, 6=>10, 7=>20, 8=>0),
 	3 => array(1=>0, 2=> 0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	4 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
-	5 => array(1=>25, 2=>15, 3=>20, 4=>20, 5=>20, 6=>0, 7=>15, 8=>0),
+	5 => array(1=>25, 2=>15, 3=>20, 4=>20, 5=>20, 6=>10, 7=>15, 8=>0),
 	6 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	7 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	8 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>100, 7=>0, 8=>0),
@@ -242,7 +242,7 @@ $_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif',
 $_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
 		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
 
-define('SITE_DEBUG',false);
+define('SITE_DEBUG',true);
 define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
 define('CRON', substr(php_sapi_name(), 0, 3) == 'cli');

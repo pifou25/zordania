@@ -25,6 +25,7 @@ SET time_zone = "+00:00";
 DELIMITER $$
 --
 -- Procédures
+-- move_member = deplacement d'un joueur: village + legions
 --
 DROP PROCEDURE IF EXISTS `move_member`$$
 CREATE DEFINER=`zordania`@`%` PROCEDURE `move_member` (IN `member` INT, IN `move_to` INT)  BEGIN
@@ -53,6 +54,7 @@ DELIMITER ;
 
 --
 -- Structure de la table `zrd_al`
+-- alliance (id / nom / member id du chef / nb de points / alliance ouverte au recrutement / nb de membres / description / regles / diplomatie)
 --
 
 DROP TABLE IF EXISTS `zrd_al`;
@@ -74,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `zrd_al` (
 
 --
 -- Structure de la table `zrd_al_mbr`
+-- membres d'alliance (membre id / alliance id / date d'entree dans l'alliance / grade d'alliance)
 --
 
 DROP TABLE IF EXISTS `zrd_al_mbr`;
@@ -90,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `zrd_al_mbr` (
 
 --
 -- Structure de la table `zrd_al_res`
+-- grenier d'alliance (alliance id / ressource id / nb de ressources + ou -)
 --
 
 DROP TABLE IF EXISTS `zrd_al_res`;
@@ -104,6 +108,7 @@ CREATE TABLE IF NOT EXISTS `zrd_al_res` (
 
 --
 -- Structure de la table `zrd_al_res_log`
+-- historique de grenier (id / alliance id / membre id / resource id / nb de resources + ou - / date de transaction / ip)
 --
 
 DROP TABLE IF EXISTS `zrd_al_res_log`;
@@ -124,6 +129,7 @@ CREATE TABLE IF NOT EXISTS `zrd_al_res_log` (
 
 --
 -- Structure de la table `zrd_al_shoot`
+-- shootbox alliance (id / membre id / alliance id / date de post / message)
 --
 
 DROP TABLE IF EXISTS `zrd_al_shoot`;
@@ -141,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `zrd_al_shoot` (
 
 --
 -- Structure de la table `zrd_atq`
+-- journal d'attaque (id/ membre1 / membre2 / legion1 / legion2 / type (atq/def) / date / cid: lieu sur la carte / bilan (array serialized))
 --
 
 DROP TABLE IF EXISTS `zrd_atq`;
@@ -162,6 +169,7 @@ CREATE TABLE IF NOT EXISTS `zrd_atq` (
 
 --
 -- Structure de la table `zrd_atq_mbr`
+-- attaque groupee (id attaque / membre id)
 --
 
 DROP TABLE IF EXISTS `zrd_atq_mbr`;
@@ -175,6 +183,7 @@ CREATE TABLE IF NOT EXISTS `zrd_atq_mbr` (
 
 --
 -- Structure de la table `zrd_bon`
+-- bonus - achat de ressources (id / membre id / date / code / ok / ressource / nombre)
 --
 
 DROP TABLE IF EXISTS `zrd_bon`;
@@ -193,6 +202,7 @@ CREATE TABLE IF NOT EXISTS `zrd_bon` (
 
 --
 -- Structure de la table `zrd_btc`
+-- batiments (id / membre id / batiment id / vie / etat)
 --
 
 DROP TABLE IF EXISTS `zrd_btc`;
@@ -210,6 +220,7 @@ CREATE TABLE IF NOT EXISTS `zrd_btc` (
 
 --
 -- Structure de la table `zrd_cmt`
+-- commentaire pour les news - useless
 --
 
 DROP TABLE IF EXISTS `zrd_cmt`;
@@ -229,6 +240,7 @@ CREATE TABLE IF NOT EXISTS `zrd_cmt` (
 
 --
 -- Structure de la table `zrd_con`
+-- statistiques ( date / nb de connectes)
 --
 
 DROP TABLE IF EXISTS `zrd_con`;
@@ -242,6 +254,7 @@ CREATE TABLE IF NOT EXISTS `zrd_con` (
 
 --
 -- Structure de la table `zrd_diplo`
+-- diplomatie (id / etat du pacte -valide en cours en attente perime etc- / type du pacte / id ally1 / id ally2 / date debut / date fin)
 --
 
 DROP TABLE IF EXISTS `zrd_diplo`;
@@ -262,6 +275,7 @@ CREATE TABLE IF NOT EXISTS `zrd_diplo` (
 
 --
 -- Structure de la table `zrd_diplo_shoot`
+-- shootbox diplo (id / membre id / diplo pacte id / date du msg / texte)
 --
 
 DROP TABLE IF EXISTS `zrd_diplo_shoot`;
@@ -278,6 +292,7 @@ CREATE TABLE IF NOT EXISTS `zrd_diplo_shoot` (
 
 --
 -- Structure de la table `zrd_frm_bans`
+-- ban du forum - useless 
 --
 
 DROP TABLE IF EXISTS `zrd_frm_bans`;
@@ -295,6 +310,8 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_bans` (
 
 --
 -- Structure de la table `zrd_frm_categories`
+-- categories du forum (id / nom / position)
+-- 1 categorie regroupe plusieurs forums
 --
 
 DROP TABLE IF EXISTS `zrd_frm_categories`;
@@ -309,6 +326,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_categories` (
 
 --
 -- Structure de la table `zrd_frm_censoring`
+-- censure du forum (useless?)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_censoring`;
@@ -323,6 +341,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_censoring` (
 
 --
 -- Structure de la table `zrd_frm_config`
+-- config forum (useless? des variables de parametrage en DB)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_config`;
@@ -336,6 +355,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_config` (
 
 --
 -- Structure de la table `zrd_frm_forums`
+-- un forum (id / nom / description / url / modos / nb de sujets /  nb de messages / dernier msg/ id du dernier msg / dernier user / dernier topic - titre / sort by(?) / position du forum / id categorie)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_forums`;
@@ -361,6 +381,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_forums` (
 
 --
 -- Structure de la table `zrd_frm_forum_perms`
+-- permissions des forms ( id groupe / id forum / permission lecture/ perm reponse / perm nouveau sujet)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_forum_perms`;
@@ -377,6 +398,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_forum_perms` (
 
 --
 -- Structure de la table `zrd_frm_groups`
+-- groupes du forum (id groupe / titres / titre / ... booleen pour les permissions)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_groups`;
@@ -404,6 +426,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_groups` (
 
 --
 -- Structure de la table `zrd_frm_online`
+-- useless
 --
 
 DROP TABLE IF EXISTS `zrd_frm_online`;
@@ -419,6 +442,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_online` (
 
 --
 -- Structure de la table `zrd_frm_posts`
+-- messages du forum (id / nom membre / id membre / ip membre / mbr email / message / ? / date du msg / edite / nom du modo editeur / id topic)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_posts`;
@@ -443,6 +467,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_posts` (
 
 --
 -- Structure de la table `zrd_frm_ranks`
+-- rang dans le forum (useless)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_ranks`;
@@ -457,6 +482,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_ranks` (
 
 --
 -- Structure de la table `zrd_frm_reports`
+-- signalement du forum (useless?)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_reports`;
@@ -478,6 +504,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_reports` (
 
 --
 -- Structure de la table `zrd_frm_search_cache`
+-- recherche en cache
 --
 
 DROP TABLE IF EXISTS `zrd_frm_search_cache`;
@@ -493,6 +520,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_search_cache` (
 
 --
 -- Structure de la table `zrd_frm_search_matches`
+-- lien mots / messages
 --
 
 DROP TABLE IF EXISTS `zrd_frm_search_matches`;
@@ -508,6 +536,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_search_matches` (
 
 --
 -- Structure de la table `zrd_frm_search_words`
+-- existence du mot
 --
 
 DROP TABLE IF EXISTS `zrd_frm_search_words`;
@@ -522,6 +551,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_search_words` (
 
 --
 -- Structure de la table `zrd_frm_topics`
+-- sujet du forum (id / nom membre / sujet / date du topic / dernier post / id membre dernier post / nom membre dernier post /  nombre de vues / nb de reponses/ ferme / epingle / deplace / id forum)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_topics`;
@@ -548,6 +578,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_topics` (
 
 --
 -- Structure de la table `zrd_frm_users`
+-- membres du forum (doublon avec mbr)
 --
 
 DROP TABLE IF EXISTS `zrd_frm_users`;
@@ -584,6 +615,7 @@ CREATE TABLE IF NOT EXISTS `zrd_frm_users` (
 
 --
 -- Structure de la table `zrd_hero`
+-- hero (id / membre id / nom / quel hero / legion id / xp / vie / bonus active / date activation bonus / date fin bonus)
 --
 
 DROP TABLE IF EXISTS `zrd_hero`;
@@ -605,6 +637,7 @@ CREATE TABLE IF NOT EXISTS `zrd_hero` (
 
 --
 -- Structure de la table `zrd_histo`
+-- evenements (id / date / id mbr1 / id mbr2 / type d'evenement / texte = array serialized)
 --
 
 DROP TABLE IF EXISTS `zrd_histo`;
@@ -623,6 +656,7 @@ CREATE TABLE IF NOT EXISTS `zrd_histo` (
 
 --
 -- Structure de la table `zrd_leg`
+-- legion (id / membre id / map id position de la legion / etat - deplacement retour attente ... / nom / xp / vitesse / destination / tours( pour idle?) / fatigue / stop(?) )
 --
 
 DROP TABLE IF EXISTS `zrd_leg`;
@@ -647,6 +681,7 @@ CREATE TABLE IF NOT EXISTS `zrd_leg` (
 
 --
 -- Structure de la table `zrd_leg_res`
+-- ressources de la legion = butin (legion id / ressource / nombre)
 --
 
 DROP TABLE IF EXISTS `zrd_leg_res`;
@@ -661,6 +696,8 @@ CREATE TABLE IF NOT EXISTS `zrd_leg_res` (
 
 --
 -- Structure de la table `zrd_map`
+-- carte (id case / coord x / y / climat / type -mer terre montagne village libre / random / region)
+-- random est un nombre aléatoire pour utiliser des images différentes pour des cases adjacentes identiques
 --
 
 DROP TABLE IF EXISTS `zrd_map`;
@@ -681,6 +718,10 @@ CREATE TABLE IF NOT EXISTS `zrd_map` (
 
 --
 -- Structure de la table `zrd_mbr`
+-- membre (id / login connexion / pseudo rp / pass / mail / langue / etat - init pause actif / groupe / decalage horaire / race / 
+-- id map du village/ place population / population / points / points armee / nb attaque - N jours / date derniere connection / 
+-- date modification / date inscription/ derniere ip / signature / description / CSS / nom village/ id mbr parrain / 
+-- nb de messages du forum / sexe / votes (?) )
 --
 
 DROP TABLE IF EXISTS `zrd_mbr`;
@@ -727,6 +768,7 @@ CREATE TABLE IF NOT EXISTS `zrd_mbr` (
 
 --
 -- Structure de la table `zrd_mbr_log`
+-- log des connexion (id / membre id / ip / date)
 --
 
 DROP TABLE IF EXISTS `zrd_mbr_log`;
@@ -742,6 +784,7 @@ CREATE TABLE IF NOT EXISTS `zrd_mbr_log` (
 
 --
 -- Structure de la table `zrd_mbr_old`
+-- anciens membres qui ont supprimé leur compte
 --
 
 DROP TABLE IF EXISTS `zrd_mbr_old`;
@@ -758,6 +801,7 @@ CREATE TABLE IF NOT EXISTS `zrd_mbr_old` (
 
 --
 -- Structure de la table `zrd_mch`
+-- marche (id / membre id / resource / nombre / prix / date debut / etat)
 --
 
 DROP TABLE IF EXISTS `zrd_mch`;
@@ -779,6 +823,7 @@ CREATE TABLE IF NOT EXISTS `zrd_mch` (
 
 --
 -- Structure de la table `zrd_mch_cours`
+-- cours du marche aujourd'hui (resource / prix)
 --
 
 DROP TABLE IF EXISTS `zrd_mch_cours`;
@@ -792,6 +837,7 @@ CREATE TABLE IF NOT EXISTS `zrd_mch_cours` (
 
 --
 -- Structure de la table `zrd_mch_sem`
+-- cours du marche semaine (resource/ date / prix)
 --
 
 DROP TABLE IF EXISTS `zrd_mch_sem`;
@@ -806,6 +852,7 @@ CREATE TABLE IF NOT EXISTS `zrd_mch_sem` (
 
 --
 -- Structure de la table `zrd_msg_env`
+-- message envoyes (id / membre id / id destinataire / ? / date message / sujet / message)
 --
 
 DROP TABLE IF EXISTS `zrd_msg_env`;
@@ -825,6 +872,7 @@ CREATE TABLE IF NOT EXISTS `zrd_msg_env` (
 
 --
 -- Structure de la table `zrd_msg_rec`
+-- message recu (id / membre id / id expediteur / date message / sujet / message / lu / signalement modo)
 --
 
 DROP TABLE IF EXISTS `zrd_msg_rec`;
@@ -845,6 +893,7 @@ CREATE TABLE IF NOT EXISTS `zrd_msg_rec` (
 
 --
 -- Structure de la table `zrd_ntes`
+-- notes (id / mbr id / titre / date / texte / importance)
 --
 
 DROP TABLE IF EXISTS `zrd_ntes`;
@@ -863,6 +912,7 @@ CREATE TABLE IF NOT EXISTS `zrd_ntes` (
 
 --
 -- Structure de la table `zrd_nws`
+-- news (useless)
 --
 
 DROP TABLE IF EXISTS `zrd_nws`;
@@ -886,6 +936,7 @@ CREATE TABLE IF NOT EXISTS `zrd_nws` (
 
 --
 -- Structure de la table `zrd_rec`
+-- recompenses accordées aux joueurs (distinction differente des grades)
 --
 
 DROP TABLE IF EXISTS `zrd_rec`;
@@ -900,6 +951,7 @@ CREATE TABLE IF NOT EXISTS `zrd_rec` (
 
 --
 -- Structure de la table `zrd_reg`
+-- statistique: nb de races par regions de la carte (region id / race / nb)
 --
 
 DROP TABLE IF EXISTS `zrd_reg`;
@@ -914,6 +966,7 @@ CREATE TABLE IF NOT EXISTS `zrd_reg` (
 
 --
 -- Structure de la table `zrd_res`
+-- ressources (mbr id / nb resources1 / ... nb resources17)
 --
 
 DROP TABLE IF EXISTS `zrd_res`;
@@ -943,6 +996,7 @@ CREATE TABLE IF NOT EXISTS `zrd_res` (
 
 --
 -- Structure de la table `zrd_res_todo`
+-- nb de resources en preparation pour cron (id / mbr id / ressource / nombre)
 --
 
 DROP TABLE IF EXISTS `zrd_res_todo`;
@@ -959,6 +1013,7 @@ CREATE TABLE IF NOT EXISTS `zrd_res_todo` (
 
 --
 -- Structure de la table `zrd_sdg`
+-- sondage (id / texte / nb reponses / Date)
 --
 
 DROP TABLE IF EXISTS `zrd_sdg`;
@@ -974,6 +1029,7 @@ CREATE TABLE IF NOT EXISTS `zrd_sdg` (
 
 --
 -- Structure de la table `zrd_sdg_rep`
+-- reponses de sondage (id / sondage id / texte / nombre de reponses)
 --
 
 DROP TABLE IF EXISTS `zrd_sdg_rep`;
@@ -989,6 +1045,7 @@ CREATE TABLE IF NOT EXISTS `zrd_sdg_rep` (
 
 --
 -- Structure de la table `zrd_sdg_vte`
+-- votes de sondage (sondage id / membre id / reponse id)
 --
 
 DROP TABLE IF EXISTS `zrd_sdg_vte`;
@@ -1003,6 +1060,7 @@ CREATE TABLE IF NOT EXISTS `zrd_sdg_vte` (
 
 --
 -- Structure de la table `zrd_ses`
+-- liste des users connectes (id / mbr id / ip / derniere page vue / dernier timestamp / random)
 --
 
 DROP TABLE IF EXISTS `zrd_ses`;
@@ -1020,6 +1078,7 @@ CREATE TABLE IF NOT EXISTS `zrd_ses` (
 
 --
 -- Structure de la table `zrd_sign`
+-- signalement des mp (id / msg id / id mbr admin concerne / date debut signalement / date fin / commentaire admin / etat)
 --
 
 DROP TABLE IF EXISTS `zrd_sign`;
@@ -1038,6 +1097,7 @@ CREATE TABLE IF NOT EXISTS `zrd_sign` (
 
 --
 -- Structure de la table `zrd_src`
+-- recherche (mbr id / type recherche)
 --
 
 DROP TABLE IF EXISTS `zrd_src`;
@@ -1051,6 +1111,7 @@ CREATE TABLE IF NOT EXISTS `zrd_src` (
 
 --
 -- Structure de la table `zrd_src_todo`
+-- recherches en todo list (membre id / type recherche / nb de tours/ date debut)
 --
 
 DROP TABLE IF EXISTS `zrd_src_todo`;
@@ -1066,6 +1127,7 @@ CREATE TABLE IF NOT EXISTS `zrd_src_todo` (
 
 --
 -- Structure de la table `zrd_stq`
+-- statistiques (date / nb membres actifs / nb inactifs/ nb connectes)
 --
 
 DROP TABLE IF EXISTS `zrd_stq`;
@@ -1081,6 +1143,7 @@ CREATE TABLE IF NOT EXISTS `zrd_stq` (
 
 --
 -- Structure de la table `zrd_surv`
+-- surveillance des membres (id / mbr id / id mbr admin / date debut / etat / type de surveillance / cause - texte)
 --
 
 DROP TABLE IF EXISTS `zrd_surv`;
@@ -1099,6 +1162,7 @@ CREATE TABLE IF NOT EXISTS `zrd_surv` (
 
 --
 -- Structure de la table `zrd_trn`
+-- terrains (mbr id / nb terrain1 ... nb terrain5)
 --
 
 DROP TABLE IF EXISTS `zrd_trn`;
@@ -1116,6 +1180,7 @@ CREATE TABLE IF NOT EXISTS `zrd_trn` (
 
 --
 -- Structure de la table `zrd_unt`
+-- unités (legion id / type d'unite / rang / nombre)
 --
 
 DROP TABLE IF EXISTS `zrd_unt`;
@@ -1131,6 +1196,7 @@ CREATE TABLE IF NOT EXISTS `zrd_unt` (
 
 --
 -- Structure de la table `zrd_unt_todo`
+-- unites en preparation (id / mbr id / type unite / nombre)
 --
 
 DROP TABLE IF EXISTS `zrd_unt_todo`;
@@ -1147,6 +1213,7 @@ CREATE TABLE IF NOT EXISTS `zrd_unt_todo` (
 
 --
 -- Structure de la table `zrd_vld`
+-- validation (reset ou suppression de compte) (mbr id / cle random / date action / type action)
 --
 
 DROP TABLE IF EXISTS `zrd_vld`;
@@ -1162,6 +1229,7 @@ CREATE TABLE IF NOT EXISTS `zrd_vld` (
 
 --
 -- Structure de la table `zrd_votes`
+-- useless
 --
 
 DROP TABLE IF EXISTS `zrd_votes`;
