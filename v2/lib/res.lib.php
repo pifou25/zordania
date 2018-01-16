@@ -1,199 +1,173 @@
-<?php
-/* Met des ressource en création dans l'ordre du tableau */
-function scl_res($mid, $res) {
-	global $_sql;
-	
-	$mid = protect($mid, "uint");
-	$res = protect($res, "array");
+<?php 
+// Met des ressource en création dans l'ordre du tableau
+function scl_res($mid, $research)
+{
+	global $_sql2;
 
-	if(!$res) return;
+	if($research)
+	{
+		$requests = [];
 
-	$sql = "INSERT INTO ".$_sql->prebdd."res_todo VALUES ";
-	foreach($res as $type => $nb) {
-		$type = protect($type, "uint");
-		$nb = protect($nb, "uint");
-		$sql.= " (NULL, $mid, $type, $nb), ";
+		foreach($research as $type => $number)
+			array_push($requests, [
+				'rtdo_mid'  => protect($mid, 'uint'), 
+				'rtdo_type' => protect($type, 'uint'), 
+				'rtdo_nb'   => protect($number, 'uint')
+			]);
+
+		if (count($research) == 1)
+			$requests = $requests[0];
+
+		return $_sql2::table('res_todo')->insertGetId($requests);
 	}
-	
-	$sql = substr($sql, 0, strlen($sql)-2); /* On vire la virgule en trop */
-	
-	return $_sql->query($sql);
+	return false;
 }
 
-/* Annule la création d'une ressources */
-function cnl_res($mid, $rid, $nb) {
-	global $_sql;
-	
-	$mid = protect($mid, "uint");
-	$rid = protect($rid, "uint");
-	$nb = protect($nb, "uint");
-
-	$sql = "UPDATE ".$_sql->prebdd."res_todo SET rtdo_nb = rtdo_nb - $nb ";
-	$sql .= "WHERE rtdo_mid = $mid AND rtdo_id = $rid";
-	$res = $_sql->query($sql);
-	
-	return $_sql->affected_rows();
+// Annule la création d'une ressource
+function cancel_research($memberId, $researchId, $number)
+{
+	global $_sql2;
+	return $_sql2::table('res_todo')->insertGetId([
+		'rtdo_nb'  => protect($number, 'uint'), 
+		'rtdo_mid' => protect($memberId, 'uint'), 
+		'rtdo_id'  => protect($researchId, 'uint')
+	]);
 }
 
-/* Modifie les ressources d'un membre , mais comparativement (ressources courante + machin) */
-function mod_res($mid, $res, $factor = 1) {
-	$res = protect($res, "array");
-	$factor = protect($factor, "float");
+// Modifie les ressources d'un membre, mais comparativement (ressources courante + machin)
+function mod_res($memberId, $research, $factor = 1)
+{
+	$research = protect($research, 'array');
+	$factor = protect($factor, 'float');
 	
-	foreach($res as $type => $nb) {
-		if($nb && $factor)
-			$res[$type] = $nb * $factor;
+	foreach($research as $type => $number)
+		if($number && $factor)
+			$research[$type] = $number * $factor;
+
+	return edit_res_gen(['mid' => $memberId, 'comp' => true], $research);
+}
+
+// Modifie les ressources qui remplissent certaines conditions
+function edit_res_gen($cond, $research)
+{
+	global $_sql2;
+	
+	if ($research)
+	{
+		$req = $_sql2::table('res');
+		$cond = protect($cond, 'array');
+		$mid = (isset($cond['mid'])) ? $req->where('res_mid', '=', protect($cond['mid'], 'uint')) : false;
+
+		foreach(protect($research, 'array') as $type => $number)
+			if(isset($cond['comp']) && protect($cond['comp'], 'bool'))
+				$req->increment(['res_type' . protect($type, 'uint'), protect($number, 'int')]);
+			else
+				$req->update(['res_type' . protect($type, 'uint'), protect($number, 'int')]);
+
+		return $req->get();
 	}
-	return edit_res_gen(array('mid' => $mid, 'comp' => true), $res);
+	return true;
 }
-
-/* Modifie le ressources qui remplissent certaines conditions */
-function edit_res_gen($cond, $res) {
-	global $_sql;
-	
-	$cond = protect($cond, "array");
-	$res = protect($res, "array");
-	
-	if(!$res) return; /* Rien a faire */
-	
-	$mid = 0;
-	$comp = false;
-
-	if(isset($cond['mid']))
-		$mid = protect($cond['mid'], "uint");
-	if(isset($cond['comp']))
-		$comp = protect($cond['comp'], "bool");
-
-	$sql = "UPDATE ".$_sql->prebdd."res SET ";
-	foreach($res as $type => $nb) {
-		
-		$type = protect($type, "uint");
-		$nb = protect($nb, "int");
-		
-		$nom = "res_type".$type;
-		if($comp)
-			$sql .= "$nom = $nb + $nom, ";
-		else
-			$sql .= "$nom = $nb, ";
-	}
-
-	$sql = substr($sql, 0, strlen($sql)-2); /* On vire la virgule en trop */
-
-	if($mid)
-		$sql.= " WHERE res_mid = $mid ";
-
-	return $_sql->query($sql);
-}
-
 /* Récupère les ressources du joueur */
-function get_res_done($mid, $res =  array(), $race = 0, $exc = array()) {
-	global $_sql;
+function get_res_done($mid, $res =  [], $race = 0, $exc = [])
+{
+	global $_sql2;
+	$req = $_sql2::table('res');
+	$mid = protect($mid, 'uint');
+	$res = protect($res, 'array');
+	$race = protect($race, 'uint');
+	$exc = protect($exc, 'array');
+	$columnsSelector = [];
 
-	$mid = protect($mid, "uint");
-	$res = protect($res, "array");
-	$race = protect($race, "uint");
-	$exc = protect($exc, "array");
-	
-	$sql = "SELECT ";
-	if(!$res) {
+	if(!$res)
+	{
 		if($race)
-			$nb = get_conf_gen($race, "race_cfg", "res_nb");
+			$number = get_conf_gen($race, 'race_cfg', 'res_nb');
 		else
-			$nb = get_conf("race_cfg", "res_nb");
-		for($i = 1; $i <= $nb; ++$i)
-			$sql.= "res_type".$i.", ";
-	} else {
+			$number = get_conf('race_cfg', 'res_nb');
+
+		for($i = 1; $i <= $number; ++$i)
+			array_push($columnsSelector, "res_type" . $i);
+	}
+	else
+	{
 		if($exc)
-			for($i = 1; $i <= 17; $i ++)
+			for($i = 1; $i <= 17; $i++)
 				if(!in_array($i, $exc))
 					$res[] = $i;
-		foreach($res as $type) {
-			$type = protect($type, "uint");
-			$sql.= "res_type".$type.", ";
-		}
+
+		foreach($res as $type)
+			array_push($columnsSelector, "res_type" . protect($type, 'uint'));
 	}
-	
-	$sql = substr($sql, 0, strlen($sql)-2); /* On vire la virgule en trop */
-	
-	$sql.= " FROM ".$_sql->prebdd."res ";
-	$sql.= "WHERE res_mid = $mid ";
-
-	return $_sql->make_array($sql);
+	return $req->select($columnsSelector)->where('res_mid', '=', $mid)->get();
 }
-
 /* Ressources en cours du joueur */
-function get_res_todo($mid, $cond =  array()) {
-	global $_sql;
+function get_res_todo($mid, $cond = [])
+{
+	global $_sql2;
 
-	$res = array(); $rid = 0;
-
-	$mid = protect($mid, "uint");
-	$cond = protect($cond, "array");
+	$mid = protect($mid, 'uint');
+	$cond = protect($cond, 'array');
+	$res = [];
+	$rid = 0;
 
 	if(isset($cond['res']))
-		$res = protect($cond['res'], "array");
+		$res = protect($cond['res'], 'array');
 	if(isset($cond['rid']))
-		$rid = protect($cond['rid'], "uint");
+		$rid = protect($cond['rid'], 'uint');
 
-	$sql = "SELECT rtdo_id, rtdo_type, rtdo_nb ";
-	$sql.= "FROM ".$_sql->prebdd."res_todo ";
-	$sql.= "WHERE rtdo_mid = $mid  AND rtdo_nb > 0 ";
+	$req = $_sql2::table('res_todo')
+		->select(['rtdo_id', 'rtdo_type', 'rtdo_nb'])
+		->where('rtdo_mid', '=', $mid)
+		->where('rtdo_nb', '>', 0);
 	
-	if($rid) {
-		$sql .= "AND rtdo_id = $rid ";
-	}
+	if($rid)
+		$req->where('rtdo_id', '=', $rid);
 	
-	if($res) {
-		$sql.= "AND rtdo_type IN (";
-		foreach($res as $type) {
-			$type = protect($type, "uint");
-			$sql.= "$type,";
-		}
-			
-		$sql = substr($sql, 0, strlen($sql)-1); /* On vire le 'OR ' en trop */
-		$sql.= ")";
+	if($res)
+	{
+		$list = [];
+		foreach($res as $type)
+			array_push($list, protect($type, 'uint'));
+
+		$req->where('rtdo_type', 'IN', $list);
 	}
-	$sql.= " ORDER BY rtdo_id ASC";
-	return $_sql->make_array($sql);
+	$req->orderBy('rtdo_id', 'asc');
+	return $req->get();
 }
-
 /* Verifie qu'on peut faire telle ou telle ressource */
-function can_res($mid, $type, $nb, & $cache = array()) {
-	$mid = protect($mid, "uint");
-	$type = protect($type, "uint");
-	$cache = protect($cache, "array");
+function can_res($mid, $type, $nb, &$cache = []) {
+	$mid = protect($mid, 'uint');
+	$type = protect($type, 'uint');
+	$cache = protect($cache, 'array');
+	$bad_src = $bad_res = $bad_btc = [];
 
-	$bad_src = array();
-	$bad_res = array();
-	$bad_btc = array();
+	if(!get_conf('res', $type))
+		return ['do_not_exist' => true];
 
-	if(!get_conf("res", $type))
-		return array("do_not_exist" => true);
-	
 	/* Bâtiments */
-	$need_btc = get_conf("res", $type, "need_btc");
-	$cond_btc = array($need_btc);
+	$need_btc = get_conf('res', $type, 'need_btc');
+	$cond_btc = [$need_btc];
 
 	if(!isset($cache['btc'])) {
 		$have_btc = get_nb_btc_done($mid, $cond_btc);
-		$have_btc = index_array($have_btc, "btc_type");
+		$have_btc = index_array($have_btc, 'btc_type');
 	} else
 		$have_btc = $cache['btc'];
 
 	/* Recherches */
 	$cond_src = array($type);
-
-	$need_src = get_conf("res", $type, "need_src");
+	$need_src = get_conf('res', $type, 'need_src');
 	$cond_src = $need_src;
 
 	if(!isset($cache['src'])) {
 		$have_src = get_src_done($mid, $cond_src);
-		$have_src = index_array($have_src, "src_type");
+		$have_src = index_array($have_src, 'src_type');
 	} else
 		$have_src = $cache['src'];
 	
 	/* Ressources */
-	$prix_res = get_conf("res", $type, "prix_res");
+	$prix_res = get_conf('res', $type, 'prix_res');
 	$cond_res = array_keys($prix_res);
 
 	if(!isset($cache['res'])) {
@@ -228,25 +202,22 @@ function can_res($mid, $type, $nb, & $cache = array()) {
 /* Permet d'avoir un tableau plus utilisable lors d'un get_res_done
  * Le array qu'on lui file doit être directement celui qui sort de get_res_done ou équivalent
  */
-function clean_array_res($array) {
-	$array = protect($array, "array");
+function clean_array_res($array)
+{
+	$array = protect($array, 'array');
+	$return = [];
 
-	if(!$array) return array();
-
-	$return = array();
-	foreach($array as $line => $value) {
-		foreach($value as $key => $val) {
-			$key = str_replace("res_type","",$key);
-			$return[$line][$key] = $val;
-		}
-	}
+	if($array)
+		foreach($array as $line => $values)
+			foreach($values as $key => $value)
+				$return[$line][str_replace('res_type', '', $key)] = $value;
 
 	return $return;
 }
 /* Récupère les ressources du joueur + mise en forme */
-function get_res_done2($mid, $res =  array(), $race = 0, $exc = array()) {
-	$result = get_res_done($mid,$res, $race, $exc);
-	return clean_array_res($result);
+function get_res_done2($mid, $res = [], $race = 0, $exc = [])
+{
+	return clean_array_res(get_res_done($mid, $res, $race, $exc));
 }
 
 /* Quand on crée un membre */

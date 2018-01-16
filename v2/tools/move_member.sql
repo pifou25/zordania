@@ -1,4 +1,4 @@
-DROP PROCEDURE IF EXISTS `move_member`//
+DROP PROCEDURE `move_member`//
 CREATE PROCEDURE `move_member`( in member int, in move_to int)
 BEGIN
   -- position de départ

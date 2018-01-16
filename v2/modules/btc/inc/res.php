@@ -1,6 +1,5 @@
 <?php
-if(!defined("INDEX_BTC")){ exit; }
-
+if(!defined("INDEX_BTC")) exit;
 
 require_once("lib/res.lib.php");
 require_once("lib/res.lib.php");
@@ -9,25 +8,25 @@ require_once("lib/btc.lib.php");
 
 if($_sub == "cancel_res")
 {
-	$rid = request("rid", "uint", "get");
-	$nb = request("nb", "uint", "post");
+	$researchId = request('rid', 'uint', 'get');
+	$number = request('nb', 'uint', 'post');
+
+	$_tpl->set('btc_act', 'cancel_res');
+	$_tpl->set('btc_rid', $researchId);
 	
-	$_tpl->set("btc_act","cancel_res");
-	$_tpl->set("btc_rid", $rid);
-	
-	if(!$rid)
-		$_tpl->set("btc_no_rid",true);
-	elseif(!$nb)
-		$_tpl->set("btc_no_nb",true);
+	if(!$researchId)
+		$_tpl->set('btc_no_rid', true);
+	elseif(!$number)
+		$_tpl->set('btc_no_nb', true);
 	else {
-		$infos = get_res_todo($_user['mid'], array('rid' => $rid));
+		$infos = get_res_todo($_user['mid'], ['rid' => $researchId]);
 		
-		if($infos && $infos[0]['rtdo_nb'] >= $nb) {
+		if($infos && $infos[0]['rtdo_nb'] >= $number) {
 			$_tpl->set("btc_ok",true);
 			
 			$type = $infos[0]['rtdo_type'];
-			cnl_res($_user['mid'], $rid, $nb);
-			mod_res($_user['mid'], get_conf("res", $type, "prix_res"), $nb * 0.5);
+			cancel_research($_user['mid'], $researchId, $number);
+			mod_res($_user['mid'], get_conf("res", $type, "prix_res"), $number * 0.5);
 		} else
 			$_tpl->set("btc_ok",false);
 	}
@@ -126,7 +125,7 @@ elseif($_sub == "add_res")
 			$array = can_res($_user['mid'], $type, $nb);
 
 			if(isset($array['do_not_exist']))
-				$_tpl->set("btc_no_type",true);
+				$_tpl->set("btc_no_type", true);
 			else {
 				$ok = !($array['need_src'] || $array['need_btc'] || $array['prix_res']);
 				$_tpl->set("res_id", $type);
@@ -135,7 +134,7 @@ elseif($_sub == "add_res")
 				$_tpl->set("btc_ok", $ok);
 				if($ok) {
 					mod_res($_user['mid'], get_conf("res", $type, "prix_res"), -1 * $nb);
-					scl_res($_user['mid'], array($type =>$nb));
+					scl_res($_user['mid'], [$type => $nb]);
 				}
 			}
 	}
