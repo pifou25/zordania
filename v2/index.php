@@ -28,6 +28,7 @@ $t1 = mtime();
 mark('start');
 
 /* Includes généraux */
+require_once 'vendor/autoload.php';
 require_once("conf/conf.inc.php");
 ini_set("include_path", SITE_DIR);
 
@@ -66,6 +67,11 @@ $_tpl->set('no_cookies',!$_COOKIE);
 $_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 $_sql->set_debug(SITE_DEBUG);
+
+// New database Connection (Eloquent)
+$_sql2 = new \Illuminate\Database\Capsule\Manager();
+$_sql2->addConnection($settings['database']);
+$_sql2->setAsGlobal();
 
 mark('mysql');
 
