@@ -22,7 +22,6 @@ function scl_res($mid, $research)
 	}
 	return false;
 }
-
 // Annule la création d'une ressource
 function cancel_research($memberId, $researchId, $number)
 {
@@ -33,7 +32,6 @@ function cancel_research($memberId, $researchId, $number)
 		'rtdo_id'  => protect($researchId, 'uint')
 	]);
 }
-
 // Modifie les ressources d'un membre, mais comparativement (ressources courante + machin)
 function mod_res($memberId, $research, $factor = 1)
 {
@@ -46,7 +44,6 @@ function mod_res($memberId, $research, $factor = 1)
 
 	return edit_res_gen(['mid' => $memberId, 'comp' => true], $research);
 }
-
 // Modifie les ressources qui remplissent certaines conditions
 function edit_res_gen($cond, $research)
 {
@@ -99,7 +96,7 @@ function get_res_done($mid, $res =  [], $race = 0, $exc = [])
 		foreach($res as $type)
 			array_push($columnsSelector, "res_type" . protect($type, 'uint'));
 	}
-	return $req->select($columnsSelector)->where('res_mid', '=', $mid)->get();
+	return json_decode(json_encode($req->select($columnsSelector)->where('res_mid', '=', $mid)->get()), true);
 }
 /* Ressources en cours du joueur */
 function get_res_todo($mid, $cond = [])
@@ -133,10 +130,11 @@ function get_res_todo($mid, $cond = [])
 		$req->where('rtdo_type', 'IN', $list);
 	}
 	$req->orderBy('rtdo_id', 'asc');
-	return $req->get();
+	return json_decode(json_encode($req->get()), true);
 }
 /* Verifie qu'on peut faire telle ou telle ressource */
-function can_res($mid, $type, $nb, &$cache = []) {
+function can_res($mid, $type, $nb, &$cache = [])
+{
 	$mid = protect($mid, 'uint');
 	$type = protect($type, 'uint');
 	$cache = protect($cache, 'array');
@@ -156,7 +154,7 @@ function can_res($mid, $type, $nb, &$cache = []) {
 		$have_btc = $cache['btc'];
 
 	/* Recherches */
-	$cond_src = array($type);
+	$cond_src = [$type];
 	$need_src = get_conf('res', $type, 'need_src');
 	$cond_src = $need_src;
 
@@ -177,8 +175,6 @@ function can_res($mid, $type, $nb, &$cache = []) {
 	} else
 		$have_res = $cache['res'];
 
-	
-
 	/* Les recherches qu'il faut avoir */
 	foreach($need_src as $src_type) {
 		if(!isset($have_src[$src_type]))
@@ -196,9 +192,8 @@ function can_res($mid, $type, $nb, &$cache = []) {
 	if(!isset($have_btc[$need_btc]))
 		$bad_btc = $cond_btc;
 
-	return array('need_src' => $bad_src, 'need_btc' => $bad_btc, 'prix_res' => $bad_res);
+	return ['need_src' => $bad_src, 'need_btc' => $bad_btc, 'prix_res' => $bad_res];
 }
-
 /* Permet d'avoir un tableau plus utilisable lors d'un get_res_done
  * Le array qu'on lui file doit être directement celui qui sort de get_res_done ou équivalent
  */
@@ -219,31 +214,20 @@ function get_res_done2($mid, $res = [], $race = 0, $exc = [])
 {
 	return clean_array_res(get_res_done($mid, $res, $race, $exc));
 }
-
 /* Quand on crée un membre */
-function ini_res($mid) {
-	global $_sql;
-	
-	$mid = protect($mid, "uint");
-
-	/* On met la ligne de ressources */	
-	$sql = "INSERT INTO ".$_sql->prebdd."res (res_mid) VALUES ($mid)";
-	$_sql->query($sql);
-
-	return mod_res($mid, get_conf("race_cfg", "debut", "res"));
+function ini_res($mid)
+{
+	global $_sql2;
+	$mid = protect($mid, 'uint');
+	$_sql2::table('res')->insertGetId(['res_mid' => $mid]);
+	return mod_res($mid, get_conf('race_cfg', 'debut', 'res'));
 }
-
 /* Quand on le vire */
-function cls_res($mid) {
-	global $_sql;
-	
-	$sql = "DELETE FROM ".$_sql->prebdd."res WHERE res_mid = $mid";
-	$res = $_sql->query($sql);
-	$nb = $_sql->affected_rows();
-	
-	$sql = "DELETE FROM ".$_sql->prebdd."res_todo WHERE rtdo_mid = $mid";
-	$res = $_sql->query($sql);
-	
-	return $_sql->affected_rows();
+function cls_res($mid)
+{
+	global $_sql2;
+
+	// Additionne les deux requêtes pour avoir le nombre total de lignes supprimés
+	return $_sql2::table('res')->where('res_mid', '=', $mid)->delete() +
+		   $_sql2::table('res_todo')->where('rtdo_mid', '=', $mid)->delete();
 }
-?>
