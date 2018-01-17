@@ -1,4 +1,5 @@
 # fichiers temporaires
+vendor/
 v2/tmp/*.compiled.php
 v2/backup/*
 
@@ -12,11 +13,8 @@ v2/conf/secret_parameters.php
 *.csv
 
 v2/scripts/cron.bat
-
 v2/scripts/cron.sh
-
 v2/cache/admin.cache.php
-
 v2/cache/global.cache.php
 
 Thumbs.db
