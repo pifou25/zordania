@@ -99,8 +99,9 @@ function get_res_done($mid, $res =  [], $race = 0, $exc = [])
 		foreach($res as $type)
 			array_push($columnsSelector, "res_type" . protect($type, 'uint'));
 	}
-	return $req->select($columnsSelector)->where('res_mid', '=', $mid)->get();
+	return json_decode(json_encode($req->select($columnsSelector)->where('res_mid', '=', $mid)->get()), true);
 }
+get_res_done('7222');
 /* Ressources en cours du joueur */
 function get_res_todo($mid, $cond = [])
 {
@@ -133,7 +134,7 @@ function get_res_todo($mid, $cond = [])
 		$req->where('rtdo_type', 'IN', $list);
 	}
 	$req->orderBy('rtdo_id', 'asc');
-	return $req->get();
+	return json_decode(json_encode($req->get()), true);
 }
 /* Verifie qu'on peut faire telle ou telle ressource */
 function can_res($mid, $type, $nb, &$cache = []) {
