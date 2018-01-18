@@ -57,9 +57,9 @@ function edit_res_gen($cond, $research)
 
 		foreach(protect($research, 'array') as $type => $number)
 			if(isset($cond['comp']) && protect($cond['comp'], 'bool'))
-				$req->increment(['res_type' . protect($type, 'uint'), protect($number, 'int')]);
+				$req->increment('res_type' . protect($type, 'uint'), protect($number, 'int'));
 			else
-				$req->update(['res_type' . protect($type, 'uint'), protect($number, 'int')]);
+				$req->update('res_type' . protect($type, 'uint'), protect($number, 'int'));
 
 		return $req->get();
 	}
