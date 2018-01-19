@@ -58,9 +58,6 @@
 			</foreach>
 			les <math oper="count({msg_id})" /> messages sélectionnés
 		</if>
-		<elseif cond='{msg_id}!=0'> le message sélectionné
-		<input type="hidden" name="msg_id" value="{msg_id}" />
-		</elseif>
 		<else> tous les messages </else>
 		dans la boîte
 		<if cond='{msg_act} == "del_env"'> d'envoi </if><else> de réception </else> ?
