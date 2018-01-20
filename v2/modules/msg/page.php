@@ -62,7 +62,7 @@ case "del_env":
 	$conf = request("msg_conf", "bool", "post");
 	$msg_id = request("msg_id", "array", "post");
 	if (empty($msg_id))
-		$msg_id = request("msg_id", "uint", "get");
+		$msg_id = array(request("msg_id", "uint", "get") => 'ok');
 	
 	$_tpl->set("msg_id",$msg_id);
 	if(!$conf)

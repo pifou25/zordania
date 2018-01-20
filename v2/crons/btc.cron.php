@@ -61,7 +61,7 @@ function mbr_btc(&$_user) {
 			if(!$trav)
 				continue;
 			$old = $value["btc_vie"];
-			$value["btc_vie"] += ($vie / $tours) * $trav;
+			$value["btc_vie"] += ceil(($vie / $tours) * $trav);
 			if($value["btc_vie"] >= $vie) {
 				if(isset($_user["btc"][$type]))
 					$_user["btc"][$type]++;

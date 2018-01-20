@@ -23,20 +23,8 @@ if($_act == 'btc')
 	$_tpl->set("btc_trav", $mbr->nb_unt_done(1));
 	$_tpl->set("btc_act",false);
 
-	// tous les batiments
-	$cache['btc_done'] = get_nb_btc($_user['mid']); // get_nb_btc_done($_user['mid']);
-	// seulement les batiments en construction
-    /* le cache est $mbr
-	$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
-	$cache['src'] = get_src_done($_user['mid']);
-	$cache['src'] = index_array($cache['src'], "src_type");
-	$cache['res'] = clean_array_res(get_res_done($_user['mid']));
-	$cache['res'] = $cache['res'][0];
-	$cache['trn'] = clean_array_trn(get_trn($_user['mid']));
-	$cache['trn'] = $cache['trn'][0];
-	$cache['unt'] = get_unt_done($_user['mid']);
-	$cache['unt'] = index_array($cache['unt'], "unt_type");
-    */
+	// tous les batiments constuits - sauf les BTC_ETAT_TODO
+	$cache['btc_done'] = get_nb_btc_done($_user['mid']); // get_nb_btc_done($_user['mid']);
     
 	if($_sub == 'btc') {// construire un nouveau bâtiment $type
 		$_tpl->set("btc_act","btc");
