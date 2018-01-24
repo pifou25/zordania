@@ -100,9 +100,11 @@
 		<h3>Ressources</h3>
 		<if cond="isset({lres_ok})"><div class="ok">Ressources modifiées !</div></if>
 
-		<p>Nourriture : <if cond="isset({res_array[{GAME_RES_BOUF}]})">{res_array[{GAME_RES_BOUF}]}</if><else>0</else> <zimgres type="{GAME_RES_BOUF}" race="{_user[race]}" /><br/>
-		Consommation: {unt_stats[unt_nb]} <zimgres type="{GAME_RES_BOUF}" race="{_user[race]}" /><br/>
-		Consommation Journalière: <math oper="{unt_stats[unt_nb]} * 24" /> <zimgres type="{GAME_RES_BOUF}" race="{_user[race]}" /></p>
+		<p>
+		Stock au village:  {res_nb} <img src="img/{_user[race]}/res/{res_type}.png" alt="{res[{_user[race]}][alt][{res_type}]}" title="{res[{_user[race]}][alt][{res_type}]}" /><br/>
+		Nourriture embarquée: <if cond="isset({res_array[{GAME_RES_BOUF}]})">{res_array[{GAME_RES_BOUF}]}</if><else>0</else> <zimgres type="{GAME_RES_BOUF}" race="{_user[race]}" /><br/>
+		Consommation par tour: {unt_stats[unt_nb]} <zimgres type="{GAME_RES_BOUF}" race="{_user[race]}" /><br/>
+		Consommation Journalière: <math oper="{unt_stats[unt_nb]} * (60/ZORD_SPEED) * 24" /> <zimgres type="{GAME_RES_BOUF}" race="{_user[race]}" /></p>
 
 		<if cond="{leg[leg_cid]} == {_user[mapcid]} && {leg[leg_etat]} != {LEG_ETAT_VLG}">
 			<form method="post" action="leg-view.html?sub=res&amp;lid={leg[leg_id]}">
