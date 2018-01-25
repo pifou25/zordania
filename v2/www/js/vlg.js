@@ -402,30 +402,33 @@ var VlgV2 = {
 			break;
 			
 		case 7:
-			this.VlgCoords[1] = new Array(340,205);
-			this.VlgCoords[2] = new Array(210,17);
-			this.VlgCoords[3] = new Array(341,297);
-			this.VlgCoords[4] = new Array(88,100);
-			this.VlgCoords[5] = new Array(409,316);
-			this.VlgCoords[6] = new Array(20,218);
-			this.VlgCoords[7] = new Array(134,10);
-			this.VlgCoords[8] = new Array(82,218);
-			this.VlgCoords[9] = new Array(10,138);
-			this.VlgCoords[10] = new Array(155,150);
-			this.VlgCoords[11] = new Array(5,95);
-			this.VlgCoords[12] = new Array(17,60);
-			this.VlgCoords[13] = new Array(242,98);
-			this.VlgCoords[14] = new Array(30,175);
-			this.VlgCoords[15] = new Array(290,93);
-			this.VlgCoords[16] = new Array(447,262);
-			this.VlgCoords[17] = new Array(155,185);
-			this.VlgCoords[18] = new Array(90,170);
-			this.VlgCoords[19] = new Array(70,54);
-			this.VlgCoords[20] = new Array(356,32);
-			this.VlgCoords[21] = new Array(3,275);
+			this.VlgCoords[1] = new Array(479,19);
+			this.VlgCoords[2] = new Array(239, 9);
+			this.VlgCoords[3] = new Array(701, 268);
+			this.VlgCoords[4] = new Array(0, 470);
+			this.VlgCoords[5] = new Array(817, 264);
+			this.VlgCoords[6] = new Array(518, 329);
+			this.VlgCoords[7] = new Array(205, 139);
+			this.VlgCoords[8] = new Array(202, 450);
+			this.VlgCoords[9] = new Array(12, 262);
+			this.VlgCoords[10] = new Array(363, 298);
+			this.VlgCoords[11] = new Array(72, 0);
+			this.VlgCoords[12] = new Array(613, 363);
+			this.VlgCoords[13] = new Array(352, 180);
+			this.VlgCoords[14] = new Array(207, 256);
+			this.VlgCoords[15] = new Array(489, 551);
+			this.VlgCoords[16] = new Array(852, 17);
+			this.VlgCoords[17] = new Array(490, 408);
+			this.VlgCoords[18] = new Array(0, 85);
+			this.VlgCoords[19] = new Array(207, 381);
+			this.VlgCoords[20] = new Array(2, 363);
+			this.VlgCoords[21] = new Array(660, 553);
+			this.VlgCoords[22] = new Array(479, 19);
 			// recherches affichent une img?
-			this.SrcCoords[15] = new Array(75,0);
-			this.SrcCoords[16] = new Array(0,22);
+			// this.SrcCoords[15] = new Array(75,0);
+			// this.SrcCoords[16] = new Array(0,22);
+			this.VlgZindex[6] = 10;
+			this.VlgZindex[10] = 10;
 			break;
 		}
 	}

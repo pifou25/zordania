@@ -7,7 +7,7 @@ if(!can_d(DROIT_PLAY)){
 require_once("lib/btc.lib.php");
 require_once("lib/src.lib.php");
 
-if($_user['race'] == 2 || $_user['race'] == 3){
+if($_user['race'] == 2 || $_user['race'] == 3 || $_user['race'] == 5){
 	// la forteresse est une img de fond specifique
 	$forteresse = get_conf('race_cfg', 'btc_nb');
 }else{
@@ -15,6 +15,7 @@ if($_user['race'] == 2 || $_user['race'] == 3){
 	$forteresse = false;
 }
 $btc_array = get_nb_btc_done($_user['mid']);
+// img de fond du village
 $imgvlg = 'vlg.jpg';
 if($forteresse !== false){
 	foreach($btc_array as $value){
