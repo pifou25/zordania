@@ -233,7 +233,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 					$_tpl->set('close', close($tid, ($sub == 'close'? 1:0)));
 			}
 		}
-/* pas de suppression de msg
+
 		//Suppression de message : confirmation
 		else if ($sub == 'conf')
 		{
@@ -256,7 +256,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 				//sinon on réalimente les infos
 			}
 		}
-*/
+
 	}
 
 	//et enfin l'affichage de message
