@@ -39,6 +39,7 @@ define("U6_GARDE1", 9);
 define("U6_GARDE2", 10);
 define("U6_COUPLE", 11);
 define("U6_GARDE3", 12);
+define("U6_CHEVALIER_XP", 13);
 
 define("S6_ARME_1", 1);
 
@@ -404,6 +405,19 @@ $this->unt[U6_LUTIN_MALIN] = array(
 );
 //</unt-7>
 
+
+$this->unt[U6_CHEVALIER_XP]=array(
+	"def"	=>	25,
+	"vie"	=>	19,
+	"atq_unt"	=>	19,
+	"vit"	=>	13,
+	"group"	=>	13,
+	"role"	=>	TYPE_UNT_CAVALERIE,
+	"rang" => 5,
+	"prix_res"	=>	array(R6_EPEE_LON => 1, R6_COTTE_MAILLE => 1, R6_CHEVAUX => 1, R6_B_ACIER => 1, R6_ACIER => 2),
+	'need_btc' => array(B6_DONJON, ),
+	'in_btc' => array(B6_DONJON, ),
+);
 
 
 //</unt>
