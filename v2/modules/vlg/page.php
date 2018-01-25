@@ -7,7 +7,7 @@ if(!can_d(DROIT_PLAY)){
 require_once("lib/btc.lib.php");
 require_once("lib/src.lib.php");
 
-if($_user['race'] == 2){
+if($_user['race'] == 2 || $_user['race'] == 3){
 	// la forteresse est une img de fond specifique
 	$forteresse = get_conf('race_cfg', 'btc_nb');
 }else{
