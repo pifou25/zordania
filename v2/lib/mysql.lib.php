@@ -1,10 +1,7 @@
 <?php
 function zrd_dump($mid, $full = false, $prefix = 'zrd_', $mode = 2) //dumpMySQL($serveur, $login, $password, $base, $mode)
 {
-/*
-    $connexion = mysql_connect($serveur, $login, $password);
-    mysql_select_db($base, $connexion);
-*/
+	global $_sql;
 	$mid = protect($mid, 'uint');
 
     $entete = "-- ----------------------\n";
@@ -66,12 +63,12 @@ function zrd_dump($mid, $full = false, $prefix = 'zrd_', $mode = 2) //dumpMySQL(
 			$prefix.'unt_todo' => 'utdo_mid',
 			$prefix.'vld' => 'vld_mid');
 
-	// tables secondaires
+	// tables secondaires : un autre id que mid fait la jointure
 	$ListeTablesSec = array(
 		$prefix.'al' => array('al_aid' => array( $prefix.'al_mbr' => 'ambr_aid')),
 		$prefix.'al_res' => array('ares_aid' => array( $prefix.'al_mbr' => 'ambr_aid')),
-		//$prefix.'al_res_log' => array('arlog_aid' => array( $prefix.'al_mbr' => 'ambr_aid')),
-		//$prefix.'al_shoot' => array('al_aid' => array( $prefix.'al_mbr' => 'ambr_aid')),
+		$prefix.'al_res_log' => array('arlog_aid' => array( $prefix.'al_mbr' => 'ambr_aid')),
+		$prefix.'al_shoot' => array('al_aid' => array( $prefix.'al_mbr' => 'ambr_aid')),
 		$prefix.'diplo' => array('al_aid' => array( $prefix.'al_mbr' => 'ambr_aid')),
 		$prefix.'leg_res' => array('lres_lid' => array( $prefix.'leg' => 'leg_id')),
 		$prefix.'unt' => array('unt_lid' => array( $prefix.'leg' => 'leg_id')));
@@ -84,17 +81,17 @@ function zrd_dump($mid, $full = false, $prefix = 'zrd_', $mode = 2) //dumpMySQL(
             $creations .= "-- -----------------------------\n";
             $creations .= "-- creation de la table ".$table."\n";
             $creations .= "-- -----------------------------\n";
-            $listeCreationsTables = mysql_query("show create table ".$table);
-            while($creationTable = mysql_fetch_array($listeCreationsTables))
-            {
-              $creations .= $creationTable[1].";\n\n";
-            }
+			$data = $_sql->make_array("show create table ".$table);
+			foreach($data as $value){
+				$creations .= $value['Create Table'] . ";\n\n";
+			}
         }
         // si l'utilisateur a demandé les données ou la totale
         if($mode > 1)
         {
 			$sql = "SELECT * FROM $table WHERE $cle = $mid";
 			$insertions .= CreeInsertSQL($sql, $table);
+			//$insertions .= CreeInsertSQL($sql, $table, array($cle => '##mid##'));
 			$deletions .= "DELETE * FROM $table WHERE $cle = $mid;\n";
         }
     }
@@ -107,11 +104,10 @@ function zrd_dump($mid, $full = false, $prefix = 'zrd_', $mode = 2) //dumpMySQL(
             $creations .= "-- -----------------------------\n";
             $creations .= "-- creation de la table ".$table."\n";
             $creations .= "-- -----------------------------\n";
-            $listeCreationsTables = mysql_query("show create table ".$table);
-            while($creationTable = mysql_fetch_array($listeCreationsTables))
-            {
-              $creations .= $creationTable[1].";\n\n";
-            }
+			$data = $_sql->make_array("show create table ".$table);
+			foreach($data as $value){
+				$creations .= $value['Create Table'] . ";\n\n";
+			}
         }
         // si l'utilisateur a demandé les données ou la totale
         if($mode > 1)
@@ -138,7 +134,6 @@ function zrd_dump($mid, $full = false, $prefix = 'zrd_', $mode = 2) //dumpMySQL(
 	}
  
 /* 
-    mysql_close($connexion);
     $fichierDump = fopen("dump.sql", "wb");
     fwrite($fichierDump, $entete);
     fwrite($fichierDump, $creations);
@@ -149,29 +144,54 @@ function zrd_dump($mid, $full = false, $prefix = 'zrd_', $mode = 2) //dumpMySQL(
 	return "$entete \n $creations \n $deletions \n $insertions";
 }
 
-function CreeInsertSQL($sql, $table)
+function CreeInsertSQL($sql, $table, $field = null)
 {
-    $donnees = mysql_query($sql);
+	global $_sql;
+	
+    $result = $_sql->query($sql);
+	if ($result === false) return "-- $table en erreur\n\n";
+	if($result->num_rows == 0) return "-- $table vide\n\n";
+	
     $insertions  = "-- -----------------------------\n";
     $insertions .= "-- insertions dans la table ".$table."\n";
     $insertions .= "-- -----------------------------\n";
-	if ($donnees === false) return $insertions."\n";
-    while($nuplet = mysql_fetch_array($donnees)) // select * from $table
+	
+	$fields = $result->fetch_fields();
+    $insert = "INSERT INTO ".$table." VALUES";
+	$datas = array();
+	
+    while($nuplet = $result->fetch_array()) // select * from $table
     {
-        $insertions .= "INSERT INTO ".$table." VALUES(";
-        for($i=0; $i < mysql_num_fields($donnees); $i++)
+		$values = array();
+		foreach($fields as $i => $finfo)
         {
-          if($i != 0)
-             $insertions .=  ", ";
-          if(mysql_field_type($donnees, $i) == "string" || mysql_field_type($donnees, $i) == "blob")
-             $insertions .=  "'";
-          $insertions .= addslashes($nuplet[$i]);
-          if(mysql_field_type($donnees, $i) == "string" || mysql_field_type($donnees, $i) == "blob")
-            $insertions .=  "'";
+
+		  // char ou assimilé ou date ( 7 )
+		  if($finfo->type == 253 || $finfo->type == 254 || $finfo->type == 252 || $finfo->type == 7)
+			  $sep = "'";
+		  else
+			  $sep = "";
+
+		  $data = addslashes($nuplet[$i]);
+		  if(is_array($field)){
+			  foreach($field as $key => $value){
+				  if($key == $finfo->name){
+					  $data = $value;
+					  break;
+				  }
+			  }
+		  }
+		  
+          $values[] = $sep . $data . $sep; 
         }
-        $insertions .=  ");\n";
+        $datas[] =  "(" . join( ", ", $values) . ")";
+		
+		if(count($datas) > 10) {
+			$insertions .= $insert . "\n" . join(",\n", $datas) . ";\n\n";
+			$datas = array();
+		}
     }
-    $insertions .= "\n";
+	$insertions .= $insert . "\n" . join(",\n", $datas) . ";\n\n";
 	return $insertions;
 }
 

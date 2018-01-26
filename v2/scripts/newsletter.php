@@ -1,38 +1,45 @@
 <?php
+/* args facultatifs */
+$mid = (isset($argv[1]) && is_numeric($argv[1]) ? (int)$argv[1] : 0);
+
 /* Config */
-$id = 0;
-$src = array();
+require_once("../conf/conf.inc.php");
+require_once(SITE_DIR.'lib/divers.lib.php');
 
-/* Script en lui même */
-require_once("conf/conf.inc.php");
-require_once(SITE_DIR."lib/mysql.class.php");
-require_once(SITE_DIR."lib/templates.class.php");
-require_once(SITE_DIR."lib/member.class.php");
-require_once(SITE_DIR."lib/paser.class.php");
-
-$_sql=new mysql(MYSQL_HOST, MYSQL_LOGIN, MYSQL_PASS, MYSQL_BASE);
+$_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 
-$mbr = new member($_sql);
+set_time_limit(0);
+//$sql = "SELECT mbr_pseudo,mbr_mail,mbr_mid FROM zrd_mbr" . (!empty($mid) ? " WHERE mbr_mid = $mid" : ' WHERE mbr_etat = 3');
+$sql = "SELECT mbr_pseudo,mbr_mail, mbr_mid FROM zrd_mbr" . (!empty($mid) ? " LIMIT $mid, 1000" : '');
+$mbr_array = $_sql->make_array($sql);
 
-$mbr_array = $mbr->get_infos($src);
+$_tpl = new Template();
+$_tpl->set_dir(SITE_DIR .'templates');
+$_tpl->set_tmp_dir(SITE_DIR .'tmp');
+$_tpl->set_lang('fr_FR');
+$_tpl->set("cfg_url",SITE_URL);
 
-$tpl = new Templates();
-$tpl->set_dir();
-
+$i=0;
+$ok=0;
 foreach($mbr_array as $values) {
-	$mail = $values['mbr_mail'];
-	$pseudo = $values['mbr_pseudo'];
-	$ldate = $values['mbr_ldate'];	
+	$_tpl->set("mbr_pseudo", $values['mbr_pseudo']);
+	$_tpl->set("mbr_mail", $values['mbr_mail']);
 
-	$_tpl->set("mbr_pseudo", $pseudo);
-	$_tpl->set("mbr_mail", $mail);
-	$_tpl->set("mbr_ldate", $ldate);
+	$subject = 'Zordania : une nouvelle aventure !';
+	$message = $_tpl->get("modules/inscr/mails/text_opengame.tpl");
+	$to = $values['mbr_mail'];
 	
-	$headers = "";
+	//echo $message;
+	if (mailto('pifou@zordania.com', $to, $subject, $message, true))
+		$ok++;
+	else
+		echo "error on " . $values['mbr_mid'] . " - " . $values['mbr_pseudo'] . "\r\n";
 
-	$objet = $tpl->get("objet_".$id.".tpl");
-	$texte = $tpl->get("texte_".$id.".tpl");
-	mail();
+	// pause 10 secondes
+	sleep(10);
+	$i++;
+	if(!($i%20)) echo date('c') . " = $i try and $ok sent (" . $values['mbr_mid'] . ")\r\n";
 }
+echo "job done: $i members try and $ok sent\r\n";
 ?>

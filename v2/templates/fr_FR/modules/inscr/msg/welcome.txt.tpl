@@ -4,14 +4,14 @@ Vous trouverez dans ce message plusieurs informations importantes pour bien comm
 
 <strong>1- Concernant le jeu</strong>
 * Lisez le <a href="{SITE_URL}manual.html">Manuel</a>. Dans un premier temps, vous pouvez laisser de côté la partie &quot;Art de la Guerre&quot;.
-* Le début du jeu peut sembler long, mais votre patience sera vite récompensée. Profitez-en pour vous imprégner du manuel, visiter les <a href="{SITE_URL}forums/index.php">Forums</a>, faire connaissance avec vos voisins de jeu, apprivoiser l'interface du site.
-* N'oubliez pas que le Role-Play constitue une facette à part entière du jeu. N'hésitez pas à prendre connaissance de <a href="{SITE_URL}forums/viewtopic.php?id=1991">cet univers</a> unique qu'est Zordania et à vous y immerger, en <a href="{SITE_URL}member-edit.html">complétant votre feuille personnelle</a> avec un avatar et une description originale.
+* Le début du jeu peut sembler long, mais votre patience sera vite récompensée. Profitez-en pour vous imprégner du manuel, visiter les <a href="{SITE_URL}forum.html">Forums</a>, faire connaissance avec vos voisins de jeu, apprivoiser l'interface du site.
+* N'oubliez pas que le Role-Play constitue une facette à part entière du jeu. N'hésitez pas à prendre connaissance de <a href="{SITE_URL}forum.html#">cet univers</a> unique qu'est Zordania et à vous y immerger, en <a href="{SITE_URL}member-edit.html">complétant votre feuille personnelle</a> avec un avatar et une description originale.
 
 <strong>2- En cas de problème</strong>
 <em>* Concernant le jeu:</em>
  -&gt; le <a href="{SITE_URL}manual.html">Manuel</a> répondra à beaucoup de vos questions.
- -&gt; sinon consultez la <a href="{SITE_URL}forums/viewforum.php?id=10">Foire Aux Questions</a> (FAQ).
- -&gt; la partie <a href="{SITE_URL}forums/viewforum.php?id=7">Entraide</a> du forum, pour voir si votre question a déjà été posée (pensez à utiliser la fonction &quot;<a href="{SITE_URL}forums/search.php">Recherche</a>&quot;).
+ -&gt; sinon consultez la <a href="{SITE_URL}/forum-topic.html?fid=7">Foire Aux Questions</a> (FAQ).
+ -&gt; la partie <a href="{SITE_URL}/forum-topic.html?fid=7">Entraide</a> du forum, pour voir si votre question a déjà été posée (pensez à utiliser la fonction &quot;<a href="{SITE_URL}/forum-search.html">Recherche</a>&quot;).
  -&gt; si votre recherche ne porte pas ses fruits, vous pouvez alors poser votre question et exposer votre problème.
  -&gt; pensez aussi que Zordania forme une communauté de joueurs et que nombre d'entre eux se feront un plaisir de répondre à vos questions, pour cela utilisez <a href="{SITE_URL}msg.html">votre Messagerie</a>.
 <em>* Avec un autre joueur:</em>

@@ -8,9 +8,7 @@ Sachez que la répartition initiale du nombre et du type de terrains est la mêm
 <p>Pour profiter des ressources qu'ils offrent, ils vous suffit de construire les bâtiments adéquats une fois qu'ils seront disponibles (pour ce faire, consultez la partie "<a href="manual.html?race={man_race}&type=btc">Bâtiments - Caractéristiques</a>")</p>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&type=res">Précédent : Ressources (Caractéristiques)</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&type=trn">Suivant : Terrains (Caractéristiques)</a> ]
+<a href="manual.html?race={man_race}&type=res">Précédent : Ressources (Caractéristiques)</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&type=trn">Suivant : Terrains (Caractéristiques)</a>
 </p>

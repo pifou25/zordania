@@ -240,7 +240,6 @@ case 'post' : // valider le formulaire & créer le topic / message
 			$_tpl->set('conf',true);
 			$_tpl->set('pid',$pid);
 		}
-
 		else if ($sub == 'del' && isset($_POST['Oui']))
 		{
 			if (($pst['poster_id'] <> $mid) && !$is_modo)//on vérifie qu'on a le droit

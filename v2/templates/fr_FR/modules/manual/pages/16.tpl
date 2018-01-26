@@ -13,11 +13,8 @@
 
 
 <p align="center" class="menu_module">
-
-[ <a href="manual.html?race={man_race}&page=14" >Précédent : Les Statistiques des Unités</a> ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=19">Suivant : Les Légions et la Carte</a> ]
+<a href="manual.html?race={man_race}&page=14" >Précédent : Les Statistiques des Unités</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=19">Suivant : Les Légions et la Carte</a>
 </p>
 

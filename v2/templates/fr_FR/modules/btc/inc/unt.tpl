@@ -5,7 +5,7 @@
 	<elseif cond='isset({btc_no_nb})'>
 		<p class="infos">Il faut choisir un nombre d'unités à annuler.</p>
 		<form action="btc-use.html?btc_type={btc_id}&sub=cancel_unt&uid={btc_uid}" method="post">
-			<input type="number" name="nb" size="1" maxlength="2" style="width:3em" />
+			<input type="number" min="0" name="nb" size="1" maxlength="2" style="width:3em" />
 			<input type="submit" value="Annuler" />
 		</form>
 	</elseif>
@@ -18,15 +18,15 @@
 </if>
 
 <elseif cond='{btc_act} == "unt"'>
+	<if cond='{unt_todo}'>
 	<div class="block" id="unt_todo">
 		<h4>{btcopt[{_user[race]}][{btc_id}][unt_todo]}</h4>
-		<if cond='{unt_todo}'>
-			<foreach cond='{unt_todo} as {unt_result}'>
-				<set name="unt_type" value="{unt_result[utdo_type]}" />
-				<zimgunt race="{_user[race]}" type="{unt_type}" /> {unt[{_user[race]}][alt][{unt_type}]} - {unt_result[utdo_nb]} - <a href="index.php?file=btc&act=use&btc_type={btc_id}&sub=cancel_unt&uid={unt_result[utdo_id]}">Annuler</a><br />
-			</foreach>
-		</if>
+		<foreach cond='{unt_todo} as {unt_result}'>
+			<set name="type_todo" value="{unt_result[utdo_type]}" />
+			<zimgunt race="{_user[race]}" type="{type_todo}" />&nbsp;{unt[{_user[race]}][alt][{type_todo}]}&nbsp;-&nbsp;{unt_result[utdo_nb]}&nbsp;-&nbsp;<a href="btc-use.html?btc_type={btc_id}&sub=cancel_unt&uid={unt_result[utdo_id]}" class="zrdPopUp">Annuler</a>
+		</foreach>
 	</div>
+	</if>
 	
 	<p class="infos">Les unités "disponibles" sont les unités formées qui ne travaillent pas dans un bâtiment, "Total" indique la somme des unités disponibles et de celles qui ne le sont pas.</p> 
 	
@@ -65,27 +65,8 @@
 	</if>
 	<else><p id="unt_infos_toggle" class="infos" style="display: none;">Aucune unité utile disponible.</p></else>
 
+	<div id="output"></div>
 	<if cond='{unt_dispo}'>
-
-<script type="text/javascript">
-<!-- // jquery sur les formulaires de formation
-$(document).ready(function()
-{
-	// Lorsqu'un formulaire est soumis
-	$("form").submit(function(event) {
-
-		event.preventDefault(); 
-		var term = $(this).serialize(),
-			url = 'ajax--' + $(this).attr( 'action' );
-
-		$.post( url, term,
-			function( data ) { $( "#unt_todo" ).append( data); }
-		);
-	});
-
-});
-// -->
-</script>
 
 	<foreach cond='{unt_dispo} as {group} => {unt_dispo1}'>			
 		<table class="liste">
@@ -133,7 +114,7 @@ $(document).ready(function()
 				<else>{unt_array[bad][limit_unt]}</else>
 			</if>
 
-			<p id="unt_{unt_id}_toggle">
+			<p id="unt_{unt_id}_toggle" style="display: none;">
 				<if cond="isset({unt_array[conf][vit]})">
 					<if cond='isset({unt_array[conf][atq_unt]}) OR isset({unt_array[conf][atq_btc]}) OR isset({unt_array[conf][def]})'>
 			[ <if cond='isset({unt_array[conf][atq_unt]})'>{unt_array[conf][atq_unt]} <img src="img/{_user[race]}/div/atq.png" alt="Attaque Unité" /></if>
@@ -160,9 +141,9 @@ $(document).ready(function()
 				</else>
 			</if>
 			<else>
-				<form action="btc-use.html?btc_type={btc_id}&sub=add_unt" method="post">
+				<form class="ajax" action="btc-use.html?btc_type={btc_id}&sub=add_unt" method="post">
 				<input type="hidden" name="type" value="{unt_id}" />
-				<input type="number" name="nb" size="1" maxlength="2" style="width:3em" />
+				<input type="number" min="0" name="nb" size="1" maxlength="2" style="width:3em" />
 				<input type="submit" value="{btcopt[{_user[race]}][{btc_id}][unt]}" />
 				</form>
 			</else>				

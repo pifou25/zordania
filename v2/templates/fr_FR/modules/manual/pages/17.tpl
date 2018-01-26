@@ -41,9 +41,7 @@ Pour finir sachez qu'une alliance peut recruter {ALL_MAX} joueurs maximum de n'i
 
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&page=25">Précédent : Les Unités de Tir</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=10">Suivant : Diplomatie</a> ]
+<a href="manual.html?race={man_race}&page=25">Précédent : Les Unités de Tir</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=10">Suivant : Diplomatie</a>
 </p>

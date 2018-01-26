@@ -141,11 +141,6 @@ Contrairement aux récompenses, les Titres ne sont pas de simples reconnaissance
 <dd>Attribué aux joueurs participants à une animation, bénéficiant ainsi d'une protection vis à vis des joueurs hors animation et qui pourrait modifier le cours d'une animation avec une attaque.</dd> 
 
 <p align="center" class="menu_module">
-
-[ <a href="manual.html?race={man_race}&page=23">Précédent : Egeria, Capitale de Zordania</a>  ]
-
--
-
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
-
+<a href="manual.html?race={man_race}&page=23">Précédent : Egeria, Capitale de Zordania</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
 </p>

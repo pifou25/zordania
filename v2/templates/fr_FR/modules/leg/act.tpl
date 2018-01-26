@@ -19,26 +19,4 @@
 	<if cond="{leg[leg_etat]} == {LEG_ETAT_POS} && !empty({unt_leg[{leg[leg_id]}]})">
 		- <a href="war-make_atq.html?lid1={leg[leg_id]}" id="make_atq">attaquer</a>
 	</if>
-
-
-<script langage="javascript">
-// ce script pilote le popup de confirmation
-$(document).ready( function(){ // quand la page a fini de se charger
-	$("#make_atq").click(function(){ // au clic sur le lien
-		$("#dialog-modal").dialog({ // popup
-			buttons: [{
-				text: "Annuler", // bouton annuler
-				click: function() {
-				$( this ).dialog( "close" );}
-			},{
-				text: "Attaquer", // bouton attaquer renvoie vers le lien #make_atq
-				click: function() {
-				window.location = $("#make_atq").attr('href');}
-			}]
-		});
-		return false;
-	});
-});
-</script>
-
 </div>

@@ -32,7 +32,7 @@
 	<p class="menu_module">
 	<a id="res_infos" href="#" class="toggle">Ressources Disponibles</a></p>
 	<if cond='{res_utils}'>
-		<table id="res_infos_toggle" class="liste">
+		<table id="res_infos_toggle" class="liste" style="display: none;">
 			<tr>
 				<th>Type</th>
 				<th>Nombre</th>
@@ -46,27 +46,8 @@
 		</table>
 	</if>
 
+	<div id="output"></div>
 	<if cond='{res_dispo}'>
-
-<script type="text/javascript">
-<!-- // jquery sur les formulaires de formation
-$(document).ready(function()
-{
-	// Lorsqu'un formulaire est soumis
-	$("form").submit(function(event) {
-
-		event.preventDefault(); 
-		var term = $(this).serialize(),
-			url = 'ajax--' + $(this).attr( 'action' );
-
-		$.post( url, term,
-			function( data ) { $( "#res_todo" ).append( data); }
-		);
-	});
-
-});
-// -->
-</script>
 
 		<foreach cond='{res_dispo} as {res_id} => {res_array}'>			
 			<if cond='!isset({current_group}) OR {current_group} != {res_array[conf][group]}'>
@@ -80,7 +61,7 @@ $(document).ready(function()
 					<tr>
 			</if>
 			<td>
-				<img src="img/0.png" id="res_{res_id}" class="toggle" />
+				<img src="img/plus.png" id="res_{res_id}" class="toggle" />
 				<zimgres race="{_user[race]}" type="{res_id}" /> - 
 				{res[{_user[race]}][alt][{res_id}]} <br/>
 				Stock : {res_utils[{res_id}]}<br/>
@@ -106,14 +87,14 @@ $(document).ready(function()
 					</foreach>
 				</if>
 
-				<div id="res_{res_id}_toggle">
+				<div id="res_{res_id}_toggle" style="display:none">
 					<p>
 						{res[{_user[race]}][descr][{res_id}]}
 					</p>
 				</div>
-				<form action="btc-use.html?btc_type={btc_id}&amp;sub=add_res" method="post">
+				<form class="ajax" action="btc-use.html?btc_type={btc_id}&amp;sub=add_res" method="post">
 					<input type="hidden" name="type" value="{res_id}" />
-					<input type="number" name="nb" size="1" maxlength="2" style="width:3em" />
+					<input type="number" name="nb" size="1" min="0" maxlength="2" style="width:3em" />
 					<input type="submit" value="{btcopt[{_user[race]}][{btc_id}][res]}" />
 				</form>
 			</td>

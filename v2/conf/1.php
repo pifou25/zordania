@@ -124,11 +124,11 @@ $this->trn = array();
 /*
 *	Ressources
 *	Nom			Type				Fonction
-*	need_btc		uint				Btiment dans le quel c'est construit
+*	need_btc		uint				Batiment requis
 *	need_src		uint				A besoin de la recherche
 *	prix_res		array(uint=>uint)		Prix type => nombre
-*	group			uint				Est dans le groupe
-*	cron			bool				Ne peut tre produit que par un cron
+*	group			uint				groupe d'affichage (page de formation)
+*	cron			bool				est produit par un cron
 */
 
 //<res>
@@ -635,7 +635,7 @@ $this->unt[U1_CHEVALIER_XP]=array(
 		"vie"	=>	19,
 		"atq_unt"	=>	19,
 		"vit"	=>	13,
-		"group"	=>	10,
+		"group"	=>	13,
 		"role"	=>	TYPE_UNT_CAVALERIE,
 		"rang" => 5,
 		"prix_res"	=>	array(R1_EPEE_LON => 1, R1_COTTE_MAILLE => 1, R1_CHEVAUX => 1, R1_B_ACIER => 1, R1_ACIER => 2),
@@ -666,7 +666,7 @@ $this->unt[U1_BELIER]=array(
 		"atq_unt"	=>	0,
 		"atq_btc"	=>	6,
 		"vit"	=>	2,
-		"group"	=>	16,
+		"group"	=>	15,
 		"role"	=>	TYPE_UNT_MACHINE,
 		"rang" => 14,
 		"prix_res"	=>	array(R1_PIERRE => 7, R1_BOIS => 7, R1_ACIER => 4),
@@ -697,7 +697,7 @@ $this->unt[U1_PRETRE]=array(
 		"vie"	=>	12,
 		"atq_unt"	=>	14,
 		"vit"	=>	10,
-		"group"	=>	18,
+		"group"	=>	17,
 		"role"	=>	TYPE_UNT_MAGIQUE,
 		"rang" => 10,
 		"prix_res"	=>	array(R1_OR => 6, R1_NOURRITURE => 30, R1_ACIER => 2, R1_MITHRIL => 1),
@@ -744,7 +744,7 @@ $this->unt[U1_SORCIER]=array(
 		"vie"	=>	9,
 		"atq_unt"	=>	6,
 		"vit"	=>	5,
-		"group"	=>	21,
+		"group"	=>	20,
 		"role"	=>	TYPE_UNT_MAGIQUE,
 		"rang" => 11,
 		"prix_res"	=>	array(R1_NOURRITURE => 30, R1_OR => 5, R1_ACIER =>2, R1_MITHRIL => 2),
@@ -760,7 +760,7 @@ $this->unt[U1_TREBUCHET]=array(
 		"atq_unt"	=>	10,
 		"atq_btc"	=>	11,
 		"vit"	=>	3,
-		"group"	=>	22,
+		"group"	=>	19,
 		"role"	=>	TYPE_UNT_MACHINE,
 		"rang" => 16,
 		"prix_res"	=>	array(R1_BOIS => 25, R1_PIERRE => 25, R1_ACIER => 15),
@@ -807,7 +807,7 @@ $this->unt[U1_GENERAL]=array(
 		"vit"	=>	13,
 		"group"	=>	23,
 		"role"	=>	TYPE_UNT_HEROS,
-		"rang" => 17,
+		"rang" => 18,
 		"prix_res"	=>	array(R1_EPEE_LON => 1, R1_COTTE_MITHRIL => 1, R1_B_ACIER => 1, R1_MITHRIL => 1, R1_NOURRITURE => 50),
 		"prix_unt"	=>	array(7 => 1),
 		"need_src" 	=>	array(S1_GENERAL),
@@ -837,7 +837,7 @@ $this->unt[U1_GRANDE_CARAVELLE]=array(
 		"vit"	=>	8,
 		"group"	=>	22,
 		"role"	=>	TYPE_UNT_DEMENAGEMENT,
-		"rang" => 16,
+		"rang" => 25,
 		//"prix_res"	=>	array(R1_BOIS => 5000, R1_PIERRE => 6000, R1_ACIER => 1000, R1_OR => 2000,R1_NOURRITURE => 50000),
 		"prix_res"	=>	array(R1_BOIS => 2500, R1_PIERRE => 3000, R1_ACIER => 500, R1_OR => 1000,R1_NOURRITURE => 25000),
 		"prix_unt"	=>	array(U1_RECRUE => 4),

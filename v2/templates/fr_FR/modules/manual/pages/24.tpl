@@ -20,9 +20,7 @@ Pour finir, vous pouvez récupérer des butins plus importants en attaquant des 
 
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&page=22">Précédent : Défense Groupée</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=25">Suivant : Les Unités de Tir</a> ]
+<a href="manual.html?race={man_race}&page=22">Précédent : Défense Groupée</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=25">Suivant : Les Unités de Tir</a>
 </p>

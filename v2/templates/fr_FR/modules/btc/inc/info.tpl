@@ -121,6 +121,9 @@
 	<img src="img/{_user[race]}/btc/{btc_id}.png" alt="{btc[{_user[race]}][alt][{btc_id}]}" title="{btc[{_user[race]}][alt][{btc_id}]}" /> 
 	{btc[{_user[race]}][alt][{btc_id}]} {btc_nb}<br /> 
 </if>
+
+<include file="modules/manual/man_btc.tpl" man_array="{btc_conf}" cache="1" />
+
 <p>
 	Manuel : 
 	<a href="manual.html?race={_user[race]}&type=btc#btc_{btc_id}" title="Voir le Manuel">{btc[{_user[race]}][alt][{btc_id}]}</a>

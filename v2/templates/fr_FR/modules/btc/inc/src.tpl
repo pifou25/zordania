@@ -12,26 +12,6 @@
 
 <elseif cond='{btc_act} == "src"'>
 
-<script type="text/javascript">
-<!-- // jquery sur les formulaires de formation
-$(document).ready(function()
-{
-	// Lorsqu'un formulaire est soumis
-	$("form").submit(function(event) {
-
-		event.preventDefault(); 
-		var term = $(this).serialize(),
-			url = 'ajax--' + $(this).attr( 'action' );
-
-		$.post( url, term,
-			function( data ) { $( "#src_todo" ).append( data); }
-		);
-	});
-
-});
-// -->
-</script>
-
 	<div class="block" id="src_todo">
 		<h4>Recherches en cours</h4>
 		<if cond='{src_todo}'>
@@ -56,7 +36,7 @@ $(document).ready(function()
 		<a id="res_infos" href="#" class="toggle">Ressources Disponibles</a>
 	</p>
 	<if cond='{res_utils}'>
-		<table class="liste" id="res_infos_toggle">
+		<table class="liste" id="res_infos_toggle" style="display: none;">
 			<tr>
 				<th>Type</th>
 				<th>Nombre</th>

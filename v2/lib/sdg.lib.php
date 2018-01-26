@@ -164,8 +164,8 @@ function get_vte_nb_by_mid($sid, $mid) {
 	$sid = protect($sid, "uint");
 	$mid = protect($mid, "uint");
 
-	$sql = "SELECT COUNT(*) FROM ".$_sql->prebdd."sdg_vte WHERE svte_sid = $sid AND svte_mid = $mid";
-	return $_sql->result($_sql->query($sql), 0); 
+	$sql = "SELECT COUNT(*) as nb FROM ".$_sql->prebdd."sdg_vte WHERE svte_sid = $sid AND svte_mid = $mid";
+	return $_sql->result($_sql->query($sql), 0, 'nb'); 
 }
 
 ?>

@@ -34,11 +34,12 @@ class mysqliext
 
 		// Fonctionne depuis PHP 5.2.9 et 5.3.0.
 		if ($this->mysqli->connect_error) {
-			echo('Erreur de connexion : ' . $this->mysqli->connect_error);
-		} else
+			$this->err = 'Erreur de connexion : ' . $this->mysqli->connect_error;
+		} else {
 			$this->con = true;
-		if (!$this->mysqli->set_charset("utf8")) {
-		    printf("Erreur lors du chargement du jeu de caractères utf8 : %s\n", $this->mysqli->error);
+			if (!$this->mysqli->set_charset("utf8")) {
+				$this->err = "Erreur lors du chargement du jeu de caractères utf8 : " . $this->mysqli->error;
+			}
 		}
 
 		$this->total_time = $this->getmicrotime() - $debut;
@@ -128,7 +129,7 @@ class mysqliext
 		
 		$req = $this->parse_query($req);
 
-		if ($explain) $this->log(count($this->queries)." | $req\n");
+		if ($this->debug AND $explain) $this->log(count($this->queries)." | $req\n");
 		$res = $this->mysqli->query($req);
 		$this->errno = $this->mysqli->errno;
 		$this->err = $this->mysqli->error;
@@ -162,6 +163,16 @@ class mysqliext
 		if($explain) $this->total_time += $this->getmicrotime()-$debut;
 
 		return $res;
+	}
+	
+	function fetch_array($res){
+		return $res->fetch_array();
+	}
+	function num_fields($res){
+		return $res->num_fields();
+	}
+	function fetch_field_direct($res, $index){
+		return $res->fetch_field_direct($index);
 	}
 	
 	function free_result($res) {

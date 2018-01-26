@@ -10,15 +10,6 @@
 		<li><a href="btc-use.html?btc_type={btc_menu_type}&amp;sub={btc_menu_sub}" title="{btcact[{_user[race]}][descr][{btc_menu_type}][{btc_menu_sub}]}">{btcact[{_user[race]}][title][{btc_menu_type}][{btc_menu_sub}]}</a></li>
 		</foreach>
 	</foreach>
-	<li>---</li>
-	<li><a href="alliances.html" title="Liste des Alliances.">Alliances</a></li>
-	<li><a href="class.html" title="Classement des Joueurs.">TOP 50</a></li>
-	<li>
-		<a href="member-liste.html" title="Liste des Joueurs.">Joueurs</a>
-		(<a href="member-liste_online.html" title="Joueurs connectés.">online</a>)
-	</li>
-	<# <li><a href="bonus.html" title="Gagner des ressources !" class="bonus">Bonus</a></li> #>
-	<li><a href="votes.html" title="Votez pour Zordania !" class="votes">Votes</a></li>
 	</ul>
 </div>
 
@@ -29,9 +20,27 @@
 <h2><label for="menu2">Zordania</label></h2>
 <input id="menu2" name="menu" type="radio" />
 	<ul>
-		<if cond='!{ses_can_play} OR !{ses_mbr_etat_ok}'>
+
+	<if cond='{ses_loged}'> 
+	<if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
+		<li><a href="alliances.html" title="Liste des Alliances.">Alliances</a></li>
+		<li><a href="class.html" title="Classement des Joueurs.">TOP 50</a></li>
+		<li>
+			<a href="member-liste.html" title="Liste des Joueurs.">Joueurs</a>
+			(<a href="member-liste_online.html" title="Joueurs connectés.">online</a>)
+		</li>
+		<# <li><a href="bonus.html" title="Gagner des ressources !" class="bonus">Bonus</a></li> #>
+		<# <li><a href="votes.html" title="Votez pour Zordania !" class="votes">Votes</a></li> #>
+
+	</if>
+	<else>
+		<li><a href="ini.html" title="Initialiser!">Compte non initialisé !</a></li>
+	</else>
+	</if>
+	<else><li>Visiteur</li></else>
+	<if cond='!{ses_can_play} OR !{ses_mbr_etat_ok}'>
 		<li><a href="presentation.html" title="Présentation.">Accueil</a></li>
-		</if>
+	</if>
 		<li><a href="news.html" title="Voir les dernières news.">News</a></li>
 		<li><a href="manual.html?race={_user[race]}" title="Comment jouer ?">Manuel</a></li>
 		<li><a href="forum.html" title="Participer à la vie de la communauté.">Forums</a> (<a href="irc.html" title="Discuter directement entre Zordaniens !">Chat</a>)</li>

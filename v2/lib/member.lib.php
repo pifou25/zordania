@@ -302,12 +302,12 @@ function can_atq_lite($mbr_array, $points, $mid, $groupe, $alaid, $dpl_array = f
 		$mbr_array[$key]['can_def'] = false;
 		$mbr_array[$key]['pna'] = false;
 
-		/* staff intouchable  - sauf par lui même */
+		/* staff intouchable  - sauf par lui même 
 		$staff = array(GRP_GARDE, GRP_PRETRE, GRP_DEMI_DIEU, GRP_DIEU, GRP_DEV, GRP_ADM_DEV);
 		if (in_array($mbr['mbr_gid'], $staff) and !in_array($groupe, $staff)) {
 			$mbr_array[$key]['can_atq'] = false;
 			continue;
-		}
+		} */
 
 		/* grade event = protégé */
 		if ($mbr['mbr_gid'] == GRP_EVENT and $groupe != GRP_EVENT) {

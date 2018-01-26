@@ -15,11 +15,9 @@ En cas de manque de ressources, vous avez toujours la possibilité d'en obtenir 
 </p>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&type=src">Précédent : Recherches (Caractéristiques)</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&type=res">Suivant : Ressources (Caractéristiques)</a> ]
+<a href="manual.html?race={man_race}&type=src">Précédent : Recherches (Caractéristiques)</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&type=res">Suivant : Ressources (Caractéristiques)</a>
 </p>
 
 

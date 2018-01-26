@@ -79,14 +79,21 @@ $(document).ready(  function()
 
 
 	<dd class="block_forum">
-	<include file="modules/war/armee.tpl" cache="1" leg="{value[atq_bilan][att]}" />
+		<div class="block_forum">
 
+	<include file="modules/war/armee.tpl" cache="1" leg="{value[atq_bilan][att]}" />
+		</div>
+
+		<div class="block_forum">
 	<include file="modules/war/armee.tpl" cache="1" leg="{value[atq_bilan][def][{value[atq_lid2]}]}" />
+		</div>
 
 	<h3>Légions en défense :</h3>
 	<foreach cond="{value[atq_bilan][def]} as {lid} => {leg}">
 		<if cond="{lid} != {value[atq_lid2]}">
+		<div class="block_forum">
 		<include file="modules/war/armee.tpl" cache="1" /><# ici {leg} est déjà défini #>
+		</div>
 		</if>
 	</foreach>
 
@@ -94,14 +101,16 @@ $(document).ready(  function()
 	<set name="leg" value="{value[atq_bilan][def][{value[atq_lid2]}]}" />
 	<if cond="{value[atq_bilan][btc_def]}">
 		<h3>Bâtiments défensifs :</h3>
+		<div class="block_forum">
 		<foreach cond="{value[atq_bilan][btc_def]} as {btc2} => {nb}">
 			{nb} <zimgbtc type="{btc2}" race="{leg[mbr_race]}" />
 		</foreach>
-		<if cond="isset({value[atq_bilan][btc_bonus][bon]})"><p>Bonus fourni par les bâtiments = {value[atq_bilan][btc_bonus][bon]} % (y compris le donjon)</p>
-		</if>
+		<if cond="isset({value[atq_bilan][btc_bonus][bon]})"><p>Bonus fourni par les bâtiments = {value[atq_bilan][btc_bonus][bon]} % (y compris le donjon)</p></if>
+		</div>
 	</if>
 
 	<if cond="{value[atq_bilan][btc_edit]}">
+		<div class="block_forum">
 		L'attaque sur les bâtiments a produit {value[atq_bilan][atq_bat]} points de dégâts.
 		<h3>Bâtiments détruits :</h3>
 		<foreach cond="{value[atq_bilan][btc_edit]} as {btc2}">
@@ -122,8 +131,10 @@ $(document).ready(  function()
 				</else>
 			</if>
 		</foreach>
+		</div>
 	</if>
 
+	<div class="block_forum">
 	<h3>Butin attaquant :</h3>
 	<foreach cond="{value[atq_bilan][butin][att]} as {type} => {nb}">
 		<if cond="{nb}">{nb} <zimgres type="{type}" race="{_user[race]}" /></if>
@@ -140,6 +151,7 @@ $(document).ready(  function()
 			<p class="ok">{leg[xp_won]} XP gagnée pour la légion {leg[leg_name]}</p>
 		</if>
 	</foreach>
+	</div>
 	</dd>
 
 <debug print="{value}" />

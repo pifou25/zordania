@@ -1,8 +1,8 @@
 <p class="menu_module">
 <foreach cond="{arr_rep} as {rep}">
-	[ <a href="admin-log.html?module=admin&amp;sub={rep}">{rep}</a> ]
+	<a href="admin-log.html?module=admin&amp;sub={rep}">{rep}</a>
 </foreach>
-[ <a href="admin-sql.html?module=admin">Autres infos</a> ]
+	<a href="admin-sql.html?module=admin">Autres infos</a>
 </p>
 
 <h3>Configuration des combats</h3>
@@ -32,6 +32,9 @@
 <th>ATQ_FAT </th><td>= {ATQ_FAT} ( inutile ici )</td>
 </tr><tr>
 <th>ATQ_LEG_IDLE </th><td>= {ATQ_LEG_IDLE} legion idle en position d'attaque - nb jours</td>
+</tr>
+</tr><tr>
+<th>DST_VIEW_MAX </th><td>= {DST_VIEW_MAX} nb de cases de vision des armées ennemies</td>
 </tr>
 </table>
 

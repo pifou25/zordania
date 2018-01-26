@@ -16,11 +16,9 @@
 <p>Il s'agit d'un sous-total de votre nombre de points, qui ne dépend que de la taille de votre armée et des unités qui la composent. C'est ce sous-total de points qui entre en compte pour savoir qui peut ou non vous attaquer (voir ci-dessus "Les Points et Limites"). Petite astuce pour finir, en comparant votre force armée à celle de vos ennemis ou alliés, vous aurez une vague idée de leur puissance.</p>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&page=12">Précédent : Guide du Débutant</a> ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=14">Suivant : Les Statistiques des Unités</a> ]
+<a href="manual.html?race={man_race}&page=12">Précédent : Guide du Débutant</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=14">Suivant : Les Statistiques des Unités</a>
 </p>
 
 

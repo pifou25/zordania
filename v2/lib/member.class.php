@@ -221,8 +221,7 @@ class member{
         if($limite)
             $cond_unt += array($type);
         
-        $have_unt = $this->unt();
-        $have_unt_leg = $this->unt_leg();
+        $have_unt = $this->nb_unt_done();
 
         $have_unt_todo = $this->unt_todo();
         $have_unt_todo = index_array($have_unt_todo, "unt_todo");
@@ -243,7 +242,7 @@ class member{
 
         /* Les unités */
         foreach($prix_unt as $unt_type => $nombre) {
-            $diff = $nombre * $nb - $this->nb_unt($unt_type);
+            $diff = $nombre * $nb - (isset($have_unt[$unt_type]) ? $have_unt[$unt_type] : 0);
 
             if($diff > 0) {
                 $bad_unt[$unt_type] =  $diff;

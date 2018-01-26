@@ -44,9 +44,7 @@ Mais combien de temps vous faudra-t-il ? C'est, encore une fois, très simple. L
 Au cours de votre développement, vous aurez accès à l'unité de déménagement. Celle-ci est disponible après l'achèvement d'une recherche. L'ensemble est très coûteux, le déménagement d'un village n'est pas chose aisée et très onéreuse pour un seigneur. Vous devrez vous armer de patience pour arriver au bout de la recherche. Une fois réalisée, vous pourrez former votre unité de déménagement. Puis vous vous rendrez dans le donjon après avoir noté vos nouvelles coordonnées et placé l'unité dans une légion avec de la nourriture! Il vous faudra attendre le temps que votre peuple se déplace jusqu'au nouvel emplacement avant que le processus ne soit fini. L'unité de déménagement sera détruite à ce moment même.
 </p>
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&page=1">Précédent : Le Jeu</a>  ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=2">Suivant : Bâtiments (Explications)</a> ]
+<a href="manual.html?race={man_race}&page=1">Précédent : Le Jeu</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=2">Suivant : Bâtiments (Explications)</a>
 </p>

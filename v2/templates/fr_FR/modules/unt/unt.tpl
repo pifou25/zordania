@@ -76,7 +76,7 @@
 			{unt[{_user[race]}][descr][{unt_type}]}
 		</p>
 
-		<if cond='{unt_dispo[conf][role]} == {TYPE_UNT_HEROS}'>
+		<if cond='isset({unt_dispo[conf][role]}) && {unt_dispo[conf][role]} == {TYPE_UNT_HEROS}'>
 			<if cond="{_user[hro_id]}">Vous avez déjà un héros.</if>
 			<else>
 				<a href="leg-hero.html?sub=form&id_hro={unt_type}" title="Former un héros !" />Former un héros !</a>
@@ -84,7 +84,7 @@
 		</if>
 
         <table><tbody><tr><td>
-            <form id="untFormer" class="ajax" method="post" action="btc-use.html?btc_type={btc_type}&amp;sub=add_unt">
+            <form method="post" action="btc-use.html?btc_type={btc_type}&amp;sub=add_unt">
                 <fieldset><legend>{btcopt[{_user[race]}][{btc_type}][unt]}</legend>
                     <label for="nb">
                     <zimgbtc race="{_user[race]}" type="{btc_type}"  />
@@ -95,7 +95,7 @@
                 </fieldset>
             </form>
         </td><td>
-            <form id="untPendre" class="ajax" method="post" action="unt-pend.html?unt_type={unt_type}">
+            <form method="post" action="unt-pend.html?unt_type={unt_type}">
                 <fieldset><legend>Pendaison.</legend>
                     <label for="unt_nb">
                         <zimgunt race="{_user[race]}" type="{unt_type}"  /><img class="left" src="img/{_user[race]}/div/pendre.png" alt="Pendre" />
@@ -111,36 +111,38 @@
     
         <if cond='{unt_todo}'>
             <div class="block" id="unt_todo">
-                    <foreach cond='{unt_todo} as {unt_result}'>
-                        <set name="type_todo" value="{unt_result[utdo_type]}" />
-                        <set name="btc_id" value="{unt_dispo[{type_todo}][conf][in_btc][0]}" />
-                        <h5>{btcopt[{_user[race]}][{btc_id}][unt_todo]} </h5>
-                        <zimgunt race="{_user[race]}" type="{type_todo}" /> {unt[{_user[race]}][alt][{type_todo}]} - {unt_result[utdo_nb]} - 
-                        <a href="index.php?file=btc&act=use&btc_type={btc_id}&sub=cancel_unt&uid={unt_result[utdo_id]}">Annuler</a><br />
+                    <foreach cond='{unt_todo} as {btc_id} => {unt_r1}'>
+						<h5>{btc[{_user[race]}][alt][{btc_id}]} : {btcopt[{_user[race]}][{btc_id}][unt_todo]}</h5>
+						<p>
+						<foreach cond='{unt_r1} as {type_todo} => {unt_r2}'>
+							<foreach cond='{unt_r2} as {unt_result}'>
+							
+<zimgunt race="{_user[race]}" type="{type_todo}" />&nbsp;{unt[{_user[race]}][alt][{type_todo}]}&nbsp;-&nbsp;{unt_result[utdo_nb]}&nbsp;-&nbsp;<a href="btc-use.html?btc_type={btc_id}&sub=cancel_unt&uid={unt_result[utdo_id]}" class="zrdPopUp">Annuler</a>
+
+							</foreach>
+						</foreach>
+						</p>
                     </foreach>
             </div>
         </if>
 
         <div id="output"></div>
 		<p class="infos">Les unités "disponibles" sont celles qui ne travaillent pas dans un bâtiment et qui ne sont pas dans une légion, "Total" indique la somme des unités disponibles et de celles qui ne le sont pas.</p> 
-		<table class="liste" id="showUntForm">
+		<table class="liste">
 			<tr>
 				<th>Type</th>
-				<th>Disponibles</th>
-				<th>Total</th>
+				<th>Dispo</th>
 				<th>Infos</th>
 			</tr>
             <tbody>
 			<foreach cond='{unt_dispo} as {unt_type} => {unt_array}'>
 				<tr>
 					<td>
-						<a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}">
+						<a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}" class="zrdPopUp">
 							<zimgunt race="{_user[race]}" type="{unt_type}"  />
-						</a>
-						{unt[{_user[race]}][alt][{unt_type}]}
+						{unt[{_user[race]}][alt][{unt_type}]}</a>
 					</td>
-					<td>{unt_done[vlg][{unt_type}]}</td>
-					<td>{unt_done[tot][{unt_type}]}</td>
+					<td>{unt_done[vlg][{unt_type}]} / {unt_done[tot][{unt_type}]}</td>
 					<td>
 						{roles[{unt_array[conf][role]}]}
 						

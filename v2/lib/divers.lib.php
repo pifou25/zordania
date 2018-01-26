@@ -11,7 +11,7 @@ function mailto($from, $to, $sujet, $message, $html=FALSE)
 	if($html) {
 	  		$from ="From: Zordania <".$from."> \n"; 
 	  		$from .= "MIME-Version: 1.0\n";
-			$from .= "Content-type: text/html; charset=iso-8859-1\n";
+			$from .= "Content-type: text/html; charset=utf-8\n";
 	 }else
 		$from="From: $from <$from>";
 
@@ -499,7 +499,7 @@ function print_debug($arr = false, $title = ''){
 		global $_tpl;
 		return print_debug($_tpl->var);
 	}
-	if ($title!='') $rep = "<dt>$title</dt>\n"; else $rep = '';
+	if ($title!='') $rep = "<dt><strong>$title</strong></dt>\n"; else $rep = '';
 	$rep1 = '<table><tr>'; $rep2 = ''; $i = 0;
 	foreach($arr as $key => $val)
 		if(!is_array($val) && !is_object($val)) { // les variables simples

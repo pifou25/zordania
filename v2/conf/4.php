@@ -622,7 +622,7 @@ $this->unt[U4_BRIGAND]=array(
 		"prix_unt"		=>	array(U4_CONVOQUE => 1),
 		"group"		=>	11,
 		"role"		=>	TYPE_UNT_DISTANCE,
-		"rang" => 11,
+		"rang" => 15,
 );
 
 $this->unt[U4_CAPUCHE_NOIRE]=array(

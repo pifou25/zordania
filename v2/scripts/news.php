@@ -1,7 +1,6 @@
 <?php
 define("DIR","../");
 include(DIR.'lib/divers.lib.php');
-include(DIR.'lib/mysql.class.php');
 include(DIR.'conf/conf.inc.php');
 
 $sql=new mysql(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
@@ -18,6 +17,7 @@ foreach($mbr_array as $value) {
   $subject = 'Zordania.com';
   $headers =  'X-Mailer: PHP/' . phpversion();
   mail($to, $subject, $txt, $headers);
+  // pause 10 secondes
   usleep(100000);
   $i++;
   if(!($i%100)) echo "$i\n";

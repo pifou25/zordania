@@ -63,22 +63,83 @@
 		<p class="infos">Vous avez déjà {nb_ventes}/{max_ventes} ventes simultanées ce qui est le maximum avec votre niveau technologique actuel.</p>
 	</if>
 	<if cond='{btc_sub} =="choix_type"'>
-		Ventes: {nb_ventes}/{max_ventes}<br/><br/>
-		Choisissez les types de ressource à échanger.<br/><br/>
+		Ventes: {nb_ventes}/{max_ventes}.
+		Choisissez le type de ressource à échanger puis le prix.
+		
 			<form action="btc-use.html?btc_type={btc_id}&amp;sub=ven" method="post">
+			
 			<p>
-			<label for="com_type">A Vendre</label>
-			<select id="com_type" name="com_type">
+			<label for="com_type">Quantité de :</label>
+			<select id="com_type" name="com_type" onchange="updateForm();">
 			<foreach cond='{com_list_res} as {res_id} => {res_value}'>
 				<if cond='{res_value} > 0 && {res_id} > 1'>
-				<option value="{res_id}"> {res[{_user[race]}][alt][{res_id}]} 		({res_value})</option>
+			<option value="{res_id}"> {res[{_user[race]}][alt][{res_id}]} ({res_value})</option>
 				</if>
 			</foreach>
 			</select>
+			<input type="number" min="0" value="0" id="com_nb" name="com_nb" style="width:5em" />
 			<p>
-			
-			<p><input name="submit" value="Suivant ->" type="submit"></p>
+
+			<p>
+			Cours : 1 <zimgres race="{_user[race]}" type="{GAME_RES_PRINC}" /> {res[{_user[race]}][alt][1]} - 
+			contre  <zimgres race="{_user[race]}" type="2" id="resimg" /> <span id="reslabel">{res[{_user[race]}][alt][2]}</span> :
+			<span id="rescours">min / max</span> - prix unitaire = <strong><span id="resunit"></span></strong>
+			<div id="slider"></div>
+			<label for="com_prix">Prix de la transaction :</label>
+			<input type="text" min="0" value="00" id="com_prix" name="com_prix" style="width:5em" />
+			</p>
+
+			<p>
+			<label for="com_vente">Nombre de ventes similaires</label>
+			<select id="com_vente" name="com_vente" style="width:5em">
+			<for cond="{i} = 1; {i} <= {max_ventes} - {nb_ventes}; ++{i}">
+			<option value="{i}"> {i} </option>
+			</for>
+			</select>
+
+			</p>
+
+			<p><input name="submit" value="Mettre en vente" type="submit"></p>
 		</form>
+		<script type="text/javascript">
+		/* labels et cours */
+		var labels = new Array();
+		var cours = new Array();
+		var qte = new Array();
+		<foreach cond='{com_cours} as {rid} => {value}'>
+		labels[{rid}] = '{res[{_user[race]}][alt][{rid}]}';
+		cours[{rid}] = new Array();
+		cours[{rid}]['min'] = {value[min]};
+		cours[{rid}]['moy'] = {value[moy]};
+		cours[{rid}]['max'] = {value[max]};
+		</foreach>
+		<foreach cond='{com_list_res} as {res_id} => {res_value}'>
+		qte[{res_id}] = {res_value};</foreach>
+
+		$( "#slider" ).slider();
+		
+		function updateForm(){
+
+			var rid = $("#com_type").val();
+			$("#resimg").attr('src', 'img/{_user[race]}/res/' + rid + '.png');
+			$("#reslabel").html(labels[rid]);
+			$( "#slider" ).slider({
+				range: true,
+				min: cours[rid]['min']*1000,
+				max: cours[rid]['max']*1000,
+				values: cours[rid]['moy'],
+				change: function( event, ui ) {
+					$("#com_prix").val( $("#com_nb").val() * ui.value / 1000);
+					$("#resunit").html(ui.value / 1000);
+				}
+			});
+			$("#com_nb").attr('max', qte[rid]);
+			$("#rescours").html('min = ' + cours[rid]['min'] + ' - max = ' + cours[rid]['max']);
+			$("#com_nb").focus();
+			
+		}
+		
+		</script>
 	</if>
 	<elseif cond='{btc_sub} =="choix_param"'>
 		<script type="text/javascript">
@@ -104,23 +165,23 @@
 		
 		<p>
 		<label for="com_nb">Quantité à vendre</label>
-		<input type="text" value="{com_nb}" id="com_nb" name="com_nb" />
+		<input type="number" min="0" value="{com_nb}" id="com_nb" name="com_nb" />
 		</p>
 		
 		<p>
 		En Echange (max: {com_max_nb}) : <zimgres race="{_user[race]}" type="{GAME_RES_PRINC}" /> {res[{_user[race]}][alt][1]}<br/>
 		<label for="com_prix">Prix</label>
-		<input type="text" value="{com_prix}" id="com_prix" name="com_prix" />
+		<input type="number" min="0" value="{com_prix}" id="com_prix" name="com_prix" />
 		</p>
 
 		<p>
 		<label for="com_nb">Nombre de ventes similaires</label>
-		<input type="text" value="1" id="com_vente" name="com_vente" />
+		<input type="number" min="0" value="1" id="com_vente" name="com_vente" />
 		</p>
 		
 		<p>
 		Prix unitaire : 
-		<input type="text" id="prix_unit"/>
+		<input type="number" id="prix_unit"/>
 		</p>
 		
 		<p><input type="submit" value="Mettre en vente"></p>
@@ -146,10 +207,7 @@
 		</p>
 	</elseif>
 	<elseif cond='{btc_sub} =="vente"'>
-		<if cond='{vente_ok}'>
-			<p class="ok"> Mise en vente effectuée, elle apparaîtra dans le marché dans quelques tours et sera supprimée dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
-		</if>
-		<else>
+		<if cond="{vente_ok}===false">
 			<if cond='isset({btc_max_nb})'>
 				<if cond='{btc_max_nb}==0'><p class="error">Il faut choisir un nombre de ventes.</p></if>
 				<else>
@@ -158,6 +216,22 @@
 			</if>
 			<else>
 				<p class="error">Vous n'avez pas les ressources que vous voulez mettre en vente.</p>
+			</else>
+		</if>
+		<else>
+			<if cond='is_array({vente_ok})'>
+				<if cond='isset({vente_ok[nb]})'>
+				<p class="ok">Vous avez atteind le maximum de {max_ventes} ventes permises par votre niveau; seulement {vente_ok[nb]} ventes effectuées, elles apparaîtront dans le marché dans quelques tours et seront supprimées dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
+				</if>
+				<elseif cond='isset({vente_ok[res]})'>
+				<p class="ok">Vous n'avez pas assez de ressources pour faire autant de ventes; seulement {vente_ok[res]} ventes effectuées, elles apparaîtront dans le marché dans quelques tours et seront supprimées dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
+				</elseif>
+				<else>
+					<p class="ok"> Mise en vente effectuée, elle apparaîtra dans le marché dans quelques tours et sera supprimée dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
+				</else>
+			</if>
+			<else>
+				<p class="ok"> Mise en vente effectuée, elle apparaîtra dans le marché dans quelques tours et sera supprimée dans {MCH_MAX} tours s'il n'y a aucun acheteur.</p>
 			</else>
 		</else>
 	</elseif>
@@ -259,7 +333,7 @@
 		
 	<form action="btc-use.html?btc_type={btc_id}&amp;sub=cours" method="post">
 		<label for="com_nb">Modifier le nombre de ressources</label>
-		<input type="text" id="com_nb" name="com_nb" value="{com_nb}" />
+		<input type="number" min="0" id="com_nb" name="com_nb" value="{com_nb}" />
 		<input type="submit" value="Modifier" />
 	</form>
 </elseif>

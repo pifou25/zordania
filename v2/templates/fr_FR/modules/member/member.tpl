@@ -7,6 +7,7 @@
 	<if cond='{mbr_logo}'>
 			<img class="blason" src="{mbr_logo}" alt="Blason" />
 	</if>
+	<p>
 	Id : {mbr_array[mbr_mid]}<br />
 	Mail : {mbr_array[mbr_mail]}<br />
 	Pseudo : {mbr_array[mbr_pseudo]}
@@ -25,11 +26,8 @@
 			<img src="img/rec/{rec_value[rec_type]}.png" title="{recompense[{rec_value[rec_type]}]}" alt="{recompense[{rec_value[rec_type]}]}" />
 		</foreach>
 	</if>
-	<h4>Description</h4>
-	<p>
-	{mbr_array[mbr_descr]}
 	</p>
-	
+
 	<hr />
 	<div class="infos">L'apparence du site peut être complètement modifiée en choisissant une autre feuille de style ! Les designs seront aussi appliqués au forum !</div>
 	<script type="text/javascript">
@@ -60,19 +58,26 @@
 		<input type="submit" value="Sauvegarder" />
 	</form>
 	<hr/>
+	
 	<if cond='{vld_array}'>
 	<strong>Vous avez une action en cours de validation  ({vldacts[{vld_array[0][vld_act]}]}),
 	<a href="member-edit.html?sub=del_vld">Annuler</a>.</strong>
 	<hr/>
 	</if>
+
+	<h4>Description</h4>
+	<p>
+	{mbr_array[mbr_descr]}
+	</p>
+	
 	<p class="menu_module">
 	<a href="parrain.html" title="Parrainer.">Parrainage</a>
-	- <a href="zzz.html" title="Mise en veille du compte.">Mise en veille</a>
-	- <a href="member-edit.html" title="Paramétrer mon compte (avatar, signature, etc ...)">Paramétrer mon compte</a>
-	<br/><a href="member-del.html?sub=pre" title="Supression du compte">Effacer mon compte</a>
-	- 
-	<if cond="{_user[etat]}==MBR_ETAT_INI"><a href="ini.html" title="Initialiser">Initialiser mon compte</a>
-	</if><else><a href="member-edit.html?sub=reset" title="Recommencer une partie">Réinitialiser mon compte</a>
+	<a href="zzz.html" title="Mise en veille du compte.">Mise&amp;en&amp;veille</a>
+	<a href="member-edit.html" title="Paramétrer mon compte (avatar, signature, etc ...)">Paramétrer&amp;mon&amp;compte</a>
+	<a href="member-del.html?sub=pre" title="Supression du compte">Effacer&amp;mon&amp;compte</a>
+	
+	<if cond="{_user[etat]}==MBR_ETAT_INI"><a href="ini.html" title="Initialiser">Initialiser&amp;mon&amp;compte</a>
+	</if><else><a href="member-edit.html?sub=reset" title="Recommencer une partie">Réinitialiser&amp;mon&amp;compte</a>
 	</else>
 	</p>
 	</else>

@@ -12,7 +12,7 @@ $module = request("module", "string", "get");
 
 $_tpl->set("module_tpl","modules/admin/admin.tpl");
 
-if(file_exists(SITE_DIR . "modules/$module/admin.php"))
+if(!empty($module) && file_exists(SITE_DIR . "modules/$module/admin.php"))
 	require_once(SITE_DIR . "modules/$module/admin.php");
 else {
 	$handle = opendir(SITE_DIR.'modules/');

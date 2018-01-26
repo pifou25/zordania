@@ -23,20 +23,8 @@ if($_act == 'btc')
 	$_tpl->set("btc_trav", $mbr->nb_unt_done(1));
 	$_tpl->set("btc_act",false);
 
-	// tous les batiments
-	$cache['btc_done'] = get_nb_btc($_user['mid']); // get_nb_btc_done($_user['mid']);
-	// seulement les batiments en construction
-    /* le cache est $mbr
-	$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
-	$cache['src'] = get_src_done($_user['mid']);
-	$cache['src'] = index_array($cache['src'], "src_type");
-	$cache['res'] = clean_array_res(get_res_done($_user['mid']));
-	$cache['res'] = $cache['res'][0];
-	$cache['trn'] = clean_array_trn(get_trn($_user['mid']));
-	$cache['trn'] = $cache['trn'][0];
-	$cache['unt'] = get_unt_done($_user['mid']);
-	$cache['unt'] = index_array($cache['unt'], "unt_type");
-    */
+	// tous les batiments constuits - sauf les BTC_ETAT_TODO
+	$cache['btc_done'] = get_nb_btc_done($_user['mid']); // get_nb_btc_done($_user['mid']);
     
 	if($_sub == 'btc') {// construire un nouveau bâtiment $type
 		$_tpl->set("btc_act","btc");
@@ -154,17 +142,27 @@ if($_act == 'btc')
 	{
 		$_tpl->set("btc_act","list2");
 		
-		$btc_type = request("btc_type", "uint", "get");
-		if(!$btc_type || !get_conf("btc", $btc_type))
+		if(!$btc_type || !get_conf("btc", $btc_type)){
 			$btc = array();
-		else
+			$btc_conf = get_conf("btc");
+		}
+		else{
 			$btc = array($btc_type);
+			$_tpl->set("btc_id",$btc_type);
+			$btc_conf = get_conf("btc", $btc_type);
+		}
 			
 		$etat = array(BTC_ETAT_OK, BTC_ETAT_REP, BTC_ETAT_BRU,BTC_ETAT_DES);
 		$btc_array = get_btc($_user['mid'], $btc, $etat);
 		
-		$_tpl->set("btc_array", $btc_array);
-		$_tpl->set("btc_conf",get_conf("btc"));
+		// regrouper les bat par etat
+		$btc_ar1 = array();
+		foreach($btc_array as $value){
+			$btc_ar1[$value['btc_etat']][] = $value;
+		}
+		
+		$_tpl->set("btc_ar1", $btc_ar1);
+		$_tpl->set("btc_conf",$btc_conf);
 	}
 	elseif($_sub == 'det') /* Supprime un bâtiment */
 	{
@@ -279,6 +277,9 @@ if($_act == 'btc')
 		
 			$btc_conf = get_conf("btc", $btc_type);
 			
+			$_tpl->set('man_array',array($btc_type => $btc_conf));
+			$_tpl->set('man_race',$_user['race']);
+
 			$_tpl->set("btc_id",$btc_type);
 			$_tpl->set("btc_conf", $btc_conf);
 			$_tpl->set("btc_nb",$btc_nb);

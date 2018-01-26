@@ -98,42 +98,47 @@
 	</form>
 
 	<div id="preview"></div>
-
-	<if cond='is_array({al_shoot_array})'>
-		<for cond='{i} = {current_i} ; {i} < {al_nb} AND {i}-{current_i} < LIMIT_NB_PAGE*LIMIT_PAGE; {i}+=LIMIT_PAGE'>
-			<if cond='{i} / LIMIT_PAGE != {al_page}'>
-				<a href="alliances-my.html?al_page=<math oper='({i} / LIMIT_PAGE)' />"><math oper='(({i} / LIMIT_PAGE)+1)' /></a>
-			</if>
-			<else>
-				<math oper='(({i} / LIMIT_PAGE)+1)' />
-			</else>
-		</for>
-
-		<foreach cond='{al_shoot_array} as {result}'>
-			<div class="block" id="{result[shoot_msgid]}">
-			<img class="blason" title="{result[mbr_pseudo]}" src="img/mbr_logo/{result[shoot_mid]}.png" />
-			<h4><zurlmbr mid="{result[shoot_mid]}" pseudo="{result[mbr_pseudo]}"/> le {result[shoot_date_formated]}<br/></h4>
-			<p>
-			{result[shoot_texte]}
-			</p>
-			<p class="signature">{result[mbr_sign]}</p>
-			<if cond="{result[mbr_mid]} == {_user[mid]} OR {al_admin}">
-				<a href="alliances-my.html?sub=del&msgid={result[shoot_msgid]}" title="Supprimer">
-					<img src="img/drop.png" alt="Supprimer" title="Supprimer" />
-				</a>
-			</if>
-			</div>
-			<br />
-		</foreach>
-		
-		<for cond='{i} = {current_i} ; {i} < {al_nb} AND {i}-{current_i} < LIMIT_NB_PAGE*LIMIT_PAGE; {i}+=LIMIT_PAGE'>
-			<if cond='{i} / LIMIT_PAGE != {al_page}'>
-				<a href="alliances-my.html?al_page=<math oper='({i} / LIMIT_PAGE)' />"><math oper='(({i} / LIMIT_PAGE)+1)' /></a>
-			</if>
-			<else>
-				<math oper='(({i} / LIMIT_PAGE)+1)' />
-			</else>
-		 </for>
-	</if>
 </div>
+
+<if cond='is_array({al_shoot_array})'>
+	<p class="pages">
+	<for cond='{i} = {current_i} ; {i} < {al_nb} AND {i}-{current_i} < LIMIT_NB_PAGE*LIMIT_PAGE; {i}+=LIMIT_PAGE'>
+		<if cond='{i} / LIMIT_PAGE != {al_page}'>
+			<a href="alliances-my.html?al_page=<math oper='({i} / LIMIT_PAGE)' />"><math oper='(({i} / LIMIT_PAGE)+1)' /></a>
+		</if>
+		<else>
+			<math oper='(({i} / LIMIT_PAGE)+1)' />
+		</else>
+	</for>
+	</p>
+
+	<foreach cond='{al_shoot_array} as {result}'>
+		<div class="block" id="{result[shoot_msgid]}">
+		<img class="blason" title="{result[mbr_pseudo]}" src="img/mbr_logo/{result[shoot_mid]}.png" />
+		<h4><zurlmbr mid="{result[shoot_mid]}" pseudo="{result[mbr_pseudo]}"/> le {result[shoot_date_formated]}
+		<if cond="{result[mbr_mid]} == {_user[mid]} OR {al_admin}">
+			<a href="alliances-my.html?sub=del&msgid={result[shoot_msgid]}" title="Supprimer">
+				<img src="img/drop.png" alt="Supprimer" title="Supprimer" />
+			</a>
+		</if>
+		</h4>
+		<p>
+		{result[shoot_texte]}
+		</p>
+		<p class="signature">{result[mbr_sign]}</p>
+		</div>
+	</foreach>
+
+	<p class="pages">
+	<for cond='{i} = {current_i} ; {i} < {al_nb} AND {i}-{current_i} < LIMIT_NB_PAGE*LIMIT_PAGE; {i}+=LIMIT_PAGE'>
+		<if cond='{i} / LIMIT_PAGE != {al_page}'>
+			<a href="alliances-my.html?al_page=<math oper='({i} / LIMIT_PAGE)' />"><math oper='(({i} / LIMIT_PAGE)+1)' /></a>
+		</if>
+		<else>
+			<math oper='(({i} / LIMIT_PAGE)+1)' />
+		</else>
+	 </for>
+	 </p>
+</if>
+
 </else>

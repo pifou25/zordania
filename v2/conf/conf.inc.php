@@ -5,18 +5,19 @@ require_once('secret_parameters.php');
 define('ZORD_VERSION',"2.1.2");
 define('ZORD_SPEED_VFAST', 0.16667); // 1 Tour toutes les 30sec
 define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
+define('ZORD_SPEED_MEDIUM', 15); // 1 Tour toutes les 15 minutes
 define('ZORD_SPEED_NORMAL', 30); // 1 Tour par demie heure
 define('ZORD_SPEED_SLOW',60); // 1 Tour par heures
-define('ZORD_SPEED', ZORD_SPEED_VFAST);
+define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
 
 define('SITE_MAX_CONNECTED', 300);
 define('SITE_MAX_INSCRITS', 10000);
 
-$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "www.zordania.com";
+$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "www.zordania.fr";
 define('SITE_URL', "http://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");
-define('ZORDLOG_URL', 'archives.zordania.com'); // URL des archives
+define('ZORDLOG_URL', 'zordania.free.fr'); // URL des archives
 
 define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.com');
 define('SITE_CHARSET', 'utf-8'); // iso-8859-1, utf-8, ...
@@ -60,7 +61,7 @@ define('MBR_NIV_1',7000);
 define('MBR_NIV_2',35000);
 
 /* Alliance */
-define('ALL_MAX',6); // Nombre maximum de joueurs
+define('ALL_MAX',12); // Nombre maximum de joueurs
 define('ALL_MIN_PTS', 4000); // Points pour entrer
 define('ALL_MIN_ADM_PTS', 7000); // Points pour créer une alliance
 define('ALL_CREATE_PRICE', 1000); // Prix pour créer une alliance
@@ -131,7 +132,7 @@ define('MSG_DEL_OLD',30); //60 jours
 define('MSG_FLOOD_TIME',30); /* 30 secondes */
 define('MSG_MAX_MMSG',5); /* Max de multi messages */
 /* mid qui envoie le msg d'accueil cf ini/page.php */
-define('MBR_WELC', 6791 );
+define('MBR_WELC', 7203 );
 
 /* Historique */
 define('HISTO_DEL_OLD',7); //7 jours
@@ -188,31 +189,19 @@ $_races_aly = array(
 );
 
 $_css = array(14,4,3,2,1,10,11,15,16,5,6);
-$_forum_css = array(
-	1 => "marron"
-	, 2 => "metal"
-	, 3 => "classik"
-	, 4 => "zord2"
-	, 5 => "mobile"
-	, 6 => "selendia"
-	, 10 => "elficnight"
-	, 11 => "elfpower"
-	, 14 => "brown_underground"
-	, 15 => "last_hope"
-);
 $_adsense_css = array(1 => '9107849390', 2 => '2158156650', 3 => '2158156650', 
 	4 => '2158156650',5 => '9107849390', 10 => '2087210871', 11 => '2087210871', 14 => '0166103822', 
 	15 => '6454056819', 6 => '');
 
 
 $_regions = array(1=> array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
-	2 => array(1=>10, 2=>20, 3=>40, 4=>20, 5=>20, 6=>0, 7=>20, 8=>0),
+	2 => array(1=>10, 2=>20, 3=>40, 4=>20, 5=>20, 6=>10, 7=>20, 8=>0),
 	3 => array(1=>0, 2=> 0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	4 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
-	5 => array(1=>25, 2=>15, 3=>20, 4=>20, 5=>20, 6=>0, 7=>15, 8=>0),
+	5 => array(1=>25, 2=>15, 3=>20, 4=>20, 5=>20, 6=>10, 7=>15, 8=>0),
 	6 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	7 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
-	8 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>100, 7=>0, 8=>0, 10=>50),
+	8 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>100, 7=>0, 8=>0),
 	9 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0));
 
 /* include pour les constantes descriptives du jeu */
@@ -233,7 +222,7 @@ $_droits[GRP_NOBLE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBE
 $_droits[GRP_SAGE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_ANTI_FLOOD);
 $_droits[GRP_GARDE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_ANTI_FLOOD, DROIT_ADM, DROIT_ADM_AL, DROIT_ADM_MBR);
 $_droits[GRP_PRETRE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER,DROIT_PUNBB_MOD, DROIT_ANTI_FLOOD);
-$_droits[GRP_DEV] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_PUNBB_MOD, DROIT_ADM);
+$_droits[GRP_DEV] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_ADM);
 $_droits[GRP_ADM_DEV] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_MMSG,
 	DROIT_ADM, DROIT_ADM_AL, DROIT_ADM_COM, DROIT_ADM_MBR, DROIT_ADM_TRAV, DROIT_ADM_EDIT,
 	DROIT_PUNBB_MEMBER,DROIT_PUNBB_MOD,DROIT_PUNBB_ADMIN, DROIT_SDG,DROIT_ANTI_FLOOD);

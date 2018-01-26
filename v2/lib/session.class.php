@@ -337,16 +337,17 @@ class session
 		$lmodif = $this->sql->result($res, 0);
 		
 		/* Mise a jour des sessions */
-		$rand = gettimeofday(); /* Pour être sur de metre a jour */
+		$rand = gettimeofday(); /* Pour être sur de mettre a jour */
 		$rand = $rand['usec'];
 		$sql="UPDATE ".$this->sql->prebdd."ses SET ses_lact = '$act', ses_ldate = NOW(), ses_rand = $rand WHERE ses_sesid = '$sesid'";
 		$this->sql->query($sql);
 		if(!$this->sql->affected_rows()) {
+			/* useless - on permet d'avoir plusieurs IP car elle change tout le temps
 			if(!CRON) { // on peut etre connecté à la fois sur IRC et sur le jeu
 				$sql = "SELECT COUNT(*) FROM ".$this->sql->prebdd."ses WHERE ses_mid = $mid ";
-				if($this->sql->result($this->sql->query($sql), 0)) /* On est connecté ailleur, donc on part .... */
+				if($this->sql->result($this->sql->query($sql), 0)) // On est connecté ailleur, donc on part ....
 					$this->del_cookie();
-			}
+			}*/
 			/* Sinon, c'est juste qu'on a pas touché a la page depuis longtemps, mais qu'on a laissé le nav ouvert */
 			return false;
 		}	

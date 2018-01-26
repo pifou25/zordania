@@ -211,10 +211,12 @@
 
 				<p class="author">
 				<a href="forum-rep.html?tid={tpc[tid]}&qt={post[pid]}"><img src="img/forum/post.png"  title="citer"/></a>
-				<if cond='{is_modo} || ({mid} == {post[poster_id]})'>
+				<if cond='{is_modo}'>
 					<a href="forum-post.html?sub=conf&pid={post[pid]}">
 						<img src="img/drop.png" alt="Supprimer" title="Supprimer" />
 					</a>
+				</if>
+				<if cond='{is_modo} || ({mid} == {post[poster_id]})'>
 					<a href="forum-rep.html?sub=edit&pid={post[pid]}">
 						<img src="img/editer.png" alt="Editer" title="Editer" />
 					</a>

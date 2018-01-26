@@ -177,6 +177,16 @@ elseif($_sub == "ven") /* faire une vente */
 			$list_res = get_res_done($_user['mid']);
 			$list_res = clean_array_res($list_res);
 			$_tpl->set('com_list_res',$list_res[0]);
+			
+			// tous les cours
+			$cours = mch_get_cours();
+			$cours1 = array();
+			foreach($cours as $row){
+				$rid = $row['mcours_res'];
+				$value = $row['mcours_cours'];
+				$cours1[$rid] = array('min' => round($value*COM_TAUX_MIN,2), 'moy' => $value, 'max' => round($value*COM_TAUX_MAX,2));
+			}
+			$_tpl->set('com_cours',$cours1);
 		} else {
 			//Cours
 			$cours = mch_get_cours($com_type);
@@ -225,16 +235,23 @@ elseif($_sub == "ven") /* faire une vente */
 					if($res_nb < $com_nb)
 					 	$_tpl->set("vente_ok", false);
 					else {
+						$ok = array();
 						for($i = 1; ; $i++) { // $i <= $com_vente and $max_ventes < $nb_ventes+$i and $res_nb > $com_nb*$i
-							if($i > $com_vente) break;
-							if($max_ventes < $nb_ventes+$i) break;
-							if($res_nb < $com_nb*$i) break;
+							if($i > $com_vente) break; // nb de ventes choisi
+							if($max_ventes < $nb_ventes+$i){
+								$ok['nb'] = $i-1;
+								break; // nb max des ventes selon recherche
+							}
+							if($res_nb < $com_nb*$i){
+								$ok['res'] = $i-1;
+								break; // plus assez de ressources
+							}
 							/* Enlever les ressources */
 							mod_res($_user['mid'], array($com_type => $com_nb), -1);	
 							/* Mettre en vente */
 							mch_vente($_user['mid'], $com_type, $com_nb, $com_prix);
 						}
-						$_tpl->set("vente_ok", true);
+						$_tpl->set("vente_ok", $ok);
 					}
 				}
 			}

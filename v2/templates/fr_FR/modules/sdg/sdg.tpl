@@ -50,6 +50,7 @@
 			<input type="submit" name="submit" value="Voter"/>
 			</form>
 		</if>
+		<else><p>Vous ne pouvez pas voter.</p></else>
 	</else>
 </if>
 <else>

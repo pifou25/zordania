@@ -3,8 +3,7 @@ echo php_sapi_name()."\n";
 $mid = (isset($argv[1]) && is_numeric($argv[1]) ? (int)$argv[1] : 0);
 $limit = (isset($argv[2]) && is_numeric($argv[2]) ? (int)$argv[2] : 0);
 
-//require_once("/home/zordania/v2/conf/conf.inc.php");
-require_once("/home/zorddev/conf/conf.inc.php");
+require_once("../conf/conf.inc.php");
 require_once(SITE_DIR . "lib/divers.lib.php");
 require_once(SITE_DIR . "lib/mysql.class.php");
 require_once(SITE_DIR . "lib/Template.class.php");
@@ -12,7 +11,7 @@ require_once(SITE_DIR . "lib/vld.lib.php");
 require_once(SITE_DIR . "lib/member.lib.php");
 
 /* BDD */
-$_sql = new mysql(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
+$_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 $_sql->set_debug(SITE_DEBUG);
 

@@ -29,10 +29,8 @@
 <p>Il s'agit d'une valeur récapitulative d'une unité. Elle indique la valeur intrinsèque d'une unité. Cette statistique est cachée car elle ne comporte pas d'intérêt direct mais sachez qu'elle existe quand même. Cela dit, vous pouvez très aisément deviner les NdT.</p>
 
 <p align="center" class="menu_module">
-[ <a href="manual.html?race={man_race}&page=8">Précédent : Art de la guerre</a> ]
--
-[ <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a> ]
--
-[ <a href="manual.html?race={man_race}&page=16">Suivant : Déroulement d'un Combat</a> ]
+<a href="manual.html?race={man_race}&page=8">Précédent : Art de la guerre</a>
+<a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=16">Suivant : Déroulement d'un Combat</a>
 </p>
 

@@ -440,6 +440,12 @@ if($_act == "del") {
 { // exporter membre
 	$mid = request("mid", "uint", "get");
 	require_once("lib/mysql.lib.php");
+	
+	// telecharger fichier sql
+	header('Content-Type: text');
+	header('Content-Disposition: attachment; filename="export.'.$mid.'.sql"');
+	die(zrd_dump($mid));
+	
 	$_tpl->set("sql",htmlspecialchars(zrd_dump($mid)));	
 	$_tpl->set("mbr_act","exp");
 }
