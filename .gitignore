@@ -16,3 +16,5 @@ v2/scripts/cron.sh
 v2/cache/admin.cache.php
 v2/cache/global.cache.php
 *.gz
+*.bat
+v2/scripts/cron.bat

@@ -2,7 +2,7 @@
 
 *{
 	font-family: "DejaVu Sans", Verdana,Tahoma,Arial,sans-serif;
-    font-size: 16px;
+    font-size: 13px;
 	margin:0;
 	padding:0;
 	border: none;
@@ -13,7 +13,7 @@ div#logo {display:none;}
 div#stats {display:none;}
 div#espace_menu_centre {display:none;}
 div#skyscraper {display:none;}
-.cleaner {display:none;}
+/* .cleaner {display:none;} */
 
 a{
 	text-decoration: none;
@@ -22,16 +22,18 @@ a{
 
 /* 1er niveau de menu */
 div#menu {
-	width: 260px;
+	width: 202px;
 	left: -270px;
 	top: 58px;
 	border: none;
 	padding-top:0px;
+	margin-top:0px;
 	position:fixed;
 	overflow: hidden;
 	transition: 1s max-height 0.3s;
 	transition: 1s max-width 0.3s;
 	z-index:99;
+	bottom: inherit; /* reset default */
 }
 
 div#menu ul{
@@ -44,6 +46,10 @@ div#menu li{
 
 .menu_gauche {
 	margin:0px;
+	opacity:1;
+	width: unset;
+	background-color: unset;
+	border: none;
 }
 .menu_gauche a{
   text-decoration: none;
@@ -75,12 +81,16 @@ div#menu li{
     padding: 0px;
 	margin: 0px;
     transition: all 0.25s ease-in-out;
+	/*
+	border: 1px solid;
+	*/
+    border-radius: 5px;
 }
 .menu_gauche input:checked + ul li {
     padding: 0.2em 0.3em;
     height: 1em;
     opacity: 1;
-    border: 1px solid #222;
+    border: 1px solid;
 }
 
 /* Titres */
@@ -89,7 +99,7 @@ h2
   font-size: 20px;
   padding:5px;
   margin:0;
-  border: 1px solid #222;
+  border: 1px solid;
 }
 
 div.haut, div.bas{
@@ -111,12 +121,14 @@ div#contenu{
 	width:100%;
 	border:none;
 }
+
+
 div#contenu li{
 	margin-left:20px;
 	list-style:circle;
 }
 div#contenu li ul{
-	border: 1px solid #222;
+	border: 1px solid;
 }
 div#contenu dt{
 	border: 1px solid #222;
@@ -133,6 +145,7 @@ div#contenu dt img{
 }
 #module .contenu{
 	padding:15px;
+	overflow-x:scroll;
 }
 #module label{
 	margin-left:0px;
@@ -144,7 +157,7 @@ div#contenu dt img{
 div#actbar {
 	position:fixed;
 	padding-left:2px;
-	border: 1px solid #222;
+	border: 1px solid;
 	width:100%;
     z-index: 99;
     top: 0px;
@@ -153,11 +166,17 @@ div#actbar {
     height: 34px;
     margin:0px;
     text-align: left;
+	left:initial;
+	overflow-x:scroll;
 }
+div#actbar::-webkit-scrollbar {
+	display: none;
+}
+
 div#actbar ul{
 	position:relative;
 	z-index:2; /* devant div#menu */
-	width: 800px;
+	width: 540px;
 }
 
 div#actbar li{
@@ -166,20 +185,18 @@ div#actbar li{
     margin: 0px;
     padding:2px;
 }
-div#actbar li > img{
-	display: none;
-}
+
 /* afficher le 1er icone */
 div#actbar li:nth-child(1){
 	display:inline;
 }
-/* masquer les icones au dela de 8 */
+/* masquer les icones au dela de 8 
 div#actbar li:nth-child(n+10){
 	display:none;
-}
+}*/
 
 .block_forum{
-	border: 1px solid #222;
+	border: 1px solid;
 	padding:2px;
 }
 div.block_forum p.post, div.block_forum p.post *{
@@ -202,7 +219,8 @@ div.block_forum p.author, div.block_forum p.author *{
 	text-align: center;
 }
 .menu_module a, .retour_module a{
-	border: 1px solid #222;
+	border-width: 1px;
+	border-style: solid;
     border-radius: 8px;
     padding:2px;
 	text-decoration: none;
@@ -210,7 +228,7 @@ div.block_forum p.author, div.block_forum p.author *{
 	font-style: bold;
 }
 div.forum, form{
-	border: 1px solid #222;
+	border: 1px solid;
 	margin:2px;
 	padding:2px;
 }
@@ -252,6 +270,7 @@ input, button, textarea, select{
 	padding:2px;
 	font-weight: bold;
 	border-radius: 4px;
+	min-width: 25px;
 }
 #formulaire input{
 	width:120px;

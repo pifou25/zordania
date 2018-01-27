@@ -191,3 +191,16 @@ z-index: 5;
 	cursor: pointer;
 }
 
+#dialog-modal{
+	z-index:101;
+}
+#dialog-modal table, #dialog-modal form{
+	border:none;
+}
+#dialog-modal tr, #dialog-modal td{
+	border:none;
+	background-color: initial;
+}
+#dialog-modal fieldset{
+	border:1px solid #000;
+}
