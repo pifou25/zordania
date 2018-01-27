@@ -1,15 +1,19 @@
 # fichiers temporaires
 v2/tmp/*.compiled.php
+v2/backup
+v2/logs
 
 v1/**/*
 v2/www/img/mbr_logo/*.png
 v2/www/img/al_logo/*.png
+v2/www/phpMyAdmin
 
 v2/conf/secret_parameters.php
 
 *.tmp
 *.log
 *.csv
+Thumbs.db
 
 v2/scripts/cron.bat
 v2/scripts/cron.sh
