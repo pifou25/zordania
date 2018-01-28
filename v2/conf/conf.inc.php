@@ -13,7 +13,7 @@ define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
 define('SITE_MAX_CONNECTED', 300);
 define('SITE_MAX_INSCRITS', 10000);
 
-$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "www.zordania.fr";
+$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.fr";
 define('SITE_URL', "http://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");

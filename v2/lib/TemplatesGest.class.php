@@ -61,8 +61,7 @@ class TemplatesGest
 			$fp = fopen($this->dir.$file,'r');
 			$contenu = fread($fp,filesize($this->dir.$file));
 			$html = $this->colorizeHTML($contenu);
-			$contenu = str_replace('&nbsp;','[espace]',utf8_decode($contenu));
-			//$contenu = str_replace('&nbsp;','[espace]',$contenu);
+			$contenu = str_replace('&nbsp;','[espace]',$contenu);
 			$final_text = htmlentities($contenu, ENT_QUOTES);
 			fclose($fp);
 		
