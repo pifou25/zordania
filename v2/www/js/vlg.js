@@ -424,9 +424,6 @@ var VlgV2 = {
 			this.VlgCoords[20] = new Array(2, 363);
 			this.VlgCoords[21] = new Array(660, 553);
 			this.VlgCoords[22] = new Array(479, 19);
-			// recherches affichent une img?
-			// this.SrcCoords[15] = new Array(75,0);
-			// this.SrcCoords[16] = new Array(0,22);
 			this.VlgZindex[6] = 10;
 			this.VlgZindex[10] = 10;
 			break;

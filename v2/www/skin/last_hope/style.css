@@ -129,50 +129,20 @@ th {
 }
 
 
-/* NiceTitles */
-div#toolTip { 
-    background-color: #555555;
-    border-color: #000000; 
-    border-style: solid;
-    border-width: 0px;
-    color: #FFFFFF; 
-    filter: Alpha( Opacity=75, Style=0);
-    font-family: Verdana, 
-    Arial, sans-serif; 
-    font-size: 10px; 
-    font-weight: bold; 
-    left: 0px; -moz-border-radius: 5%; -moz-opacity: 0.75; 
-    padding: 5px;
-    position: absolute;
-    top: 0px; 
-    width: auto;
-    z-index: 20;
-}
-div#toolTip p {
-	margin: 0;
-	padding: 0 3px;
-}
-div#toolTip p em { 
-	display:block; 
-	margin-top:3px;
-	color:#f60;
-	font-style:normal;
-	font-weight:bold;
-}
-
 /* Tout ce qu'il y'a dans body */
 #contenu {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 10px;
 	text-align: left;
-	width: 1100px;
+	width: 1220px;
 	position: relative;
 }
 
 /* Logo en haut */
 #logo {
 	width: 900px;
+	float:right;
 }
 #logo .haut, #logo .bas {
 	height: 2px;
@@ -184,8 +154,7 @@ div#toolTip p em {
     overflow: hidden;
     background-image: url(img/banniere.png); 
     background-repeat: no-repeat;
-    height: 0px !important; /* for most browsers */
-    height /**/:33px; /* for IE5.5's bad box model */
+    height: 0px;
 }
 
 /* Y'a écrit "zordania" */
@@ -196,10 +165,11 @@ div#toolTip p em {
 
 /* Boite de pub */
 #pub {
+	display:none;
 	margin-left: 50px;
 	float: left; 
 	width: 450px;
-	filter:alpha(opacity=60); -moz-opacity:0.6; opacity: 0.6;
+	opacity: 0.6;
 }
 #pub .haut {
 	height: 30px;
@@ -208,9 +178,10 @@ div#toolTip p em {
 /* Boite de stats */
 #stats {
 	background-color:#000000;
-	filter:alpha(opacity=70); -moz-opacity:0.9; opacity: 0.7;
+	opacity: 0.7;
 	float: left;
 	width: 250px;
+	padding-top:10px;
 }
 
 #comptearebour, #date_rebour
@@ -254,6 +225,7 @@ color: #ffffff;
 
 /* Espace entre les stats et la pub */
 #espace_stats_pub {
+	display:none;
 	float: left;
 	visibility: hidden;
 	width: 55px;
@@ -261,6 +233,7 @@ color: #ffffff;
 
 /* Div entre le menu et le centre, permet de les espacer */
 #espace_menu_centre {
+	display:none;
 	float: left;
 	visibility: hidden;
 	width: 30px;
@@ -273,9 +246,9 @@ color: #ffffff;
 
 #module {
 	background-color: #000000;
-	filter:alpha(opacity=70); -moz-opacity:0.7; opacity: 0.7;
+	opacity: 0.7;
 	float: left;
-	width: 690px; 
+	width: 1050px; 
 }
 
 #module .bas {
@@ -298,15 +271,16 @@ color: #ffffff;
 	background-image: url(img/bordvertical.png); 
 	background-position: right; 
 	background-repeat: repeat-y; 
-	padding: 40px 25px 5px 25px;
+	padding: 10px 25px 5px 25px;
 }
 
 #actbar {
-    position: absolute;
-    top: 258px;
+	float:right;
+    top: -10px;
+    /*position: absolute;
+    left: 290px;*/
     height: 40px;
     text-align: right;
-    left: 290px;
     z-index: 15;
 }
 #actbar ul {

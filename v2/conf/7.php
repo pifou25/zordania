@@ -1030,7 +1030,7 @@ $this->src[S7_EXPLO_PROF]=array(
 		"group"	=>	8,
 		"need_btc"	=>  array(B7_SONDEUR_ABYSSAL),
 		"prix_res"	=>	array(R7_BOIS => 100, R7_GRANIT => 120, ),
-		'vlg' => true
+		//'vlg' => true
 );
 
 $this->src[S7_EXPLO_AQUA]=array(
@@ -1039,7 +1039,7 @@ $this->src[S7_EXPLO_AQUA]=array(
 		"need_btc"	=>	array(B7_MINE_PROF),
 		"need_src"	=>	array(S7_EXPLO_PROF),
 		"prix_res"	=>	array(R7_OR => 30, R7_BOIS => 75, R7_GRANIT => 80, R7_ADAMANTITE => 75, R7_SARONITE => 75),
-		'vlg' => true
+		//'vlg' => true
 );
 
 $this->src[S7_RENOVATION]=array(

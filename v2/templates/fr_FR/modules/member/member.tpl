@@ -72,12 +72,12 @@
 	
 	<p class="menu_module">
 	<a href="parrain.html" title="Parrainer.">Parrainage</a>
-	<a href="zzz.html" title="Mise en veille du compte.">Mise&amp;en&amp;veille</a>
-	<a href="member-edit.html" title="Paramétrer mon compte (avatar, signature, etc ...)">Paramétrer&amp;mon&amp;compte</a>
-	<a href="member-del.html?sub=pre" title="Supression du compte">Effacer&amp;mon&amp;compte</a>
+	<a href="zzz.html" title="Mise en veille du compte.">Mise&nbsp;en&nbsp;veille</a>
+	<a href="member-edit.html" title="Paramétrer mon compte (avatar, signature, etc ...)">Paramétrer&nbsp;mon&nbsp;compte</a>
+	<a href="member-del.html?sub=pre" title="Supression du compte">Effacer&nbsp;mon&nbsp;compte</a>
 	
-	<if cond="{_user[etat]}==MBR_ETAT_INI"><a href="ini.html" title="Initialiser">Initialiser&amp;mon&amp;compte</a>
-	</if><else><a href="member-edit.html?sub=reset" title="Recommencer une partie">Réinitialiser&amp;mon&amp;compte</a>
+	<if cond="{_user[etat]}==MBR_ETAT_INI"><a href="ini.html" title="Initialiser">Initialiser&nbsp;mon&nbsp;compte</a>
+	</if><else><a href="member-edit.html?sub=reset" title="Recommencer une partie">Réinitialiser&nbsp;mon&nbsp;compte</a>
 	</else>
 	</p>
 	</else>

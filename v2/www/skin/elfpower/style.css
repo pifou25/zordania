@@ -125,7 +125,7 @@ input,select {
     margin: 2px;
     background: #3B372C;
     border: thin solid #000;
-	color: black;
+	color: #ffebd1;
 }
 
 textarea:focus,input:focus
@@ -136,7 +136,7 @@ textarea:focus,input:focus
 textarea
 {
     background: #3B372C;
-    color: #fff;
+    color: #ffebd1;
     border: thin solid #000;
 }
 
@@ -180,6 +180,7 @@ td {
 #logo {
     margin-bottom: 6px;
     width: 800px;
+	float: right;
 }
 
 #logo h1 {
@@ -216,7 +217,7 @@ td {
     margin-right: auto;
     margin-top: 10px;
     text-align: left;
-    width: 1100px;
+    width: 1200px;
     border: 1px solid #000000;
     background: #353229;
 
@@ -259,7 +260,7 @@ td {
 
 #module {
     float: left;
-    width: 700px;
+    width: 900px;
     position: relative;
     bottom: 47px;
 	margin-top: -7px;
@@ -270,9 +271,11 @@ td {
     float: right;
     position: relative;
     bottom: 90px;
+	top: -30px;
     padding: 3px 3px 3px 3px;
     margin: 1px;
     margin-right: 5px;
+	z-index:10;
 }
 
 #actbar li {
@@ -406,7 +409,9 @@ td {
     background: #3B372C;
     font-weight:bold;
 }
-
+.infos{
+	color: #ffebd1;
+}
 .ok {
     border-color: #226622;
     color: #226622;
@@ -481,6 +486,9 @@ td {
 	color: #b3b3aa;
 	padding: 5px;
 	margin-top: 10px;
+	margin-left:auto;
+	margin-right:auto;
+	width:640px;
 }
 
 .block_forum {

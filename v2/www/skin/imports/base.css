@@ -9,10 +9,13 @@ img {
     overflow: auto;
 }
 
-.titre_module,.menu_module,.retour_module,.center,.titre_news {
+.titre_module,.menu_module,.retour_module,.center {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+.titre_module,.menu_module,.retour_module {
+	line-height:2;
 }
 
 .menu_module a,.retour_module a {
