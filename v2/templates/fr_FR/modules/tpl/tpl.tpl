@@ -1,6 +1,6 @@
 <p class="menu_module">
-[ <a href="index.php?file=admin&module=tpl" title="Liste des templates">Liste</a> ]
-[ <a href="admin.html?module=tpl&dir=fr_FR/modules/" title="Liste des modules">Modules/</a> ]
+<a href="index.php?file=admin&module=tpl" title="Liste des templates">Liste</a>
+<a href="admin.html?module=tpl&dir=fr_FR/modules/" title="Liste des modules">Modules/</a>
 </p>
 <hr />
 <if cond='{tpl_act} == "liste"'>
@@ -36,7 +36,7 @@
 				<td>{file_array[size]}</td>
 				<td>
 					<if cond='{file_array[ext]} != "dir"'>
-					<a href="index.php?file=admin&module=tpl&act=edit&tpl={tpl_current_dir}{file_array[name]}" title="Editer {file_array[name]}"><img src="img/editer.png" alt="Editer" /></a>
+					<a href="admin.html?module=tpl&amp;act=edit&amp;tpl={tpl_current_dir}{file_array[name]}" title="Editer {file_array[name]}"><img src="img/editer.png" alt="Editer" /></a>
 					</if>
 				</td>
 			</tr>
