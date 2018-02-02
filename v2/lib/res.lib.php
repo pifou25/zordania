@@ -115,8 +115,10 @@ function get_res_todo($mid, $cond = [])
 
 	$req = $_sql2::table('res_todo')
 		->select(['rtdo_id', 'rtdo_type', 'rtdo_nb'])
-		->where('rtdo_mid', '=', $mid)
-		->where('rtdo_nb', '>', 0);
+		->where([
+			['rtdo_nb', '>', 0], 
+			['rtdo_mid', '=', $mid]
+		]);
 	
 	if($rid)
 		$req->where('rtdo_id', '=', $rid);
