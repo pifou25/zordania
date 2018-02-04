@@ -351,6 +351,10 @@ class member{
 	}
 	
 	function nb_btc($btc = array(), $etat = array()){
+		// compter pour 1 type de bat:
+		if(is_int($btc))
+			return count($this->btc( array($btc), $etat));
+		
         $tmp = $this->btc( $btc, $etat);
         // compter les btc par type
         $result = array();
@@ -409,6 +413,7 @@ class member{
             
         /* Unités */
         $have_unt = $this->nb_unt_done();
+        $prix_unt = $this->get_conf("btc", $type, "prix_unt");
     
         /* Les recherches qu'il faut avoir */
         foreach($need_src as $src_type) {
@@ -448,8 +453,8 @@ class member{
                 $bad_btc[] = $btc_type;
         }
         
-        /* La limite */
-        if($limite && isset($have_btc[$type]['btc_nb']) && $have_btc[$type]['btc_nb'] >= $limite)
+        /* La limite : recompter pour prendre en compte les btc TODO */
+        if($limite && $this->nb_btc($type) >= $limite) // isset($have_btc[$type]['btc_nb']) && $have_btc[$type]['btc_nb'] >= $limite)
             $limit_btc = $limite;
 
         return array('need_src' => $bad_src, 'need_btc' => $bad_btc, 'prix_res' => $bad_res, 'prix_trn' => $bad_trn, 'prix_unt' => $bad_unt, 'limit_btc' => $limit_btc);
@@ -458,7 +463,7 @@ class member{
     /*** terrains ***/
     function trn(){
         if(!$this->trn_load){
-            $have_trn = get_trn($mid);
+            $have_trn = get_trn($this->mid);
             $have_trn = clean_array_trn($have_trn);
             $this->trn = $have_trn[0];
             $this->trn_load = true;
