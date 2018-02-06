@@ -5,7 +5,7 @@ set mydate=%date:~6,4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%
 set mydate=%mydate: =0%
 
 : repertoire du PHP CLI
-set REP_PHP=C:\wamp64\bin\php\php5.6.31\php.exe
+set REP_PHP=C:\ProgramData\wamp64\bin\php\php7.1.9\php.exe
 
 cd ..
 set ZPATH=%CD%
