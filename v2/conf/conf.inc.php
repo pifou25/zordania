@@ -140,7 +140,7 @@ define('HISTO_DEL_LOG_ALLY', 15); // 15 jours
 
 /* Commerce */
 define('MCH_ACCEPT',4); //Nombre de tours avant acceptation (avec un petit rand() dans le cron)
-define('MCH_MAX',30000); //Nombre de tours max
+define('MCH_MAX',1000); //Nombre de tours max
 define('MCH_COURS_MIN',1);
 define('MCH_OLD',30); //calcul des cours du marché sur NB jours (les ventes plus vieilles sont supprimées)
 
@@ -188,17 +188,17 @@ $_races_aly = array(
 		8 => array(1 => 12, 2 => 12, 3 => 12, 4 => 12, 5 => 12, 7=> 12, 8=>12),
 );
 
-$_css = array(14,4,3,2,1,10,11,15,16,5);
+$_css = array(14,4,3,2,1,10,11,15,16,5,6);
 $_adsense_css = array(1 => '9107849390', 2 => '2158156650', 3 => '2158156650', 
 	4 => '2158156650',5 => '9107849390', 10 => '2087210871', 11 => '2087210871', 14 => '0166103822', 
-	15 => '6454056819');
+	15 => '6454056819', 6 => '');
 
 
 $_regions = array(1=> array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
-	2 => array(1=>10, 2=>20, 3=>40, 4=>20, 5=>20, 6=>10, 7=>20, 8=>0),
+	2 => array(1=>10, 2=>20, 3=>40, 4=>20, 5=>20, 6=>5, 7=>20, 8=>0),
 	3 => array(1=>0, 2=> 0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	4 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
-	5 => array(1=>25, 2=>15, 3=>20, 4=>20, 5=>20, 6=>10, 7=>15, 8=>0),
+	5 => array(1=>25, 2=>15, 3=>20, 4=>20, 5=>20, 6=>5, 7=>15, 8=>0),
 	6 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	7 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	8 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>100, 7=>0, 8=>0),
@@ -242,7 +242,7 @@ $_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif',
 $_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
 		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
 
-define('SITE_DEBUG',true);
+define('SITE_DEBUG',false);
 define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
 define('CRON', substr(php_sapi_name(), 0, 3) == 'cli');
