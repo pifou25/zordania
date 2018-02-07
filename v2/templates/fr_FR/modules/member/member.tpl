@@ -1,4 +1,4 @@
-<if cond='!isset({mbr_act})'>
+﻿<if cond='!isset({mbr_act})'>
 	<if cond='isset({mbr_not_loged})'>
 		<div class="error">Vous n'êtes pas connecté.</div>
 	</if>

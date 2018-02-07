@@ -1,4 +1,4 @@
-<dl>
+﻿<dl>
  <foreach cond='{man_array} as {btc_id} => {btc_value}'>
       <dt id="btc_{btc_id}">
       <h3>
@@ -48,10 +48,10 @@
             </foreach><br/>
        </if>
      <if cond="isset({btc_value[need_btc]})">
-          Bâtiment:
+          <p>Bâtiment:
           <foreach cond="{btc_value[need_btc]} as {btc_id2}">
-			   <span class="menu_module"><a href="#btc_{btc_id2}">{btc[{man_race}][alt][{btc_id2}]}</a></span>
-          </foreach><br/>
+               <zimgbtc type="{btc_id2}" race="{man_race}" />
+          </foreach></p>
      </if>
 
      <if cond='isset({btc_value[prod_res_auto]})'>
