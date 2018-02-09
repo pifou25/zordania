@@ -30,11 +30,8 @@
 </ul>
 <if cond='{ses_loged} && {_user[login]} != "guest"'>
 	<div class="menu_module">
-	<br />
 	<a href="notes.html" title="Gérez vos notes...">Notes</a>
-	-
 	<a href="histo.html" title="Événements importants ...">Événements</a>
-	-
 	<if cond='{_user[msg]} == 1'>
 	 	<a href="msg.html" title="Vous avez {_user[msg]} nouveau message."><strong>{_user[msg]}</strong><img src="img/msg.png"/></a>
 	</if>

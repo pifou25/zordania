@@ -12,9 +12,8 @@
 }
 
 body {
-	/*background-color:#e2dd9d;*/
 	background: #e2dd9d url('img/bckgrnd.zordania.jpg') no-repeat center top;
-    /*background-attachment: fixed;*/
+    background-attachment: fixed;
     /*background-position: center top;*/
 	color: #DFD9CD;
 	font-family: Dejavu, Verdana,Tahoma,Arial,sans-serif;
@@ -26,34 +25,32 @@ body {
 
 #espace_stats_pub {display:none;}
 #pub {display:none;}
-/* div#logo {display:none;}*/
-div#stats {display:none;}
+div#logo {display:none;}
 div#espace_menu_centre {display:none;}
 div#skyscraper {display:none;}
 .cleaner {display:none;}
 
-div#logo, div#stats, div#actbar, div#module div.centre, div#menu {
+div#stats, div#module div.centre, div#menu {
 	border:2px solid #de8e2b;
-	-moz-border-radius:4px 4px;
-	-webkit-border-radius:4px 4px;
 	border-radius:4px 4px;
 	background-color:rgba(226,221,157,0.7);
 	padding:2px;
 }
 
 /*
- * #logo
+ * #statistiques
  */
 
-div#logo {
+div#stats {
 	position:fixed;
     top: 0px;
     text-align: left;
 	margin-left:10px;
 	margin-top:5px;
 }
-div#logo *{
-	font-size: 90%;
+div#stats *{
+	list-style: none;
+	font-size: 95%;
 }
 
 /*
@@ -69,6 +66,10 @@ div#actbar {
     text-align: right;
 	margin-top:5px;
 	margin-right:10px;
+	background-color: rgba(249, 237, 151, 1);
+	border:2px solid #de8e2b;
+	border-radius:4px 4px;
+	padding:2px;
 }
 div#actbar ul{
 	position:relative;
@@ -111,7 +112,7 @@ div#menu {
 	margin:5px;
 	padding-left:2px;
 	list-style-type: none; 
-	background-color:#f9ed97;
+	background-color: rgba(249, 237, 151, 1);
 }
 .menu_gauche li a{
 	text-decoration: none;
@@ -144,9 +145,11 @@ div#menu {
 }
 #module table tr:nth-child(even) td{
 	border-top: 1px solid #de8e2b;
+	background-color: rgba(249, 237, 151, 1);
 }
 #module table tr:nth-child(odd) td{
 	border-top: 1px solid #efc087;
+	background-color: rgba(249, 237, 151, 0.8);
 }
 
 dt, dd{
@@ -182,7 +185,7 @@ dt, dd{
 }
 
 #module div.centre{
-	background-color: #e7a22b;
+	background-color: rgba(249, 237, 151, 1);
 	max-width:1020px;
 	min-width:60%;
 	margin-left:auto;
@@ -225,10 +228,8 @@ dt, dd{
 }
 .forum{
 	border:2px solid #de8e2b;
-	-moz-border-radius:4px 4px;
-	-webkit-border-radius:4px 4px;
 	border-radius:4px 4px;
-	background-color: rgba(222,142,43);
+	background-color: rgba(249, 237, 151, 1);
 	padding:2px;
 	margin-left:50px;
 	margin-right:50px;
@@ -256,6 +257,7 @@ dt, dd{
 	margin-top:5px;
 	margin-bottom:5px;
 	padding:2px;
+	background-color: rgba(249, 237, 151, 1);
 }
 .block_forum .titre{
 	display:none;
@@ -285,6 +287,7 @@ dt, dd{
 	margin-top:5px;
 	margin-bottom:5px;
 	padding:2px;
+	background-color: rgba(249, 237, 151, 1);
 }
 .block h4, .block h4 a{
 	font-size: 11px;

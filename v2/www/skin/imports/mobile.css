@@ -108,9 +108,9 @@ div.haut, div.bas{
 
 /* ne pas confondre #contenu le div contenant tout et .contenu une classe */
 div#module {
-	margin-left: auto;
-	margin-right: auto;
 	margin-top: 0px;
+	margin-left:0px;
+	margin-right:0px;
 	padding-top:30px;
 	width:100%;
 	overflow:hidden;
@@ -144,7 +144,7 @@ div#contenu dt img{
 	vertical-align:middle;
 }
 #module .contenu{
-	padding:15px;
+	padding:5px;
 	overflow-x:scroll;
 }
 #module label{
@@ -194,6 +194,30 @@ div#actbar li:nth-child(1){
 div#actbar li:nth-child(n+10){
 	display:none;
 }*/
+
+/* village */
+#village{
+	overflow-x:scroll;
+	overflow-y:hidden;
+	width:100%;
+}
+/* width */
+#village::-webkit-scrollbar {
+    width: 10px;
+}
+/* Track */
+#village::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+/* Handle */
+#village::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+/* Handle on hover */
+#village::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
 
 .block_forum{
 	border: 1px solid;
