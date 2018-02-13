@@ -88,9 +88,9 @@
                 <fieldset><legend>{btcopt[{_user[race]}][{btc_type}][unt]}</legend>
                     <label for="nb">
                     <zimgbtc race="{_user[race]}" type="{btc_type}"  />
-                    </label>
+                    </label><br/>
                     <input type="hidden" name="type" value="{unt_type}" />
-                    <input type="number" name="nb" id="nb" style="width:2em" />
+                    <input type="number" name="nb" id="nb" style="width:5em" />
                     <input type="submit" value="{btcopt[{_user[race]}][{btc_type}][unt]}" />
                 </fieldset>
             </form>
@@ -99,8 +99,8 @@
                 <fieldset><legend>Pendaison.</legend>
                     <label for="unt_nb">
                         <zimgunt race="{_user[race]}" type="{unt_type}"  /><img class="left" src="img/{_user[race]}/div/pendre.png" alt="Pendre" />
-                    </label>
-                    <input type="number" name="unt_nb" id="nb" style="width:2em"/>
+                    </label><br/>
+                    <input type="number" name="unt_nb" id="nb" style="width:5em"/>
                     <input type="submit" value="Pendez-les !!!" />
                 </fieldset>
             </form>
