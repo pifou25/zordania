@@ -40,6 +40,8 @@ define("U6_GARDE2", 10);
 define("U6_COUPLE", 11);
 define("U6_GARDE3", 12);
 define("U6_CHEVALIER_XP", 13);
+define("U6_MAGICIEN", 14);
+define("U6_ARBALETRIER", 15);
 
 define("S6_ARME_1", 1);
 
@@ -176,7 +178,7 @@ $this->btc[B6_DONJON]=array(
 		"tours"	=>	500,
 		"bonus" 	=>  array('gen' => 300, 'bon' => 40),
 		"prix_res"	=>	array(R6_BOIS => 2250, R6_PIERRE => 2250, R6_ACIER => 200),
-		"prod_pop"	=>	700,
+		"prod_pop"	=>	1000,
 		"prod_src"	=>	true,
 		"prod_unt"	=>	80,
 		"prod_res_auto"	=>	array(R6_NOURRITURE => 1000, R6_OR => 20)
@@ -408,7 +410,7 @@ $this->unt[U6_LUTIN_MALIN] = array(
 
 $this->unt[U6_CHEVALIER_XP]=array(
 	"def"	=>	25,
-	"vie"	=>	19,
+	"vie"	=>	28,
 	"atq_unt"	=>	19,
 	"vit"	=>	13,
 	"group"	=>	13,
@@ -417,10 +419,38 @@ $this->unt[U6_CHEVALIER_XP]=array(
 	"prix_res"	=>	array(R6_EPEE_LON => 1, R6_COTTE_MAILLE => 1, R6_CHEVAUX => 1, R6_B_ACIER => 1, R6_ACIER => 2),
 	'need_btc' => array(B6_DONJON, ),
 	'in_btc' => array(B6_DONJON, ),
+	"cron"	=>	true,
 );
 
+		
+$this->unt[U6_ARBALETRIER]=array(
+		"def"	=>	17,
+		"vie"	=>	23,
+		"atq_unt"	=>	20,
+		"vit"	=>	9,
+		"bonus" => array('vie' => 1),
+		"group"	=>	13,
+		"rang" => 8,
+		"role"	=>	TYPE_UNT_DISTANCE,
+		"prix_res"	=>	array(R6_ARBALETE => 1,R6_COTTE_MAILLE => 1, R6_OR => 5),
+		"need_btc"	=>	array(B6_DONJON),
+		"in_btc"	=>	array(B6_DONJON),
+);
 
-//</unt>
+$this->unt[U6_MAGICIEN]=array(
+		"def"	=>	6,
+		"bonus"	=> array('def' => 1.5),
+		"vie"	=>	20,
+		"atq_unt"	=>	7,
+		"vit"	=>	4,
+		"group"	=>	13,
+		"role"	=>	TYPE_UNT_MAGIQUE,
+		"rang" => 12,
+		"prix_res"	=>	array(R6_NOURRITURE => 30, R6_OR => 5, R6_ACIER =>2, R6_MITHRIL => 2),
+		"need_btc"	=>	array(B6_DONJON),
+		"in_btc"	=>	array(B6_DONJON),
+);	
+
 
 //<src>
 $this->src[S6_ARME_1]=array(

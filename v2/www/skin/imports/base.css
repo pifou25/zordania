@@ -82,12 +82,13 @@ img {
     float: right;
 }
 
-/* Village (oui, je sais, cette page de sert a rien */
+/* Village */
 #village {
     position: relative;
     text-align: left;
     margin-left: auto;
     margin-right: auto;
+	width: 1000px;
 }
 
 #village .btc {

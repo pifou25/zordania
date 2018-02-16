@@ -101,6 +101,9 @@ function initToggle(){
 		var src=($(this).attr('src')==='img/plus.png'?'img/minus.png':'img/plus.png');
 		$(this).attr('src',src);
 	});
+	
+	// remove class to avoid reccursive effects
+	$(".toggle").removeClass("toggle");
 }
 
 function traiterFormulaires(){
