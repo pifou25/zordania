@@ -44,7 +44,7 @@
 	<if cond='{mbr_array[can_def]}'>
 		<a href="leg-move.html?sub=atq&cid={mbr_array[mbr_mapcid]}" title="Soutenir {mbr_array[mbr_pseudo]}"><img src="img/{_user[race]}/div/def.png" /> Soutenir</a>
 	</if>
-	<elseif cond='{mbr_array[can_atq]}'>
+	<elseif cond='{mbr_array[can_atq]} && !({mbr_array[mbr_gid]} == GRP_PNJ || {mbr_array[mbr_race]} == 6)'>
 		<a href="leg-move.html?sub=atq&cid={mbr_array[mbr_mapcid]}" title="Attaquer {mbr_array[mbr_pseudo]}"><img src="img/{_user[race]}/div/atq.png" /> Attaquer</a>
 	</elseif>
 	<a href="msg-new.html?mbr_mid={mbr_array[mbr_mid]}" title="Envoyer un message à {mbr_array[mbr_pseudo]}"><img src="img/msg.png"/> Ecrire</a>

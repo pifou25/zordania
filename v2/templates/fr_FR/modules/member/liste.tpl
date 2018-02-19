@@ -99,7 +99,7 @@
 				<if cond='{result[can_def]}'> - 
 					<a href="leg-move.html?sub=atq&amp;cid={result[mbr_mapcid]}" title="Soutenir {result[mbr_pseudo]}"><img src="img/{_user[race]}/div/def.png" /></a>
 				</if>
-				<elseif cond='{result[can_atq]}'> - 
+				<elseif cond='{result[can_atq]} && !({result[mbr_gid]} == GRP_PNJ || {result[mbr_race]} == 6)'> - 
 					<a href="leg-move.html?sub=atq&amp;cid={result[mbr_mapcid]}" title="Attaquer {result[mbr_pseudo]}"><img src="img/{_user[race]}/div/atq.png" /></a>
 				</elseif>
 			</if>
@@ -214,7 +214,7 @@
 					<img src="img/{_user[race]}/div/def.png" />
 					</a>
 				</if>
-				<elseif cond='{result[can_atq]}'> - 
+				<elseif cond='{result[can_atq]} && !({result[mbr_gid]} == GRP_PNJ || {result[mbr_race]} == 6)'> - 
 					<a href="leg-move.html?sub=atq&amp;cid={result[mbr_mapcid]}" title="Attaquer {result[mbr_pseudo]}">
 					<img src="img/{_user[race]}/div/atq.png" />
 					</a>
