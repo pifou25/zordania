@@ -154,6 +154,7 @@ define('GRP_ADM_DEV',14);
 define('GRP_CHAMP_REG',15);
 define('GRP_PNJ',16);
 define('GRP_EVENT',17);
+define('GRP_KING',18);
 
 /* Smileys */
 // Tous les Smileys
