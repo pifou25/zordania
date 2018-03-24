@@ -239,7 +239,7 @@ $_votes = array();
 $_votes[VOTES_HIT] = array('img' => 'http://www.jeux-alternatifs.com/im/bandeau/hitP_88x31_v3.gif',
 		'url' => 'http://www.jeux-alternatifs.com/Zordania-jeu177_hit-parade_1_1.html', 'delay' => 24);
 $_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif', 
-		'url' => 'http://www.rpg-paradize.com/?page=vote&vote=36937', 'delay' => 24);
+		'url' => 'https://www.rpg-paradize.com/site-Zordania.fr-110465', 'delay' => 3);
 $_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
 		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
 
