@@ -670,7 +670,7 @@ function get_mbr_pos($cond) {
 	else
 		return array();
 	
-	$sql = "SELECT mbr_mid, mbr_mapcid, map_x, map_y, mbr_pseudo, mbr_points ";
+	$sql = "SELECT mbr_mid, mbr_gid, mbr_race, mbr_mapcid, map_x, map_y, mbr_pseudo, mbr_points ";
 	$sql.= "FROM ".$_sql->prebdd."mbr ";
 	$sql.= "JOIN ".$_sql->prebdd."map ON mbr_mapcid = map_cid ";
 	$sql.= "WHERE ";

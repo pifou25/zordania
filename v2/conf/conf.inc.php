@@ -219,6 +219,7 @@ $_droits[GRP_CHEF_REG] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_ME
 $_droits[GRP_CHAMP_REG] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER);
 $_droits[GRP_SCRIBE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER);
 $_droits[GRP_NOBLE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER);
+$_droits[GRP_KING] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER);
 $_droits[GRP_SAGE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_ANTI_FLOOD);
 $_droits[GRP_GARDE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_ANTI_FLOOD, DROIT_ADM, DROIT_ADM_AL, DROIT_ADM_MBR);
 $_droits[GRP_PRETRE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER,DROIT_PUNBB_MOD, DROIT_ANTI_FLOOD);
@@ -238,7 +239,7 @@ $_votes = array();
 $_votes[VOTES_HIT] = array('img' => 'http://www.jeux-alternatifs.com/im/bandeau/hitP_88x31_v3.gif',
 		'url' => 'http://www.jeux-alternatifs.com/Zordania-jeu177_hit-parade_1_1.html', 'delay' => 24);
 $_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif', 
-		'url' => 'http://www.rpg-paradize.com/?page=vote&vote=36937', 'delay' => 24);
+		'url' => 'https://www.rpg-paradize.com/site-Zordania.fr-110465', 'delay' => 3);
 $_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
 		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
 
