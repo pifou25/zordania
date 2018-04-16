@@ -74,9 +74,16 @@
 	Points : {mbr_array[mbr_points]}<br />
 	Force armée : {mbr_array[mbr_pts_armee]}<br />
 	Population : {mbr_array[mbr_population]}<br />
-	Position : <a href="carte.html?map_cid={mbr_array[mbr_mapcid]}" title="voir la carte">{mbr_array[map_x]}x{mbr_array[map_y]}</a><br/>
+	Position : <if cond="{mbr_array[mbr_gid]} == GRP_PNJ || {mbr_array[mbr_race]} == 6">
+	Inconnue<br/>
+	Région : Inconnue<br/>
+	Distance : Inconnue<br/>
+	</if>
+	<else>
+	<a href="carte.html?map_cid={mbr_array[mbr_mapcid]}" title="voir la carte">{mbr_array[map_x]}x{mbr_array[map_y]}</a><br/>
 	Région : {regions[{mbr_array[map_region]}][name]}<br/>
 	Distance : {mbr_dst}<br/>
+	</else>
 	<if cond='isset({mbr_array[al_name]}) && {mbr_array[ambr_aid]}'>
 	Alliance: <a href="alliances-view.html?al_aid={mbr_array[ambr_aid]}" title="Infos sur {mbr_array[al_name]}">
 		<img src="img/al_logo/{mbr_array[ambr_aid]}-thumb.png" class="mini_al_logo"/>
