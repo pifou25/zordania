@@ -46,7 +46,7 @@ div#stats {
 	position:fixed;
     top: 0px;
     text-align: left;
-	margin-left:10px;
+	margin-left:100px;
 	margin-top:5px;
 }
 div#stats *{
@@ -66,7 +66,7 @@ div#actbar {
 	right:0px;
     text-align: right;
 	margin-top:5px;
-	margin-right:10px;
+	margin-right:100px;
 	background-color: rgba(249, 237, 151, 1);
 	border:2px solid #de8e2b;
 	border-radius:4px 4px;
@@ -99,7 +99,7 @@ div#menu {
     /*height: 34px;*/
     text-align: left;
 	font-size: 90%;
-	margin-left:10px;
+	margin-left:100px;
 	bottom: 10px;
     overflow-y: scroll;
 }
