@@ -878,7 +878,7 @@ $this->unt[U5_TRANSPOR_INCANT]=array(
 		"group"=>25,
 		"prix_unt"=>array(U5_DRUIDE => 2),
 		"role"=>TYPE_UNT_DEMENAGEMENT,
-		"rang" => 18,
+		"rang" => 27,
 );
 //</unt>
 

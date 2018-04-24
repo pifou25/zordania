@@ -929,7 +929,7 @@ $this->unt[U7_MEDUSA] = array(
 	'atq_unt' => 75,
 	'vit' => 9,
 	'prix_unt' => array(U7_DRESSEUR => 1, ),
-	'rang' => 22,
+	'rang' => 27,
 );
 //</unt-26>
 
