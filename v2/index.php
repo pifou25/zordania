@@ -5,6 +5,12 @@ error_reporting (E_ALL | E_STRICT | E_RECOVERABLE_ERROR);
 date_default_timezone_set("Europe/Paris");
 
 
+//verification mode mobile ou pas?
+	$ua = $_SERVER['HTTP_USER_AGENT'];
+	if (preg_match('/iphone/i',$ua) || preg_match('/android/i',$ua) || preg_match('/blackberry/i',$ua) || preg_match('/symb/i',$ua) || preg_match('/ipad/i',$ua) || preg_match('/ipod/i',$ua) || preg_match('/phone/i',$ua) )
+		{ 
+			$mobile = true;		
+		}
 /* Fonctions de Bench */
 function mtime()
 {
@@ -326,3 +332,7 @@ if(!empty($_error)) { // log des erreurs PHP
 }
 
 ?>
+<script type="text/javascript">
+var mobile='<?PHP echo $mobile;?>';
+//alert(mobile);
+</script>
