@@ -43,6 +43,10 @@
 	
 	<script type="text/javascript" src="js/vlg.js"></script>
 	<script type="text/javascript">
-		VlgV2.init({_user[race]});
+		$(function(){
+			// mobile or desktop design
+			var isMobile  = isVisible('#bp_mobile');
+			VlgV2.init({_user[race]}, isMobile);
+		});
 	</script>
 </div>

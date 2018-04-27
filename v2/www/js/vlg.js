@@ -2,6 +2,7 @@
 var decX = 0;
 var decY = 0;
 
+// Vlg v1 old version - useless
 var Vlg = {
 	w: 500,
 	h: 350,
@@ -220,7 +221,7 @@ var Vlg = {
 	}
 };
 
-
+// vlg.tpl using new Images from Iparcos
 var VlgV2 = {
 	w: 500,
 	h: 350,
@@ -228,28 +229,27 @@ var VlgV2 = {
 	VlgZindex: new Array(),
 	SrcCoords: new Array(),
 	
-	init: function(race) {
+	init: function(race, isMobile) {
 		if(race < 1 || race > 7) race = 1;
 		/* initialiser les coordonnées par race */
-		this.initCoord(race);
+		this.initCoord(race, isMobile);
 			
 		/* positionner les batiments */
-		$.each(this.VlgCoords, function(index, value, mobile) { 
+		$.each(this.VlgCoords, function(index, value) { 
 		  if(value) {
-			 if(mobile == true)
+			var img = $("#btc_"+index);			
+			img.css('top', value[1]+decX).css('left', value[0]+decY).css('position', 'absolute');	
+			 if(isMobile)
 			 {
-				var img = $("#btc_"+index);			
-				img.attr('src', "img/"+ race + "/btc/2" + "/" + index + ".png");			
-				img.css('top', value[1]+decX).css('left', value[0]+decY).css('position', 'absolute');	
+				img.attr('src', "img/"+ race + "/btc/2/" + index + ".png");			
 			 }
 			 else
 			 {
-				 var img = $("#btc_"+index);			
-				img.attr('src', "img/"+ race + "/btc" + "/" + index + ".png");			
-				img.css('top', value[1]+decX).css('left', value[0]+decY).css('position', 'absolute');
+				img.attr('src', "img/"+ race + "/btc/" + index + ".png");			
 			 }
 		  }
 		});
+		// z-index pour les images à mettre au dessus des autres
 		$.each(this.VlgZindex, function(index, value) {
 			if(value) {
 			 $("#btc_"+index).css('z-index', value);
@@ -268,8 +268,8 @@ var VlgV2 = {
 	},
 
 	/* coordonnées de chaque bâtiment du village par race */
-	initCoord: function(race, mobile) {
-		if(mobile == true)
+	initCoord: function(race, isMobile) {
+		if(isMobile) // coord pour mobile
 			 {
 				switch(race) {
 				case 1:
@@ -443,7 +443,7 @@ var VlgV2 = {
 					break;
 				}
 			 }
-		else
+		else // coord pour desktop
 			{
 				switch(race) {
 				case 1:

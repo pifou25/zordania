@@ -80,7 +80,7 @@ $(document).ready(  function()
     
     // réponse ajax dans une popup
     traiterZrdPopUp();
-    
+
 });
 
 
@@ -254,10 +254,17 @@ var funcZrdModal = function(){ // au clic sur le lien
 			output.html(header + '<div class="centre">' + html + '</div>');
 			// remettre les memes comportements sur la reponse ajax
 			traiterZrdPopUp();
-			initToggle();
+			initToggle
+			();
 			traiterFormulaires();
 			output.show();
 		}
 	});
 	return false;
 }
+
+// check visibility of an element
+// used to detect desktop or mobile responsive design
+var isVisible = function(element) {
+	return $(element).is(':visible');
+};

@@ -176,3 +176,13 @@ div#actbar li:nth-child(1){
 #dialog-modal fieldset{
 	border:none;
 }
+
+/* media query detection */
+.bp_checking { display:none; }
+
+@media only screen and (max-width:800px) {
+	#bp_mobile { display:block; }
+}
+@media only screen and (min-width:801px) {
+	#bp_desktop { display:block; }
+}

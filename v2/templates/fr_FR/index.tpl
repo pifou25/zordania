@@ -184,5 +184,7 @@ pageTracker._trackPageview();
 } catch(err) {}
 */
 </script>
+<span id="bp_mobile" class="bp_checking"></span>
+<span id="bp_desktop" class="bp_checking"></span>
 </body>
 </html>
