@@ -16,33 +16,16 @@ if($_user['race'] == 2 || $_user['race'] == 3 || $_user['race'] == 5){
 }
 $btc_array = get_nb_btc_done($_user['mid']);
 // img de fond du village
-if ($mobile == true)
-{
-	$imgvlg = 'vlg1.jpg';
-	if($forteresse !== false)
-	{
-		foreach($btc_array as $value){
-			if($value['btc_type'] == $forteresse){
-				$imgvlg = 'vlgf1.jpg';
-				break;
-				}
-		}
+$imgvlg = 'vlg0.jpg';
+if($forteresse !== false){
+	foreach($btc_array as $value){
+		if($value['btc_type'] == $forteresse){
+			$imgvlg = 'vlgf0.jpg';
+			break;
+			}
 	}
 }
-else
-{
-	$imgvlg = 'vlg0.jpg';
-	if($forteresse !== false)
-	{
-		foreach($btc_array as $value){
-			if($value['btc_type'] == $forteresse){
-				$imgvlg = 'vlgf0.jpg';
-				break;
-				}
-		}
-	}
-}
-
+	
 $_tpl->set("module_tpl","modules/vlg/vlg.tpl");
 
 $_tpl->set("btc_max", get_conf("race_cfg", "btc_nb"));
