@@ -107,6 +107,7 @@
 			  </if>
 			  <if cond='isset({need_to_be_loged})'>
 			  <p class="infos">Il faut se connecter pour accéder à cette partie du site.</p>
+			  <meta http-equiv="refresh" content="1; url=presentation.html">
 			  <include file="modules/session/connect.tpl" cache="1" />
 			  </if>
 			  <elseif cond='{cant_view_this} == true'>

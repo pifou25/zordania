@@ -6,7 +6,7 @@
 		<p class="error">Tous les champs n'ont pas été renseignés !</p>
 	</elseif>
 	<elseif cond='isset({ses_redir})'>
-		<meta http-equiv="refresh" content="1; url=news.html">
+		<meta http-equiv="refresh" content="1; url=vlg.html">
 		<p class="infos">Connexion ...
 		<a href="{cfg_url}"><img src="img/right.png" alt="Passer" /></a>
 		</p>
@@ -17,10 +17,11 @@
 </if>
 <elseif cond='{ses_act} == "logout"'>
 	<if cond='isset({ses_is_not_loged})'>
+	<meta http-equiv="refresh" content="1; url=presentation.html">
 		<p class="error">Tu n'es pas connecté !</p>
 	</if>
 	<elseif cond='isset({ses_redir})'>
-		<meta http-equiv="refresh" content="1; url={cfg_url}">
+		<meta http-equiv="refresh" content="1; url=presentation.html">
 		<p class="infos">Déconnexion ... <a href="{cfg_url}"><img src="img/right.png" alt="Passer" /></a></p>
 	</elseif>
 </elseif>
