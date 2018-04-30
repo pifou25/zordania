@@ -258,7 +258,7 @@ $this->btc[B7_RUINE_OUBLIEE] = array(
 	'limite' => 1,
 	'prix_res' => array(R7_OR => 1500, R7_BOIS => 2250, R7_GRANIT => 2250, R7_ACIER => 200, ),
 	'prod_src' => 1,
-	'prod_unt' => 4,
+	'prod_unt' => 6,
 );
 //</btc-1>
 
@@ -547,7 +547,7 @@ $this->unt[U7_ARTISAN] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-2>
 
@@ -558,7 +558,7 @@ $this->unt[U7_COLLECTEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-3>
 
@@ -569,7 +569,7 @@ $this->unt[U7_CHASSEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE,B7_RUINE_RENFORCEE ),
 );
 //</unt-4>
 
@@ -580,7 +580,7 @@ $this->unt[U7_GOB_BRIG] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 3, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE,B7_RUINE_RENFORCEE ),
 );
 //</unt-5>
 
@@ -591,7 +591,7 @@ $this->unt[U7_RECRUTEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 5, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-6>
 
@@ -602,7 +602,7 @@ $this->unt[U7_DRESSEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, R7_LICHEN => 10, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-7>
 
@@ -613,7 +613,7 @@ $this->unt[U7_INGENIEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 3,),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-8>
 
