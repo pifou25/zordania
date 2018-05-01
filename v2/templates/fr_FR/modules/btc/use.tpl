@@ -201,7 +201,8 @@
 
 <p class="retour_module">
 	<if cond='{_display}=="ajax"'>
-		<a href="#" title="Fermer" onclick="$('#dialog-modal').hide();">Fermer</a>
+		<# do not display this link to close the jquery popup #>
+		<# a href="#" title="Fermer" onclick="$('#dialog-modal').hide();">Fermer</a #>
 	</if>
 	<else>
 		<if cond="!isset({btc_id})">

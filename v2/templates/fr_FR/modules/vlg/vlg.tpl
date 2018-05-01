@@ -11,7 +11,7 @@
 </style>
 </if>
 
-	<img src="img/{_user[race]}/vlg/{imgvlg}" alt="village" />
+	<img src="img/{_user[race]}/vlg/{imgvlg}" alt="village" id="fondvlg" />
 	
 	<foreach cond='{src_array} as {src_vars}'>
 		<if cond="isset({src_conf[{src_vars[src_type]}][vlg]})">
@@ -46,7 +46,8 @@
 		$(function(){
 			// mobile or desktop design
 			var isMobile  = isVisible('#bp_mobile');
-			VlgV2.init({_user[race]}, isMobile);
+			var forteresse = <if cond="{forteresse}">1</if><else>0</else>;
+			VlgV2.init({_user[race]}, isMobile, forteresse);
 		});
 	</script>
 </div>

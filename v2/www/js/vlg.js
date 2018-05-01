@@ -229,11 +229,14 @@ var VlgV2 = {
 	VlgZindex: new Array(),
 	SrcCoords: new Array(),
 	
-	init: function(race, isMobile) {
+	init: function(race, isMobile, forteresse) {
 		if(race < 1 || race > 7) race = 1;
 		/* initialiser les coordonnées par race */
 		this.initCoord(race, isMobile);
-			
+		
+		/* image de fond du village */
+		$("#fondvlg").attr('src', "img/" + race + "/vlg/vlg" + (forteresse?"f":"") + (isMobile?"1":"0") + ".jpg");
+		
 		/* positionner les batiments */
 		$.each(this.VlgCoords, function(index, value) { 
 		  if(value) {

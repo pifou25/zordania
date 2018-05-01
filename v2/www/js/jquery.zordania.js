@@ -228,7 +228,8 @@ var funcZrdPopup = function(){ // au clic sur le lien
 				}],
 				resizable:false,
 				draggable:false,
-				width: 500
+				width: 500,
+				closeText: ""
 			});
 			if(title){
 				output.dialog("option", "title", title);
