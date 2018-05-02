@@ -41,7 +41,7 @@
 	<if cond='!{ses_can_play} OR !{ses_mbr_etat_ok}'>
 		<li><a href="presentation.html" title="Présentation.">Accueil</a></li>
 	</if>
-		<li><a href="news.html" title="Voir les dernières news.">News</a></li>
+		<li><a href="forum-<math oper="str2url({_user[sub]})"/>.html?tid={_user[tid]}" title="Voir la dernière news.">News</a><img title="Nouvelle News!" src="img/acts/notif.gif" /></li>
 		<li><a href="manual.html?race={_user[race]}" title="Comment jouer ?">Manuel</a></li>
 		<li><a href="forum.html" title="Participer à la vie de la communauté.">Forums</a> (<a href="irc.html" title="Discuter directement entre Zordaniens !">Chat</a>)</li>
 		<li><a href="sdg.html" title="Faites connaître votre avis !">Sondages</a></li>
