@@ -517,7 +517,7 @@ $this->btc[B7_RUINE_RENFORCEE] = array(
 	'prod_pop' => 130,
 	"bonus"         =>      array('gen' => 300, 'bon' => 13.5),
 	'prix_unt' => array(U7_GOB_FRONDEUR => 10), 
-	"prod_unt"	=>	4,
+	"prod_unt"	=>	6,
 	"prod_src"	=>	true,
 	'limite' => 1,
 	'prix_res' => array(R7_BOIS => 1500, R7_GRANIT => 2000, R7_OR => 2500, R7_ACIER => 350, ),
