@@ -13,6 +13,8 @@ $_tpl->set("smileys_more", $smileys_more);
 $_tpl->set("module_tpl","modules/news/news.tpl");
 $_tpl->set('is_modo',can_d(DROIT_PUNBB_MOD));
 
+// news vue, check
+$_ses->set('news', 0);
 
 // Regarde toutes les news + pagination
 // tout autre lien renvoie sur le forum

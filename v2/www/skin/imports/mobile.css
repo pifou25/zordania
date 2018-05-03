@@ -195,6 +195,12 @@ div#actbar li:nth-child(n+10){
 	display:none;
 }*/
 
+.blinkhover { /* image position relative hover existing image */
+	position: absolute;
+	left: 128px;
+	top: 5px;
+}
+
 /* village */
 #village{
 	overflow-x:scroll;

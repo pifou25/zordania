@@ -62,6 +62,12 @@ img {
     color: #226622;
 }
 
+.blinkhover { /* image position relative hover existing image */
+	position: absolute;
+	left: 120px;
+	top: 5px;
+}
+
 /* Mise en forme a certains endroits ou <em> et <strong> passent pas */
 .italique{ font-style: italic; }
 .strong{ font-weight: bold; }
