@@ -119,7 +119,7 @@ class session
 		
 		
 		// Nouvelle news?
-			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id = 25 AND posted=(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
+			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
 			$result = $this->sql->make_array_result($sql);
 			$this->set("tid", $result['id']);
 			$this->set("sub", $result['subject']);

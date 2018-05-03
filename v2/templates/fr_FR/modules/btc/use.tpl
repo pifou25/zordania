@@ -18,12 +18,10 @@
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours_sem" title="Cours sur la semaine" class="zrdPopUp">Cours de la Semaine</a>
 		</if>
 		<a href="btc-use.html?btc_type={btc_id}" title="Infos" class="zrdPopUp">Infos</a>
-		<if cond="!isset({btc_id})">
-			<a href="btc-use.html?sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste&nbsp;complète</a>
-		</if>
-		<else>
+		<if cond="isset({btc_id})">
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste</a>
-		</else>
+		</if>
+		<a href="btc-use.html?sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste&nbsp;complète</a>
 	</p>
 
 </if>
