@@ -17,7 +17,7 @@
 
 	<br/>
 	
-	<p class="infos">NEW : la communauté se retrouve maintenant sur Discord, suivez le lien d'invitation: <a href="https://discord.gg/fjGXrkY" title="for the gamers">Discord app</a></p>
+	<p class="infos">NEW : la communauté se retrouve maintenant sur Discord, suivez le lien d'invitation: <a href="https://discord.gg/Wmwf829" title="for the gamers">Discord app</a></p>
 	
 	<hr/>
 

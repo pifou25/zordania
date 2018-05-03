@@ -1525,7 +1525,7 @@ $this->unt[U3_TRANSPORT_RUNIQUE] = array(
 	'need_src' => array(S3_RUNE_VOYAGE, ),
 	'vit' => 6,
 	'prix_unt' => array(U3_BATISSEUR => 3, ),
-	'rang' => 11,
+	'rang' => 28,
 
 );
 

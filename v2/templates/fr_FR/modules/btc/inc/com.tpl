@@ -71,8 +71,9 @@
 			<p>
 			<label for="com_type">Quantité de :</label>
 			<select id="com_type" name="com_type" onchange="updateForm();">
+			<option value=""> Choisir...</option>
 			<foreach cond='{com_list_res} as {res_id} => {res_value}'>
-				<if cond='{res_value} > 0 && {res_id} > 1'>
+				<if cond='{res_value} > 0 && {res_id} > 1'>			
 			<option value="{res_id}"> {res[{_user[race]}][alt][{res_id}]} ({res_value})</option>
 				</if>
 			</foreach>
