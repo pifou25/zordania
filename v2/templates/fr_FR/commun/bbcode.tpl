@@ -20,7 +20,7 @@ include générique :
 		<a href="javascript:emoticon('{str}','{message}');"><img src="img/smile/{img}" alt="{str}" title="{str}" /></a>
 	</foreach>
 	<img id="smileys" src="img/plus.png" alt="Tous les smileys" class="toggle" />
-	<div id="smileys_toggle">
+	<div id="smileys_toggle" style="display: none;">
 		<foreach cond="{smileys_more} as {img} => {str}">
 			<a href="javascript:emoticon('{str}','{message}');"><img src="img/smile/{img}" alt="{str}" title="{str}" /></a>
 		</foreach>
