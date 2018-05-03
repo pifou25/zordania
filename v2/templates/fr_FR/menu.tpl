@@ -1,30 +1,21 @@
+<!-- sous-menu liste des bâtiments = plus utile avec nouveaux villages
 <if cond='{ses_loged}'> 
 <if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
 
 <div class="menu_gauche">
-<h2><label for="menu1">Egeria</label></h2>
+<h2><label for="menu1">Village</label></h2>
 <input id="menu1" name="menu" type="radio" />
 	<ul>
-	<li><a href="forum-<math oper="str2url({_user[sub]})"/>.html?tid={_user[tid]}" title="Voir la dernière news.">News</a><img title="Nouvelle News!" src="img/acts/notif.gif" /></li>
-	<if cond='{ses_loged}'> 
-	<if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
-		<li><a href="alliances.html" title="Liste des Alliances.">Alliances</a></li>
-		<li><a href="class.html" title="Classement des Joueurs.">TOP 50</a></li>
-		<li>
-			<a href="member-liste.html" title="Liste des Joueurs.">Joueurs</a>
-			(<a href="member-liste_online.html" title="Joueurs connectés.">online</a>)
-		</li>
-
-	</if>
-	<else>
-		<li><a href="ini.html" title="Initialiser!">Compte non initialisé !</a></li>
-	</else>
-	</if>
+	<foreach cond='{stats_prim_btc[vil]} as {btc_menu_type} => {btc_menu_array}'>
+		<foreach cond='{btc_menu_array} as {btc_menu_sub}'>
+		<li><a href="btc-use.html?btc_type={btc_menu_type}&amp;sub={btc_menu_sub}" title="{btcact[{_user[race]}][descr][{btc_menu_type}][{btc_menu_sub}]}">{btcact[{_user[race]}][title][{btc_menu_type}][{btc_menu_sub}]}</a></li>
+		</foreach>
+	</foreach>
 	</ul>
 </div>
 
 </if>
-</if>
+</if> -->
 
 <div class="menu_gauche">
 <h2><label for="menu2">Zordania</label></h2>
@@ -33,8 +24,17 @@
 
 	<if cond='{ses_loged}'> 
 	<if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
+		<li><a href="forum-<math oper="str2url({_user[sub]})"/>.html?tid={_user[tid]}" title="Voir la dernière news.">News</a><img title="Nouvelle News!" src="img/acts/notif.gif" />
+		<li><a href="alliances.html" title="Liste des Alliances.">Alliances</a></li>
+		
+		<li>
+			<a href="member-liste.html" title="Liste des Joueurs.">Joueurs</a>
+			(<a href="member-liste_online.html" title="Joueurs connectés.">online</a>)
+		</li>
+		<li><a href="class.html" title="Classement des Joueurs.">TOP 50</a></li>
 		<# <li><a href="bonus.html" title="Gagner des ressources !" class="bonus">Bonus</a></li> #>
 		<# <li><a href="votes.html" title="Votez pour Zordania !" class="votes">Votes</a></li> #>
+		</li>
 
 	</if>
 	<else>
@@ -44,7 +44,7 @@
 	<else><li>Visiteur</li></else>
 	<if cond='!{ses_can_play} OR !{ses_mbr_etat_ok}'>
 		<li><a href="presentation.html" title="Présentation.">Accueil</a></li>
-		<li><a href="news.html" title="Voir les news.">News</a></li>
+		<li><a href="news.html" title="Voir les dernières news.">News</a></li>
 	</if>
 		
 		<li><a href="manual.html?race={_user[race]}" title="Comment jouer ?">Manuel</a></li>
