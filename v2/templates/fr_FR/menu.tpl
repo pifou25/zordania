@@ -24,7 +24,7 @@
 
 	<if cond='{ses_loged}'> 
 	<if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
-		<li><a href="forum-<math oper="str2url({_user[sub]})"/>.html?tid={_user[tid]}" title="Voir la dernière news.">News</a><img title="Nouvelle News!" src="img/acts/notif.gif" />
+		<li><a href="forum-<math oper="str2url({_user[sub]})"/>.html?tid={_user[tid]}" title="Nouvelle News!" >News</a><if cond='{_user[news]} >= 1'><img src="img/acts/notif.gif"/></if></li>
 		<li><a href="alliances.html" title="Liste des Alliances.">Alliances</a></li>
 		
 		<li>
