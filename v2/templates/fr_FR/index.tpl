@@ -75,7 +75,8 @@
 	</div>
 
 	<div class="cleaner">&nbsp;</div>
-
+	
+	
 <if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
 	<div id="actbar">
 	<include file="actbar.tpl" cache="1" />
@@ -84,6 +85,10 @@
 
 	<div id="menu">
 	<include file="menu.tpl" cache="1" />
+	</div>
+	
+	<div id="menu_droite">
+	<include file="menu_droite.tpl" cache="1" />
 	</div>
 
 	<div id="espace_menu_centre">&nbsp;</div>
