@@ -2,12 +2,6 @@
 * Par Iksaif
 */
 
-/* Permet d'afficher un popup ... a n'utiliser que si on permet aussi d'afficher une page normale */
-function myPopup(file, param, w, h)
-{
-	window.open(cfg_url+'?file='+file+param+'&display=popup',file,'height='+h+',width='+w+',left=100,top=100,resizable=yes,scrollbars=no,toolbar=no,status=no');
-	return false;
-}
 
 /* Ou un lien dans la fenêtre qui a ouvert la page courante .. ouvre un lien dans la même fenêtre si c'est pas possible */
 function goOpener(url)

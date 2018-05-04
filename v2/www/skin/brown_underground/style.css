@@ -46,7 +46,7 @@ fieldset {
 input,select { 
 	background-color: #3B291C; 
 	border: 1px solid #533721; 
-	color: #000000;
+	color: #E6C5A3; 
 	font-size: 11px; 
 	font-weight: bold;
 	margin: 2px; -moz-border-radius: 3%;
@@ -55,7 +55,7 @@ input,select {
 textarea {
 	background-color: #91603B;
 	border: thin solid #533721;
-	color: #000000;
+	color: #E6C5A3; 
     font-size: 13px; -moz-border-radius: 1%;
 }
 
@@ -175,21 +175,23 @@ div#toolTip p em {
 	margin-right: auto;
 	margin-top: 5px;
 	text-align: left;
-	width: 1100px;
+	width: 1500px;
 }
 
 /* Logo en haut */
 #logo {
 	width: 900px;
+	float: right;
 }
-
+#logo .haut, #logo .bas{
+	display:none;
+}
 #logo h1 {
     padding: 120px 0px 0px 0px;
     overflow: hidden;
     background-image: url(img/banniere.png);
     background-repeat: no-repeat;
-	height: 0px !important; /* for most browsers */
-    height /**/:33px; /* for IE5.5's bad box model */
+	height: 0px;
 }
 
 /* Y'a écrit "zordania" */
@@ -208,6 +210,7 @@ div#toolTip p em {
 #stats {
     float: left;
 	width: 240px;
+	margin-top: 15px;
 }
 
 #comptearebour, #date_rebour {
@@ -220,6 +223,13 @@ div#toolTip p em {
 	width: 170px;
 	padding-left:15 px;
 }
+
+#menu_droite {
+	float: right;
+	min-width: 170px;
+	padding-left:15 px;
+}
+
 #stats .bas {
  	background-image: url(img/bordhorizontal.png); 
 	height: 15px; 
@@ -328,7 +338,7 @@ div#toolTip p em {
     background-color: #000000;
     margin-left: 20px;
     float: left;
-    width: 700px; 
+    width: 1050px; 
 }
 
 #connec .bas, #module .bas {
@@ -437,10 +447,9 @@ div#toolTip p em {
 }
  
 #actbar {
-	float: right;
-	margin-top: -65px;
+	margin-top: -25px;
 	margin-bottom: 5px;
-	margin-right: 200px;
+	margin-right: 5px;
 	padding-left: 4px;
 	padding-right: 4px;
 	padding-top: 8px;
@@ -473,6 +482,9 @@ div#toolTip p em {
 	color: #ffffff;
 	padding: 5px;
 	margin-top: 10px;
+	width: 618px;
+	margin-left: auto;
+	margin-right:auto;
 }
 
 .block_forum {

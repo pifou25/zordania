@@ -1,1 +1,0 @@
-Votre légion est arrivée chez {vars[mbr_pseudo]} !

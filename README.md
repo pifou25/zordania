@@ -2,6 +2,9 @@
 
 A PHP/MySQL Browser Based Medieval Fantasy Game.
 
+http://www.zordania.fr
+discord : https://discord.gg/fjGXrkY
+
 Installation
 ------------
 

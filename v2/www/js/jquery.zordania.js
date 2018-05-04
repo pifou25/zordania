@@ -7,7 +7,8 @@ $(document).ready(  function()
 	 * 	$('.menu_gauche').css('background-color', $('body').css('background-color'));
 	 * 	$('.menu_gauche ul').css('background-color', $('#module').css('background-color'));
 	 * */
-	 
+
+	/* animation pour le menu lateral - en mode mobile */
 	var isMenuOpen = false;
 
 	$('#openmenulat').click(function()
@@ -29,25 +30,14 @@ $(document).ready(  function()
 	});
 	
 
-	/* un élément avec id et classe 'toggle' permet
-     * d'afficher / masquer un élément 'id_toggle'
-	 * tous sont masqués au chargement (fin du index.tpl)
+	/*
+	 * la class="toggle" sur un lien ou une image
+	 * affiche / masque un autre item
 	 */
-
-	// Lorsqu'un lien a.toggle est cliqué
-	$("a.toggle").click(function() {
-		$("#"+$(this).attr('id')+"_toggle" ).toggle('slide');
-		return false;
-	});
-	// Lorsqu'une image .toggle est cliquée
-	$("img.toggle").click(function() {
-		$("#"+$(this).attr('id')+"_toggle" ).toggle('slide');
-		var src=($(this).attr('src')==='img/plus.png'?'img/minus.png':'img/plus.png');
-		$(this).attr('src',src);
-	});
+	initToggle();
 
 	// Lorsqu'un button #preview est cliqué
-	// forum shoot et shoot diplo
+	// forum msg note shoot et shoot diplo
 	$("input#btpreview").click(function ()
 	{
 		$.post(
@@ -56,20 +46,7 @@ $(document).ready(  function()
 			function(txt){ $("#preview").html(txt); }
 		);
 	});
-	
-    // réponse ajax dans la page
-	// module unt, formation des unités
-	$("table#showUntForm a").each(function(){
-		$(this).click(function(){
-            $(".jqBlock").remove(); // virer l'ancienne requete ajax
-            var url = $(this).attr('href');
-            var output = $(this).parents('tr');
-            var len = output.children('td').length;
-            output.after('<tr class="jqBlock"><td id="ajaxContent" colspan="' + len + '"></td></tr>');
-			jqShowMod(url, $('#ajaxContent'));
-			return false;
-		});
-	});
+
 
     // Commerce - achat : module/fr/btc/inc/com.tpl - Lorsqu'un lien a.com est cliqué
     $("table#showComForm a").each(function(){
@@ -83,14 +60,51 @@ $(document).ready(  function()
 		});
 	});
         
-        
+	// ce script pilote le popup de confirmation (leg/act.tpl)
+	$("#make_atq").click(function(){ // au clic sur le lien
+		$("#dialog-modal").dialog({ // popup
+			buttons: [{
+				text: "Annuler", // bouton annuler
+				click: function() {
+				$( this ).dialog( "close" );}
+			},{
+				text: "Confirmer", // bouton attaquer renvoie vers le lien #make_atq
+				click: function() {
+				window.location = $("#make_atq").attr('href');}
+			}]
+		});
+		return false;
+	});
+  
 	traiterFormulaires();
     
     // réponse ajax dans une popup
     traiterZrdPopUp();
-    
+
 });
 
+
+function initToggle(){
+	/* un élément avec id et classe 'toggle' permet
+     * d'afficher / masquer un élément 'id_toggle'
+	 * tous sont masqués au chargement ( style="display: none;" )
+	 */
+
+	// Lorsqu'un lien a.toggle est cliqué
+	$("a.toggle").click(function() {
+		$("#"+$(this).attr('id')+"_toggle" ).toggle('slide');
+		return false;
+	});
+	// Lorsqu'une image .toggle est cliquée
+	$("img.toggle").click(function() {
+		$("#"+$(this).attr('id')+"_toggle" ).toggle('slide');
+		var src=($(this).attr('src')==='img/plus.png'?'img/minus.png':'img/plus.png');
+		$(this).attr('src',src);
+	});
+	
+	// remove class to avoid reccursive effects
+	$(".toggle").removeClass("toggle");
+}
 
 function traiterFormulaires(){
 	$("form.ajax").each(function(){
@@ -106,10 +120,20 @@ function traiterFormulaires(){
 			$form.attr("action", url);
 			// Send the data using post
 			$.post( url, term, function(data){
-				$("#output").html(data);
+				$("#dialog-modal").html(data)
+					.dialog({ // popup
+						buttons: [{
+							text: "Fermer", // bouton annuler
+							click: function() {
+							$( this ).dialog( "close" );}
+						}],
+						resizable:false,
+						draggable:false,
+						title:'Opération terminée',
+						hide: {effect: "fadeOut", duration: 1000}
+					}, setTimeout(function(){$("#dialog-modal").dialog("close");},3000)
+				);
 			});
-
-
 		});
 	});
 }
@@ -128,6 +152,13 @@ function jqShowMod(module, output) {
 			// gérer les nouveaux formulaires & popup
 			traiterFormulaires();
             traiterZrdPopUp();
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			output.html('<p class="error">Erreur : ' + textStatus + ' sur le module ' + module + ' - ' + errorThrown + '</p>');
+		},
+		complete: function(jqXHR, textStatus){
+			if(textStatus != 'success')
+				output.append('<p class="infos">' + textStatus + '</p>');
 		}
 	});
 	return false;
@@ -156,33 +187,85 @@ function showMapInfo() {
 	return false;
 }
 
-// ce script pilote les popup ajax
+// ce script pilote les - petites - popup ajax (confirmation & co)
 // unt.html
 function traiterZrdPopUp() {
-    
-    $(".zrdPopUp").each(function(){
-        
-        $(this).click(function(){ // au clic sur le lien
 
-            var url = $(this).attr('href');
-            var title = $(this).attr('title');
-            console.log('popup ' + title + ' vers url=' + url);
-            var output = $("#dialog-modal");
-            $.ajax({
-                url: cfg_url+"ajax--"+url,
-                success: function(html) {
-                    output.html(html);
-                    output.dialog({ // popup
-                        buttons: [{
-                            text: "Fermer", // bouton annuler
-                            click: function() {
-                            $( this ).dialog( "close" );}
-                        }],
-                        title: title
-                    });
-                }
-            });
-            return false;
-        });
-    });
+	// autre popup ajax pour les modules - plus grande. specifique selon le CSS
+    if(user_css == 6) {
+		// popup specifique
+		$("#village .zrdPopUp").click(funcZrdModal);
+		$(".liste .zrdPopUp").click(funcZrdModal);
+		$("#dialog-modal .zrdPopUp").click(funcZrdModal);
+	}else{
+		// popup jquery-iu classique
+		$("#village .zrdPopUp").click(funcZrdPopup);
+		$(".liste .zrdPopUp").click(funcZrdPopup);
+		$("#dialog-modal .zrdPopUp").click(funcZrdPopup);
+	}
 }
+
+var funcZrdPopup = function(){ // au clic sur le lien
+
+	var url = $(this).attr('href');
+	var title = $(this).attr('title');
+	var output = $("#dialog-modal");
+	console.log('popup ' + title + ' vers url=' + url);
+	
+	$.ajax({
+		url: cfg_url+"ajax--"+url,
+		dataType:"html",
+		success: function(html) {
+			output.html(html);
+			// remettre les memes comportements sur la reponse ajax
+			traiterZrdPopUp();
+			
+			output.dialog({ // popup
+				buttons: [{
+					text: "Fermer", // bouton annuler
+					click: function() {
+					$( this ).dialog( "close" );}
+				}],
+				resizable:false,
+				draggable:false,
+				width: 500,
+				closeText: ""
+			});
+			if(title){
+				output.dialog("option", "title", title);
+			}
+			output.dialog('moveToTop');
+		}
+	});
+	return false;
+}
+
+var funcZrdModal = function(){ // au clic sur le lien
+
+	var url = $(this).attr('href');
+	var title = $(this).attr('title');
+	var output = $("#dialog-modal");
+	console.log('module ' + title + ' vers url=' + url);
+	var header = '<div class="header"><h3>' + title + '</h3></div><div class="close" onclick="$(\'#dialog-modal\').hide();"></div>';
+	
+	$.ajax({
+		url: cfg_url+"module--"+url,
+		dataType:"html",
+		success: function(html) {
+			output.html(header + '<div class="centre">' + html + '</div>');
+			// remettre les memes comportements sur la reponse ajax
+			traiterZrdPopUp();
+			initToggle
+			();
+			traiterFormulaires();
+			output.show();
+		}
+	});
+	return false;
+}
+
+// check visibility of an element
+// used to detect desktop or mobile responsive design
+var isVisible = function(element) {
+	return $(element).is(':visible');
+};

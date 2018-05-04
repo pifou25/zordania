@@ -7,7 +7,6 @@ v1/**/*
 v2/www/img/mbr_logo/*.png
 v2/www/img/al_logo/*.png
 v2/www/phpMyAdmin
-
 v2/conf/secret_parameters.php
 
 *.tmp

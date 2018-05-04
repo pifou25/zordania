@@ -18,6 +18,8 @@
 	</else>
 	<li>
 		<a href="gen.html" title="Informations générales du village."><img src="img/acts/gen.png" /></a>
+		<if cond='{_user[msg]} == 1'><a href="msg.html" title="Vous avez {_user[msg]} nouveau message." class="blinkhover"><img src="img/acts/notif.gif"/></a></if>
+		<elseif cond='{_user[msg]} > 1'><a href="msg.html" title="Vous avez {_user[msg]} nouveaux messages." class="blinkhover"><img src="img/acts/notif.gif"/></a></elseif>
 	</li>
 	<li>
 		<a href="btc-btc.html" title="Construire des bâtiments."><img src="img/acts/ctr.png" /></a>
@@ -39,7 +41,7 @@
 		<a href="carte.html" title="Carte de Zordania."><img src="img/acts/map.png" /></a>
 	</li>
 	<li>
-		<a href="btc-use.html" title="Gérer le village."><img src="img/acts/vlg{_user[race]}.png" /></a>
+		<a href="vlg.html" title="Gérer le village."><img src="img/acts/vlg{_user[race]}.png" /></a>
 	</li>
 	<li>
 		<a href="res.html" title="Voir les ressources." class="zrdPopUp"><img src="img/acts/res.png" /></a>

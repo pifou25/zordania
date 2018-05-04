@@ -3,7 +3,6 @@ session_start();
 ignore_user_abort();
 error_reporting (E_ALL | E_STRICT | E_RECOVERABLE_ERROR);
 date_default_timezone_set("Europe/Paris");
-define("_INDEX_",true);
 
 /* Fonctions de Bench */
 function mtime()
@@ -47,6 +46,7 @@ mark('lib');
 */
 $_tpl = new Template();
 $_tpl->set_dir('../templates');
+$_tpl->set("charset", SITE_CHARSET);
 
 /* display : xhtml - module - ajax - popup - xml */
 $_display = request("display", "string", "get", "xhtml"); /* Type d'affichage */
@@ -72,6 +72,7 @@ if(!$_sql->con) /* Utiliser Display = module */
 {
 	$_tpl->set_lang('all');
 	$_tpl->set('page','mysql_error.tpl');
+	$_tpl->set('error',$_sql->err);
 	if(!$_display != "xml")
 		echo $_tpl->get('index.tpl',1);
 
@@ -82,7 +83,7 @@ if(!$_sql->con) /* Utiliser Display = module */
 * Sessions
 */
 $_ses = new session($_sql);
-$_file = request("file", "string", "get", "presentation");
+$_file = request("file", "string", "get", "vlg");
 $_type = request("type", "string", "get");
 $_act = request("act", "string", "get");
 $_sub = request("sub", "string", "get");
@@ -162,6 +163,8 @@ $_tpl->set($const['user']);
 $_tpl->set("cfg_url",SITE_URL);
 $_tpl->set("cfg_style",request("style", "string", "cookie", "Marron"));
 $_tpl->set("zordlog_url",ZORDLOG_URL);
+if(!in_array($_user['design'], $_css)) // check if the current css exist
+	$_user['design'] = 4;
 $_tpl->set("adsense_code",$_adsense_css[$_user['design']]);
 
 /* Droits */
@@ -179,7 +182,6 @@ if(preg_match("/(http|ftp|\/|\.)/i",$_file))
 
 /* header utf-8 pour tout le site */
 $charset = SITE_CHARSET; // iso-8859-1, utf-8, ...
-$_tpl->set("charset", $charset);
 
 if($_display == "xml") { /* Sortie en XML */
 	header("Content-Type: application/xml; charset=$charset");
@@ -322,7 +324,4 @@ if(!empty($_error)) { // log des erreurs PHP
 	//$err_log->close();
 }
 
-/* Fin de la page */
-//$_histo->flush();
-//$_sql->close();
 ?>

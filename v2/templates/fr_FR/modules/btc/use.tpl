@@ -3,12 +3,10 @@
 	<p class="menu_module">
 		
 		<a href="btc-use.html?btc_type={btc_id}" title="Infos" class="zrdPopUp">Infos</a>
-		<if cond="!isset({btc_id})">
-			<a href="btc-use.html?sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste&nbsp;complète</a>
-		</if>
-		<else>
+		<if cond="isset({btc_id})">
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste</a>
-		</else>
+		</if>
+		<a href="btc-use.html?sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste&nbsp;complète</a>
 	</p>
 
 </if>
@@ -212,7 +210,8 @@
 
 <p class="retour_module">
 	<if cond='{_display}=="ajax"'>
-		<a href="#" title="Fermer" onclick="$('#dialog-modal').hide();">Fermer</a>
+		<# do not display this link to close the jquery popup #>
+		<# a href="#" title="Fermer" onclick="$('#dialog-modal').hide();">Fermer</a #>
 	</if>
 	<else>
 		<if cond="!isset({btc_id})">
@@ -221,6 +220,6 @@
 		<else>
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste complète des bâtiments de ce type">Liste</a>
 		</else>
-		<a href="btc-use.html?sub=vue" title="Vue générale">Village</a>
+		<a href="vlg.html" title="Vue générale">Village</a>
 	</else>
 </p>

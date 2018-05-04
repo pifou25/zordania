@@ -30,7 +30,7 @@ if($_act == "lite" || $_act == "ajax") {
 	$map_cid = request("map_cid", "uint", "get", -1);
 	$map_pseudo = request("map_pseudo", "string", "get");
 
-	$diff = ($_display == "module") ? 20 : 10;
+	$diff = ($_display == "module") ? 30 : 20;
 
 	if($map_cid != -1) {
 		$coord = get_square($map_cid, true);
@@ -116,11 +116,13 @@ if($_act == "view") {
 	// edit skin/imports/carte.css #carte_big and #carte_lite
 	// for the correct height and width according to the number of squares:
 	if($_display == "module") {
+		// 30x30
+		$max_x2 = $map_x + 29;
+		$max_y2 = $map_y + 29;
+	} else {
+		// 20x20
 		$max_x2 = $map_x + 19;
 		$max_y2 = $map_y + 19;
-	} else {
-		$max_x2 = $map_x + 9;
-		$max_y2 = $map_y + 9;
 	}
 
 	$map_array = get_map($_user["mid"], $map_x,  $map_y, $max_x2, $max_y2);

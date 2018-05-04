@@ -51,6 +51,11 @@ function add_votes($mid,$vid)
 		
 		
 		$sql = "UPDATE ".$_sql->prebdd."votes SET `votes_nb`=`votes_nb`+1 WHERE votes_mid='$mid' AND votes_vid='$vid'";
+			
+			/*$sql = "INSERT INTO ".$_sql->prebdd."votes (votes_mid, votes_vid, votes_nb) VALUES";
+				$sql.= " ($mid,'$vid',1)";
+				$_sql->query($sql);*/
+					
 		}
 
 	return $_sql->query($sql);

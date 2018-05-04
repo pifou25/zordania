@@ -1,1 +1,0 @@
-{btc[alt][19]}: {btc_nb}<br/>

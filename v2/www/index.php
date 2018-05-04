@@ -7,5 +7,7 @@ if(isset($_SERVER['HTTP_HOST']) and $_SERVER['HTTP_HOST'] == 'www.zordania.fr'){
 	exit();
 }
 
+define("_INDEX_",true);
+
 require("../index.php");
 ?>

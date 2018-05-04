@@ -11,7 +11,7 @@
 	<div class="error">Ce pseudo est déjà pris !</div>
 </elseif>
 <elseif cond="isset({mbr_ini_ok})">
-	<div class="ok">Votre compte est initialisé, vous pouvez aller faire un tour dans votre <a href="btc-use.html" title="Aller voir le village">Village</a> !</div>
+	<div class="ok">Votre compte est initialisé, vous pouvez aller faire un tour dans votre <a href="vlg.html" title="Aller voir le village">Village</a> !</div>
 </elseif>
 <else>
 	<form action="ini.html" method="post">
