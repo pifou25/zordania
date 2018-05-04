@@ -104,8 +104,8 @@ img {
 }
 
 #actbar {
-    text-align:right;
-    
+    text-align:center;
+    float: right;
     position: relative;
     bottom: 20px;
     margin: 1px;
