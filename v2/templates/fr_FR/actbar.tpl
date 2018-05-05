@@ -3,6 +3,14 @@
     <li>
         <a href="#" id="openmenulat" title="Menu."><img src="img/acts/menu_bg.png" /></a>
     </li>
+	<li>
+		<a href="vlg.html" title="Gérer le village."><img src="img/acts/vlg{_user[race]}.png" /></a>
+	</li>
+	<li>
+		<a href="gen.html" title="Informations générales du village."><img src="img/acts/gen.png" /></a>
+		<if cond='{_user[msg]} == 1'><a href="msg.html" title="Vous avez {_user[msg]} nouveau message." class="blinkhover"><img src="img/acts/notif.gif"/></a></if>
+		<elseif cond='{_user[msg]} > 1'><a href="msg.html" title="Vous avez {_user[msg]} nouveaux messages." class="blinkhover"><img src="img/acts/notif.gif"/></a></elseif>
+	</li>
     <li>
         <a href="forum.html" title="Forum."><img src="img/acts/codu.png" /></a>
     </li>
@@ -17,18 +25,10 @@
 		</li>
 	</else>
 	<li>
-		<a href="gen.html" title="Informations générales du village."><img src="img/acts/gen.png" /></a>
-		<if cond='{_user[msg]} == 1'><a href="msg.html" title="Vous avez {_user[msg]} nouveau message." class="blinkhover"><img src="img/acts/notif.gif"/></a></if>
-		<elseif cond='{_user[msg]} > 1'><a href="msg.html" title="Vous avez {_user[msg]} nouveaux messages." class="blinkhover"><img src="img/acts/notif.gif"/></a></elseif>
+		<a href="leg.html" title="Attaques, Légions."><img src="img/acts/leg.png" /></a>
 	</li>
 	<li>
 		<a href="btc-btc.html" title="Construire des bâtiments."><img src="img/acts/ctr.png" /></a>
-	</li>
-	<li>
-		<a href="unt.html" title="Voir la population."><img src="img/acts/unt{_user[race]}.png" /></a>
-	</li>
-	<li>
-		<a href="leg.html" title="Attaques, Légions."><img src="img/acts/leg.png" /></a>
 	</li>
 	<li>
 		<foreach cond='{stats_prim_btc[ext]} as {btc_menu_type} => {btc_menu_array}'>
@@ -41,7 +41,7 @@
 		<a href="carte.html" title="Carte de Zordania."><img src="img/acts/map.png" /></a>
 	</li>
 	<li>
-		<a href="vlg.html" title="Gérer le village."><img src="img/acts/vlg{_user[race]}.png" /></a>
+		<a href="unt.html" title="Voir la population."><img src="img/acts/unt{_user[race]}.png" /></a>
 	</li>
 	<li>
 		<a href="res.html" title="Voir les ressources." class="zrdPopUp"><img src="img/acts/res.png" /></a>
