@@ -1,4 +1,4 @@
-@import url(../imports/base.css);
+.foru@import url(../imports/base.css);
 /*header popup*/
 .ui-widget-header{border:1px solid #4A4031;
 	background-image:-webkit-linear-gradient(top, #4A4031 0%, #231e17 100%);
@@ -532,7 +532,7 @@ margin: 2px;
 	margin-top: 10px;	
 	margin-left: auto;
 	margin-right:auto;
-	width: 618px;
+	max-width: 618px;
 }
 
 .block_forum {

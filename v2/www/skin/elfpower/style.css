@@ -522,7 +522,7 @@ td {
 	margin-top: 10px;
 	margin-left:auto;
 	margin-right:auto;
-	width:640px;
+	max-width:640px;
 }
 
 .block_forum {

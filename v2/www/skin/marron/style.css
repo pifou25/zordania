@@ -383,7 +383,7 @@ margin: 2px;
 	margin-top: 10px;	
 	margin-left: auto;
 	margin-right:auto;
-	width: 618px;
+	max-width: 618px;
 }
 
 .block_forum {

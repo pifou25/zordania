@@ -696,7 +696,7 @@ margin: 2px;
 	margin-top: 10px;	
 	margin-left: auto;
 	margin-right:auto;
-	width: 560px;
+	max-width: 560px;
 }
 
 .block_forum {
