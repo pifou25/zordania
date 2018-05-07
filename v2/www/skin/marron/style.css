@@ -1,8 +1,29 @@
 @import url(../imports/base.css);
+/*header popup*/
+.ui-widget-header{border:1px solid #4A4031;
+	background-image:-webkit-linear-gradient(top, #4A4031 0%, #231e17 100%);
+	background-image:linear-gradient(to bottom, #4A4031 0%, #231e17 100%);
+}
+/*fond popup*/
+.ui-widget-content{
+background: url(img/bg1.png);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: wheat;
+}
+#dialog-modal td{
+	background-color: rgba(0, 0, 0, 0.75);
+}
+#dialog-modal h3{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#dialog-modal h5{
+	background-color: rgba(0, 0, 0, 0.75);
+	font-size: 12px;
+	min-height: 20px; /* hauteur du parent */
+  line-height: 20px; /* hauteur de ligne (identique) */
+}
 
-/*
-* Design G?n?ral
-*/
+/* Design G?n?ral*/
 a{
 	font-size: 12px;
 }

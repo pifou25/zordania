@@ -1,8 +1,21 @@
 @import url(../imports/base.css);
-
+/*header popup*/
+.ui-widget-header{border:1px solid #4C5C7B;
+	background-image:-webkit-linear-gradient(top, #536995 0%, #3D4A61 100%);
+	background-image:linear-gradient(to bottom, #536995 0%, #3D4A61 100%);
+}
+/*fond popup*/
+.ui-widget-content{
+	background-color: #DFD9CD;
+	border:1px solid #BCB29F;
+}
 /*
 * Design Général
 */
+.menu_module a, .retour_module a {
+   border-left: solid 1px #4C5C7B;
+    border-right: solid 1px #4C5C7B;
+}
 a{
 	color: #3F4C66; font-size: 1em;
 }

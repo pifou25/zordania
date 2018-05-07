@@ -1,4 +1,38 @@
 @import url(../imports/base.css);
+/*header popup*/
+.ui-widget-header{border:1px solid #4E641F;
+	background-image:-webkit-linear-gradient(top, #4E641F 0%, #20290d 100%);
+	background-image:linear-gradient(to bottom, #4E641F 0%, #20290d 100%);
+}
+/*fond popup*/
+.ui-widget-content{
+	background-color: #D6DDE4;
+	color: #20290d;
+}
+#dialog-modal td{
+	background-color: rgba(32,41,13,0.2500);
+}
+#dialog-modal h3{
+	background-color: rgba(32,41,13,0.2500);
+}
+#dialog-modal h5{
+	background-color: rgba(32,41,13,0.2500);
+	font-size: 12px;
+	min-height: 20px; /* hauteur du parent */
+  line-height: 20px; /* hauteur de ligne (identique) */
+}
+/*lien popup*/
+#dialog-modal a{	
+	border-left: solid 1px #20290d;
+border-right: solid 1px #20290d;
+	color : #20290d;
+}
+a.zrdPopUp:link, a.zrdPopUp:visited, a.zrdPopUp:active {
+	color: #20290d; text-decoration: none;
+}
+a.zrdPopUp:hover {
+	color: darkgrey; 
+}
 
 body {
 	background-color:#20290d;

@@ -165,7 +165,7 @@
 	</if>
 <h3>
 	<zimgbtc race="{_user[race]}" type="{btc_id}" /> {btc[{_user[race]}][alt][{btc_id}]}</h3>
-	{btc[{_user[race]}][descr][{btc_id}]} <hr />
+	<h5>{btc[{_user[race]}][descr][{btc_id}]}</h5> <hr />
 	<br/>
 	<p class="menu_module">
 		  <a href="btc-use.html?btc_type={btc_id}">Infos</a> 

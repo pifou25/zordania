@@ -1,5 +1,27 @@
 @import url(../imports/base.css);
-
+/*header popup*/
+.ui-widget-header{border:1px solid #4A4031;
+	background-image:-webkit-linear-gradient(top, #4A4031 0%, #231e17 100%);
+	background-image:linear-gradient(to bottom, #4A4031 0%, #231e17 100%);
+}
+/*fond popup*/
+.ui-widget-content{
+background: url(img/texture_centre.png);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: wheat;
+}
+#dialog-modal td{
+	background-color: rgba(0, 0, 0, 0.55);
+}
+#dialog-modal h3{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#dialog-modal h5{
+	background-color: rgba(0, 0, 0, 0.5);
+	font-size: 12px;
+	min-height: 20px; /* hauteur du parent */
+  line-height: 20px; /* hauteur de ligne (identique) */
+}
 /*
 * Design Général
 */
@@ -155,7 +177,7 @@ div#toolTip p em {
 	margin-right: auto;
 	margin-top: 2px;
 	text-align: left;
-	width: 1000px;
+	width: 1250px;
 }
 
 /* Logo en haut */
@@ -163,6 +185,7 @@ div#toolTip p em {
 	margin-bottom: 6px;
 	width: 800px;
 	padding: 10px 0px 8px 0px;
+	float:right;
 }
 
 #logo h1
@@ -322,7 +345,7 @@ div#toolTip p em {
 	background-image: url(img/texture_fond.png);
 	float: left;
 	left: 10px;
-	width: 610px;
+	width: 1050px;
 	margin-left: 10px;
 	margin-top: -10px;
 }
@@ -424,9 +447,9 @@ div#toolTip p em {
 
 #actbar {
 	float: right;
-	margin-top: -55px;
+	margin-top: -25px;
 	margin-bottom: 5px;
-	margin-right: 200px;
+	margin-right: 0px;
 	padding-left: 4px;
 	padding-right: 4px;
 	padding-top: 8px;

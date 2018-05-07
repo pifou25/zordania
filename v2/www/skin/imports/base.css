@@ -64,8 +64,8 @@ img {
 
 .blinkhover { /* image position relative hover existing image */
 	position: absolute;
-	left: 65px;
-	top: 5px;
+	left: 78px;
+	top: 14px;
 }
 
 /* Mise en forme a certains endroits ou <em> et <strong> passent pas */

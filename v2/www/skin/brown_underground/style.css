@@ -1,5 +1,27 @@
 @import url(../imports/base.css);
-
+/*header popup*/
+.ui-widget-header{border:1px solid #533721;
+	background-image:-webkit-linear-gradient(top, #533721 0%, #312013 100%);
+	background-image:linear-gradient(to bottom, #533721 0%, #312013 100%);
+}
+/*fond popup*/
+.ui-widget-content{
+	border:1px solid #533721;
+background: url(img/fond.png);
+	color: wheat;
+}
+#dialog-modal td{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#dialog-modal h3{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#dialog-modal h5{
+	background-color: rgba(0, 0, 0, 0.5);
+	font-size: 12px;
+	min-height: 20px; /* hauteur du parent */
+  line-height: 20px; /* hauteur de ligne (identique) */
+}
 /*
 * Design Général
 */

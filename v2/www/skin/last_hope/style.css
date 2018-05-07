@@ -1,4 +1,34 @@
 @import url(../imports/base.css);
+/*header popup*/
+.ui-widget-header{border:1px solid #4C5C7B;
+	background-image:-webkit-linear-gradient(top, #536995 0%, #3D4A61 100%);
+	background-image:linear-gradient(to bottom, #536995 0%, #3D4A61 100%);
+}
+/*fond popup*/
+.ui-widget-content{
+background: url(img/fond.png);
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#dialog-modal td{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#dialog-modal h3{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#dialog-modal h5{
+	background-color: rgba(0, 0, 0, 0.5);
+	font-size: 12px;
+	min-height: 20px; /* hauteur du parent */
+  line-height: 20px; /* hauteur de ligne (identique) */
+}
+/*lien popup
+
+a.zrdPopUp:link, a.zrdPopUp:visited, a.zrdPopUp:active {
+	color: #4D5E7F; text-decoration: none;
+}
+a.zrdPopUp:hover {
+	color: darkgrey; 
+}*/
 
 /*
 * Design Général
@@ -14,6 +44,8 @@ a:link, a:visited, a:active {
 a:hover {
 	color: #4D5E7F; text-decoration: underline;
 }
+/*
+
 
 /* Lien bonus */
 a.bonus{ 

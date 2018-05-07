@@ -1,5 +1,26 @@
 @import url(../imports/base.css);
-
+/*header popup*/
+.ui-widget-header{border:1px solid #4C5C7B;
+	background-image:-webkit-linear-gradient(top, #536995 0%, #3D4A61 100%);
+	background-image:linear-gradient(to bottom, #536995 0%, #3D4A61 100%);
+}
+/*fond popup*/
+.ui-widget-content{
+background-color: #D6DDE4;
+	color: #6271A2;
+}
+#dialog-modal td{
+	background-color: rgba(98,113,162,0.35);
+}
+#dialog-modal h3{
+	background-color: rgba(98,113,162,0.35);
+}
+#dialog-modal h5{
+	background-color: rgba(98,113,162,0.35);
+	font-size: 12px;
+	min-height: 20px; /* hauteur du parent */
+  line-height: 20px; /* hauteur de ligne (identique) */
+}
 /**************************
 * General                 *
 **************************/
