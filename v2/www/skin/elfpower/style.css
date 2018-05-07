@@ -562,7 +562,9 @@ td {
 	padding-left: 10px;
 	color: #000000;
 }
-
+.titre_module {
+margin-top: 40px;
+}
 .desc {
 	font-style: italic;
 	text-indent: 25px;
