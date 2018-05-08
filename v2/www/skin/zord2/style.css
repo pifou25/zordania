@@ -1,4 +1,4 @@
-.foru@import url(../imports/base.css);
+@import url(../imports/base.css);
 /*header popup*/
 .ui-widget-header{border:1px solid #4A4031;
 	background-image:-webkit-linear-gradient(top, #4A4031 0%, #231e17 100%);
@@ -27,12 +27,6 @@ background: url(img/fond.png);
 	border-left: solid 1px wheat;
 border-right: solid 1px wheat;
 	color : wheat;
-}
-a.zrdPopUp:link, a.zrdPopUp:visited, a.zrdPopUp:active {
-	color: wheat; text-decoration: none;
-}
-a.zrdPopUp:hover {
-	color: darkgrey; 
 }
 
 body {
