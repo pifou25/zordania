@@ -124,7 +124,7 @@
 	</if>
 	<hr />
 	
-	<h3><a id="parrain_infos" class="toggle">Filleuls</a></h3>
+	<h3>Filleuls  <img id="parrain_infos"  src="img/plus.png" title="Tous les filleuls" class="toggle"/></h3>
 	<table id="parrain_infos_toggle" class="liste" style="display: none;">
 	   <tr>
 			<th>Pseudo</th>
