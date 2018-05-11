@@ -1,3 +1,16 @@
+<foreach cond='{dpl_shoot_array} as {result}'></foreach>
+
+
+<if cond="{pacte[dpl_did]} != {result[dpl_shoot_did]}">
+	<p class="infos">Vous essayez d'espionner une autre coalition!</p>
+</if>
+<elseif cond=" {pacte[dpl_did]} == 0 || {pacte[dpl_etat]} == DPL_ETAT_FIN">
+	<p class="infos">Ce pacte n'existe pas ou plus!</p>
+</elseif>
+<elseif cond="{pacte[dpl_did]} == {result[dpl_shoot_did]} && ({pacte[dpl_etat]} == DPL_ETAT_ATT || {pacte[dpl_etat]} == DPL_ETAT_PROP)">
+	<p class="infos">Votre pacte n'est pas encore accepté!</p>
+</elseif>
+<elseif cond="{pacte[dpl_did]} == {result[dpl_shoot_did]} && {pacte[dpl_etat]} == DPL_ETAT_OK">
 	<h3>Discussion commune avec nos alliés: <a href="alliances-view.html?al_aid={pacte[dpl_al]}" title="{pacte[al_name]}">
 		<img class="mini_al_logo" alt="{pacte[al_name]}" src="img/al_logo/{pacte[dpl_al]}-thumb.png" />
 		{pacte[al_name]}</a></h3>
@@ -39,7 +52,7 @@
 			<p class="signature">{result[mbr_sign]}</p>
 			<if cond="{result[mbr_mid]} == {_user[mid]}">
 				<a href="diplo-shoot.html?did={pacte[dpl_did]}&amp;sub=del&amp;msgid={result[dpl_shoot_msgid]}" title="Supprimer">
-					<img src="img/drop.png" alt="Supprimer" title="Supprimer" />
+					<img src="img/drop.png" alt="Supprimer" title="Supprimer" />{result[dpl_shoot_did]}
 				</a>
 			</if>
 			</div>
@@ -55,3 +68,4 @@
 			</else>
 		 </for>
 	</if>
+</elseif>
