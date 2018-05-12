@@ -218,20 +218,20 @@ case ZORD_SPEED_MEDIUM:
 	scl("15m", "mbr", array("res", "unt", "btc", "src", "mbr"));
 
 	scl("5m", "glob", array("cache", "com"));
-	scl("15m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl'));
+	scl("15m", "glob", array("leg", "res", "unt", "btc", "src","stats", 'dpl'));
 	scl("1h", "glob", array("aly", "mbr", "pts"));
 
-	scl("15m", "glob", array("stats"));
+	scl("24h", "glob", array("stats"));
 	break;
 default:
 case ZORD_SPEED_SLOW:
 	scl("1h", "mbr", array("res", "unt", "btc", "src", "mbr"));
 
 	scl("5m", "glob", array("cache", "com"));
-	scl("1h", "glob", array("stats", "leg", "res", "unt", "btc", "src", 'dpl'));
+	scl("1h", "glob", array("stats", "leg", "res", "unt", "btc", "src","stats", 'dpl'));
 	scl("6h", "glob", array("mbr", "pts", "aly"));
 
-	scl("1h", "glob", array("stats", "map"));
+	scl("24h", "glob", array( "map"));
 	break;
 }
 clean_scl();
