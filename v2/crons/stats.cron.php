@@ -5,11 +5,11 @@ $log_stats = "Statistiques";
 function glob_stats() {
 	global $_sql, $_m, $_h;
 	
-	if($_m == 0) { /* Nombre de connectés */
+	//if($_m == 0) { /* Nombre de connectés */
 		$sql = "INSERT INTO ".$_sql->prebdd."con (con_nb) ";
-		$sql.= "SELECT COUNT(*) FROM ".$_sql->prebdd."ses ";
+		$sql.= "SELECT COUNT(DISTINCT ses_mid) FROM ".$_sql->prebdd."ses ";
 		$_sql->query($sql);
-	}
+	
 	
 	if($_h == 0) { /* Statistiques */
 		$sql = "INSERT INTO ".$_sql->prebdd."stq VALUES (NOW(),";

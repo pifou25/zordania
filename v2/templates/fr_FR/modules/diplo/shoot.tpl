@@ -52,7 +52,7 @@
 			<p class="signature">{result[mbr_sign]}</p>
 			<if cond="{result[mbr_mid]} == {_user[mid]}">
 				<a href="diplo-shoot.html?did={pacte[dpl_did]}&amp;sub=del&amp;msgid={result[dpl_shoot_msgid]}" title="Supprimer">
-					<img src="img/drop.png" alt="Supprimer" title="Supprimer" />{result[dpl_shoot_did]}
+					<img src="img/drop.png" alt="Supprimer" title="Supprimer" />
 				</a>
 			</if>
 			</div>
