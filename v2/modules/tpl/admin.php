@@ -1,8 +1,6 @@
 <?php
 if(defined("_INDEX_") and can_d(DROIT_ADM_TRAV)){
 
-//include('lib/tplmore.class.php'); AUTOLOAD
-
 $tplm  = new TemplatesGest();
 $tplm->set_dir(SITE_DIR.'templates');
 

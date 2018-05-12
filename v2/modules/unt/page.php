@@ -26,7 +26,7 @@ if($_act == "pend") {
 		$_tpl->set('no_heros',false);
 	} else {
 		$_tpl->set('unt_act','pend');
-		if($unt_nb > $mbr->nb_unt($unt_type))
+		if($unt_nb > $mbr->nb_unt_done($unt_type))
 			$_tpl->set('unt_sub','paspossible');
 		else  {
 			edit_unt_vlg($_user['mid'], array($unt_type => $unt_nb), -1);
@@ -53,7 +53,6 @@ if(!$_act) {
 		$unt_tmp[$type]['conf'] = $value;
 	}
 
-	$unt_array = array();
 	foreach($unt_tmp as $uid => $array) {
         // requete pour 1 seul type d'unité
         if(!empty($unt_type) && $unt_type != $uid) continue;
@@ -82,15 +81,17 @@ if(!$_act) {
 
 	$_tpl->set("unt_done", $unt_done);
 	
-	// grouper les todo par bat et par type
-	$unt_todo = array();
-	foreach($mbr->unt_todo() as $val1){
-		$typ = $val1['utdo_type'];
-		$inbtc = $unt_array[$typ]['conf']['in_btc'][0];
-		$unt_todo[$inbtc][$typ][] = $val1;
+	if(empty($unt_type)){
+		// grouper les todo par bat et par type
+		$unt_todo = array();
+		foreach($mbr->unt_todo() as $val1){
+			$typ = $val1['utdo_type'];
+			$inbtc = $unt_array[$typ]['conf']['in_btc'][0];
+			$unt_todo[$inbtc][$typ][] = $val1;
+		}
+		$_tpl->set('unt_todo', $unt_todo);
+		$_tpl->set("unt_dispo",$unt_array);
 	}
-    $_tpl->set('unt_todo', $unt_todo);
-        $_tpl->set("unt_dispo",$unt_array);
 
 	if($unt_type) {
 		if ($mbr->get_conf('unt', $unt_type, 'role') == TYPE_UNT_HEROS)

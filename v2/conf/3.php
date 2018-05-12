@@ -1525,7 +1525,7 @@ $this->unt[U3_TRANSPORT_RUNIQUE] = array(
 	'need_src' => array(S3_RUNE_VOYAGE, ),
 	'vit' => 6,
 	'prix_unt' => array(U3_BATISSEUR => 3, ),
-	'rang' => 11,
+	'rang' => 28,
 
 );
 
@@ -1989,7 +1989,7 @@ $this->comp[CP_VOLEE_DE_FLECHES]=array(
         'type'                => 1
 
 );
-
+/*
 $this->comp[CP_VITESSE]=array(
 
         'heros'                => array(U3_SEIGNEUR_DE_GUERRE),
@@ -2002,7 +2002,7 @@ $this->comp[CP_VITESSE]=array(
 
         'type'                => 1
 
-);
+);*/
 
 /* ### Def ### */
 

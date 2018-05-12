@@ -871,7 +871,7 @@ $this->unt[U2_BALUCHON] = array(
 		"prix_unt"	=>	array(U2_TETE => 1),
 		"group"		=>	29,
 		"role"		=>	TYPE_UNT_DEMENAGEMENT,
-		"rang" => 26,
+		"rang" => 33,
 );
 //</unt>
 

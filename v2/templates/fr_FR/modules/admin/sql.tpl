@@ -11,6 +11,8 @@
 <th>CONSTANTE</th>
 <th>valeur</th>
 <tr>
+<th>SITE_URL</th><td>= {SITE_URL}</td>
+</tr><tr>
 <th>ATQ_MAX_NB24H </th><td>= {ATQ_MAX_NB24H} Nb d'attaques par jour</td>
 </tr><tr>
 <th>ATQ_PTS_DIFF </th><td>= {ATQ_PTS_DIFF} Trop de points de différences</td>

@@ -4,7 +4,6 @@ ignore_user_abort();
 error_reporting (E_ALL | E_STRICT | E_RECOVERABLE_ERROR);
 date_default_timezone_set("Europe/Paris");
 
-
 /* Fonctions de Bench */
 function mtime()
 {
@@ -90,7 +89,7 @@ if(!$_sql->con) /* Utiliser Display = module */
 * Sessions
 */
 $_ses = new session($_sql);
-$_file = request("file", "string", "get", "presentation");
+$_file = request("file", "string", "get", "vlg");
 $_type = request("type", "string", "get");
 $_act = request("act", "string", "get");
 $_sub = request("sub", "string", "get");

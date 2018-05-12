@@ -19,12 +19,18 @@ if($_act != $type && ($_act == "ajax" || $_act == "lite") )
 	setcookie('map_type',$_act, time() + 60 * 60 * 24 * 7 * 30);
 
 if($_act == "lite" || $_act == "ajax") {
-	$map_x = request("map_x", "uint", "get", -1);
-	$map_y = request("map_y", "uint", "get", -1);
+	if(empty($_GET['map_x']))
+		$map_x = -1;
+	else
+		$map_x = request("map_x", "uint", "get", -1);
+	if(empty($_GET['map_y']))
+		$map_y = -1;
+	else
+		$map_y = request("map_y", "uint", "get", -1);
 	$map_cid = request("map_cid", "uint", "get", -1);
 	$map_pseudo = request("map_pseudo", "string", "get");
 
-	$diff = ($_display == "module") ? 20 : 10;
+	$diff = ($_display == "module") ? 30 : 20;
 
 	if($map_cid != -1) {
 		$coord = get_square($map_cid, true);
@@ -35,7 +41,7 @@ if($_act == "lite" || $_act == "ajax") {
 	} else if($map_pseudo) {
 		$cond = array("pseudo" => $map_pseudo);
 		$mbr_array = get_mbr_pos($cond);
-		if($mbr_array) {
+		if($mbr_array && !($mbr_array[0]['mbr_race'] == 6 || $mbr_array[0]['mbr_gid'] == GRP_PNJ)) {
 			$map_x = $mbr_array[0]['map_x'] - $diff / 2;
 			$map_y = $mbr_array[0]['map_y'] - $diff / 2;
 		}
@@ -106,12 +112,17 @@ if($_act == "view") {
 	$_tpl->set("orig_x", $map_x);
 	$_tpl->set("orig_y", $map_y);
 	
+	// 1 square = 50x50px
+	// edit skin/imports/carte.css #carte_big and #carte_lite
+	// for the correct height and width according to the number of squares:
 	if($_display == "module") {
+		// 30x30
+		$max_x2 = $map_x + 29;
+		$max_y2 = $map_y + 29;
+	} else {
+		// 20x20
 		$max_x2 = $map_x + 19;
 		$max_y2 = $map_y + 19;
-	} else {
-		$max_x2 = $map_x + 9;
-		$max_y2 = $map_y + 9;
 	}
 
 	$map_array = get_map($_user["mid"], $map_x,  $map_y, $max_x2, $max_y2);

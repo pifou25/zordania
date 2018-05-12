@@ -880,7 +880,7 @@ $this->unt[U4_OLIPHANT] = array(
 	'need_src' => array(S4_APPEL_MONSTREUX, ),
 	'vit' => 6,
 	'prix_unt' => array(U4_DRESSEUR => 1, ),
-	'rang' => 11,
+	'rang' => 28,
 );
 //</unt>
 

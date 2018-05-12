@@ -39,8 +39,13 @@
 .swipe-wrap > div > h3 {
    padding-left: 20px;
 }
+.swipe-wrap > div > h2 {
+   margin-top: 300px;
+   padding-left: 10px;
+   font-size: 15px;
+}
 .swipe-wrap > div:nth-child(1) {
-    background-image: url("img/portail/village400.png");
+    background-image: url("img/7/vlg/cite-gobelin-final.jpg");
 }
 .swipe-wrap > div:nth-child(2) {
     background-image: url("img/portail/recherche400.png");
@@ -57,7 +62,7 @@
 
 </style>
 
-<div id='mySwipe' style='max-width:500px;margin:0 auto' class='swipe'>
+<div id='mySwipe' style='max-width:100%;margin:0 auto' class='swipe'>
   <div class='swipe-wrap'>
   
 	<div>
@@ -67,6 +72,7 @@
 		toujours plus puissants pour mener vos soldats à la victoire ?<br/>
 		Zordania est un jeu tour par tour de stratégie médiévale fantastique gratuit où vous incarnez un seigneur, 
 		chef d'une cité que vous devrez gérer au niveau économique et surtout au niveau militaire. Choisissez votre race pour devenir un être sanguinaire, ou sauver la veuve et l'orphelin. Mais soyez toujours prêt, car tous vos voisins ne vous laisseront pas prospérer en paix.</p>
+		<h2>Village Gobelin<h2>
 	</div>
 	<div>
 		<!-- img src="img/portail/recherche400.png" alt="image2"/ -->

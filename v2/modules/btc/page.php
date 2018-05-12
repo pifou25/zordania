@@ -24,23 +24,19 @@ if($_act == 'btc')
 	$_tpl->set("btc_act",false);
 
 	// tous les batiments constuits - sauf les BTC_ETAT_TODO
-	$cache['btc_done'] = get_nb_btc_done($_user['mid']); // get_nb_btc_done($_user['mid']);
-    
+	//$cache['btc_done'] = $mbr->nb_btc(); // get_nb_btc_done($_user['mid']);
+	//$cache['btc_todo'] = $mbr->nb_btc( array(), array(BTC_ETAT_TODO));
+
 	if($_sub == 'btc') {// construire un nouveau bâtiment $type
 		$_tpl->set("btc_act","btc");
 		$type = request("type", "uint", "get");
 		
-		$btc_todo = $mbr->nb_btc(array(), array(BTC_ETAT_TODO)); // $cache['btc_todo'];
-		$btc_nb = 0;
-		foreach($btc_todo as $btc_type)
-			$btc_nb += $btc_type['btc_nb'];
-
 		if(!$type)
 			$_tpl->set("btc_no_type",true);
-		else if($btc_nb >= TODO_MAX_BTC)
+		else if(count($mbr->btc(array(), array(BTC_ETAT_TODO))) >= TODO_MAX_BTC)
 			$_tpl->set("another_btc", true);
 		else {
-			$array = can_btc($_user['mid'], $type, $cache);
+			$array = $mbr->can_btc($type); // can_btc($_user['mid'], $type, $cache);
 			
 			if(isset($array['do_not_exist']))
 				$_tpl->set("btc_no_type",true);
@@ -57,8 +53,9 @@ if($_act == 'btc')
 					mod_res($_user['mid'], get_conf("btc", $type, "prix_res"), -1);
 					
 					scl_btc($_user['mid'], $type);
-					// MAJ du $cache
-					$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
+					// MAJ du $cache - on refait le select DB
+					//$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
+					$mbr = new member($_user['mid']);
 				}
 			}
 		}
@@ -81,42 +78,54 @@ if($_act == 'btc')
 				mod_trn($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
 				mod_res($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
 				// MAJ du $cache
-				$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
+				//$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
+				$mbr = new member($_user['mid']);
 			}
 		}
 	}
 
 	/* Y'en a en construction ? */
-	$btc_todo = get_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
-
+	$btc_todo = $mbr->btc(array(), array(BTC_ETAT_TODO));
 	if($btc_todo) {
 		$_tpl->set("btc_conf",get_conf("btc"));
 		$_tpl->set("btc_todo",$btc_todo);
-	}// else {
+	}
+	$nb_todo = count($btc_todo);
+	$btc_todo = $mbr->nb_btc(array(), array(BTC_ETAT_TODO));
 
 	$btc_tmp = array();
 	for($i = 1; $i <= get_conf("race_cfg", "btc_nb"); ++$i) {
-		$btc_tmp[$i]['bad'] = can_btc($_user['mid'], $i, $cache);
+		$btc_tmp[$i]['bad'] = $mbr->can_btc($i); // can_btc($_user['mid'], $i, $cache);
 		$btc_tmp[$i]['conf'] = get_conf("btc", $i);
+		/*
 		if(isset($cache['btc_done'][$i]['btc_nb']))
 			$btc_tmp[$i]['btc_nb'] = $cache['btc_done'][$i]['btc_nb'];
 		else
 			$btc_tmp[$i]['btc_nb'] = 0;
+		*/
+		$btc_tmp[$i]['btc_nb'] = $mbr->nb_btc($i);
+		/*
 		if(isset($cache['btc_todo'][$i]['btc_nb']))
 			$btc_tmp[$i]['btc_todo'] = $cache['btc_todo'][$i]['btc_nb'];
+		*/
+		if(isset($btc_todo[$i]))
+			$btc_tmp[$i]['btc_todo'] = $btc_todo[$i]['btc_nb'];
 	}
 
 	$btc_ok = array(); // constructible, montrable
 	$btc_bad = array(); // pas constructible, mais montrable 
 	$btc_limit = array(); // limite atteinte, mais montrable
 	foreach($btc_tmp as $bid => $array) {
+		// pas montrable on ignore
 		if($array['bad']['need_src'] || $array['bad']['need_btc']) continue;
+		// limite ou manque de terrains
 		if($array['bad']['limit_btc'] || $array['bad']['prix_trn'])
 			$btc_limit[$bid] = $array;
+		// manque ressources ou unités
 		else if($array['bad']['prix_res'] || $array['bad']['prix_unt'])
 			$btc_bad[$bid] = $array;
 		else {
-			if(count($btc_todo) <= TODO_MAX_BTC)
+			if($nb_todo <= TODO_MAX_BTC)
 				unset($array['bad']);
 			$btc_ok[$bid] = $array;
 		}

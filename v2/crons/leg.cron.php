@@ -125,7 +125,7 @@ function glob_leg() {
 
 	/* Avancer les légions en déplacement */
 	$sql = "SELECT leg_id, leg_dest, leg_cid, leg_vit, leg_etat, leg_mid, ";
-	$sql.=" a.map_x as leg_x, a.map_y as leg_y, b.map_x as dest_x, b.map_y as dest_y ";
+	$sql.=" a.map_x as leg_x, a.map_y as leg_y, b.map_x as dest_x, b.map_y as dest_y, b.map_type as dest_type ";
 	$sql.= "FROM ".$_sql->prebdd."leg ";
 	$sql.= "JOIN ".$_sql->prebdd."map as a ON a.map_cid = leg_cid ";
 	$sql.= "JOIN ".$_sql->prebdd."map as b ON b.map_cid = leg_dest ";
@@ -157,8 +157,8 @@ function glob_leg() {
 		if($x1 == $x2 && $y1 == $y2) {// la légion est arrivée à destination!
 			$sql.= ", leg_dest = 0, leg_stop = NOW(), leg_etat = ";
 			$sql.= ($value['leg_etat'] == LEG_ETAT_DPL) ? LEG_ETAT_POS : LEG_ETAT_GRN;
-			/* vérifier si la légion contient l'unité caravane */
-			if (isset($leg_move_array[$lid])) {
+			/* vérifier si la légion contient l'unité caravane ET si l'emplacement est libre */
+			if (isset($leg_move_array[$lid]) && $value['dest_type'] == MAP_LIBRE) {
 				$leg = $leg_move_array[$lid];
 				/*déplacement du village*/
 				move_member($mid, $value['leg_dest']);

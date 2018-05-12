@@ -1,4 +1,38 @@
 @import url(../imports/base.css);
+/*header popup*/
+.ui-widget-header{border:1px solid #4E641F;
+	background-image:-webkit-linear-gradient(top, #4E641F 0%, #20290d 100%);
+	background-image:linear-gradient(to bottom, #4E641F 0%, #20290d 100%);
+}
+/*fond popup*/
+.ui-widget-content{
+	background-color: #D6DDE4;
+	color: #20290d;
+}
+#dialog-modal td{
+	background-color: rgba(32,41,13,0.2500);
+}
+#dialog-modal h3{
+	background-color: rgba(32,41,13,0.2500);
+}
+#dialog-modal h5{
+	background-color: rgba(32,41,13,0.2500);
+	font-size: 12px;
+	min-height: 20px; /* hauteur du parent */
+  line-height: 20px; /* hauteur de ligne (identique) */
+}
+/*lien popup*/
+#dialog-modal a{	
+	border-left: solid 1px #20290d;
+border-right: solid 1px #20290d;
+	color : #20290d;
+}
+a.zrdPopUp:link, a.zrdPopUp:visited, a.zrdPopUp:active {
+	color: #20290d; text-decoration: none;
+}
+a.zrdPopUp:hover {
+	color: darkgrey; 
+}
 
 body {
 	background-color:#20290d;
@@ -125,7 +159,7 @@ input,select {
     margin: 2px;
     background: #3B372C;
     border: thin solid #000;
-	color: black;
+	color: #ffebd1;
 }
 
 textarea:focus,input:focus
@@ -136,7 +170,7 @@ textarea:focus,input:focus
 textarea
 {
     background: #3B372C;
-    color: #fff;
+    color: #ffebd1;
     border: thin solid #000;
 }
 
@@ -180,6 +214,7 @@ td {
 #logo {
     margin-bottom: 6px;
     width: 800px;
+	float: right;
 }
 
 #logo h1 {
@@ -216,7 +251,7 @@ td {
     margin-right: auto;
     margin-top: 10px;
     text-align: left;
-    width: 1100px;
+    width: 1200px;
     border: 1px solid #000000;
     background: #353229;
 
@@ -259,7 +294,7 @@ td {
 
 #module {
     float: left;
-    width: 700px;
+    width: 900px;
     position: relative;
     bottom: 47px;
 	margin-top: -7px;
@@ -270,9 +305,11 @@ td {
     float: right;
     position: relative;
     bottom: 90px;
+	top: -30px;
     padding: 3px 3px 3px 3px;
     margin: 1px;
     margin-right: 5px;
+	z-index:10;
 }
 
 #actbar li {
@@ -406,7 +443,9 @@ td {
     background: #3B372C;
     font-weight:bold;
 }
-
+.infos{
+	color: #ffebd1;
+}
 .ok {
     border-color: #226622;
     color: #226622;
@@ -481,6 +520,9 @@ td {
 	color: #b3b3aa;
 	padding: 5px;
 	margin-top: 10px;
+	margin-left:auto;
+	margin-right:auto;
+	max-width:640px;
 }
 
 .block_forum {
@@ -520,7 +562,9 @@ td {
 	padding-left: 10px;
 	color: #000000;
 }
-
+.titre_module {
+margin-top: 40px;
+}
 .desc {
 	font-style: italic;
 	text-indent: 25px;

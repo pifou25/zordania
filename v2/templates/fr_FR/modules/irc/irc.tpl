@@ -17,7 +17,7 @@
 
 	<br/>
 	
-	<p class="infos">NEW : la communauté se retrouve maintenant sur Discord, suivez le lien d'invitation: <a href="https://discord.gg/fjGXrkY" title="for the gamers">Discord app</a></p>
+	<p class="infos">NEW : la communauté se retrouve maintenant sur Discord, suivez le lien d'invitation: <a href="https://discord.gg/Wmwf829" title="for the gamers">Discord app</a></p>
 	
 	<hr/>
 
@@ -33,7 +33,7 @@
 	<div class="menu_module">
 	<a href="module--irc-webchat.html" target="_blank" title="Aucune installation nécessaire !">Utiliser l'interface web</a>
 	- <a href="irc://irc.quakenet.org/zordania" title="Rejoindre le chat avec mon logiciel habituel">Utiliser mon logiciel habituel</a>
-	- <a href="https://discord.gg/fjGXrkY" title="for the gamers">Discord app</a>
+	- <a href="https://discord.gg/Wmwf829" title="for the gamers">Discord app</a>
 	</div>
 </if>
 

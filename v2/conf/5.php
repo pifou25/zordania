@@ -641,7 +641,6 @@ $this->unt[U5_ARCHER]=array(
 		"vie"=>12,
 		"atq_unt"=>15,
 		"vit"=>10,
-		"bonus" => array('vie' => 1),
 		"prix_res"=>array(R5_ARC_COURT => 1,R5_A_CUIR => 1),
 		"need_btc"=>array(B5_CASERNE),
 		"in_btc"=>array(B5_CASERNE),
@@ -687,6 +686,7 @@ $this->unt[U5_GARDE]=array(
 		"vie"=>10,
 		"atq_unt"=>15,
 		"vit"=>10,
+		"bonus" => array('vie' => 1),
 		"prix_res"=>array(R5_ARC_COMPOSITE => 1,R5_A_CUIR => 1,R5_RONDACHE => 1),
 		"need_btc"=>array(B5_CASERNE),
 		"in_btc"=>array(B5_CASERNE),
@@ -878,7 +878,7 @@ $this->unt[U5_TRANSPOR_INCANT]=array(
 		"group"=>25,
 		"prix_unt"=>array(U5_DRUIDE => 2),
 		"role"=>TYPE_UNT_DEMENAGEMENT,
-		"rang" => 18,
+		"rang" => 27,
 );
 //</unt>
 

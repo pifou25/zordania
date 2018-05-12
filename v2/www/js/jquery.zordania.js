@@ -80,7 +80,7 @@ $(document).ready(  function()
     
     // réponse ajax dans une popup
     traiterZrdPopUp();
-    
+
 });
 
 
@@ -101,6 +101,9 @@ function initToggle(){
 		var src=($(this).attr('src')==='img/plus.png'?'img/minus.png':'img/plus.png');
 		$(this).attr('src',src);
 	});
+	
+	// remove class to avoid reccursive effects
+	$(".toggle").removeClass("toggle");
 }
 
 function traiterFormulaires(){
@@ -225,7 +228,8 @@ var funcZrdPopup = function(){ // au clic sur le lien
 				}],
 				resizable:false,
 				draggable:false,
-				width: 500
+				width: 500,
+				closeText: ""
 			});
 			if(title){
 				output.dialog("option", "title", title);
@@ -251,10 +255,17 @@ var funcZrdModal = function(){ // au clic sur le lien
 			output.html(header + '<div class="centre">' + html + '</div>');
 			// remettre les memes comportements sur la reponse ajax
 			traiterZrdPopUp();
-			initToggle();
+			initToggle
+			();
 			traiterFormulaires();
 			output.show();
 		}
 	});
 	return false;
 }
+
+// check visibility of an element
+// used to detect desktop or mobile responsive design
+var isVisible = function(element) {
+	return $(element).is(':visible');
+};
