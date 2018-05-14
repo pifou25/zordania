@@ -76,7 +76,8 @@ $(document).ready(  function()
 		return false;
 	});
   
-	traiterFormulaires();
+	// activer le comportement ajax sur les formulaires
+	$("form.ajax").submit(funcZrdFormulaire);
     
     // réponse ajax dans une popup
     traiterZrdPopUp();
@@ -106,37 +107,33 @@ function initToggle(){
 	$(".toggle").removeClass("toggle");
 }
 
-function traiterFormulaires(){
-	$("form.ajax").each(function(){
-		$(this).submit(function(event){
-			// Stop form from submitting normally
-			event.preventDefault();
+var funcZrdFormulaire = function(event){
+	// Stop form from submitting normally
+	event.preventDefault();
 
-			// Get some values from elements on the page:
-			var $form = $( this ),
-			term = $form.serialize(),
-			url = "ajax--" + $form.attr( "action" );
+	// Get some values from elements on the page:
+	var $form = $( this ),
+	term = $form.serialize(),
+	url = "ajax--" + $form.attr( "action" );
 
-			$form.attr("action", url);
-			// Send the data using post
-			$.post( url, term, function(data){
-				$("#dialog-modal").html(data)
-					.dialog({ // popup
-						buttons: [{
-							text: "Fermer", // bouton annuler
-							click: function() {
-							$( this ).dialog( "close" );}
-						}],
-						resizable:false,
-						draggable:false,
-						title:'Opération terminée',
-						hide: {effect: "fadeOut", duration: 1000}
-					}, setTimeout(function(){$("#dialog-modal").dialog("close");},3000)
-				);
-			});
-		});
+	$form.attr("action", url);
+	// Send the data using post
+	$.post( url, term, function(data){
+		$("#dialog-modal").html(data)
+			.dialog({ // popup
+				buttons: [{
+					text: "Fermer", // bouton annuler
+					click: function() {
+					$( this ).dialog( "close" );}
+				}],
+				resizable:false,
+				draggable:false,
+				title:'Opération terminée',
+				hide: {effect: "fadeOut", duration: 1000}
+			}, setTimeout(function(){$("#dialog-modal").dialog("close");},3000)
+		);
 	});
-}
+};
 
 /*
 * jQuery ajax get
@@ -218,7 +215,11 @@ var funcZrdPopup = function(){ // au clic sur le lien
 		success: function(html) {
 			output.html(html);
 			// remettre les memes comportements sur la reponse ajax
-			traiterZrdPopUp();
+			output.find(".liste .zrdPopUp").click(funcZrdPopup);
+			// remettre les toggle
+			initToggle();
+			// activer le comportement ajax sur les formulaires
+			output.find("form.ajax").submit(funcZrdFormulaire);
 			
 			output.dialog({ // popup
 				buttons: [{
@@ -240,7 +241,7 @@ var funcZrdPopup = function(){ // au clic sur le lien
 	return false;
 }
 
-var funcZrdModal = function(){ // au clic sur le lien
+var funcZrdModal = function(){ // au clic sur le lien - popup CSS style selendia
 
 	var url = $(this).attr('href');
 	var title = $(this).attr('title');
@@ -254,9 +255,10 @@ var funcZrdModal = function(){ // au clic sur le lien
 		success: function(html) {
 			output.html(header + '<div class="centre">' + html + '</div>');
 			// remettre les memes comportements sur la reponse ajax
-			traiterZrdPopUp();
-			initToggle
-			();
+			output.find(".liste .zrdPopUp").click(funcZrdPopup);
+			// remettre les toggle
+			initToggle();
+			
 			traiterFormulaires();
 			output.show();
 		}

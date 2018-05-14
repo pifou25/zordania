@@ -1,5 +1,5 @@
-<if cond='isset({btc_tpl}) || {btc_act} == "list2" || {_display}=="ajax"'>
-
+<# if cond='isset({btc_tpl}) || {btc_act} == "list2" || {_display}=="ajax"'>
+<!-- menu useless -->
 	<p class="menu_module">
 		
 		<a href="btc-use.html?btc_type={btc_id}" title="Infos" class="zrdPopUp">Infos</a>
@@ -9,7 +9,7 @@
 		<a href="btc-use.html?sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste&nbsp;complète</a>
 	</p>
 
-</if>
+</if #>
 
 
 <if cond='!isset({btc_act}) || {btc_act} == "list"'>
@@ -49,6 +49,7 @@
 		Vlg.init({_user[race]}, fortif);
 	</script>
 </if>
+<# liste des batiments #>
 <elseif cond='{btc_act} == "list2"'>
 
 	<form action="alert('javascript!');" method="post" id="form_btc">
@@ -163,10 +164,12 @@
 		{btc[{_user[race]}][descr][{btc_id}]}
 		<include file="modules/btc/inc/info.tpl" cache="1" />
 	</if>
-<h3>
-	<zimgbtc race="{_user[race]}" type="{btc_id}" /> {btc[{_user[race]}][alt][{btc_id}]}</h3>
-	<h5>{btc[{_user[race]}][descr][{btc_id}]}</h5> <hr />
-	<br/>
+<#
+	<h3><zimgbtc race="{_user[race]}" type="{btc_id}" /> {btc[{_user[race]}][alt][{btc_id}]}</h3>
+	<h5>{btc[{_user[race]}][descr][{btc_id}]}</h5>
+	<hr />
+#>
+
 	<p class="menu_module">
 		  <a href="btc-use.html?btc_type={btc_id}">Infos</a> 
 		<if cond="isset({btc_conf[prod_src]})">
@@ -188,6 +191,9 @@
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours" title="Cours moyens">Cours</a>
 			
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours_sem" title="Cours sur la semaine">Cours de la Semaine</a> 
+		</if>
+		<if cond="isset({btc_id})">
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste</a>
 		</if>
 	</p>
 	<include file="{btc_tpl}" cache="1" />
