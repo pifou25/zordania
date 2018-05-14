@@ -7,8 +7,8 @@
 		<a href="vlg.html" title="Gérer le village."><img src="img/acts/vlg{_user[race]}.png" /></a>
 	</li>
 	<li>	
-		<if cond='{_user[msg]} == 1'><a href="msg.html" title="Vous avez {_user[msg]} nouveau message." ><img src="img/acts/gen.gif"/></a></if>
-		<elseif cond='{_user[msg]} > 1'><a href="msg.html" title="Vous avez {_user[msg]} nouveaux messages." ><img src="img/acts/gen.gif"/></a></elseif>
+		<if cond='{_user[msg]} == 1'><a href="gen.html" title="Vous avez {_user[msg]} nouveau message." ><img src="img/acts/gen.gif"/></a></if>
+		<elseif cond='{_user[msg]} > 1'><a href="gen.html" title="Vous avez {_user[msg]} nouveaux messages." ><img src="img/acts/gen.gif"/></a></elseif>
 		<else><a href="gen.html" title="Informations générales du village."><img src="img/acts/gen.png" /></a></else>
 	</li>
     <li>

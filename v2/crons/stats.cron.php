@@ -20,7 +20,7 @@ function glob_stats() {
 	}	
 	
 	if($_m == 0) { //on ne garde que 3 mois pour ne pas surcharger la db
-	$sql = "DELETE FROM ".$_sql->prebdd."con WHERE con_date = NOW() - INTERVAL 90 DAY";
+	$sql = "DELETE FROM ".$_sql->prebdd."con WHERE con_date < (NOW() - INTERVAL 90 DAY)";
 		$_sql->query($sql);
 	}
 }
