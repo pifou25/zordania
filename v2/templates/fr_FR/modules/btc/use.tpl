@@ -194,6 +194,7 @@
 		</if>
 		<if cond="isset({btc_id})">
 			<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste</a>
+			<a href="btc-use.html?sub=list" title="Tous les bâtiments" class="zrdPopUp">Liste&nbsp;complète</a>
 		</if>
 	</p>
 	<include file="{btc_tpl}" cache="1" />
