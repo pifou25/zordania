@@ -119,18 +119,19 @@ var funcZrdFormulaire = function(event){
 	$form.attr("action", url);
 	// Send the data using post
 	$.post( url, term, function(data){
-		$("#dialog-modal").html(data)
-			.dialog({ // popup
-				buttons: [{
-					text: "Fermer", // bouton annuler
-					click: function() {
-					$( this ).dialog( "close" );}
-				}],
-				resizable:false,
-				draggable:false,
-				title:'Opération terminée',
-				hide: {effect: "fadeOut", duration: 1000}
-			}, setTimeout(function(){$("#dialog-modal").dialog("close");},3000)
+		var output = $("#dialog-modal").html(data);
+		output.find("a.zrdPopUp").click(funcZrdPopup) ;// tous les liens restent dans la popup
+		output.dialog({ // popup
+			buttons: [{
+				text: "Fermer", // bouton annuler
+				click: function() {
+				$( this ).dialog( "close" );}
+			}],
+			resizable:false,
+			draggable:false,
+			title:'Opération terminée',
+			hide: {effect: "fadeOut", duration: 1000}
+		}, setTimeout(function(){$("#dialog-modal").dialog("close");},3000)
 		);
 	});
 };
@@ -220,6 +221,8 @@ var funcZrdPopup = function(){ // au clic sur le lien
 			initToggle();
 			// activer le comportement ajax sur les formulaires
 			output.find("form.ajax").submit(funcZrdFormulaire);
+			// tous les liens restent dans la popup
+			output.find("a.zrdPopUp").click(funcZrdPopup);
 			
 			output.dialog({ // popup
 				buttons: [{

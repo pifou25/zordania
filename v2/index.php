@@ -86,7 +86,7 @@ $_ses = new session($_sql);
 $_file = request("file", "string", "get", "vlg");
 $_type = request("type", "string", "get");
 $_act = request("act", "string", "get");
-$_sub = request("sub", "string", "get");
+$_sub = request("sub", "string", "get", request("sub", "string", "post"));
 
 /* pour le fichier html de verification google */
 if($_file == 'google0ae71ec825ebe77e')

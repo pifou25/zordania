@@ -1,7 +1,7 @@
 <if cond='{btc_act} == "my"'>
 	<if cond='{vente_array}'>
 		<p class="info">Attention en cas d'annulation d'une vente, une taxe de {COM_TAX}% sera prélevée sur celle-ci.</p>
-		<form action="btc-use.html?btc_type={btc_id}&amp;sub=cnl" method="post">
+		<form class="ajax" action="btc-use.html?btc_type={btc_id}&amp;sub=cnl" method="post">
 		<table class="liste">
 		<tr>
 			<th>Proposé</th>
@@ -66,7 +66,7 @@
 		Ventes: {nb_ventes}/{max_ventes}.
 		Choisissez le type de ressource à échanger puis le prix.
 		
-			<form action="btc-use.html?btc_type={btc_id}&amp;sub=ven" method="post">
+			<form class="ajax" action="btc-use.html?btc_type={btc_id}&amp;sub=ven" method="post">
 			
 			<p>
 			<label for="com_type">Quantité de :</label>
@@ -155,7 +155,7 @@
 			});
 		});
 		</script>
-		<form name="form" action="btc-use.html?btc_type={btc_id}&amp;sub=ven" method="post">
+		<form class="ajax" name="form" action="btc-use.html?btc_type={btc_id}&amp;sub=ven" method="post">
 		<if cond="isset({btc_error})">
 		    <p class="error">Cours incorrect.</p>
 		</if>
@@ -247,7 +247,7 @@
 			<foreach cond='{com_liste} as {mch_value}'>
 				<set name="mch_type" value="{mch_value[mch_type]}" />
 				<zimgres race="{_user[race]}" type="{mch_type}" />
-				<a href="btc-use.html?btc_type={btc_id}&amp;sub=ach&amp;com_type={mch_type}" title="Afficher {res[{_user[race]}][alt][{mch_type}]}">{res[{_user[race]}][alt][{mch_type}]}</a><br />
+				<a class="zrdPopUp" href="btc-use.html?btc_type={btc_id}&amp;sub=ach&amp;com_type={mch_type}" title="Afficher {res[{_user[race]}][alt][{mch_type}]}">{res[{_user[race]}][alt][{mch_type}]}</a><br />
 				<if cond='isset({com_type}) && {com_type} == {mch_type}'>
 				<include file="modules/btc/inc/com_list_res.tpl" cache="1" />
 				</if>
@@ -312,7 +312,7 @@
 		<foreach cond="{mch_cours} as {mch_value}">
 		<tr>
 			<td>
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=cours_sem&amp;com_type={mch_value[mcours_res]}" title="Cours de  {res[{_user[race]}][alt][{mch_value[mcours_res]}]}">
+			<a class="zrdPopUp" href="btc-use.html?btc_type={btc_id}&amp;sub=cours_sem&amp;com_type={mch_value[mcours_res]}" title="Cours de  {res[{_user[race]}][alt][{mch_value[mcours_res]}]}">
 				<zimgres race="{_user[race]}" type="{mch_value[mcours_res]}" /> {res[{_user[race]}][alt][{mch_value[mcours_res]}]}
 			</a>
 			</td>
@@ -342,12 +342,12 @@
 
 	<hr />
 	<div class="menu_module">
-	Jour : <a href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;jour=<math oper='{stq_jour}-1'/>&amp;mois={stq_mois}&amp;annee={stq_annee}" title="Précédent"><img src="img/left.png"/></a> 
-	{stq_jour} <a href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;jour=<math oper='{stq_jour}+1'/>&amp;mois={stq_mois}&amp;annee={stq_annee}" title="Suivant"><img src="img/right.png"/></a> - 
-	Mois : <a href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;mois=<math oper='{stq_mois}-1'/>&amp;jour={stq_jour}&amp;annee={stq_annee}" title="Précédent"><img src="img/left.png"/></a> 
-	{stq_mois} <a href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;mois=<math oper='{stq_mois}+1'/>&amp;jour={stq_jour}&amp;annee={stq_annee}" title="Suivant"><img src="img/right.png"/></a> -
-	Année : <a href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;annee=<math oper='{stq_annee}-1'/>&amp;jour={stq_jour}&amp;mois={stq_mois}" title="Précédent"><img src="img/left.png"/></a> 
-	{stq_annee} <a href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;annee=<math oper='{stq_annee}+1'/>&amp;mois={stq_mois}&amp;mois={stq_mois}" title="Suivant"><img src="img/right.png"/></a>
+	Jour : <a class="zrdPopUp" href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;jour=<math oper='{stq_jour}-1'/>&amp;mois={stq_mois}&amp;annee={stq_annee}" title="Précédent"><img src="img/left.png"/></a> 
+	{stq_jour} <a class="zrdPopUp" href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;jour=<math oper='{stq_jour}+1'/>&amp;mois={stq_mois}&amp;annee={stq_annee}" title="Suivant"><img src="img/right.png"/></a> - 
+	Mois : <a class="zrdPopUp" href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;mois=<math oper='{stq_mois}-1'/>&amp;jour={stq_jour}&amp;annee={stq_annee}" title="Précédent"><img src="img/left.png"/></a> 
+	{stq_mois} <a class="zrdPopUp" href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;mois=<math oper='{stq_mois}+1'/>&amp;jour={stq_jour}&amp;annee={stq_annee}" title="Suivant"><img src="img/right.png"/></a> -
+	Année : <a class="zrdPopUp" href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;annee=<math oper='{stq_annee}-1'/>&amp;jour={stq_jour}&amp;mois={stq_mois}" title="Précédent"><img src="img/left.png"/></a> 
+	{stq_annee} <a class="zrdPopUp" href="btc-use.html?btc_type={btc_id}&sub=cours_sem&amp;annee=<math oper='{stq_annee}+1'/>&amp;mois={stq_mois}&amp;mois={stq_mois}" title="Suivant"><img src="img/right.png"/></a>
 	</div>
 
 	<if cond="{mch_cours}">

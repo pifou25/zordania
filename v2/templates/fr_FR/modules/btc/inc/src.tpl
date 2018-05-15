@@ -17,7 +17,7 @@
 		<if cond='{src_todo}'>
 			<foreach cond='{src_todo} as {src_type} => {src_result}'>
 				<zimgsrc type="{src_type}" race="{_user[race]}" />
-				{src[{_user[race]}][alt][{src_type}]} -  <a href="btc-use.html?btc_type={btc_id}&amp;sub=cancel_src&amp;sid={src_type}">Annuler</a><br />
+				{src[{_user[race]}][alt][{src_type}]} -  <a href="btc-use.html?btc_type={btc_id}&amp;sub=cancel_src&amp;sid={src_type}" class="zrdPopUp">Annuler</a><br />
 
 <# <!-- pas possible d'utiliser le tag zimgba2 ici car on doit calculser 100-'stdo_tours' ... -->
 				<zimgba2 per="{src_result[stdo_tours]}" max="{src_conf[{src_type}][tours]}" />
@@ -92,7 +92,7 @@
 						<br/>
 					</if>
 					<else>
-						<form action="btc-use.html?btc_type={btc_id}&amp;sub=add_src" method="post">
+						<form class="ajax" action="btc-use.html?btc_type={btc_id}&amp;sub=add_src" method="post">
 							<input type="hidden" name="type" value="{src_id}" />
 							<input type="submit" value="Rechercher" />
 						</form>
