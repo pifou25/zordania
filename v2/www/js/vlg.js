@@ -333,7 +333,7 @@ var VlgV2 = {
 					this.VlgCoords[15] = new Array(175, 258);
 					this.VlgCoords[16] = new Array(261, 111);
 					this.VlgCoords[17] = new Array(61, 177);
-					this.FortCoords = new Array(527, 185, 110, 52);
+					this.FortCoords = new Array(270, 185, 110, 52);
 					//this.VlgCoords[18] = new Array(94,61);
 					break;
 				case 3:
