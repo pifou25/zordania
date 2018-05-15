@@ -97,7 +97,7 @@
 							<input type="submit" value="Rechercher" />
 						</form>
 					</else>
-					<div id="src_{src_id}_toggle">
+					<div id="src_{src_id}_toggle" style="display: none;">
 						<if cond="isset({src_array[conf][need_no_src]})">
 							Incompatible avec :
 							<foreach cond="{src_array[conf][need_no_src]} as {src_no_type}">
