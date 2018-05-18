@@ -88,6 +88,15 @@ $_type = request("type", "string", "get");
 $_act = request("act", "string", "get");
 $_sub = request("sub", "string", "get", request("sub", "string", "post"));
 
+/*
+* device: mobile ou desktop: mettre la variable en session
+*/
+$_mobile = request('mobile', 'string', 'get');
+if(!empty($_mobile)){
+	$_ses->set('mobile', $_mobile);
+	die($_mobile);
+}
+
 /* pour le fichier html de verification google */
 if($_file == 'google0ae71ec825ebe77e')
 	die(file_get_contents(WWW_DIR.$_SERVER['REQUEST_URI']));

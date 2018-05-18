@@ -137,7 +137,7 @@
 			<if cond='{unt_array[conf][role]} == {TYPE_UNT_HEROS}'>
 				<if cond="{_user[hro_id]}">Vous avez déjà un héros.</if>
 				<else>
-					<a href="leg-hero.html?sub=form&id_hro={unt_id}" title="Former un héros !" />Former un héros !</a>
+					<a href="leg-hero.html?sub=form&id_hro={unt_id}" title="Former un héros !">Former un héros !</a>
 				</else>
 			</if>
 			<else>

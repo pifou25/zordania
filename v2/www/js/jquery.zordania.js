@@ -2,7 +2,20 @@
 
 $(document).ready(  function()
 {
+	// mobile or desktop design
+	var isMobile  = isVisible('#bp_mobile');
 
+	/* envoyer le device au script php */
+	if (typeof mobilePhp == "undefined" || mobilePhp != isMobile) {
+		$.ajax({
+			url: 'index.php',
+			data: 'mobile='+ isMobile,
+			success: function(reponse) {
+				console.log(reponse);
+			}
+		});
+	}
+	
 	/* forcer les valeurs du menu avec celles du fond 
 	 * 	$('.menu_gauche').css('background-color', $('body').css('background-color'));
 	 * 	$('.menu_gauche ul').css('background-color', $('#module').css('background-color'));
