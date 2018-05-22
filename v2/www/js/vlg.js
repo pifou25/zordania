@@ -228,6 +228,7 @@ var VlgV2 = {
 	VlgCoords: new Array(),
 	VlgZindex: new Array(),
 	SrcCoords: new Array(),
+	FortCoords: null,
 	
 	init: function(race, isMobile, forteresse) {
 		if(race < 1 || race > 7) race = 1;
@@ -267,6 +268,13 @@ var VlgV2 = {
 			$("#src_"+index).css('top', value[1] + decX).css('left', value[0] + decY).css('position', 'absolute');
 		  }
 		});
+		
+		/* ajouter un div vide pour la forteresse */
+		if(this.FortCoords != null){
+			$("div#forteresse").css('top', this.FortCoords[1]+decX)
+				.css('left', this.FortCoords[0]+decY).css('position', 'absolute')
+				.css('height', this.FortCoords[3]).css('width', this.FortCoords[2]);
+		}
 
 	},
 
@@ -325,6 +333,7 @@ var VlgV2 = {
 					this.VlgCoords[15] = new Array(175, 258);
 					this.VlgCoords[16] = new Array(261, 111);
 					this.VlgCoords[17] = new Array(61, 177);
+					this.FortCoords = new Array(270, 185, 110, 52);
 					//this.VlgCoords[18] = new Array(94,61);
 					break;
 				case 3:
@@ -348,6 +357,7 @@ var VlgV2 = {
 					this.VlgCoords[18] = new Array(91,105);
 					this.VlgCoords[19] = new Array(178, 163);
 					this.VlgCoords[20] = new Array(6, 43);
+					this.FortCoords = new Array(420, 203, 92, 80);
 					break;
 					
 				case 4:
@@ -410,6 +420,7 @@ var VlgV2 = {
 					this.VlgCoords[21] = new Array(2, 14);
 					this.VlgCoords[22] = new Array(154, 231);
 					this.VlgCoords[23] = new Array(423, 58);
+					this.FortCoords = new Array(10, 272, 142, 52);
 					break;
 					
 				case 6:
@@ -499,6 +510,7 @@ var VlgV2 = {
 					this.VlgCoords[15] = new Array(350, 516);
 					this.VlgCoords[16] = new Array(523, 223);
 					this.VlgCoords[17] = new Array(121, 355);
+					this.FortCoords = new Array(540, 370, 220, 105);
 					//this.VlgCoords[18] = new Array(187,122);
 					break;
 				case 3:
@@ -522,6 +534,7 @@ var VlgV2 = {
 					this.VlgCoords[18] = new Array(181,211);
 					this.VlgCoords[19] = new Array(356, 326);
 					this.VlgCoords[20] = new Array(13, 86);
+					this.FortCoords = new Array(820, 406, 175, 160);
 					break;
 					
 				case 4:
@@ -584,6 +597,7 @@ var VlgV2 = {
 					this.VlgCoords[21] = new Array(3, 28);
 					this.VlgCoords[22] = new Array( 309, 462);
 					this.VlgCoords[23] = new Array(846, 119);
+					this.FortCoords = new Array(20, 545, 285, 105);
 					break;
 					
 				case 6:

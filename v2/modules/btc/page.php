@@ -257,14 +257,6 @@ if($_act == 'btc')
 				}
 			}
 		}
-	} else if(!$btc_type) { /* Vue du village */
-		$_tpl->set("btc_act","list");
-		$btc_array = get_nb_btc_done($_user['mid']);
-		$_tpl->set("btc_max", get_conf("race_cfg", "btc_nb"));
-		$_tpl->set("btc_conf", get_conf("btc"));
-		$_tpl->set("src_conf", get_conf("src"));
-		$_tpl->set("src_array", get_src_done($_user['mid']));
-		$_tpl->set("btc_array", $btc_array);
         
 	//Gérer : formation / recherche / ressources dispo dans le bâtiment
 	} else {
@@ -312,16 +304,6 @@ if($_act == 'btc')
             // la page "info" du bat
 			include("modules/btc/inc/info.php");
 
-			if($_display == "ajax"){
-				if(isset($btc_conf['prod_unt']) and ($_sub == 'add_unt' or $_sub == 'cancel_unt'))
-					$_tpl->set("module_tpl","modules/btc/inc/unt.tpl");
-				else if(isset($btc_conf['prod_src']) and ($_sub == 'add_src' or $_sub == 'cancel_src'))
-					$_tpl->set("module_tpl","modules/btc/inc/src.tpl");
-				else if(isset($btc_conf['prod_res']) and ($_sub == 'add_res' or $_sub == 'cancel_res'))
-					$_tpl->set("module_tpl","modules/btc/inc/res.tpl");
-				else if(isset($btc_conf['com']) and ($_sub == 'ach' or $_sub == 'ven'))
-					$_tpl->set("module_tpl","modules/btc/inc/com.tpl");
-			}
 		}
 	}
 

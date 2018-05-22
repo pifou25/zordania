@@ -1,5 +1,8 @@
 <if cond='isset({al_no_al})'>
 	<p class="infos">Vous n'êtes pas dans une Alliance.</p>
+	<h3>Réjoindre une Alliance</h3>
+	Vous pouvez en rejoindre une sur la page "<a href="alliances.html" title="Page Alliances">alliances</a>".<br/>
+	Pour cela cliquez sur <img src="img/join.png" title="Rejoindre" /> pour envoyer une demande à l'alliance de votre choix, cela vous coutera {ALL_JOIN_PRICE} <img src="img/{_user[race]}/res/{GAME_RES_PRINC}.png" alt="{res[{_user[race]}][alt][{GAME_RES_PRINC}]}" title="{res[{_user[race]}][alt][{GAME_RES_PRINC}]}" />
 	<if cond='{_user[points]} >= {ALL_MIN_ADM_PTS}'>
 		<h3>Créer une Alliance</h3>
 		Prix: {ALL_CREATE_PRICE} <img src="img/{_user[race]}/res/{GAME_RES_PRINC}.png" alt="{res[{_user[race]}][alt][{GAME_RES_PRINC}]}" title="{res[{_user[race]}][alt][{GAME_RES_PRINC}]}" />

@@ -7,7 +7,12 @@ class session
 	function __construct(&$db)
 	{
 		$this->sql = &$db; //objet de la classe mysql
-		if(!CRON) $this->vars = & $_SESSION['user'];
+		if(!CRON){
+			if(empty($_SESSION['user']['mobile'])) // init desktop value
+				$_SESSION['user']['mobile'] = false;
+			$_SESSION['user']['btc'] = $_SESSION['user']['mobile'] == true ? '/2' : '';
+			$this->vars = & $_SESSION['user'];
+		}
 	}
 
 	function __destruct()
@@ -86,6 +91,7 @@ class session
 		$this->set("design", $mbr_infos['mbr_design']);
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
+		$this->set("mobile", isset($_SESSION['mobile']) ? $_SESSION['mobile'] : false);
 
 		/* Visiteur */
 		if($this->get("login") == "guest") {

@@ -30,7 +30,7 @@ class Template
 		//$this->search[8] = '#<(zurl)(mbr|gid|race)\s*(?:(?:\s*(?:(?:mid=(\\\\\'|")(.*?)\\3)|(?:pseudo=(\\\\\'|")(.*?)\\5)|(?:gid=(\\\\\'|")(.*?)\\7)))+)\s*/>#s';
 		$this->search[8] = '#<(zurl)(mbr|gid|race)\s*(?:(?:\s*(?:(?:mid=(\\\\\'|")(.*?)\\3)|(?:pseudo=(\\\\\'|")(.*?)\\5)|(?:gid=(\\\\\'|")(.*?)\\7)|(?:race=(\\\\\'|")(.*?)\\9)))+)\s*/>#s';
 		
-		$this->replace[0] = '#<(zimg)(res|unt|trn|btc|src|comp)\s*(?:(?:\s*(?:(?:race=(\\\\\'|")(.*?)\\3)|(?:type=(\\\\\'|")(.*?)\\5)))+)\s*(.*?)/>#s';
+		$this->replace[0] = '#<(zimg)(res|unt|trn|src|comp)\s*(?:(?:\s*(?:(?:race=(\\\\\'|")(.*?)\\3)|(?:type=(\\\\\'|")(.*?)\\5)))+)\s*(.*?)/>#s';
 		$this->replaceby[0] = '<img src="img/$4/$2/$6.png" alt="{$2[$4][alt][$6]}" title="{$2[$4][alt][$6]}" $7 />';
 
 		$this->replace[1] = '#<(bbimg)(res|unt|trn|btc|src|comp)\s*(?:(?:\s*(?:(?:race=(\\\\\'|")(.*?)\\3)|(?:type=(\\\\\'|")(.*?)\\5)))+)\s*/>#s'; // tpl -> bbcode
@@ -43,6 +43,9 @@ class Template
 		$this->replaceby[4] = '';
 		$this->replace[5] = '#<(zimgpact)\s*(?:type=(\\\\\'|")(.*?)\\2)\s*/>#s';
 		$this->replaceby[5] = '<img src="img/dpl/$3.png" title="{dpl_type[$3]}"/>';
+
+		$this->replace[6] = '#<(zimg)(btc)\s*(?:(?:\s*(?:(?:race=(\\\\\'|")(.*?)\\3)|(?:type=(\\\\\'|")(.*?)\\5)))+)\s*(.*?)/>#s';
+		$this->replaceby[6] = '<img src="img/$4/$2{_user[btc]}/$6.png" alt="{$2[$4][alt][$6]}" title="{$2[$4][alt][$6]}" $7 />';
 
 		$this->macro[1] = '#<(zimg)(bar|ba2|ba3)\s*(?:(?:\s*(?:(?:per=(\\\\\'|")(.*?)\\3)|(?:max=(\\\\\'|")(.*?)\\5)))+)\s*/>#s';
 		
@@ -226,7 +229,7 @@ class Template
 	<div style=\"width:$width1%;\" class=\"barre_verte\"></div>
 	<div style=\"width:$width2%;\" class=\"barre_rouge\"></div>
 </div>\n";
-			} else { // affichage d'une image de zordania
+			} else { // affichage d'une image de zordania: USELESS - remplacement simple; pas de macro
 				// $var[2] = unt|src|trn|btc|res / $var[4] = race / $var[6] = type
 				$alt = '{'.$var[2].'['.$var[4].'][alt]['.$var[6].']}';
 				return '<img src="img/'.$var[4].'/'.$var[2].'/'.$var[6].'.png" alt="'.$alt.'" title="'.$alt.'" />';
