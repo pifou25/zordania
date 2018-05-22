@@ -17,7 +17,7 @@
 		$limite1 = protect($limite1, "uint");
 		$limite2 = protect($limite2, "uint");
 	
-		$sql="SELECT mbr_mid, dpl_shoot_msgid, dpl_shoot_mid, dpl_shoot_texte,mbr_pseudo,mbr_sign,_DATE_FORMAT(dpl_shoot_date) as dpl_shoot_date_formated,
+		$sql="SELECT mbr_mid, dpl_shoot_msgid, dpl_shoot_mid, dpl_shoot_did, dpl_shoot_texte,mbr_pseudo,mbr_sign,_DATE_FORMAT(dpl_shoot_date) as dpl_shoot_date_formated,
 			DATE_FORMAT(dpl_shoot_date,'%a, %d %b %Y %T') as dpl_shoot_date_rss";
 		$sql.=" FROM ".$_sql->prebdd."diplo_shoot ";
 		$sql.=" JOIN ".$_sql->prebdd."mbr ON mbr_mid = dpl_shoot_mid ";

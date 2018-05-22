@@ -1,8 +1,29 @@
 @import url(../imports/base.css);
+/*header popup*/
+.ui-widget-header{border:1px solid #4A4031;
+	background-image:-webkit-linear-gradient(top, #4A4031 0%, #231e17 100%);
+	background-image:linear-gradient(to bottom, #4A4031 0%, #231e17 100%);
+}
+/*fond popup*/
+.ui-widget-content{
+background: url(img/bg1.png);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: wheat;
+}
+#dialog-modal td{
+	background-color: rgba(0, 0, 0, 0.75);
+}
+#dialog-modal h3{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#dialog-modal h5{
+	background-color: rgba(0, 0, 0, 0.75);
+	font-size: 12px;
+	min-height: 20px; /* hauteur du parent */
+  line-height: 20px; /* hauteur de ligne (identique) */
+}
 
-/*
-* Design G?n?ral
-*/
+/* Design G?n?ral*/
 a{
 	font-size: 12px;
 }
@@ -43,15 +64,16 @@ fieldset {
 
 input,select { background-color: #48402D; 
 border: 1px solid #000; 
-color: #000;
+color: rgb(231, 214, 181);
  font-size: 11px; 
  font-weight: bold; 
  margin: 2px; }
  
 textarea{ background-color: #48402D; 
 border: thin solid #000; 
-color: #000; 
-font-size: 13px; }
+color: rgb(231, 214, 181); 
+font-size: 13px;
+}
 
 textarea:focus,input:focus{  background-color: #6E6145; }
 
@@ -112,43 +134,17 @@ th {
 }
 
 
-/* NiceTitles */
-div#toolTip {
- background-color: #3f3627;
- border-color: #000000;
- border-style: solid; 
- border-width: 1px; 
- color: white;  
- font-family: Verdana, Helvetica, Arial, sans-serif; 
- font-size: 9px; 
- font-weight: bold; 
- left: 0px; -moz-border-radius: 5%;
- padding: 4px; 
- position: absolute; 
- top: 0px;
- width: auto;
- z-index: 20;
-}
-div#toolTip p {margin: 0;
- padding: 0 3px; }
-div#toolTip p em { display:block;
-  margin-top:3px;  
-  color:#f60;
-  font-style:normal; 
-  font-weight:bold; }
-
-
 /* Tout ce qu'il y'a dans body */
 #contenu {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 10px;
 	text-align: left;
-	width: 1000px;
+	width: 1250px;
 }
 
 /* Logo en haut */
-#logo { margin-bottom: 10px; width: 800px; }
+#logo { margin-bottom: 10px; width: 800px; float: right; margin-right: 5px;}
 #logo h1 { 
 	padding: 33px 0px 0px 0px;
     margin: 0px;
@@ -244,7 +240,7 @@ float: left; visibility: hidden; width: 47px;
 	margin: 5px;
 }
 
-#module { background-color: #231e17; float: left; left: 10px; width: 620px; margin-top: -15px; }
+#module { background-color: #231e17; float: left; left: 10px; width: 1060px; margin-top: -15px; }
 
 #module .bas {
 background-image: url(img/centre_hor.png);
@@ -348,9 +344,9 @@ background-color: rgb(0, 0, 0);
 
 #actbar {
 	float: right;
-	margin-top: -40px;
-	margin-bottom: 5px;
-	margin-right: 200px;
+	margin-top: -50px;
+	margin-bottom: 15px;
+	margin-right: 5px;
 	padding-left: 4px;
 	padding-right: 4px;
 	padding-top: 8px;
@@ -384,7 +380,10 @@ margin: 2px;
 	border-width: 1px;
 	color: rgb(231, 214, 181);
 	padding: 5px;
-	margin-top: 10px;
+	margin-top: 10px;	
+	margin-left: auto;
+	margin-right:auto;
+	max-width: 618px;
 }
 
 .block_forum {

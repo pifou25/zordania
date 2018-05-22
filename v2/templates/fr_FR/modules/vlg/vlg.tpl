@@ -11,7 +11,7 @@
 </style>
 </if>
 
-	<img src="img/{_user[race]}/vlg/{imgvlg}" alt="village" />
+	<img src="img/{_user[race]}/vlg/{imgvlg}" alt="village" id="fondvlg" />
 	
 	<foreach cond='{src_array} as {src_vars}'>
 		<if cond="isset({src_conf[{src_vars[src_type]}][vlg]})">
@@ -39,10 +39,19 @@
 			<zimgbtc race="{_user[race]}" type="{btc_vars[btc_type]}" class="btc" id="btc_{btc_vars[btc_type]}" /></a>
 		</else>
 		</if>
+		<else>
+			<a href="btc-use.html?btc_type={btc_vars[btc_type]}" class="zrdPopUp" title="{btc[{_user[race]}][alt][{btc_vars[btc_type]}]}">
+			<div class="btc" id="forteresse"><!-- div vide forteresse --></div></a>
+		</else>
 	</foreach>
 	
 	<script type="text/javascript" src="js/vlg.js"></script>
 	<script type="text/javascript">
-		VlgV2.init({_user[race]});
+		$(function(){
+			// mobile or desktop design
+			var isMobile  = isVisible('#bp_mobile');
+			var forteresse = <if cond="{forteresse}">1</if><else>0</else>;
+			VlgV2.init({_user[race]}, isMobile, forteresse);
+		});
 	</script>
 </div>

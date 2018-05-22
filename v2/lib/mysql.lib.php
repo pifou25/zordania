@@ -90,7 +90,9 @@ function zrd_dump($mid, $full = false, $prefix = 'zrd_', $mode = 2) //dumpMySQL(
         if($mode > 1)
         {
 			$sql = "SELECT * FROM $table WHERE $cle = $mid";
+			// extraction avec ID conservés
 			$insertions .= CreeInsertSQL($sql, $table);
+			// extraction avec NULL à la place des ID PK
 			//$insertions .= CreeInsertSQL($sql, $table, array($cle => '##mid##'));
 			$deletions .= "DELETE * FROM $table WHERE $cle = $mid;\n";
         }

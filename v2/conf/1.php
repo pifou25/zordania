@@ -837,7 +837,7 @@ $this->unt[U1_GRANDE_CARAVELLE]=array(
 		"vit"	=>	8,
 		"group"	=>	22,
 		"role"	=>	TYPE_UNT_DEMENAGEMENT,
-		"rang" => 25,
+		"rang" => 27,
 		//"prix_res"	=>	array(R1_BOIS => 5000, R1_PIERRE => 6000, R1_ACIER => 1000, R1_OR => 2000,R1_NOURRITURE => 50000),
 		"prix_res"	=>	array(R1_BOIS => 2500, R1_PIERRE => 3000, R1_ACIER => 500, R1_OR => 1000,R1_NOURRITURE => 25000),
 		"prix_unt"	=>	array(U1_RECRUE => 4),

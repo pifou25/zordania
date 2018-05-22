@@ -75,7 +75,7 @@
 				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
 			</elseif>
-			<if cond='{result[can_atq]}'>
+			<if cond='{result[can_atq]} && !({result[mbr_gid]} == GRP_PNJ || {result[mbr_race]} == 6)'>
 				- <a href="leg-move.html?sub=atq&amp;cid={result[mbr_mapcid]}" title="Attaquer {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/atq.png" alt="Attaquer" /></a> 
 			</if>
@@ -161,7 +161,7 @@
 				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
 			</elseif>
-			<if cond='{result[can_atq]}'>
+			<if cond='{result[can_atq]} && !({result[mbr_gid]} == GRP_PNJ || {result[mbr_race]} == 6)'>
 				- <a href="leg-move.html?sub=atq&amp;cid={result[mbr_mapcid]}" title="Attaquer {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/atq.png" alt="Attaquer" /></a> 
 			</if>
@@ -212,7 +212,7 @@
 				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
 			</elseif>
-			<if cond='{result[can_atq]}'>
+			<if cond='{result[can_atq]} && !({result[mbr_gid]} == GRP_PNJ || {result[mbr_race]} == 6)'>
 				- <a href="leg-move.html?sub=atq&amp;cid={result[mbr_mapcid]}" title="Attaquer {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/atq.png" alt="Attaquer" /></a> 
 			</if>
@@ -294,7 +294,7 @@
 				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
 			</elseif>
-			<if cond='{result[can_atq]}'>
+			<if cond='{result[can_atq]} && !({result[mbr_gid]} == GRP_PNJ || {result[mbr_race]} == 6)'>
 				- <a href="leg-move.html?sub=atq&amp;cid={result[mbr_mapcid]}" title="Attaquer {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/atq.png" alt="Attaquer" /></a> 
 			</if>

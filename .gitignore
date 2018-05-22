@@ -13,11 +13,12 @@ v2/www/phpMyAdmin
 *.tmp
 *.log
 *.csv
+Thumbs.db
 
 v2/scripts/cron.bat
 v2/scripts/cron.sh
 v2/cache/admin.cache.php
 v2/cache/global.cache.php
-
-Thumbs.db
 *.gz
+*.bat
+v2/scripts/cron.bat

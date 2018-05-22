@@ -2,7 +2,7 @@
 require_once('secret_parameters.php');
 
 /* === Configuration Site === */
-define('ZORD_VERSION',"2.1.2");
+define('ZORD_VERSION',"2.1.3");
 define('ZORD_SPEED_VFAST', 0.16667); // 1 Tour toutes les 30sec
 define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
 define('ZORD_SPEED_MEDIUM', 15); // 1 Tour toutes les 15 minutes
@@ -13,7 +13,7 @@ define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
 define('SITE_MAX_CONNECTED', 300);
 define('SITE_MAX_INSCRITS', 10000);
 
-$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "www.zordania.fr";
+$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.fr";
 define('SITE_URL', "http://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");
@@ -140,7 +140,7 @@ define('HISTO_DEL_LOG_ALLY', 15); // 15 jours
 
 /* Commerce */
 define('MCH_ACCEPT',4); //Nombre de tours avant acceptation (avec un petit rand() dans le cron)
-define('MCH_MAX',30000); //Nombre de tours max
+define('MCH_MAX',1000); //Nombre de tours max
 define('MCH_COURS_MIN',1);
 define('MCH_OLD',30); //calcul des cours du marché sur NB jours (les ventes plus vieilles sont supprimées)
 
@@ -188,17 +188,17 @@ $_races_aly = array(
 		8 => array(1 => 12, 2 => 12, 3 => 12, 4 => 12, 5 => 12, 7=> 12, 8=>12),
 );
 
-$_css = array(14,4,3,2,1,10,11,15,16,5,6);
+$_css = array(14,4,3,2,1,10,11,15,16,5,17);
 $_adsense_css = array(1 => '9107849390', 2 => '2158156650', 3 => '2158156650', 
-	4 => '2158156650',5 => '9107849390', 10 => '2087210871', 11 => '2087210871', 14 => '0166103822', 
-	15 => '6454056819', 6 => '');
+	4 => '2158156650',5 => '9107849390', 17 => '', 10 => '2087210871', 11 => '2087210871', 14 => '0166103822', 
+	15 => '6454056819', 16 => '');
 
 
 $_regions = array(1=> array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
-	2 => array(1=>10, 2=>20, 3=>40, 4=>20, 5=>20, 6=>0, 7=>20, 8=>0),
+	2 => array(1=>10, 2=>20, 3=>40, 4=>20, 5=>20, 6=>5, 7=>20, 8=>0),
 	3 => array(1=>0, 2=> 0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	4 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
-	5 => array(1=>25, 2=>15, 3=>20, 4=>20, 5=>20, 6=>0, 7=>15, 8=>0),
+	5 => array(1=>25, 2=>15, 3=>20, 4=>20, 5=>20, 6=>5, 7=>15, 8=>0),
 	6 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	7 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 	8 => array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>100, 7=>0, 8=>0),
@@ -219,10 +219,11 @@ $_droits[GRP_CHEF_REG] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_ME
 $_droits[GRP_CHAMP_REG] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER);
 $_droits[GRP_SCRIBE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER);
 $_droits[GRP_NOBLE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER);
+$_droits[GRP_KING] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER);
 $_droits[GRP_SAGE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_ANTI_FLOOD);
 $_droits[GRP_GARDE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_ANTI_FLOOD, DROIT_ADM, DROIT_ADM_AL, DROIT_ADM_MBR);
 $_droits[GRP_PRETRE] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER,DROIT_PUNBB_MOD, DROIT_ANTI_FLOOD);
-$_droits[GRP_DEV] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_PUNBB_MOD, DROIT_ADM);
+$_droits[GRP_DEV] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_PUNBB_MEMBER, DROIT_ADM);
 $_droits[GRP_ADM_DEV] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_MMSG,
 	DROIT_ADM, DROIT_ADM_AL, DROIT_ADM_COM, DROIT_ADM_MBR, DROIT_ADM_TRAV, DROIT_ADM_EDIT,
 	DROIT_PUNBB_MEMBER,DROIT_PUNBB_MOD,DROIT_PUNBB_ADMIN, DROIT_SDG,DROIT_ANTI_FLOOD);
@@ -238,11 +239,11 @@ $_votes = array();
 $_votes[VOTES_HIT] = array('img' => 'http://www.jeux-alternatifs.com/im/bandeau/hitP_88x31_v3.gif',
 		'url' => 'http://www.jeux-alternatifs.com/Zordania-jeu177_hit-parade_1_1.html', 'delay' => 24);
 $_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif', 
-		'url' => 'http://www.rpg-paradize.com/?page=vote&vote=36937', 'delay' => 24);
+		'url' => 'https://www.rpg-paradize.com/site-Zordania.fr-110465', 'delay' => 3);
 $_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
 		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
 
-define('SITE_DEBUG',true);
+define('SITE_DEBUG',false);
 define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
 define('CRON', substr(php_sapi_name(), 0, 3) == 'cli');

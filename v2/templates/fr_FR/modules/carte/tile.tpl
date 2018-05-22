@@ -34,10 +34,10 @@
 		Points: {result[mbr_points]} <br/>
 		Race: <img src="img/{result[mbr_race]}/{result[mbr_race]}.png" title="{race[{result[mbr_race]}]}" alt="{race[{result[mbr_race]}]}"/>
 		<if cond='isset({result[can_atq]}) && {result[can_atq]}'>
-		<div class="menu_module">[ <a href="leg-move.html?sub=atq&amp;cid={result[map_cid]}" title="Attaquer">Attaquer</a> ]</div>
+		<div class="menu_module"> <a href="leg-move.html?sub=atq&amp;cid={result[map_cid]}" title="Attaquer">Attaquer</a> </div>
 		</if>
 		<if cond='isset({result[can_pro]}) && {result[can_pro]}'>
-		<div class="menu_module">[ <a href="leg-move.html?sub=sou&amp;cid={result[map_cid]}" title="Protéger">Envoyer des renforts</a> ]</div>
+		<div class="menu_module"> <a href="leg-move.html?sub=sou&amp;cid={result[map_cid]}" title="Protéger">Envoyer des renforts</a> </div>
 		</if>
 	</if>
 	</tr></td></table>
@@ -67,10 +67,10 @@
 			<td>
 			<if cond='{value[leg_mid]} == {_user[mid]}'>
 				<if cond="{value[leg_cid]} != {_user[mapcid]}">
-					[ <a href="leg-move.html?sub=sou&amp;cid={_user[mapcid]}&amp;lid={value[leg_id]}" title="ramener la légion au village">rentrer</a> ]
+					 <a href="leg-move.html?sub=sou&amp;cid={_user[mapcid]}&amp;lid={value[leg_id]}" title="ramener la légion au village">rentrer</a> 
 				</if>
 				<if cond="{value[leg_etat]} == {LEG_ETAT_POS} ">
-					- [ <a href="leg-view.html?lid={value[leg_id]}">attaquer</a> ]
+					-  <a href="leg-view.html?lid={value[leg_id]}">attaquer</a> 
 				</if>
 			</if>
 			</td>

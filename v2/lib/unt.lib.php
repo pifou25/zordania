@@ -420,7 +420,7 @@ class legion {
 		}
 		/* compétence 'pas de course' : ajouter x % */
 		if (isset($this->bonus['cpt']['vit'])) {
-			$total = floor($total(1 + $this->bonus['cpt']['vit']));
+			$total = floor($total * (1 + $this->bonus['cpt']['vit'] / 100));
 		}
 		return ($nbt == 0 ? 0 : round($total / $nbt));
 	}

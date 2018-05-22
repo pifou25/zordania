@@ -154,6 +154,7 @@ define('GRP_ADM_DEV',14);
 define('GRP_CHAMP_REG',15);
 define('GRP_PNJ',16);
 define('GRP_EVENT',17);
+define('GRP_KING',18);
 
 /* Smileys */
 // Tous les Smileys
@@ -243,4 +244,8 @@ define('SURV_TYPE_ALL', 5); // All
 define('VOTES_HIT', 1); // hit parade 
 define('VOTES_RPG',  2); // RPG paradize
 define('VOTES_TOP',  3); // xtreme top100
+
+/*ID Forum news*/
+define('ZORD_NEWS_FID',25);
+
 ?>

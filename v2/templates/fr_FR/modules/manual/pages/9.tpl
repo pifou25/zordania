@@ -40,13 +40,13 @@ L'explorateur est un bêta-testeur à l'activité normale.</dd>
 
 
 <h3>Les rois et reines de Zordania</h3>
-<dt><img src="img/rec/11.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou reine des humains</br>
-<img src="img/rec/21.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou reine des orcs</br>
-<img src="img/rec/31.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou reine des nains</br>
-<img src="img/rec/41.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou reine des drows</br>
-<img src="img/rec/51.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou reine des elfes</br>
-<img src="img/rec/71.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou reine des gobelins</br></dt>
-<dd>Ces titres spéciaux sont attribués lors d'un tournoi ou les prétendants s'affrontent physiquement, intellectuellement et culturellement. Ceci est remis en jeu chaque année.</dd>
+<dt><img src="img/rec/11.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou Reine des Humains</br>
+<img src="img/rec/21.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou Reine des Orcs</br>
+<img src="img/rec/31.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou Reine des Nains</br>
+<img src="img/rec/41.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou Reine des Drows</br>
+<img src="img/rec/51.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou Reine des Elfes</br>
+<img src="img/rec/71.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou Reine des Gobelins</br></dt>
+<dd>Ces titres spéciaux sont attribués lors d'un tournoi où les prétendants s'affrontent physiquement, intellectuellement et culturellement. Ceci est remis en jeu chaque année!</dd>
 
 
 <h3>Les Titres</h3>
@@ -139,6 +139,10 @@ Contrairement aux récompenses, les Titres ne sont pas de simples reconnaissance
 <dt><img src="img/groupes/17.png" alt="{groupes[17]}" title="{groupes[17]}"/> Grade évènement  (event)</dt>
 
 <dd>Attribué aux joueurs participants à une animation, bénéficiant ainsi d'une protection vis à vis des joueurs hors animation et qui pourrait modifier le cours d'une animation avec une attaque.</dd> 
+
+<dt><img src="img/groupes/18.png" alt="{groupes[18]}" title="{groupes[18]}"/> Roi de Zordania</dt>
+
+<dd>Titre attibué exceptionnellement lors d'une animation demandant une bravoure et un courage digne d'un tel couronnement! Donnant un accès VIP durant la période de reigne, ceci peut être remis en jeu à tout moment!</dd> 
 
 <p align="center" class="menu_module">
 <a href="manual.html?race={man_race}&page=23">Précédent : Egeria, Capitale de Zordania</a>

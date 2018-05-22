@@ -70,6 +70,40 @@ case 'histo':
 		}
 	} // else mbr exist
 	break;
+default:
+	// membres anim
+	$mbrs = get_mbr_gen(array('gid' => array(GRP_EVENT)));
+	
+	echo "attaquant; date; defenseur; bilan: nb defs; nb tues; nb pertes;dégats héros; vie restante; degats bat; bat detruits<br/>\n";
+
+	foreach($mbrs as $mbr){
+		
+		// comptage des points du tournoi
+		$atqs = get_atq($mbr['mbr_mid']);
+		
+		foreach($atqs as $atq){
+			// cumul defenses
+			$legs = 0;
+			$tues = 0;
+			foreach($atq['atq_bilan']['def'] as $def){
+				$tmp = array_sum($def['pertes']['unt']);
+				if($tmp != 0){
+					$tues += $tmp;
+					$legs++;
+				}
+			}
+			$pertes = array_sum($atq['atq_bilan']['att']['pertes']['unt']);
+			$hro = $atq['atq_bilan']['att']['pertes'];
+			$nb_btc = count($atq['btc_edit']);
+			
+			echo "{$mbr[mbr_pseudo]} ({$mbr[mbr_mid]}); {$atq[atq_date_formated]}; {$atq[mbr_pseudo2]} ({$atq[atq_mid2]}); 
+			$legs; $tues; $pertes; {$hro[deg_hro]}; {$hro[hro_reste]}; {$atq[atq_bat]}; $nb_btc<br/>\n";
+			
+		}
+		
+	}
+	die('fin de fichier');
+	break;
 }// switch($_act)
 
 }// else can_d(DROIT_PLAY)

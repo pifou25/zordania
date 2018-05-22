@@ -53,6 +53,7 @@ $(document).ready(function()
                 <td>
                         <form id="form{vid}" action="{vote_conf[url]}" method="get" target="_blank" class="vote">
                         <input type="hidden" id="form{vid}vid" name="form{vid}vid" value="{vid}"/>
+						<input type="hidden" id="form{vid}id" name="form{vid}id" value="{votes_array[{vid}][votes_id]}"/>
                         <input src="{vote_conf[img]}" type="image" value="submit" />
                         </form>
                 </td>

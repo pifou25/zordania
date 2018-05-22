@@ -7,7 +7,12 @@ class session
 	function __construct(&$db)
 	{
 		$this->sql = &$db; //objet de la classe mysql
-		if(!CRON) $this->vars = & $_SESSION['user'];
+		if(!CRON){
+			if(empty($_SESSION['user']['mobile'])) // init desktop value
+				$_SESSION['user']['mobile'] = false;
+			$_SESSION['user']['btc'] = $_SESSION['user']['mobile'] == true ? '/2' : '';
+			$this->vars = & $_SESSION['user'];
+		}
 	}
 
 	function __destruct()
@@ -86,6 +91,7 @@ class session
 		$this->set("design", $mbr_infos['mbr_design']);
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
+		$this->set("mobile", isset($_SESSION['mobile']) ? $_SESSION['mobile'] : false);
 
 		/* Visiteur */
 		if($this->get("login") == "guest") {
@@ -116,7 +122,24 @@ class session
 			$sql="SELECT COUNT(*) AS nb FROM ".$this->sql->prebdd."msg_rec JOIN ".$this->sql->prebdd."mbr ON mrec_from = mbr_mid WHERE mrec_mid = $mid AND mrec_readed = 0";
 			$result = $this->sql->make_array_result($sql);
 			$this->set("msg", $result['nb']);
-		}
+		
+		
+			/* Nouvelle news? mbr_ldate = dernière connexion heure locale */
+			$sql="SELECT count(*) AS nb FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd.
+			  " WHERE forum_id =".ZORD_NEWS_FID." AND posted > " . $this->get("ldate") ;
+			$result = $this->sql->make_array_result($sql);
+			$this->set("news", $result['nb']);
+			
+			/*Select la dernière news*/
+			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
+			$result = $this->sql->make_array_result($sql);
+			$this->set("tid", $result['id']);
+			$this->set("sub", $result['subject']);
+			
+		}	
+		
+		
+			
 	}
 
 	function update_heros() {

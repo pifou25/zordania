@@ -19,7 +19,7 @@ function get_votes($mid)
 	
 	$mid = protect($mid, "uint");
 
-	$sql="SELECT mbr_mid, votes_vid, votes_mid, votes_nb,_DATE_FORMAT(votes_date) as votest_date_formated,
+	$sql="SELECT mbr_mid, votes_id, votes_vid, votes_mid, votes_nb,_DATE_FORMAT(votes_date) as votest_date_formated,
 		DATE_FORMAT(votes_date,'%a, %d %b %Y %T') as votes_date_rss";
 	$sql.=" FROM ".$_sql->prebdd."votes ";
 	$sql.=" JOIN ".$_sql->prebdd."mbr ON mbr_mid = votes_mid ";
@@ -41,7 +41,21 @@ function add_votes($mid,$vid)
 
 	if($votes_up=true)
 		{
+		
+		$sql="SELECT votes_nb";
+	$sql.=" FROM ".$_sql->prebdd."votes ";
+	$sql.=" WHERE votes_id = '$mid' ";
+	$sql.=" ORDER BY votes_date DESC";
+
+	return $_sql->index_array($sql, 'votes_vid');
+		
+		
 		$sql = "UPDATE ".$_sql->prebdd."votes SET `votes_nb`=`votes_nb`+1 WHERE votes_mid='$mid' AND votes_vid='$vid'";
+			
+			/*$sql = "INSERT INTO ".$_sql->prebdd."votes (votes_mid, votes_vid, votes_nb) VALUES";
+				$sql.= " ($mid,'$vid',1)";
+				$_sql->query($sql);*/
+					
 		}
 
 	return $_sql->query($sql);

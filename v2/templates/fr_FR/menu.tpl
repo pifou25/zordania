@@ -1,3 +1,4 @@
+<!-- sous-menu liste des bâtiments = plus utile avec nouveaux villages
 <if cond='{ses_loged}'> 
 <if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
 
@@ -14,7 +15,7 @@
 </div>
 
 </if>
-</if>
+</if> -->
 
 <div class="menu_gauche">
 <h2><label for="menu2">Zordania</label></h2>
@@ -23,14 +24,17 @@
 
 	<if cond='{ses_loged}'> 
 	<if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
+		<li><a href="forum-<math oper="str2url({_user[sub]})"/>.html?tid={_user[tid]}" title="Nouvelle News!" >News</a><if cond='{_user[news]} >= 1'><img src="img/acts/notif.gif"/></if></li>
 		<li><a href="alliances.html" title="Liste des Alliances.">Alliances</a></li>
-		<li><a href="class.html" title="Classement des Joueurs.">TOP 50</a></li>
+		
 		<li>
 			<a href="member-liste.html" title="Liste des Joueurs.">Joueurs</a>
 			(<a href="member-liste_online.html" title="Joueurs connectés.">online</a>)
 		</li>
+		<li><a href="class.html" title="Classement des Joueurs.">TOP 50</a></li>
 		<# <li><a href="bonus.html" title="Gagner des ressources !" class="bonus">Bonus</a></li> #>
 		<# <li><a href="votes.html" title="Votez pour Zordania !" class="votes">Votes</a></li> #>
+		</li>
 
 	</if>
 	<else>
@@ -40,8 +44,9 @@
 	<else><li>Visiteur</li></else>
 	<if cond='!{ses_can_play} OR !{ses_mbr_etat_ok}'>
 		<li><a href="presentation.html" title="Présentation.">Accueil</a></li>
-	</if>
 		<li><a href="news.html" title="Voir les dernières news.">News</a></li>
+	</if>
+		
 		<li><a href="manual.html?race={_user[race]}" title="Comment jouer ?">Manuel</a></li>
 		<li><a href="forum.html" title="Participer à la vie de la communauté.">Forums</a> (<a href="irc.html" title="Discuter directement entre Zordaniens !">Chat</a>)</li>
 		<li><a href="sdg.html" title="Faites connaître votre avis !">Sondages</a></li>

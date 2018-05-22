@@ -22,29 +22,29 @@ $_tpl->set_tmp_dir(SITE_DIR .'tmp');
 $_tpl->set_lang('fr_FR');
 $_tpl->set("cfg_url",SITE_URL);
 
-/* sélection des comptes non validés 
-$sql = 'SELECT mbr_mid, mbr_login, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date, vld_rand, vld_date, vld_act ';
-$sql.= ' FROM zrd_mbr LEFT JOIN zrd_vld ON mbr_mid = vld_mid AND vld_act = \'new\' WHERE ';
+/* sélection des comptes non validés */
+$sql = 'SELECT mbr_mid, mbr_login, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
+$sql.= ' FROM zrd_mbr WHERE ';
 if($mid) $sql .= "mbr_mid > $mid AND ";
-$sql.= ' mbr_etat ='.MBR_ETAT_INI;
-$sql.= ' ORDER BY zrd_mbr.mbr_lmodif_date ASC';*/
+$sql.= ' mbr_gid ='.GRP_DEMI_DIEU. 'AND mbr_etat ='.MBR_ETAT_ZZZ.'AND mbr_etat ='.MBR_ETAT_INI.;
+$sql.= ' ORDER BY zrd_mbr.mbr_lmodif_date ASC';
 
-/* sélection des comptes validés en veille sauf exilés et visiteur vieux de + de 30 jours */
+/* sélection des comptes validés en veille sauf exilés et visiteur vieux de + de 30 jours 
 $sql = 'SELECT mbr_mid, mbr_login, mbr_pseudo, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
 $sql.= ' FROM '.$_sql->prebdd.'mbr WHERE ';
 if($mid) $sql .= "mbr_mid = $mid ";
 else $sql.= ' mbr_etat ='.MBR_ETAT_ZZZ.' AND mbr_gid NOT IN ('.GRP_VISITEUR.','.GRP_EXILE.','.GRP_EXILE_TMP.') AND datediff(NOW(), `mbr_ldate`) > 30';
-$sql.= ' ORDER BY mbr_ldate ASC';
+$sql.= ' ORDER BY mbr_ldate ASC';*/
 
 //echo $sql;
 
 $mbr_array = $_sql->make_array($sql);
 $nb=0;
 foreach($mbr_array as $mbr){
-	/* supprime toute clé de validation existante */
+	/* supprime toute clé de validation existante 
 	cls_vld($mbr['mbr_mid']);
 
-	/* nouvelle clé de validation */
+	/* nouvelle clé de validation 
 	$key = genstring(GEN_LENGHT);
 	new_vld($key, $mbr['mbr_mid'], 'rest'); // restauration
 	/* les autres valeurs sont new res del et edit */
@@ -59,7 +59,7 @@ foreach($mbr_array as $mbr){
 
 	$txt = $_tpl->get('modules/inscr/mails/text_relance.tpl',1);
 	$obj = $_tpl->get('modules/inscr/mails/objet_relance.tpl',1);
-	if(mailto('pifou@zordania.com', $mbr['mbr_mail'], $obj, $txt)) {
+	if(mailto('webmaster@zordania.fr', $mbr['mbr_mail'], $obj, $txt)) {
 		// debug !
 		echo $mbr['mbr_ldate'].' - mail à '.$mbr['mbr_mail']." : $obj\n";
 		if ($mid) echo "$txt\n";

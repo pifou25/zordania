@@ -258,7 +258,7 @@ $this->btc[B7_RUINE_OUBLIEE] = array(
 	'limite' => 1,
 	'prix_res' => array(R7_OR => 1500, R7_BOIS => 2250, R7_GRANIT => 2250, R7_ACIER => 200, ),
 	'prod_src' => 1,
-	'prod_unt' => 4,
+	'prod_unt' => 6,
 );
 //</btc-1>
 
@@ -517,7 +517,7 @@ $this->btc[B7_RUINE_RENFORCEE] = array(
 	'prod_pop' => 130,
 	"bonus"         =>      array('gen' => 300, 'bon' => 13.5),
 	'prix_unt' => array(U7_GOB_FRONDEUR => 10), 
-	"prod_unt"	=>	4,
+	"prod_unt"	=>	6,
 	"prod_src"	=>	true,
 	'limite' => 1,
 	'prix_res' => array(R7_BOIS => 1500, R7_GRANIT => 2000, R7_OR => 2500, R7_ACIER => 350, ),
@@ -536,7 +536,7 @@ $this->unt[U7_RESCAPE] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-1>
 
@@ -547,7 +547,7 @@ $this->unt[U7_ARTISAN] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-2>
 
@@ -558,7 +558,7 @@ $this->unt[U7_COLLECTEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-3>
 
@@ -569,7 +569,7 @@ $this->unt[U7_CHASSEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE,B7_RUINE_RENFORCEE ),
 );
 //</unt-4>
 
@@ -580,7 +580,7 @@ $this->unt[U7_GOB_BRIG] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 3, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE,B7_RUINE_RENFORCEE ),
 );
 //</unt-5>
 
@@ -591,7 +591,7 @@ $this->unt[U7_RECRUTEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 5, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-6>
 
@@ -602,7 +602,7 @@ $this->unt[U7_DRESSEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, R7_LICHEN => 10, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-7>
 
@@ -613,7 +613,7 @@ $this->unt[U7_INGENIEUR] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 3,),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-8>
 
@@ -929,7 +929,7 @@ $this->unt[U7_MEDUSA] = array(
 	'atq_unt' => 75,
 	'vit' => 9,
 	'prix_unt' => array(U7_DRESSEUR => 1, ),
-	'rang' => 22,
+	'rang' => 27,
 );
 //</unt-26>
 
@@ -1030,7 +1030,7 @@ $this->src[S7_EXPLO_PROF]=array(
 		"group"	=>	8,
 		"need_btc"	=>  array(B7_SONDEUR_ABYSSAL),
 		"prix_res"	=>	array(R7_BOIS => 100, R7_GRANIT => 120, ),
-		'vlg' => true
+		//'vlg' => true
 );
 
 $this->src[S7_EXPLO_AQUA]=array(
@@ -1039,7 +1039,7 @@ $this->src[S7_EXPLO_AQUA]=array(
 		"need_btc"	=>	array(B7_MINE_PROF),
 		"need_src"	=>	array(S7_EXPLO_PROF),
 		"prix_res"	=>	array(R7_OR => 30, R7_BOIS => 75, R7_GRANIT => 80, R7_ADAMANTITE => 75, R7_SARONITE => 75),
-		'vlg' => true
+		//'vlg' => true
 );
 
 $this->src[S7_RENOVATION]=array(

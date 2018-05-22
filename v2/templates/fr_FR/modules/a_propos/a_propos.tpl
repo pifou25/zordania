@@ -70,6 +70,9 @@
 	<li>Juin 2008 - Nouveau serveur: Dedibox.</li>
 	<li>Janvier 2009 - Nouveau départ avec une nouvelle équipe.</li>
 	<li>Avril 2013 - 2.1 Nouvelle race: les gobelins.</li>
+	<li>Janvier 2018 - 2.2 Reprise du site après une longue absence.</li>
+	<li>Mars 2018 - 2.2.5 Corrections de bugs.</li>
+	<li>Mai 2018 - 2.3 Nouveaux villages.</li>
 	</ul>
 </elseif>
 <elseif cond='{a_propos_act} == "boutons"'>

@@ -31,15 +31,15 @@
 					</a>
 				</if>
 				<if cond='{al_value[al_nb_mbr]} < {ALL_MAX} AND {al_value[al_open]} AND {_user[alaid]} == 0'>
-					<a href="alliances-join.html?al_aid={al_value[al_aid]}">
+					 - <a href="alliances-join.html?al_aid={al_value[al_aid]}">
 					<img src="img/join.png" alt="Rejoindre" title="Rejoindre {al_value[al_name]}" />
-					</a> - 
+					</a> 
 				</if>
 				<if cond="isset({mbr_dpl[{al_value[al_aid]}]})">
-					<img src="img/dpl/{mbr_dpl[{al_value[al_aid]}]}.png" title="{dpl_type[{mbr_dpl[{al_value[al_aid]}]}]}"/>
+					 - <img src="img/dpl/{mbr_dpl[{al_value[al_aid]}]}.png" title="{dpl_type[{mbr_dpl[{al_value[al_aid]}]}]}"/>
 				</if>
 				<elseif cond='{_user[achef]} == {_user[mid]} AND {_user[alaid]} != {al_value[al_aid]}'>
-					<a href="diplo-add.html?al2={al_value[al_aid]}">
+					 - <a href="diplo-add.html?al2={al_value[al_aid]}">
 					<img src="img/join.png" alt="Pacte" title="Proposer un nouveau pacte avec {al_value[al_name]}" />
 					</a>
 				</elseif>
