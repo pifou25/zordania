@@ -77,11 +77,11 @@ function get_topic($cond){
 
 	if($select == 'topic'){// optimisé: table 'topic' seulement
 		// posted_unformat: pour la comparaison de date
-		$sql = 'SELECT _UDATE_FORMAT(t.posted) AS posted, t.last_post AS posted_unformat, _UDATE_FORMAT(t.last_post) AS last_post, t.id AS tid, t.poster, t.subject, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.forum_id, t.id ';
+		$sql = 'SELECT _UDATE_FORMAT(t.posted) AS posted, t.last_post AS posted_unformat, _UDATE_FORMAT(t.last_post) AS last_post, t.id AS tid, t.poster, t.subject, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.forum_id, t.etat, t.id ';
 		$sql .= ' FROM '.MYSQL_PREBDD_FRM.'topics AS t ';
 
 	}else{// CEIL(1+num_replies/LIMIT_PAGE) = nb de pages
-		$sql = 'SELECT _UDATE_FORMAT(t.posted) AS posted, t.last_post AS posted_unformat, _UDATE_FORMAT(t.last_post) AS last_post, t.id AS tid, t.poster, t.subject, t.last_post_id, t.last_poster, t.num_views, t.num_replies, CEIL((t.num_replies)/'.LIMIT_PAGE.') as pgs, t.closed, t.sticky, t.moved_to, t.forum_id, t.id, f.forum_name, f.last_post_id AS frm_last_post_id, c.id AS cid, c.cat_name, IFNULL(fp.read_forum, 1) AS read_forum, IFNULL(fp.post_replies, 1) AS post_replies, IFNULL(fp.post_topics, 1) AS post_topics ';
+		$sql = 'SELECT _UDATE_FORMAT(t.posted) AS posted, t.last_post AS posted_unformat, _UDATE_FORMAT(t.last_post) AS last_post, t.id AS tid, t.poster, t.subject, t.last_post_id, t.last_poster, t.num_views, t.num_replies, CEIL((t.num_replies)/'.LIMIT_PAGE.') as pgs, t.closed, t.sticky, t.moved_to, t.forum_id, t.etat, t.id, f.forum_name, f.last_post_id AS frm_last_post_id, c.id AS cid, c.cat_name, IFNULL(fp.read_forum, 1) AS read_forum, IFNULL(fp.post_replies, 1) AS post_replies, IFNULL(fp.post_topics, 1) AS post_topics ';
 		if($select=='mbr'){
 			$sql .= ', m2.mbr_mid AS auth_mid,  m2.mbr_gid AS auth_gid, m1.mbr_mid AS last_poster_mid, m1.mbr_gid AS last_poster_gid ';
 		}
