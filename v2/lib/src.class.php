@@ -2,33 +2,31 @@
 
 class src {
     
-    private $mid;
+    private $_mid;
     private $_sql;
     
-	function __construct($mid){
+	function __construct($mid, $sql){
 		$this->mid = $mid;
-        $this->_sql = mysqliext::$bdd;
+        $this->_sql = $sql;
 	}
 
-    /* Rajouter la recherche dont la conf est $conf en prévision */
+    /* Rajouter la recherche dont la conf est $conf en todo */
     public function scl($type) {
 
         $type = protect($type, "uint");
 
-        add_src($this->mid, $type);
+        $this->add($type);
         $tours = get_conf("src", $type, "tours");
 
-        $sql = "INSERT INTO ".$this->_sql->prebdd."src_todo VALUES ($this->mid, $type, $tours, NOW())";
-        return $this->_sql->query($sql);
+		$request = ['stdo_mid' => $this->mid, 'stdo_type' => $type, 'stdo_tours' => $tours, 'stdo_time' => 'NOW()'];
+		return $_sql::table('src_todo')->insertGetId($request);
     }
 
     /* Ajoute une recherche pour de vrai */
     public function add($type) {
-  
-        $type = protect($type, "uint");
 
-        $sql = "INSERT INTO ".$this->_sql->prebdd."src VALUES ($this->mid, $type)";
-        return $this->_sql->query($sql);
+		$request = ['src_mid' => $this->mid, 'src_type' => protect($type, "uint")];
+		return $_sql::table('src')->insertGetId($request);
     }
 
     /* Verifie qu'on peut faire telle ou telle recherche */
