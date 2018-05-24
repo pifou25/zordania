@@ -286,7 +286,18 @@
 					</foreach>
 					</optgroup>
 				</foreach>
-				</select>
+				</select>				
+				
+				<if cond="{tpc[forum_id]} == FORUM_BUG_FID ">	
+				<label for="statut">Statut : </label>				
+					<select id="statut" name="statut">
+						<option value="-1" >Laisser</option>
+						<option value="FORUM_REPORT_NEW">Déclaré</option>
+						<option value="FORUM_REPORT_OK">Avéré</option>
+						<option value="FORUM_REPORT_NOK">Pas bug</option>
+						<option value="FORUM_REPORT_ON">Corrigé</option>						
+					</select>
+				</if>
 
 				<input type="submit" name="modo" value="Effectuer" />
 			</p>
@@ -345,19 +356,21 @@
 			<foreach cond="{topic_array} as {topic}">
 			<tr>
 				<td><!-- Image pour l'état du topic -->
-
-				<if cond="({lu_forum_ldate} > {topic[posted_unformat]}) || isset({forum_lus[{topic[tid]}]})"><set name="etat" value="lu" /></if>
-				<else><set name="etat" value="non_lu" /></else>
-				<if cond="{topic[sticky]} == 1 AND {topic[closed]} == 1"><img src="img/forum/sticky-closed-{etat}.png" title="Post-it Fermé - {etat}" /></if>
-				<elseif cond="{topic[closed]} == 1"><img src="img/forum/closed-{etat}.png" title="Fermé - {etat}" /></elseif>
-				<elseif cond="{topic[sticky]} == 1"><img src="img/forum/sticky-{etat}.png" title="Post-it - {etat}" /></elseif>
-				<else><img src="img/forum/{etat}.png" title="{etat}" /></else>
+				
 				<if cond="{topic[forum_id]} == FORUM_BUG_FID ">				
-					<if cond="{topic[etat]} == FORUM_REPORT_NEW ">  <img src="img/forum/bug-{FORUM_REPORT_NEW}.png" title="Nouveau bug" /></if>
-					<elseif cond="{topic[etat]} == FORUM_REPORT_OK ">  <img src="img/forum/bug-{FORUM_REPORT_OK}.png" title="Bug avéré" /></elseif>
-					<elseif cond="{topic[etat]} == FORUM_REPORT_NOK ">  <img src="img/forum/bug-{FORUM_REPORT_NOK}.png" title="N'est pas un bug" /></elseif>
-					<elseif cond="{topic[etat]} == FORUM_REPORT_ON ">  <img src="img/forum/bug-{FORUM_REPORT_ON}.png" title="Bug corrigé" /></elseif>					
+					<if cond="{topic[statut]} == FORUM_REPORT_NEW ">  <img src="img/forum/bug-{FORUM_REPORT_NEW}.png" title="Nouveau bug" /></if>
+					<elseif cond="{topic[statut]} == FORUM_REPORT_OK ">  <img src="img/forum/bug-{FORUM_REPORT_OK}.png" title="Bug avéré" /></elseif>
+					<elseif cond="{topic[statut]} == FORUM_REPORT_NOK ">  <img src="img/forum/bug-{FORUM_REPORT_NOK}.png" title="N'est pas un bug" /></elseif>
+					<elseif cond="{topic[statut]} == FORUM_REPORT_ON ">  <img src="img/forum/bug-{FORUM_REPORT_ON}.png" title="Bug corrigé" /></elseif>					
 				</if>
+				<else>
+					<if cond="({lu_forum_ldate} > {topic[posted_unformat]}) || isset({forum_lus[{topic[tid]}]})"><set name="etat" value="lu" /></if>
+					<else><set name="etat" value="non_lu" /></else>
+					<if cond="{topic[sticky]} == 1 AND {topic[closed]} == 1"><img src="img/forum/sticky-closed-{etat}.png" title="Post-it Fermé - {etat}" /></if>
+					<elseif cond="{topic[closed]} == 1"><img src="img/forum/closed-{etat}.png" title="Fermé - {etat}" /></elseif>
+					<elseif cond="{topic[sticky]} == 1"><img src="img/forum/sticky-{etat}.png" title="Post-it - {etat}" /></elseif>
+					<else><img src="img/forum/{etat}.png" title="{etat}" /></else>
+				</else>
 
 				</td>
 

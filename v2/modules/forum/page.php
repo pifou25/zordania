@@ -181,7 +181,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 					$edit['silent'] = true;
 				$move = request('move', 'uint', 'post', -1);
 				if($is_modo && $move >=0)
-					$edit['fid'] = $move;
+					$edit['fid'] = $move;				
 				// possible d'éditer le sujet hormis modo ??
 				$title = request('pst_titre', 'string', 'post');
 				if($is_modo && $title)
@@ -194,7 +194,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 			}
 		}
 		//panel de modération topic (fermer/postit/déplacer)
-		elseif ($sub == 'modo' || $sub == 'stick' || $sub == 'unstick' || $sub == 'close' || $sub == 'open')
+		elseif ($sub == 'modo' || $sub == 'stick' || $sub == 'unstick' || $sub == 'close' || $sub == 'open' || $sub == 'open')
 		{
 			//on vérifie qu'on a les droits
 			if (!$is_modo)
@@ -221,7 +221,13 @@ case 'post' : // valider le formulaire & créer le topic / message
 						$edit['fid'] = $move;
 						$info['forum_id'] = $move;
 					}
-					if(isset($edit['closed']) or isset($edit['sticky']) or isset($edit['fid']))
+					
+					$statut = isset($_POST['statut']);
+					if($statut){
+						$edit['statut'] = $statut;
+					}
+					
+					if(isset($edit['closed']) or isset($edit['sticky']) or isset($edit['fid']) or isset($edit['statut']))
 					{ //on édite le message, et on met à jour la bdd
 						edit_post_gen($edit);
 						$_tpl->set('edit_tpc',true);

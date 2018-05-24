@@ -247,7 +247,7 @@ define('VOTES_TOP',  3); // xtreme top100
 
 /*ID Forum news*/
 define('ZORD_NEWS_FID',25);
-define('ZORD_PLAINTES_FID',30);
+define('FORUM_PLAINTES_FID',30);
 
 /*Etat bug/suggestion*/
 define('FORUM_BUG_FID',8);
