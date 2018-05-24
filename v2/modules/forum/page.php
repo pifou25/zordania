@@ -222,7 +222,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 						$info['forum_id'] = $move;
 					}
 					
-					$statut = isset($_POST['statut']);
+					$statut = request('statut', 'int', 'post', -1);
 					if($statut){
 						$edit['statut'] = $statut;
 					}

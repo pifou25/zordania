@@ -292,10 +292,10 @@
 				<label for="statut">Statut : </label>				
 					<select id="statut" name="statut">
 						<option value="-1" >Laisser</option>
-						<option value="FORUM_REPORT_NEW">Déclaré</option>
-						<option value="FORUM_REPORT_OK">Avéré</option>
-						<option value="FORUM_REPORT_NOK">Pas bug</option>
-						<option value="FORUM_REPORT_ON">Corrigé</option>						
+						<option value="{FORUM_REPORT_NEW}">Déclaré</option>
+						<option value="{FORUM_REPORT_OK}">Avéré</option>
+						<option value="{FORUM_REPORT_NOK}">Pas bug</option>
+						<option value="{FORUM_REPORT_ON}">Corrigé</option>						
 					</select>
 				</if>
 
@@ -358,10 +358,7 @@
 				<td><!-- Image pour l'état du topic -->
 				
 				<if cond="{topic[forum_id]} == FORUM_BUG_FID ">				
-					<if cond="{topic[statut]} == FORUM_REPORT_NEW ">  <img src="img/forum/bug-{FORUM_REPORT_NEW}.png" title="Nouveau bug" /></if>
-					<elseif cond="{topic[statut]} == FORUM_REPORT_OK ">  <img src="img/forum/bug-{FORUM_REPORT_OK}.png" title="Bug avéré" /></elseif>
-					<elseif cond="{topic[statut]} == FORUM_REPORT_NOK ">  <img src="img/forum/bug-{FORUM_REPORT_NOK}.png" title="N'est pas un bug" /></elseif>
-					<elseif cond="{topic[statut]} == FORUM_REPORT_ON ">  <img src="img/forum/bug-{FORUM_REPORT_ON}.png" title="Bug corrigé" /></elseif>					
+					<img src="img/forum/{topic[statut]}.png" title="Nouveau bug" />				
 				</if>
 				<else>
 					<if cond="({lu_forum_ldate} > {topic[posted_unformat]}) || isset({forum_lus[{topic[tid]}]})"><set name="etat" value="lu" /></if>
