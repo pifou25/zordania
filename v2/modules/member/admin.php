@@ -365,7 +365,7 @@ if($_act == "del") {
 			$_tpl->set('leg_bat_diff', $leg_bat_diff); /* leg theorique bat */
 			$_tpl->set('leg_bat_th', $leg_bat_th); /* leg theorique bat */
 
-			$res_array = clean_array_res(get_res_done($mid));
+			$res_array = get_res_done($mid);
 			// edit ressources du joueur
 			$add_res = request('add_res', 'array', 'post');
 			if(!empty($add_res)) {
@@ -375,16 +375,16 @@ if($_act == "del") {
 					foreach($add_res as $key=>$value)
 						if(!is_numeric($value) || $value==0) // valeur ko
 							unset($add_res[$key]);
-						else if($res_array[0][$key] + $value < 0) // y'a pas assez
+						else if($res_array[$key] + $value < 0) // y'a pas assez
 							unset($add_res[$key]);
 						else
-							$res_array[0][$key]+=$value; // ok
+							$res_array[$key]+=$value; // ok
 					if(mod_res($mid, $add_res))
 						$_tpl->set('edit_res', $add_res);
 				}
 			}
 
-			$_tpl->set('res_done', $res_array[0]);
+			$_tpl->set('res_done', $res_array);
 			$_tpl->set('res_todo', get_res_todo($mid));
 
 			$trn_array = clean_array_trn(get_trn($mid));

@@ -137,10 +137,9 @@ if($_sub == "my") { /* liste des ventes en cours */
 			elseif ($mch_array['mch_mid'] == $_user['mid'])
 				$_tpl->set('btc_achat','error');
 			else {
-				$have_res = get_res_done($_user['mid'], array(1));
-				$have_res = clean_array_res($have_res);
+				$have_res = get_res_done($_user['mid'], array(GAME_RES_PRINC));
 
-				if($have_res[0][1] < $mch_array['mch_prix']*$com_mod_max)
+				if($have_res[GAME_RES_PRINC] < $mch_array['mch_prix']*$com_mod_max)
 					$_tpl->set('btc_achat','nores'); // trop cher
 				else {
 					$_tpl->set('btc_achat','ok');
@@ -175,8 +174,7 @@ elseif($_sub == "ven") /* faire une vente */
 			//choix du type de la ressource
 			$_tpl->set('btc_sub','choix_type');
 			$list_res = get_res_done($_user['mid']);
-			$list_res = clean_array_res($list_res);
-			$_tpl->set('com_list_res',$list_res[0]);
+			$_tpl->set('com_list_res',$list_res);
 			
 			// tous les cours
 			$cours = mch_get_cours();
@@ -229,9 +227,8 @@ elseif($_sub == "ven") /* faire une vente */
 					$_tpl->set('vente_ok',false);
 				} else {
 					/* Est ce qu'il a bien les ressources ? */
-					$list_res = get_res_done($_user['mid'], $com_type);
-					$list_res = clean_array_res($list_res);
-					$res_nb = $list_res[0][$com_type];
+					$list_res = get_res_done($_user['mid'], [$com_type]);
+					$res_nb = $list_res[$com_type];
 					if($res_nb < $com_nb)
 					 	$_tpl->set("vente_ok", false);
 					else {

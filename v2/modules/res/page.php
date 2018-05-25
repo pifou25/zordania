@@ -10,8 +10,8 @@ require_once("lib/trn.lib.php");
 $_tpl->set("module_tpl","modules/res/res.tpl");
 
 $res_array = get_res_done($_user['mid']);
-$res_array = clean_array_res($res_array);
-$_tpl->set("res_dispo",$res_array[0]);
+
+$_tpl->set("res_dispo",$res_array);
 
 $trn_array = get_trn($_user['mid']);
 $trn_array = clean_array_trn($trn_array);

@@ -67,12 +67,19 @@ $_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 $_sql->set_debug(SITE_DEBUG);
 
-// New database Connection (Eloquent)
-$_sql2 = new \Illuminate\Database\Capsule\Manager();
-$_sql2->addConnection($settings['database']);
-$_sql2->setAsGlobal();
-
 mark('mysql');
+
+// New database Connection (Eloquent)
+use Illuminate\Database\Capsule\Manager as Capsule;
+$_sql2 = new Capsule;
+//$_sql2 = new \Illuminate\Database\Capsule\Manager();
+$_sql2->addConnection($settings['database']);
+// Make this Capsule instance available globally via static methods
+$_sql2->setAsGlobal();
+// Setup the Eloquent ORM
+$_sql2->bootEloquent();
+
+mark('eloquent');
 
 if(!$_sql->con) /* Utiliser Display = module */
 {

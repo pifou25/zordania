@@ -63,8 +63,8 @@ foreach ($batiments AS $typeBat => $nbBat) {
 $prod_res[GAME_RES_BOUF] -= $_user['population'];
 
 $cond_res = get_conf("race_cfg", "second_res");
-$prim_res = clean_array_res(get_res_done($_user['mid'], $cond_res));
-$_tpl->set("res_array", $prim_res[0]);
+$prim_res = get_res_done($_user['mid'], $cond_res);
+$_tpl->set("res_array", $prim_res);
 $_tpl->set("prod_res", $prod_res);
 
 /* Terrains */

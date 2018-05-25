@@ -46,7 +46,7 @@ function glob_leg() {
 			/* Si la légion est au village, on va piquer un peu de bouffe là bas */
 			if($bouf < $nb && $value['leg_cid'] == $value['mbr_mapcid']) {
 				$tmp = get_res_done($mid, array(GAME_RES_BOUF));
-				$boufvlg = $tmp[0]['res_type'.GAME_RES_BOUF];
+				$boufvlg = $tmp[GAME_RES_BOUF];
 				$diff = $nb - $bouf;
 				$boufvlg = min($boufvlg, $diff);
 				mod_res($mid, array(GAME_RES_BOUF => $boufvlg), -1);

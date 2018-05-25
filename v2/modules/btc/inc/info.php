@@ -12,8 +12,6 @@ if(!$_sub) {
 		$btc_array = get_nb_btc_done($_user['mid']);
 		$btc_array = index_array($btc_array, "btc_type");
 		$res_array = get_res_done($_user['mid']);
-		$res_array = clean_array_res($res_array);
-		$res_array = $res_array[0];
 	}
 	if(isset($btc_conf['prod_pop'])) {
 		$btc_pop_utils = array();

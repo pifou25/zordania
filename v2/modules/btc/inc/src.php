@@ -56,8 +56,7 @@ elseif($_sub == "src")
 	$cache = array();
 	$cache['src'] = get_src_done($_user['mid'], $need_src);
 	$cache['src'] = index_array($cache['src'], "src_type");
-	$cache['res'] = clean_array_res(get_res_done($_user['mid'], $need_res));
-	$cache['res'] = $cache['res'][0];
+	$cache['res'] = get_res_done($_user['mid'], $need_res);
 	$cache['src_todo'] = index_array($src_todo, "stdo_type");
 	$cache['btc_done'] = get_nb_btc_done($_user['mid'], $need_btc);
 	$cache['btc_done'] = index_array($cache['btc_done'], "btc_type");

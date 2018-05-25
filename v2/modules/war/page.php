@@ -496,9 +496,7 @@ case 'make_atq':
 	
 	/* PILLAGE */
 	if ($bilan['att']['pertes'] != $bilan['att']['stat']['nb']) {// si la légion est rasée, pas de pillage
-		$res_def = get_res_done($mid_def, array(), 0); // ressources du défenseur
-		$res_def = clean_array_res($res_def);
-		$res_def = $res_def[0];
+		$res_def = get_res_done($mid_def); // ressources du défenseur
 
 		$coef_fake = ($bilan['att']['stat']['nb'] - 1) * 2; // on gère les fakes
 		if ($coef_fake >= 100) $coef_fake = 100; // avec un maximum de 100% => coef à 1

@@ -94,8 +94,6 @@ function can_src($mid, $type, & $cache = array()) {
 
 	if(!isset($cache['res'])) {
 		$have_res = get_res_done($mid, $cond_res);
-		$have_res = clean_array_res($have_res);
-		$have_res = $have_res[0];
 	} else
 		$have_res = $cache['res'];
 

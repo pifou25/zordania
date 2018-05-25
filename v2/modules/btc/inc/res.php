@@ -73,8 +73,7 @@ if($_sub == "cancel_res")
 	$cache['btc'] = index_array($cache['btc'], "btc_type");
 	$cache['src'] = get_src_done($_user['mid'], $need_src);
 	$cache['src'] = index_array($cache['src'], "src_type");
-	$cache['res'] = clean_array_res(get_res_done($_user['mid'], $need_res));
-	$cache['res'] = $cache['res'][0];
+	$cache['res'] = get_res_done($_user['mid'], $need_res);
 	
 	foreach($res_todo as $value) {
 		if(!isset($cache['res_todo'][$value['rtdo_type']]['rtdo_nb']))

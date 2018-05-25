@@ -1,4 +1,7 @@
 <?php 
+class Res extends Illuminate\Database\Eloquent\Model {}
+class Res_todo extends Illuminate\Database\Eloquent\Model {}
+
 // Met des ressource en création dans l'ordre du tableau
 function scl_res($mid, $research)
 {
@@ -66,37 +69,33 @@ function edit_res_gen($cond, $research)
 	return true;
 }
 /* Récupère les ressources du joueur */
-function get_res_done($mid, $res =  [], $race = 0, $exc = [])
+function get_res_done($mid, $filter = false)
 {
-	global $_sql2;
-	$req = $_sql2::table('res');
-	$mid = protect($mid, 'uint');
-	$res = protect($res, 'array');
-	$race = protect($race, 'uint');
-	$exc = protect($exc, 'array');
-	$columnsSelector = [];
-
-	if(!$res)
-	{
-		if($race)
-			$number = get_conf_gen($race, 'race_cfg', 'res_nb');
-		else
-			$number = get_conf('race_cfg', 'res_nb');
-
-		for($i = 1; $i <= $number; ++$i)
-			array_push($columnsSelector, "res_type" . $i);
-	}
+	$row = Res::where('res_mid', '=', $mid)->get();
+	if(count($row) == 0) return [];
+	$row = $row[0];
+	$result = ['1' => $row['res_type1'],
+		'2' => $row['res_type2'],
+		'3' => $row['res_type3'],
+		'4' => $row['res_type4'],
+		'5' => $row['res_type5'],
+		'6' => $row['res_type6'],
+		'7' => $row['res_type7'],
+		'8' => $row['res_type8'],
+		'9' => $row['res_type9'],
+		'10' => $row['res_type10'],
+		'11' => $row['res_type11'],
+		'12' => $row['res_type12'],
+		'13' => $row['res_type13'],
+		'14' => $row['res_type14'],
+		'15' => $row['res_type15'],
+		'16' => $row['res_type16'],
+		'17' => $row['res_type17'],
+	];
+	if($filter)
+		return array_intersect_key($result, array_flip($filter));
 	else
-	{
-		if($exc)
-			for($i = 1; $i <= 17; $i++)
-				if(!in_array($i, $exc))
-					$res[] = $i;
-
-		foreach($res as $type)
-			array_push($columnsSelector, "res_type" . protect($type, 'uint'));
-	}
-	return json_decode(json_encode($req->select($columnsSelector)->where('res_mid', '=', $mid)->get()), true);
+		return $result;
 }
 /* Ressources en cours du joueur */
 function get_res_todo($mid, $cond = [])
@@ -170,8 +169,6 @@ function can_res($mid, $type, $nb, &$cache = [])
 
 	if(!isset($cache['res'])) {
 		$have_res = get_res_done($mid, $cond_res);
-		$have_res = clean_array_res($have_res);
-		$have_res = $have_res[0];
 	} else
 		$have_res = $cache['res'];
 

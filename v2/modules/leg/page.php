@@ -394,8 +394,6 @@ if($_display == "ajax") print_r($_POST);
 			$res_nb = request("res_nb", "uint", "post");
 			if($factor && $res_type && $res_nb && get_conf("res", $res_type)) {
 				$have_res = get_res_done($_user['mid']);// resources joueur
-				$have_res = clean_array_res($have_res);
-				$have_res = $have_res[0];
 
 				$res_ok = false;
 				if($factor > 0) {

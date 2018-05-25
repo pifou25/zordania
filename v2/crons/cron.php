@@ -354,9 +354,7 @@ function get_mbr(&$dep) {
 		$user["unt"] = index_array($user["unt"], "unt_type");
 	}
 	if(in_array("res", $dep)) {
-		$user["res"] = get_res_done($user['mbr_mid'], array(), $user["mbr_race"]);
-		$user["res"] = clean_array_res($user["res"]);
-		$user["res"] = $user["res"][0];
+		$user["res"] = get_res_done($user['mbr_mid']);
 	}
 
 	next($mid_array);
