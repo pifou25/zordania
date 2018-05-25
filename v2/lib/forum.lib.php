@@ -288,7 +288,7 @@ function edit_post_gen($cond){ // fonction générale full options
 		$_sql->query($sql);
 	}
 
-	if($closed>=0 || $sticky>=0 || $title || $fid){ // éditer le topic
+	if($closed>=0 || $sticky>=0 || $title || $fid || $statut >= 0){ // éditer le topic
 		if(!$tid) return false;
 
 		if($fid){// /!\ déplacement topic : mettre à jour le nombre de sujets dans chaque forum /!\
