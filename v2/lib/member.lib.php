@@ -221,7 +221,7 @@ function ini_mbr($mid, $pseudo, $vlg, $race, $cid, $gid, $sexe=1) {
         ResTodo::where('rtdo_mid', '=', $mid)->delete();
 	ini_src($mid);
 	ini_btc($mid);
-	ini_trn($mid);
+	Trn::init($mid);
 }
 
 /* Réinitialise un compte */
@@ -233,7 +233,7 @@ function reini_mbr($mid, $pseudo, $vlg, $race, $cid, $oldcid, $gid, $sexe=1) {
 	cls_btc($mid);
 	cls_res($mid);
 	cls_src($mid);
-	cls_trn($mid);
+	Trn::clear($mid);
 	cls_com($mid);
 	cls_atq($mid);
 	cls_histo($mid);
@@ -250,7 +250,7 @@ function cls_mbr($mid, $cid, $race) {
 	cls_btc($mid);
 	cls_res($mid);
 	cls_src($mid);
-	cls_trn($mid);
+	Trn::clear($mid);
 	cls_com($mid);
 	cls_atq($mid);
 	cls_histo($mid);

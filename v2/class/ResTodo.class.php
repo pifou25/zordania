@@ -30,11 +30,7 @@ class ResTodo extends Illuminate\Database\Eloquent\Model {
 
     // Annule la création d'une ressource
     static function cancel(int $mid, int $res, int $number) {
-        return ResTodo::insertGetId([
-                    'rtdo_nb' => $number,
-                    'rtdo_mid' => $mid,
-                    'rtdo_id' => $res
-        ]);
+        return ResTodo::where('rtdo_mid', '=', $mid)->decrement($res, $number);
     }
 
     /* Ressources en cours du joueur */

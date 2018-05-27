@@ -49,7 +49,7 @@ if($_act == 'btc')
 					edit_unt_vlg($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
 					edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"));
 					
-					mod_trn($_user['mid'], get_conf("btc", $type, "prix_trn"), -1);
+					Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), -1);
 					Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), -1);
 					
 					scl_btc($_user['mid'], $type);
@@ -75,7 +75,7 @@ if($_act == 'btc')
 				edit_unt_vlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
 				edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
 					
-				mod_trn($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
+				Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
 				Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
 				// MAJ du $cache
 				//$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
@@ -199,7 +199,7 @@ if($_act == 'btc')
 					edit_unt_vlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
 					edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
 
-					mod_trn($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
+					Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
 					Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
 
 					$place = get_conf("btc", $type, "prod_pop");

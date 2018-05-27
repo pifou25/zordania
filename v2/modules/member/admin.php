@@ -391,9 +391,7 @@ if($_act == "del") {
 			$_tpl->set('res_done', $res_array);
 			$_tpl->set('res_todo', ResTodo::get($mid));
 
-			$trn_array = clean_array_trn(get_trn($mid));
-                        $trn_array = empty($trn_array) ? [] : $trn_array [0];
-			$_tpl->set('trn_done', $trn_array);
+			$_tpl->set('trn_done', Trn::get($mid));
 
 			$_tpl->set('src_done', get_src_done($mid));
 			$_tpl->set('src_todo', get_src_todo($mid));

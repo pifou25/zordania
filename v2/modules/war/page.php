@@ -414,7 +414,7 @@ case 'make_atq':
 						if ($bat_lid) $legions->legs[$bat_lid]->del_unt($type, $nb);
 
 					/* Et les terrains ! */
-					mod_trn($mid_def, get_conf_gen($race2, "btc", $btc["btc_type"], 'prix_trn'));
+					Trn::mod($mid_def, get_conf_gen($race2, "btc", $btc["btc_type"], 'prix_trn'));
 
 					/* Et la pop */
 					$update_place += (int) get_conf_gen($race2, "btc", $btc["btc_type"], 'prod_pop');

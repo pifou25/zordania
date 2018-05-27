@@ -68,8 +68,7 @@ $_tpl->set("res_array", $prim_res);
 $_tpl->set("prod_res", $prod_res);
 
 /* Terrains */
-$trn_array = clean_array_trn(get_trn($_user['mid']));
-$_tpl->set("trn_array", $trn_array[0]);
+$_tpl->set("trn_array", Trn::get($_user['mid']));
 
 /* Bâtiments */
 $btc_array = get_btc($_user['mid'],array(),array(BTC_ETAT_TODO,BTC_ETAT_REP,BTC_ETAT_BRU));

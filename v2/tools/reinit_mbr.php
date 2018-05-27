@@ -57,7 +57,7 @@ foreach($mid_array as $_user)
 		cls_btc($mid);
 		cls_res($mid);
 		cls_src($mid);
-		cls_trn($mid);
+		Trn::clear($mid);
 		cls_com($mid);
 		cls_atq($mid);
 		cls_histo($mid);

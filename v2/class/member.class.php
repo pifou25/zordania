@@ -463,9 +463,7 @@ class member{
     /*** terrains ***/
     function trn(){
         if(!$this->trn_load){
-            $have_trn = get_trn($this->mid);
-            $have_trn = clean_array_trn($have_trn);
-            $this->trn = $have_trn[0];
+            $this->trn = Trn::get($this->mid);
             $this->trn_load = true;
         }
         return $this->trn;

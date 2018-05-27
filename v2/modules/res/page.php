@@ -10,9 +10,7 @@ require_once("lib/trn.lib.php");
 $_tpl->set("module_tpl","modules/res/res.tpl");
 $_tpl->set("res_dispo",Res::get($_user['mid']));
 
-$trn_array = get_trn($_user['mid']);
-$trn_array = clean_array_trn($trn_array);
-$_tpl->set("trn_dispo",$trn_array[0]);
+$_tpl->set("trn_dispo",Trn::get($_user['mid']));
 
 }
 ?>

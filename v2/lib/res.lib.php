@@ -1,28 +1,5 @@
 <?php 
 
-// Met des ressource en création dans l'ordre du tableau
-function scl_res($mid, $research)
-{
-	global $_sql2;
-
-	if($research)
-	{
-		$requests = [];
-
-		foreach($research as $type => $number)
-			array_push($requests, [
-				'rtdo_mid'  => protect($mid, 'uint'), 
-				'rtdo_type' => protect($type, 'uint'), 
-				'rtdo_nb'   => protect($number, 'uint')
-			]);
-
-		if (count($research) == 1)
-			$requests = $requests[0];
-
-		return $_sql2::table('res_todo')->insertGetId($requests);
-	}
-	return false;
-}
 /* Verifie qu'on peut faire telle ou telle ressource */
 function can_res($mid, $type, $nb, &$cache = [])
 {
@@ -84,20 +61,10 @@ function can_res($mid, $type, $nb, &$cache = [])
 	return ['need_src' => $bad_src, 'need_btc' => $bad_btc, 'prix_res' => $bad_res];
 }
 
-/* Quand on crée un membre */
-function ini_res($mid)
-{
-	global $_sql2;
-	$mid = protect($mid, 'uint');
-	$_sql2::table('res')->insertGetId(['res_mid' => $mid]);
-	return Res::mod($mid, get_conf('race_cfg', 'debut', 'res'));
-}
 /* Quand on le vire */
 function cls_res($mid)
 {
-	global $_sql2;
-
 	// Additionne les deux requêtes pour avoir le nombre total de lignes supprimés
-	return $_sql2::table('res')->where('res_mid', '=', $mid)->delete() +
-		   $_sql2::table('res_todo')->where('rtdo_mid', '=', $mid)->delete();
+	return Res::where('res_mid', '=', $mid)->delete() +
+		   ResTodo::where('rtdo_mid', '=', $mid)->delete();
 }

@@ -84,8 +84,7 @@ if(!$_sub) {
 		$res_utils_array = array();
 		$res_prod_array = $btc_conf['prod_res_auto'];
 	
-		$trn_array = get_trn($_user['mid']);
-		$trn_array = clean_array_trn($trn_array);
+		$trn_array = Trn::get($_user['mid']);
 		
 		if(isset($btc_conf['prox_trn'])) {
 			foreach($btc_conf['prix_trn'] as $type => $value) {
