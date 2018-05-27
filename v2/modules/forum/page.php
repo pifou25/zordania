@@ -270,6 +270,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 
 	//et enfin l'affichage de message
 	//on vérifie qu'on a le droit
+		
 	if (isset($info) && $info['read_forum'] == 1)
 	{
 		ajout_view($tid);

@@ -38,8 +38,9 @@ define('TODO_MAX_RES',250);
 define('TODO_MAX_UNT',250);
 define('TODO_MAX_SRC',5);
 
-/* Nombre max */
-define('TOTAL_MAX_UNT', 1000);
+/* Nombre unité max */
+define('TOTAL_MAX_UNT_1', 700); //Toutes
+define('TOTAL_MAX_UNT_2', 1000); // Sauf les  gobelins
 
 /* Donjon */
 // Distance à partir de laquelle une légion est visible dans le donjon
