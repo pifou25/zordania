@@ -6,7 +6,6 @@ if(!can_d(DROIT_PLAY)) {
 
 require_once("lib/msg.lib.php");
 require_once("lib/alliances.lib.php");
-require_once("lib/ally.class.php");
 require_once("lib/res.lib.php");
 require_once("lib/member.lib.php");
 require_once("lib/diplo.lib.php");
@@ -238,7 +237,7 @@ case 'admin':
 							&& $mbr_infos['ambr_etat'] == ALL_ETAT_DEM) {
 							del_aly_mbr($_user['alaid'], $mid);
 							// rembourser le postulant
-							mod_res($mid, array(GAME_RES_PRINC => ALL_JOIN_PRICE));
+							Res::mod($mid, array(GAME_RES_PRINC => ALL_JOIN_PRICE));
 							
 							$text = $_tpl->get('modules/alliances/msg/refuse.tpl',1);
 							$titre = $_tpl->get('modules/alliances/msg/titre.tpl',1);
@@ -346,9 +345,8 @@ case 'res': /* grenier */
 	else
 		$coef =0;
 
-	$have_res = get_res_done2($_user['mid']);
-	$have_res = $have_res[0];
-
+	$have_res = Res::get($_user['mid']);
+	
 	$aly_res = $ally->getRessources(); // Ressources du grenier
 
 	$res_limite = array(); /* si limite atteinte */
@@ -406,7 +404,7 @@ case 'res': /* grenier */
 		} // fin foreach $res_nb...
 
 		/* maj des ressources */
-		mod_res($_user['mid'], $res_ok, -1);
+		Res::mod($_user['mid'], $res_ok, -1);
 		mod_aly_res($_user['alaid'], $_user['mid'], $res_taxed);
 	} // fin if ( droits grenier )
 
@@ -551,9 +549,7 @@ case 'ressyn': // synthèse détaillée format tableau
 
 case 'new': // créer une alliance
 	
-	$aly_res = get_res_done2($_user['mid'], array(GAME_RES_PRINC));
-	$aly_res = $aly_res[0];
-	
+	$aly_res = Res::get($_user['mid'], array(GAME_RES_PRINC));
 	$name = request("al_name", "string", "post");
 	
 	if($_user['aetat'] != ALL_ETAT_NULL)
@@ -567,7 +563,7 @@ case 'new': // créer une alliance
 	else {
 		$al_id = add_aly($_user['mid'], $name);
 		exec("cp img/al_logo/0.png img/al_logo/$al_id.png");
-		mod_res($_user['mid'], array(GAME_RES_PRINC => ALL_CREATE_PRICE), -1);
+		Res::mod($_user['mid'], array(GAME_RES_PRINC => ALL_CREATE_PRICE), -1);
 		add_aly_mbr($al_id, $_user['mid'], ALL_ETAT_CHEF);
 		$_ses->update_aly();
 		$_tpl->set('al_new',$al_id);
@@ -598,8 +594,7 @@ case 'join': // demander à rejoindre une alliance
 			else if($_user['points'] < ALL_MIN_PTS) /* Pas assez de points */
 				$_tpl->set('al_not_enought_pts',ALL_MIN_PTS);
 			else {
-				$have_res = get_res_done2($_user['mid'], array(GAME_RES_PRINC));
-				$have_res = $have_res[0];
+				$have_res = Res::get($_user['mid'], array(GAME_RES_PRINC));
 				$chef = $ally->getChef();
 
 				if($have_res[GAME_RES_PRINC] < ALL_JOIN_PRICE) /* Pas assez d'or */
@@ -613,7 +608,7 @@ case 'join': // demander à rejoindre une alliance
 					require_once("lib/msg.lib.php");
 			
 					add_aly_mbr($al_aid, $_user['mid'], ALL_ETAT_DEM);
-					mod_res($_user['mid'], array(GAME_RES_PRINC => ALL_JOIN_PRICE), -1);
+					Res::mod($_user['mid'], array(GAME_RES_PRINC => ALL_JOIN_PRICE), -1);
 					$_ses->update_aly();
 					/* envoyer un msg au chef */
 					$text = $_tpl->get('modules/alliances/msg/demande.tpl',1);

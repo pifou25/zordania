@@ -96,7 +96,7 @@ function mbr_unt(&$_user) {
 		$nb = $bouf;
 	}
 
-	mod_res($mid, array(GAME_RES_BOUF => -$nb));// nourriture consommée
+	Res::mod($mid, array(GAME_RES_BOUF => -$nb));// nourriture consommée
 
 	edit_unt_vlg($mid, $update_unt);// MAJ unités formées ou mort de faim
 

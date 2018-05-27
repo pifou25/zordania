@@ -4,7 +4,6 @@ if(!can_d(DROIT_PLAY)) {
 	$_tpl->set("need_to_be_loged",true);
 } else {
 
-require_once ('lib/diplo.class.php');
 require_once ('lib/diplo.lib.php');
 require_once ('lib/alliances.lib.php');
 require_once ('lib/member.lib.php');

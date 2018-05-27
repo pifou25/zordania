@@ -65,7 +65,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 			$mod_res[$value['mch_type']] += $value['mch_nb'] * (1 - (COM_TAX / 100));
 		}
 	}
-	mod_res($_user['mid'], $mod_res);
+	Res::mod($_user['mid'], $mod_res);
 	cnl_mch($_user['mid'], array_keys($have_mch));
 	$_tpl->set("com_cnl", $have_mch);
 } elseif($_sub == "ach") { /* marché / achat */
@@ -137,14 +137,14 @@ if($_sub == "my") { /* liste des ventes en cours */
 			elseif ($mch_array['mch_mid'] == $_user['mid'])
 				$_tpl->set('btc_achat','error');
 			else {
-				$have_res = get_res_done($_user['mid'], array(GAME_RES_PRINC));
+				$have_res = Res::get($_user['mid'], array(GAME_RES_PRINC));
 
 				if($have_res[GAME_RES_PRINC] < $mch_array['mch_prix']*$com_mod_max)
 					$_tpl->set('btc_achat','nores'); // trop cher
 				else {
 					$_tpl->set('btc_achat','ok');
-					mod_res($_user['mid'], array(1 => ($mch_array['mch_prix'] * $com_mod * -1), $mch_array['mch_type'] => $mch_array['mch_nb']));
-					mod_res($mch_array['mch_mid'], array(1 => $mch_array['mch_prix']));
+					Res::mod($_user['mid'], array(1 => ($mch_array['mch_prix'] * $com_mod * -1), $mch_array['mch_type'] => $mch_array['mch_nb']));
+					Res::mod($mch_array['mch_mid'], array(1 => $mch_array['mch_prix']));
 
 					mch_achat($_user['mid'], $com_cid);
 
@@ -173,7 +173,7 @@ elseif($_sub == "ven") /* faire une vente */
 		if($com_type <= 1 || !get_conf("res", $com_type)) {
 			//choix du type de la ressource
 			$_tpl->set('btc_sub','choix_type');
-			$list_res = get_res_done($_user['mid']);
+			$list_res = Res::get($_user['mid']);
 			$_tpl->set('com_list_res',$list_res);
 			
 			// tous les cours
@@ -227,7 +227,7 @@ elseif($_sub == "ven") /* faire une vente */
 					$_tpl->set('vente_ok',false);
 				} else {
 					/* Est ce qu'il a bien les ressources ? */
-					$list_res = get_res_done($_user['mid'], [$com_type]);
+					$list_res = Res::get($_user['mid'], [$com_type]);
 					$res_nb = $list_res[$com_type];
 					if($res_nb < $com_nb)
 					 	$_tpl->set("vente_ok", false);
@@ -244,7 +244,7 @@ elseif($_sub == "ven") /* faire une vente */
 								break; // plus assez de ressources
 							}
 							/* Enlever les ressources */
-							mod_res($_user['mid'], array($com_type => $com_nb), -1);	
+							Res::mod($_user['mid'], array($com_type => $com_nb), -1);	
 							/* Mettre en vente */
 							mch_vente($_user['mid'], $com_type, $com_nb, $com_prix);
 						}

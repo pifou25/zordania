@@ -92,11 +92,10 @@ class src {
         $cond_res = array_keys($prix_res);
 
         if(!isset($cache['res'])) {
-            $have_res = get_res_done($this->mid, $cond_res);
-            $have_res = clean_array_res($have_res);
-            $have_res = $have_res[0];
-        } else
+            $have_res = Res::get($this->mid, $cond_res);
+        } else {
             $have_res = $cache['res'];
+        }
 
         foreach($prix_res as $res_type => $nombre) {
             $diff =  $nombre - $have_res[$res_type];

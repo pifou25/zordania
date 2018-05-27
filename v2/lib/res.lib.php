@@ -1,6 +1,4 @@
 <?php 
-class Res extends Illuminate\Database\Eloquent\Model {}
-class Res_todo extends Illuminate\Database\Eloquent\Model {}
 
 // Met des ressource en création dans l'ordre du tableau
 function scl_res($mid, $research)
@@ -24,112 +22,6 @@ function scl_res($mid, $research)
 		return $_sql2::table('res_todo')->insertGetId($requests);
 	}
 	return false;
-}
-// Annule la création d'une ressource
-function cancel_research($memberId, $researchId, $number)
-{
-	global $_sql2;
-	return $_sql2::table('res_todo')->insertGetId([
-		'rtdo_nb'  => protect($number, 'uint'), 
-		'rtdo_mid' => protect($memberId, 'uint'), 
-		'rtdo_id'  => protect($researchId, 'uint')
-	]);
-}
-// Modifie les ressources d'un membre, mais comparativement (ressources courante + machin)
-function mod_res($memberId, $research, $factor = 1)
-{
-	$research = protect($research, 'array');
-	$factor = protect($factor, 'float');
-	
-	foreach($research as $type => $number)
-		if($number && $factor)
-			$research[$type] = $number * $factor;
-
-	return edit_res_gen(['mid' => $memberId, 'comp' => true], $research);
-}
-// Modifie les ressources qui remplissent certaines conditions
-function edit_res_gen($cond, $research)
-{
-	global $_sql2;
-	
-	if ($research)
-	{
-		$req = $_sql2::table('res');
-		$cond = protect($cond, 'array');
-		$mid = (isset($cond['mid'])) ? $req->where('res_mid', '=', protect($cond['mid'], 'uint')) : false;
-
-		foreach(protect($research, 'array') as $type => $number)
-			if(isset($cond['comp']) && protect($cond['comp'], 'bool'))
-				$req->increment('res_type' . protect($type, 'uint'), protect($number, 'int'));
-			else
-				$req->update('res_type' . protect($type, 'uint'), protect($number, 'int'));
-
-		return $req->get();
-	}
-	return true;
-}
-/* Récupère les ressources du joueur */
-function get_res_done($mid, $filter = false)
-{
-	$row = Res::where('res_mid', '=', $mid)->get();
-	if(count($row) == 0) return [];
-	$row = $row[0];
-	$result = ['1' => $row['res_type1'],
-		'2' => $row['res_type2'],
-		'3' => $row['res_type3'],
-		'4' => $row['res_type4'],
-		'5' => $row['res_type5'],
-		'6' => $row['res_type6'],
-		'7' => $row['res_type7'],
-		'8' => $row['res_type8'],
-		'9' => $row['res_type9'],
-		'10' => $row['res_type10'],
-		'11' => $row['res_type11'],
-		'12' => $row['res_type12'],
-		'13' => $row['res_type13'],
-		'14' => $row['res_type14'],
-		'15' => $row['res_type15'],
-		'16' => $row['res_type16'],
-		'17' => $row['res_type17'],
-	];
-	if($filter)
-		return array_intersect_key($result, array_flip($filter));
-	else
-		return $result;
-}
-/* Ressources en cours du joueur */
-function get_res_todo($mid, $cond = [])
-{
-	global $_sql2;
-
-	$mid = protect($mid, 'uint');
-	$cond = protect($cond, 'array');
-	$res = [];
-	$rid = 0;
-
-	if(isset($cond['res']))
-		$res = protect($cond['res'], 'array');
-	if(isset($cond['rid']))
-		$rid = protect($cond['rid'], 'uint');
-
-	$req = $_sql2::table('res_todo')
-		->select(['rtdo_id', 'rtdo_type', 'rtdo_nb'])
-		->where('rtdo_mid', '=', $mid)
-		->where('rtdo_nb', '>', 0);
-	
-	if($rid)
-		$req->where('rtdo_id', '=', $rid);
-	
-	if($res)
-	{
-		$list = [];
-		foreach($res as $type)
-			array_push($list, protect($type, 'uint'));
-
-		$req->where('rtdo_type', 'IN', $list);
-	}
-	$req->orderBy('rtdo_id', 'asc');
-	return json_decode(json_encode($req->get()), true);
 }
 /* Verifie qu'on peut faire telle ou telle ressource */
 function can_res($mid, $type, $nb, &$cache = [])
@@ -168,7 +60,7 @@ function can_res($mid, $type, $nb, &$cache = [])
 	$cond_res = array_keys($prix_res);
 
 	if(!isset($cache['res'])) {
-		$have_res = get_res_done($mid, $cond_res);
+		$have_res = Res::get($mid, $cond_res);
 	} else
 		$have_res = $cache['res'];
 
@@ -191,33 +83,14 @@ function can_res($mid, $type, $nb, &$cache = [])
 
 	return ['need_src' => $bad_src, 'need_btc' => $bad_btc, 'prix_res' => $bad_res];
 }
-/* Permet d'avoir un tableau plus utilisable lors d'un get_res_done
- * Le array qu'on lui file doit être directement celui qui sort de get_res_done ou équivalent
- */
-function clean_array_res($array)
-{
-	$array = protect($array, 'array');
-	$return = [];
 
-	if($array)
-		foreach($array as $line => $values)
-			foreach($values as $key => $value)
-				$return[$line][str_replace('res_type', '', $key)] = $value;
-
-	return $return;
-}
-/* Récupère les ressources du joueur + mise en forme */
-function get_res_done2($mid, $res = [], $race = 0, $exc = [])
-{
-	return clean_array_res(get_res_done($mid, $res, $race, $exc));
-}
 /* Quand on crée un membre */
 function ini_res($mid)
 {
 	global $_sql2;
 	$mid = protect($mid, 'uint');
 	$_sql2::table('res')->insertGetId(['res_mid' => $mid]);
-	return mod_res($mid, get_conf('race_cfg', 'debut', 'res'));
+	return Res::mod($mid, get_conf('race_cfg', 'debut', 'res'));
 }
 /* Quand on le vire */
 function cls_res($mid)

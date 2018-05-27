@@ -37,7 +37,7 @@ if(!$log_in_out && can_d(DROIT_PLAY) && $_user['etat'] != MBR_ETAT_INI)
 	$cond_btc = array_keys($array_btc);
 
 	$cond_res = get_conf("race_cfg", "primary_res");
-	$prim_res = get_res_done($_user['mid'], $cond_res);
+	$prim_res = Res::get($_user['mid'], $cond_res);
 
 	foreach($prim_res as $key => $value)
 		if($value >= 1000000)

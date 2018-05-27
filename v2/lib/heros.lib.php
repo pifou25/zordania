@@ -24,7 +24,7 @@ function add_hero($mid, $name, $type) {
 	$res = $_sql->query($sql);
 	$edit_unt[$type] = -1; // ajouter le héros comme unité
 	edit_unt_gen($mid, LEG_ETAT_VLG, $edit_unt, -1); // prix unités & héros
-	mod_res($mid, $prix_res, -1);// ressources payées
+	Res::mod($mid, $prix_res, -1);// ressources payées
 	// maj mbr
 	$_sql->query('UPDATE '.$_sql->prebdd.'mbr SET mbr_lmodif_date = NOW()');
 	return true;

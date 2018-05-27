@@ -22,3 +22,6 @@ v2/cache/global.cache.php
 *.gz
 *.bat
 v2/scripts/cron.bat
+
+# data for NetBeans IDE
+v2/nbproject

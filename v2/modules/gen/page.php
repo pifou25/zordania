@@ -63,7 +63,7 @@ foreach ($batiments AS $typeBat => $nbBat) {
 $prod_res[GAME_RES_BOUF] -= $_user['population'];
 
 $cond_res = get_conf("race_cfg", "second_res");
-$prim_res = get_res_done($_user['mid'], $cond_res);
+$prim_res = Res::get($_user['mid'], $cond_res);
 $_tpl->set("res_array", $prim_res);
 $_tpl->set("prod_res", $prod_res);
 
@@ -118,7 +118,7 @@ foreach($src_todo as $key => $src) { // calculer RAF
 $_tpl->set('src_todo',$src_todo);
 
 /* Ressources en cours */
-$res_todo = get_res_todo($_user['mid']);
+$res_todo = ResTodo::get($_user['mid']);
 $_tpl->set('res_todo',$res_todo);
 
 

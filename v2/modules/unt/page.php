@@ -32,7 +32,7 @@ if($_act == "pend") {
 			edit_unt_vlg($_user['mid'], array($unt_type => $unt_nb), -1);
 			edit_mbr($_user['mid'], array('population' => count_pop($_user['mid'])));
 			// on rembourse 50% du prix de ressources
-			mod_res($_user['mid'], $mbr->get_conf("unt", $unt_type, "prix_res"), 0.5 * $unt_nb);
+			Res::mod($_user['mid'], $mbr->get_conf("unt", $unt_type, "prix_res"), 0.5 * $unt_nb);
 			$_tpl->set('unt_sub','ok');
 
 		}

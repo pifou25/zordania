@@ -4,8 +4,8 @@
 spl_autoload_register(function ($classname) {
 	$folders = glob(__DIR__ . "\*", GLOB_ONLYDIR);
 
-	if (is_file(SITE_DIR ."lib/$classname.class.php"))
-		require_once SITE_DIR ."lib/$classname.class.php";
+	if (is_file(SITE_DIR ."class/$classname.class.php"))
+		require_once SITE_DIR ."class/$classname.class.php";
 	else
 		for ($i = 0; $i < count($folders); $i++)
 			if (is_file($folders[$i] . "/$classname.class.php"))

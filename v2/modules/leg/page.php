@@ -12,7 +12,6 @@ require_once("lib/member.lib.php");
 require_once("lib/heros.lib.php");
 require_once("lib/war.lib.php");
 require_once("lib/btc.lib.php");
-require_once("lib/histo.class.php");
 
 $_tpl->set("module_tpl", "modules/leg/leg.tpl");
 $_tpl->set("leg_act", $_act);
@@ -383,7 +382,7 @@ if($_display == "ajax") print_r($_POST);
 				}
 			}
 
-			mod_res($_user['mid'], $tmp, -1);
+			Res::mod($_user['mid'], $tmp, -1);
 			$legions->legs[$lid]->mod_res($tmp);
 			$_tpl->set("lres_ok", true);
 			break;
@@ -393,7 +392,7 @@ if($_display == "ajax") print_r($_POST);
 			$res_type = request("res_type", "uint", "post");
 			$res_nb = request("res_nb", "uint", "post");
 			if($factor && $res_type && $res_nb && get_conf("res", $res_type)) {
-				$have_res = get_res_done($_user['mid']);// resources joueur
+				$have_res = Res::get($_user['mid']);// resources joueur
 
 				$res_ok = false;
 				if($factor > 0) {
@@ -405,7 +404,7 @@ if($_display == "ajax") print_r($_POST);
 				}
 				if($res_ok) {
 					$res_nb *= $factor;
-					mod_res($_user['mid'], array($res_type => $res_nb), -1);// ressources joueur
+					Res::mod($_user['mid'], array($res_type => $res_nb), -1);// ressources joueur
 					$legions->legs[$lid]->mod_res(array($res_type => $res_nb)); // ressources légion
 					$have_res[$res_type] -= $res_nb;
 					$_tpl->set("lres_ok", true);

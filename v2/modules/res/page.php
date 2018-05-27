@@ -8,10 +8,7 @@ require_once("lib/res.lib.php");
 require_once("lib/trn.lib.php");
 
 $_tpl->set("module_tpl","modules/res/res.tpl");
-
-$res_array = get_res_done($_user['mid']);
-
-$_tpl->set("res_dispo",$res_array);
+$_tpl->set("res_dispo",Res::get($_user['mid']));
 
 $trn_array = get_trn($_user['mid']);
 $trn_array = clean_array_trn($trn_array);

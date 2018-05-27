@@ -35,11 +35,23 @@
 			<if cond="is_array({value})">( array )</if><else>{value}</else><br/>
 		</foreach></dd>
 		</if>
-<if cond="true">
-		<dt>SQL</dt>
+
+                <dt>SQL</dt>
 		<dd>
 			<ol>
+                            <if cond="{eloQueries}">
+                        <h3>ELOQUENT</h3>
+                                <foreach cond='{eloQueries} as {values}'>
+			<li>
+				<math oper="htmlspecialchars({values[query]})" /><br/>
+				Bindings: <math oper="print_debug({values[bindings]})" />
+				Temps: <math oper="round({values[time]},2)" /> ms
+			</li>
+                                </foreach>
+                            </if>
+                            
 			<if cond="{sv_queries}">
+                        <h3>OLD MANAGED QUERIES</h3>
 			<foreach cond='{sv_queries} as {values}'>
 			<li>
 				<math oper="htmlspecialchars({values[req]})" /><br/>
@@ -71,6 +83,5 @@
 			Au total: <math oper='round({sv_total_sql_time},4)' /> sur <math oper='round(mtime()-{sv_diff},4)' /> secondes<br/>
 			Donc: <math oper='round({sv_total_sql_time} /  (mtime()-{sv_diff}) * 100,2)' /> % du temps.
 		</dd>
-</if>
 	</dl>
 </div>

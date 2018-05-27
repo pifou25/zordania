@@ -331,7 +331,7 @@ if($_act == "del") {
 						$res_array[$res] = $nb * -1;
 
 					$legions->legs[$lid]->mod_res($res_array);
-					mod_res($mid, $res_array, -1);
+					Res::mod($mid, $res_array, -1);
 					$_tpl->set("lres_ok", true);
 				}
 			}
@@ -339,33 +339,37 @@ if($_act == "del") {
 			$_tpl->set("res_leg", $legions->get_all_res());
 			$_tpl->set("unt_leg", $legions->get_all_unts());
 			$_tpl->set("leg_array", $legions->get_all_legs_infos());
-			$leg_bat_reel = $legions->legs[$legions->btc_lid]->get_unt();
-			$_tpl->set("leg_bat_reel", $leg_bat_reel);
-			$_tpl->set("leg_race", $mbr_array['mbr_race']);
+                        if(isset($legions->legs[$legions->btc_lid])){
+                            $leg_bat_reel = $legions->legs[$legions->btc_lid]->get_unt();
+                            $_tpl->set("leg_bat_reel", $leg_bat_reel);
+                            
+                            $leg_bat_diff = array();
+                            foreach($leg_bat_reel as $key => $nb)
+                                    $leg_bat_diff[$key] = -$nb; /* initialiser la legion difference */
+
+                            $leg_bat_th = array();
+                            foreach ($btc_array as $btc) {
+                                    /* compter la legion theorique des batiments */
+                                    $prix_unt = get_conf_gen($mbr_array['mbr_race'], 'btc', $btc['btc_type'], 'prix_unt');
+                                    if ($prix_unt) {
+                                            array_ksum($leg_bat_diff, $prix_unt, $btc['btc_nb']);/* difference = - existant + requis */
+                                            array_ksum($leg_bat_th, $prix_unt, $btc['btc_nb']);/* requis dans les batiments */
+                                    }
+                            }
+
+                            $_tpl->set('leg_bat_diff', $leg_bat_diff); /* leg theorique bat */
+                            $_tpl->set('leg_bat_th', $leg_bat_th); /* leg theorique bat */
+                        }
+                        
+                        $_tpl->set("leg_race", $mbr_array['mbr_race']);
 			$btc_array = get_nb_btc($mid, array(), array(BTC_ETAT_OK,BTC_ETAT_BRU,BTC_ETAT_DES,BTC_ETAT_REP));
 			$_tpl->set('btc_done', $btc_array);
 			$_tpl->set('btc_todo', get_btc($mid, array(), array(BTC_ETAT_TODO)));
 			$conf_btc = get_conf_gen($mbr_array['mbr_race'], 'btc');
 			$_tpl->set('conf_btc', $conf_btc);
 
-			$leg_bat_diff = array();
-			foreach($leg_bat_reel as $key => $nb)
-				$leg_bat_diff[$key] = -$nb; /* initialiser la legion difference */
 
-			$leg_bat_th = array();
-			foreach ($btc_array as $btc) {
-				/* compter la legion theorique des batiments */
-				$prix_unt = get_conf_gen($mbr_array['mbr_race'], 'btc', $btc['btc_type'], 'prix_unt');
-				if ($prix_unt) {
-					array_ksum($leg_bat_diff, $prix_unt, $btc['btc_nb']);/* difference = - existant + requis */
-					array_ksum($leg_bat_th, $prix_unt, $btc['btc_nb']);/* requis dans les batiments */
-				}
-			}
-
-			$_tpl->set('leg_bat_diff', $leg_bat_diff); /* leg theorique bat */
-			$_tpl->set('leg_bat_th', $leg_bat_th); /* leg theorique bat */
-
-			$res_array = get_res_done($mid);
+			$res_array = Res::get($mid);
 			// edit ressources du joueur
 			$add_res = request('add_res', 'array', 'post');
 			if(!empty($add_res)) {
@@ -379,16 +383,17 @@ if($_act == "del") {
 							unset($add_res[$key]);
 						else
 							$res_array[$key]+=$value; // ok
-					if(mod_res($mid, $add_res))
+					if(Res::mod($mid, $add_res))
 						$_tpl->set('edit_res', $add_res);
 				}
 			}
 
 			$_tpl->set('res_done', $res_array);
-			$_tpl->set('res_todo', get_res_todo($mid));
+			$_tpl->set('res_todo', ResTodo::get($mid));
 
 			$trn_array = clean_array_trn(get_trn($mid));
-			$_tpl->set('trn_done', $trn_array[0]);
+                        $trn_array = empty($trn_array) ? [] : $trn_array [0];
+			$_tpl->set('trn_done', $trn_array);
 
 			$_tpl->set('src_done', get_src_done($mid));
 			$_tpl->set('src_todo', get_src_todo($mid));

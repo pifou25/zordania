@@ -496,7 +496,7 @@ case 'make_atq':
 	
 	/* PILLAGE */
 	if ($bilan['att']['pertes'] != $bilan['att']['stat']['nb']) {// si la légion est rasée, pas de pillage
-		$res_def = get_res_done($mid_def); // ressources du défenseur
+		$res_def = Res::get($mid_def); // ressources du défenseur
 
 		$coef_fake = ($bilan['att']['stat']['nb'] - 1) * 2; // on gère les fakes
 		if ($coef_fake >= 100) $coef_fake = 100; // avec un maximum de 100% => coef à 1
@@ -507,7 +507,7 @@ case 'make_atq':
 				$bilan['butin']['att'][GAME_RES_PRINC] = 0;
 			$bilan['butin']['att'][GAME_RES_PRINC] += $gain_or; // ajout des ressources au butin
 			unset($res_def[GAME_RES_PRINC]); // on supprime l'or des ressources du défenseur pour ne pas retomber dessus pour la 2e ressource pillée
-			mod_res($mid_def, array(1 => $gain_or), -1); // On retire les ressources pillées du joueur
+			Res::mod($mid_def, array(1 => $gain_or), -1); // On retire les ressources pillées du joueur
 		}
 		foreach($res_def as $res => $qtite_res) { // on cherche une ressource qui n'est pas nulle
 			if($qtite_res == 0)
@@ -519,7 +519,7 @@ case 'make_atq':
 			if(!isset($bilan['butin']['att'][$res_pillee]));
 				$bilan['butin']['att'][$res_pillee] = 0;
 			$bilan['butin']['att'][$res_pillee] += $gain_res; // on ajoute les ressources au butin
-			mod_res($mid_def, array($res_pillee => $gain_res), -1); // On retire les ressources pillées du joueur
+			Res::mod($mid_def, array($res_pillee => $gain_res), -1); // On retire les ressources pillées du joueur
 		}
 	}
 
@@ -605,7 +605,7 @@ case 'make_atq':
 
 			if ($lid == $legions->vlg_lid) // ressources du joueur
 				
-				mod_res($legions->legs[$lid]->mid, $butin);
+				Res::mod($legions->legs[$lid]->mid, $butin);
 			else
 				mod_res_leg($lid, $butin);
 		}

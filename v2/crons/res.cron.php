@@ -50,7 +50,7 @@ function mbr_res(&$_user) {
 		}
 	}
 	
-	$res_todo = get_res_todo($mid); // production sur demande (armes)
+	$res_todo = ResTodo::get($mid); // production sur demande (armes)
 	$have_btc = $_user["btc"];
 	
 	foreach($res_todo as $value) {
@@ -77,7 +77,7 @@ function mbr_res(&$_user) {
 		}
 	}
 
-	mod_res($mid, $update_res);
+	Res::mod($mid, $update_res);
 
 	$sql = "";
 	foreach($update_res_todo as $id => $nb) {

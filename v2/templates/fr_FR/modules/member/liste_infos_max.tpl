@@ -237,6 +237,7 @@
 					<th>théorique</th>
 					<th>différence</th>
 				</tr>
+                                <if cond="isset({leg_bat_diff})">
 				<foreach cond="{leg_bat_diff} as {type} => {nb}">
 				<tr>
 					<td><if cond="isset({leg_bat_reel[{type}]})">{leg_bat_reel[{type}]}</if>
@@ -247,6 +248,7 @@
 					</td>
 				</tr>
 				</foreach>
+                                </if>
 			</table>
 		</td>
 		<td>

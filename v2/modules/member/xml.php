@@ -28,7 +28,7 @@ if(!$mbr_array || !in_array($race, $_races))
 } else {
 	load_conf($race);
 	$cond_res = get_conf_gen($race, "race_cfg", "primary_res");
-	$prim_res = get_res_done($mid, $cond_res);
+	$prim_res = Res::get($mid, $cond_res);
 
 	$_tpl->set("res_array",$prim_res);
 	$_tpl->set('mbr_array',$mbr_array);

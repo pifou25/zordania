@@ -70,14 +70,15 @@ $_sql->set_debug(SITE_DEBUG);
 mark('mysql');
 
 // New database Connection (Eloquent)
-use Illuminate\Database\Capsule\Manager as Capsule;
-$_sql2 = new Capsule;
-//$_sql2 = new \Illuminate\Database\Capsule\Manager();
+$_sql2 = new Illuminate\Database\Capsule\Manager();
 $_sql2->addConnection($settings['database']);
 // Make this Capsule instance available globally via static methods
 $_sql2->setAsGlobal();
 // Setup the Eloquent ORM
 $_sql2->bootEloquent();
+if(SITE_DEBUG){
+    $_sql2->connection()->enableQueryLog();
+}
 
 mark('eloquent');
 
@@ -301,6 +302,7 @@ if($_display == "xml") { /* Sortie en XML */
 		$_tpl->set('sv_site_debug',true);
 		$_tpl->set('sv_total_sql_time',$_sql->total_time);
 		$_tpl->set_ref('sv_queries',$_sql->queries);
+                $_tpl->set('eloQueries',$_sql2->getConnection()->getQueryLog());
 		$t2 = mtime();
 	}
 

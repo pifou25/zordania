@@ -93,7 +93,7 @@ function can_src($mid, $type, & $cache = array()) {
 	$cond_res = array_keys($prix_res);
 
 	if(!isset($cache['res'])) {
-		$have_res = get_res_done($mid, $cond_res);
+		$have_res = Res::get($mid, $cond_res);
 	} else
 		$have_res = $cache['res'];
 

@@ -217,7 +217,8 @@ function ini_mbr($mid, $pseudo, $vlg, $race, $cid, $gid, $sexe=1) {
 	ini_map($mid, $cid);
 
 	ini_unt($mid, $cid, $vlg);
-	ini_res($mid);
+	Res::init($mid);
+        ResTodo::where('rtdo_mid', '=', $mid)->delete();
 	ini_src($mid);
 	ini_btc($mid);
 	ini_trn($mid);

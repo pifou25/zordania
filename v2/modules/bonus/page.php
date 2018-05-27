@@ -36,14 +36,14 @@ if($id == 66656) {
 
 	if($nb_res && bonus_test()) {
 		$_tpl->set('bon_ok', true);
-		mod_res($_user['mid'], array($type_res => $nb_res));
+		Res::mod($_user['mid'], array($type_res => $nb_res));
 		if ($_user['parrain'])
 		{
 			$parrain = get_mbr_by_mid_full($_user['parrain']);
 			if ($parrain)
 			{
 				$nb = ceil($nb_res * PARRAIN_BONUS_PRC / 100);
-				mod_res($_user['parrain'], array($type_res => $nb));
+				Res::mod($_user['parrain'], array($type_res => $nb));
 				$_histo->add($_user['parrain'], $_user['mid'], HISTO_PARRAIN_BONUS,array("res_type" => $type_res, "res_nb" => $nb));
 			}
 		}

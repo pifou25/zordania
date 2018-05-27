@@ -17,8 +17,8 @@ $_tpl->set('module_tpl','modules/gen/gen.tpl');
 
 /* Ressources */
 $cond_res = get_conf("race_cfg", "second_res");
-$prim_res = clean_array_res(get_res_done($_user['mid'], $cond_res));
-$_tpl->set("res_array", $prim_res[0]);
+$prim_res = Res::get($_user['mid'], $cond_res);
+$_tpl->set("res_array", $prim_res);
 
 /* Terrains */
 $trn_array = clean_array_trn(get_trn($_user['mid']));
@@ -71,7 +71,7 @@ foreach($src_todo as $key => $src) { // calculer RAF
 $_tpl->set('src_todo',$src_todo);
 
 /* Ressources en cours */
-$res_todo = get_res_todo($_user['mid']);
+$res_todo = ResTodo::get($_user['mid']);
 $_tpl->set('res_todo',$res_todo);
 
 

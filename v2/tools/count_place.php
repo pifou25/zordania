@@ -109,7 +109,7 @@ foreach($mid_array as $_user)
 
 		if (!empty($arr_res)) { /* payer le prix ressources */
 			if ($exec)
-				mod_res($mid, $arr_res);
+				Res::mod($mid, $arr_res);
 		}
 	}
 

@@ -50,7 +50,7 @@ if($_act == 'btc')
 					edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"));
 					
 					mod_trn($_user['mid'], get_conf("btc", $type, "prix_trn"), -1);
-					mod_res($_user['mid'], get_conf("btc", $type, "prix_res"), -1);
+					Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), -1);
 					
 					scl_btc($_user['mid'], $type);
 					// MAJ du $cache - on refait le select DB
@@ -76,7 +76,7 @@ if($_act == 'btc')
 				edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
 					
 				mod_trn($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
-				mod_res($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
+				Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
 				// MAJ du $cache
 				//$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
 				$mbr = new member($_user['mid']);
@@ -200,7 +200,7 @@ if($_act == 'btc')
 					edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
 
 					mod_trn($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
-					mod_res($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
+					Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
 
 					$place = get_conf("btc", $type, "prod_pop");
 					if($place) {
