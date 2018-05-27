@@ -10,12 +10,7 @@ $smileys_base = getSmileysBase();
 $smileys_more = getSmileysMore($smileys_base);
 $_tpl->set("smileys_base", $smileys_base);
 $_tpl->set("smileys_more", $smileys_more);
-/*
-require_once("lib/res.lib.php");
-require_once("lib/trn.lib.php");
-require_once("lib/src.lib.php");
-require_once("lib/btc.lib.php");
-*/
+
 require_once("lib/map.lib.php");
 require_once("lib/alliances.lib.php");
 require_once("lib/mch.lib.php");
@@ -50,7 +45,6 @@ if($_act == "del") {
 			require_once("lib/btc.lib.php");
 			require_once("lib/res.lib.php");
 			require_once("lib/unt.lib.php");
-			require_once("lib/trn.lib.php");
 			require_once("lib/src.lib.php");
 
 			if(cls_mbr($mid, $cid, $race))
@@ -305,7 +299,6 @@ if($_act == "del") {
 			require_once("lib/btc.lib.php");
 			require_once("lib/res.lib.php");
 			require_once("lib/unt.lib.php");
-			require_once("lib/trn.lib.php");
 			require_once("lib/src.lib.php");
 
 			$legions = new legions(array('mid'=>$mid, 

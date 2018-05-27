@@ -70,15 +70,15 @@ if(!$_act || $_act == "new") {
 		// Check the score to determine what to do.
 		if ($score)
 		{
-			// vérifier unicité du login et du mail
+			// vï¿½rifier unicitï¿½ du login et du mail
 			$count = get_mbr_gen(array('count'=>true, 'login'=>$login, 'mail'=>$mail, 'op'=>'OR'));
 			if($count[0]['mbr_nb']>0)
 				$_tpl->set("mbr_error",true);
-			else if($mid = add_mbr($login, $_ses->crypt($login,$pass), $mail, $lang, MBR_ETAT_INI, GRP_JOUEUR, $decal, get_ip(), $_css[0], $parrain)) {// membre ajouté, envoyer le mail
+			else if($mid = add_mbr($login, $_ses->crypt($login,$pass), $mail, $lang, MBR_ETAT_INI, GRP_JOUEUR, $decal, get_ip(), $_css[0], $parrain)) {// membre ajoutï¿½, envoyer le mail
 				$_tpl->set("mbr_show_form",false);
 				$_tpl->set("mbr_ok", mail_init($mid, $login, $pass, $mail));
 				$_ses->login($login, $pass);// se connecter (!)
-			} else { // cas d'erreur non prévu
+			} else { // cas d'erreur non prï¿½vu
 				$_tpl->set("mbr_error",true);
 			}
 		}
@@ -102,7 +102,7 @@ if(!$_act || $_act == "new") {
 			$mbr_array = get_mbr_by_mid_lite($mid);
 			$mbr_array = $mbr_array[0];
 			$_tpl->set("mbr_edit", true);
-			if($mbr_array['mbr_etat']==MBR_ETAT_INI){// compte non encore validé: relancer mail
+			if($mbr_array['mbr_etat']==MBR_ETAT_INI){// compte non encore validï¿½: relancer mail
 				del_vld($mid);// on annule tout ancien changement
 				$_tpl->set("mbr_newkey", mail_init($mid));
 			}
@@ -154,7 +154,6 @@ if(!$_act || $_act == "new") {
 			/* Includes */
 			require_once("lib/unt.lib.php");
 			require_once("lib/res.lib.php");
-			require_once("lib/trn.lib.php");
 			require_once("lib/src.lib.php");
 			require_once("lib/btc.lib.php");
 			require_once("lib/map.lib.php");
@@ -175,7 +174,7 @@ if(!$_act || $_act == "new") {
 		del_vld($mid);// on annule tout ancien changement
 		$_tpl->set('send_mail',mail_del($mid, $mail));
 	}
-} else if($_act == 'rest') { /* relance mail : quitter ou réactiver */
+} else if($_act == 'rest') { /* relance mail : quitter ou rï¿½activer */
 	$_tpl->set("mbr_act","rest");
 	$mid = request("mid", "uint", "get");
 	$login = request('login', 'string', 'get');
@@ -196,7 +195,7 @@ if(!$_act || $_act == "new") {
 				$_tpl->set('mbr_another_valid', $vld_array[0]['vld_act'] );
 			} else if($vld_array[0]['vld_rand'] != $key) { /* aucune ou mauvaise clef */
 				$_tpl->set('mbr_no_key', true);
-			} else { // identification par login & clé suite au mail de relance OK
+			} else { // identification par login & clï¿½ suite au mail de relance OK
 				$_tpl->set('mid',$mid);
 			}		
 		}		

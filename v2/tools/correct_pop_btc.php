@@ -9,7 +9,6 @@ require_once(SITE_DIR . "lib/mysql.class.php");
 require_once(SITE_DIR . 'lib/divers.lib.php');
 require_once(SITE_DIR . 'lib/btc.lib.php');
 require_once(SITE_DIR . 'lib/unt.lib.php');
-require_once(SITE_DIR . 'lib/trn.lib.php');
 require_once(SITE_DIR . 'lib/member.lib.php');
 
 $_sql = new mysql(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);

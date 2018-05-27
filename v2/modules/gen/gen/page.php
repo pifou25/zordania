@@ -8,7 +8,6 @@ require_once("lib/res.lib.php");
 require_once("lib/unt.lib.php");
 require_once("lib/btc.lib.php");
 require_once("lib/src.lib.php");
-require_once("lib/trn.lib.php");
 require_once("lib/mch.lib.php");
 
 $_tpl->set('COM_ETAT_OK',COM_ETAT_OK);
