@@ -5,7 +5,6 @@ if(!defined("INDEX_BTC")){ exit; }
 require_once("lib/res.lib.php");
 require_once("lib/unt.lib.php");
 require_once("lib/src.lib.php");
-require_once("lib/btc.lib.php");
 require_once("lib/member.lib.php");
 
 $_tpl->set('TOTAL_MAX_UNT', TOTAL_MAX_UNT);

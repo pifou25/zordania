@@ -40,12 +40,14 @@
 		<dd>
 			<ol>
                             <if cond="{eloQueries}">
-                        <h3>ELOQUENT</h3>
+                        <h3>ELOQUENT QUERIES</h3>
                                 <foreach cond='{eloQueries} as {values}'>
 			<li>
 				<math oper="htmlspecialchars({values[query]})" /><br/>
 				Bindings: <math oper="print_debug({values[bindings]})" />
 				Temps: <math oper="round({values[time]},2)" /> ms
+				<if cond="is_array({values[callstack]})"><pre>Callstack:
+				<math oper='implode("<br/>",{values[callstack]})' /></pre></if>
 			</li>
                                 </foreach>
                             </if>

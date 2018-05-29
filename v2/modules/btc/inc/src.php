@@ -5,7 +5,6 @@ if(!defined("INDEX_BTC")){ exit; }
 require_once("lib/res.lib.php");
 require_once("lib/unt.lib.php");
 require_once("lib/src.lib.php");
-require_once("lib/btc.lib.php");
  
  if($_sub == "cancel_src")
 {
@@ -58,8 +57,7 @@ elseif($_sub == "src")
 	$cache['src'] = index_array($cache['src'], "src_type");
 	$cache['res'] = Res::get($_user['mid'], $need_res);
 	$cache['src_todo'] = index_array($src_todo, "stdo_type");
-	$cache['btc_done'] = get_nb_btc_done($_user['mid'], $need_btc);
-	$cache['btc_done'] = index_array($cache['btc_done'], "btc_type");
+	$cache['btc_done'] = Btc::getNbDone($_user['mid'], $need_btc);
 	$src_tmp = array();
 
 	foreach($conf_src as $type => $value) { 

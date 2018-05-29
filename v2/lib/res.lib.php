@@ -16,8 +16,7 @@ function can_res($mid, $type, $nb, &$cache = [])
 	$cond_btc = [$need_btc];
 
 	if(!isset($cache['btc'])) {
-		$have_btc = get_nb_btc_done($mid, $cond_btc);
-		$have_btc = index_array($have_btc, 'btc_type');
+		$have_btc = Btc::getNbDone($mid, $cond_btc);
 	} else
 		$have_btc = $cache['btc'];
 

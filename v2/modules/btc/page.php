@@ -7,7 +7,6 @@ else {
     
 $mbr = new member($_user['mid']);
 
-require_once("lib/btc.lib.php");
 require_once("lib/src.lib.php");
 require_once("lib/unt.lib.php");
 require_once("lib/res.lib.php");
@@ -23,7 +22,7 @@ if($_act == 'btc')
 	$_tpl->set("btc_act",false);
 
 	// tous les batiments constuits - sauf les BTC_ETAT_TODO
-	//$cache['btc_done'] = $mbr->nb_btc(); // get_nb_btc_done($_user['mid']);
+	//$cache['btc_done'] = $mbr->nb_btc(); // Btc::getNbDone($_user['mid']);
 	//$cache['btc_todo'] = $mbr->nb_btc( array(), array(BTC_ETAT_TODO));
 
 	if($_sub == 'btc') {// construire un nouveau bâtiment $type
@@ -51,9 +50,9 @@ if($_act == 'btc')
 					Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), -1);
 					Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), -1);
 					
-					scl_btc($_user['mid'], $type);
+					Btc::add($_user['mid'], $type);
 					// MAJ du $cache - on refait le select DB
-					//$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
+					//$cache['btc_todo'] = Btc::getNb($_user['mid'], array(), array(BTC_ETAT_TODO));
 					$mbr = new member($_user['mid']);
 				}
 			}
@@ -64,12 +63,12 @@ if($_act == 'btc')
 		if(!$bid)
 			$_tpl->set("btc_no_bid", true);
 		else {
-			$infos = get_btc_gen(array('bid' => $bid, 'mid' => $_user['mid']));
+			$infos = Btc::get($_user['mid'], [$bid]);
 			$_tpl->set("can_btc_ok", $infos);
 
 			if($infos) {
 				$type = $infos[$bid]['btc_type'];
-				cnl_btc($_user['mid'], $bid);
+				Btc::del($_user['mid'], $bid);
 				
 				edit_unt_vlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
 				edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
@@ -77,7 +76,7 @@ if($_act == 'btc')
 				Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
 				Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
 				// MAJ du $cache
-				//$cache['btc_todo'] = get_nb_btc($_user['mid'], array(), array(BTC_ETAT_TODO));
+				//$cache['btc_todo'] = Btc::getNb($_user['mid'], array(), array(BTC_ETAT_TODO));
 				$mbr = new member($_user['mid']);
 			}
 		}
@@ -160,8 +159,7 @@ if($_act == 'btc')
 			$btc_conf = get_conf("btc", $btc_type);
 		}
 			
-		$etat = array(BTC_ETAT_OK, BTC_ETAT_REP, BTC_ETAT_BRU,BTC_ETAT_DES);
-		$btc_array = get_btc($_user['mid'], $btc, $etat);
+		$btc_array = Btc::get($_user['mid'], $btc, [BTC_ETAT_OK, BTC_ETAT_REP, BTC_ETAT_BRU,BTC_ETAT_DES]);
 		
 		// regrouper les bat par etat
 		$btc_ar1 = array();
@@ -190,11 +188,11 @@ if($_act == 'btc')
 		else if($ok) {
 			$_tpl->set('btc_ok', true);
 			foreach($arr_bid as $btc_bid => $value){
-				$infos = get_btc_gen(array('bid' => $btc_bid, 'mid' => $_user['mid']));
+				$infos = Btc::get($_user['mid'], [$btc_bid]);
 				$_tpl->set("btc_det_ok", $infos);
 				if($infos) {
 					$type = $infos[$btc_bid]['btc_type'];
-					cnl_btc($_user['mid'], $btc_bid);
+					Btc::del($_user['mid'], $btc_bid);
 					edit_unt_vlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
 					edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
 
@@ -227,7 +225,7 @@ if($_act == 'btc')
 			$_tpl->set('btc_no_bid',true);
 		else {
 			foreach($arr_bid as $btc_bid => $value){
-				$infos = get_btc_gen(array('bid' => $btc_bid, 'mid' => $_user['mid']));
+				$infos = Btc::get($_user['mid'], [$btc_bid]);
 				if(!$infos)
 					$_tpl->set('btc_no_bid',true);
 				else {
@@ -238,18 +236,18 @@ if($_act == 'btc')
 						if ($bonus)
 							$res = -1;
 						else if($etat == BTC_ETAT_OK)
-							$res = edit_btc($_user['mid'], array($btc_bid => array('etat' => BTC_ETAT_DES)));
+							$res = Btc::edit($_user['mid'], array($btc_bid => array('etat' => BTC_ETAT_DES)));
 						else
 							$res = 0;
 						break;
 					case 'act':
 						if($etat == BTC_ETAT_DES || $etat == BTC_ETAT_REP)
-							$res = edit_btc($_user['mid'], array($btc_bid => array('etat' => BTC_ETAT_OK)));
+							$res = Btc::edit($_user['mid'], array($btc_bid => array('etat' => BTC_ETAT_OK)));
 						else
 							$res = 0;
 						break;
 					case 'rep':
-						$res = edit_btc($_user['mid'], array($btc_bid => array('etat' => BTC_ETAT_REP)));
+						$res = Btc::edit($_user['mid'], array($btc_bid => array('etat' => BTC_ETAT_REP)));
 						break;
 					}
 					$_tpl->set('btc_mod_etat',$res);

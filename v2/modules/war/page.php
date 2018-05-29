@@ -11,7 +11,6 @@ require_once("lib/unt.lib.php");
 require_once("lib/res.lib.php");
 require_once("lib/member.lib.php");
 require_once("lib/war.lib.php");
-require_once("lib/btc.lib.php");
 require_once("lib/alliances.lib.php");
 require_once("lib/heros.lib.php");
 
@@ -301,8 +300,8 @@ case 'make_atq':
 
 	$race2 = $mbr_def_array['mbr_race'];
 	/* Calcul des bonus batiment, une fois pour toute */
-	$btc_array = get_btc_done($mid_def); // detail des batiments ($bid, vie, type...)
-	$btc_list = btc_milit($btc_array, $race2);
+	$btc_array = Btc::getDone($mid_def); // detail des batiments ($bid, vie, type...)
+	$btc_list = Btc::milit($btc_array, $race2);
 	$btc_edit = array();   // batiments detruits ou endommages
 	// unites des batiments, pour le nb d'unites des batiments detruits
 	$bat_lid = $legions->btc_lid;
@@ -590,7 +589,7 @@ case 'make_atq':
 	//$_histo->flush();
 
 	// Mises a jour des btc
-	edit_btc($mid_def, $btc_edit);
+	Btc::edit($mid_def, $btc_edit);
 
 	// Mise a jour des ressources
 	foreach ($legs['combat'] as $lid) // parcourrir les legions

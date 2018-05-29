@@ -9,7 +9,6 @@ require_once(SITE_DIR . "lib/Template.class.php");
 require_once(SITE_DIR . "lib/vld.lib.php");
 require_once(SITE_DIR . "lib/member.lib.php");
 
-require_once(SITE_DIR ."lib/btc.lib.php");
 require_once(SITE_DIR ."lib/res.lib.php");
 require_once(SITE_DIR ."lib/unt.lib.php");
 require_once(SITE_DIR ."lib/src.lib.php");

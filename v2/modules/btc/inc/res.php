@@ -6,7 +6,6 @@ if (!defined("INDEX_BTC"))
 require_once("lib/res.lib.php");
 require_once("lib/res.lib.php");
 require_once("lib/src.lib.php");
-require_once("lib/btc.lib.php");
 
 if ($_sub == "cancel_res") {
     $researchId = request('rid', 'uint', 'get');
@@ -69,8 +68,7 @@ if ($_sub == "cancel_res") {
     asort($need_src);
 
     $cache = array();
-    $cache['btc'] = get_nb_btc_act($_user['mid'], $need_btc);
-    $cache['btc'] = index_array($cache['btc'], "btc_type");
+    $cache['btc'] = Btc::getNbActive($_user['mid'], [$need_btc]);
     $cache['src'] = get_src_done($_user['mid'], $need_src);
     $cache['src'] = index_array($cache['src'], "src_type");
     $cache['res'] = Res::get($_user['mid'], $need_res);

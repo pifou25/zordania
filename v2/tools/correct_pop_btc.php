@@ -7,7 +7,6 @@ require_once("../conf/conf.inc.php");
 
 require_once(SITE_DIR . "lib/mysql.class.php");
 require_once(SITE_DIR . 'lib/divers.lib.php');
-require_once(SITE_DIR . 'lib/btc.lib.php');
 require_once(SITE_DIR . 'lib/unt.lib.php');
 require_once(SITE_DIR . 'lib/member.lib.php');
 
@@ -53,16 +52,16 @@ foreach($mid_array as $_user)
 	$leg_bat = array();
 	$trn_debut = get_conf_gen($race, 'race_cfg', 'debut', 'trn');
 
-	$btc_array = get_btc_gen(array('mid' => $mid, 'count' => true));
-	foreach ($btc_array as $btc) {
+	$btc_array = Btc::getNb($mid);
+	foreach ($btc_array as $type => $btc) {
 
 		/* compter la place totale */
-		$prod_pop = get_conf_gen($race, 'btc', $btc['btc_type'], 'prod_pop');
+		$prod_pop = get_conf_gen($race, 'btc', $type, 'prod_pop');
 		if ($prod_pop)
 			$place_totale += $prod_pop * $btc['btc_nb'];
 
 		/* compter la legion batiments */
-		$prix_unt = get_conf_gen($race, 'btc', $btc['btc_type'], 'prix_unt');
+		$prix_unt = get_conf_gen($race, 'btc', $type, 'prix_unt');
 		if ($prix_unt)
 			array_ksum( $leg_bat, $prix_unt, $btc['btc_nb']);
 		

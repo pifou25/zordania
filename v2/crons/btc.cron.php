@@ -14,7 +14,7 @@ function mbr_btc(&$_user) {
 	$race = $_user["mbr_race"];
 	
 	/* Selection des bâtiments utiles */
-	$btc_array = get_btc($mid, array(), array(BTC_ETAT_TODO, BTC_ETAT_REP)); // BTC_ETAT_BRU
+	$btc_array = Btc::get($mid, array(), array(BTC_ETAT_TODO, BTC_ETAT_REP)); // BTC_ETAT_BRU
 	if(!$btc_array)
 		return;
 

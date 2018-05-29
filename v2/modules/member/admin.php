@@ -42,7 +42,6 @@ if($_act == "del") {
 			$race = $array['mbr_race'];
 			$cid = $array['mbr_mapcid'];
 
-			require_once("lib/btc.lib.php");
 			require_once("lib/res.lib.php");
 			require_once("lib/unt.lib.php");
 			require_once("lib/src.lib.php");
@@ -296,7 +295,6 @@ if($_act == "del") {
 				$_tpl->set("al_array",$al_array[0]);
 			}*/
 
-			require_once("lib/btc.lib.php");
 			require_once("lib/res.lib.php");
 			require_once("lib/unt.lib.php");
 			require_once("lib/src.lib.php");
@@ -355,9 +353,9 @@ if($_act == "del") {
                         }
                         
                         $_tpl->set("leg_race", $mbr_array['mbr_race']);
-			$btc_array = get_nb_btc($mid, array(), array(BTC_ETAT_OK,BTC_ETAT_BRU,BTC_ETAT_DES,BTC_ETAT_REP));
+			$btc_array = Btc::getNb($mid, array(), array(BTC_ETAT_OK,BTC_ETAT_BRU,BTC_ETAT_DES,BTC_ETAT_REP));
 			$_tpl->set('btc_done', $btc_array);
-			$_tpl->set('btc_todo', get_btc($mid, array(), array(BTC_ETAT_TODO)));
+			$_tpl->set('btc_todo', Btc::get($mid, [], [BTC_ETAT_TODO]));
 			$conf_btc = get_conf_gen($mbr_array['mbr_race'], 'btc');
 			$_tpl->set('conf_btc', $conf_btc);
 
@@ -400,7 +398,7 @@ if($_act == "del") {
 			$mbr_array['pts']['src']['pts'] = count($src_array) 
 				* 10000 / (get_conf_gen($mbr_array['mbr_race'], "race_cfg", "src_nb") + 1);
 
-			$btc_arr = get_btc_gen(array('mid'=>$mid));
+			$btc_arr = Btc::get($mid);
 			$btc_vie = 0;
 			foreach($btc_arr as $value) $btc_vie += $value['btc_vie'];
 			$mbr_array['pts']['btc']['nb'] = count($btc_array);

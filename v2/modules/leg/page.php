@@ -11,7 +11,6 @@ require_once("lib/map.lib.php");
 require_once("lib/member.lib.php");
 require_once("lib/heros.lib.php");
 require_once("lib/war.lib.php");
-require_once("lib/btc.lib.php");
 
 $_tpl->set("module_tpl", "modules/leg/leg.tpl");
 $_tpl->set("leg_act", $_act);
@@ -318,7 +317,6 @@ case "hero":
 		}
 	} else if($sub == "form"){ // formation héros étape 1: demander son nom
 		// pour la formation, visu des bâtiments & recherches
-		require_once("lib/btc.lib.php");
 		require_once("lib/src.lib.php");
 		$id_hro = request("id_hro", "uint", "get");
 		$name = request("hro_name", "string", "post");
@@ -435,8 +433,8 @@ if($_display == "ajax") print_r($_POST);
 		if ($_act == 'view') {
 			/* calcul bonus bat si legion au village */
 			if ($legions->legs[$lid]->cid == $_user['mapcid']) {
-				$btc_array = get_btc_done($_user['mid']); // detail des batiments ($bid, vie, type...)
-				$btc_list = btc_milit($btc_array, $_user['race']);
+				$btc_array = Btc::getDone($_user['mid']); // detail des batiments ($bid, vie, type...)
+				$btc_list = Btc::milit($btc_array, $_user['race']);
 				$legions->legs[$lid]->set_bonus_btc($btc_list['bonus']);
 			}
 			if (!$legions->legs[$lid]->vide())

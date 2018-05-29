@@ -3,7 +3,6 @@ if(!defined("_INDEX_")){ exit; }
 
 /* Nécessaire */
 require_once("lib/res.lib.php");
-require_once("lib/btc.lib.php");
 
 $decal = $_user['decal'];
 
@@ -45,12 +44,10 @@ if(!$log_in_out && can_d(DROIT_PLAY) && $_user['etat'] != MBR_ETAT_INI)
 
 	$_tpl->set("stats_prim_res", $prim_res);
 
-	$tmp_btc = get_nb_btc($_user['mid'], $cond_btc, array(BTC_ETAT_OK));
+	$tmp_btc = Btc::getNb($_user['mid'], $cond_btc, array(BTC_ETAT_OK));
 
 	$prim_btc = array('vil' => array(), 'ext' => array());
-	foreach($tmp_btc as $values) {
-		$type = $values['btc_type'];
-		$nb = $values['btc_type'];
+	foreach($tmp_btc as $type => $values) {
 		if(isset($vil_btc[$type]))
 			$prim_btc['vil'][$type] = $vil_btc[$type];
 		if(isset($ext_btc[$type]))

@@ -328,7 +328,7 @@ class member{
 	function btc($btc = array(), $etat = array()){
         // mise en cache du resultat sql
 		if(!$this->btc_load){
-			$this->btc = get_btc_gen(array('mid' => $this->mid));
+			$this->btc = Btc::get($this->mid);
 			$this->btc_load = true;
         }
         $result = $this->btc;

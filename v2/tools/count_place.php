@@ -7,7 +7,6 @@ require_once("../conf/conf.inc.php");
 
 require_once(SITE_DIR . "lib/mysql.class.php");
 require_once(SITE_DIR . 'lib/divers.lib.php');
-require_once(SITE_DIR . 'lib/btc.lib.php');
 require_once(SITE_DIR . 'lib/unt.lib.php');
 require_once(SITE_DIR . 'lib/res.lib.php');
 require_once(SITE_DIR . 'lib/member.lib.php');
@@ -21,7 +20,7 @@ $exec = request('exec', 'uint', 'get');
 function del_btc_type($mid, $race, $type, $nb, &$arr_unt = array(), &$arr_res = false) {
 /* détruire $nb bat $type du membre $mid et rembourser dans $res */
 	global $_sql;
-	$arr_btc = get_btc_done( $mid, array($type));
+	$arr_btc = Btc::getDone( $mid, array($type));
 
 	$del = 0;
 	$arr_bid = array();
@@ -73,7 +72,7 @@ foreach($mid_array as $_user)
 	$place_totale = 0;
 	$res = array(); // remboursement en ressources
 
-	$btc_array = get_nb_btc_done($mid);
+	$btc_array = Btc::getNbDone($mid);
 	$arr_unt = array(); /* unités à supprimer */
 	$arr_res = array(); /* resources à rembourser */
 	$arr_bid = array(); /* liste des btc à détruire */

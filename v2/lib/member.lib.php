@@ -220,7 +220,7 @@ function ini_mbr($mid, $pseudo, $vlg, $race, $cid, $gid, $sexe=1) {
 	Res::init($mid);
         ResTodo::where('rtdo_mid', '=', $mid)->delete();
 	ini_src($mid);
-	ini_btc($mid);
+	Btc::init($mid);
 	Trn::init($mid);
 }
 
@@ -230,7 +230,7 @@ function reini_mbr($mid, $pseudo, $vlg, $race, $cid, $oldcid, $gid, $sexe=1) {
 	cls_aly($mid);
 	cls_unt($mid);
 	cls_hro($mid);
-	cls_btc($mid);
+	Btc::clear($mid);
 	cls_res($mid);
 	cls_src($mid);
 	Trn::clear($mid);
@@ -247,7 +247,7 @@ function cls_mbr($mid, $cid, $race) {
 	add_old_mbr($mid) ;
 	cls_aly($mid);
 	cls_unt($mid);
-	cls_btc($mid);
+	Btc::clear($mid);
 	cls_res($mid);
 	cls_src($mid);
 	Trn::clear($mid);

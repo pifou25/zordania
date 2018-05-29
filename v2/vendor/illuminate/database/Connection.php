@@ -682,7 +682,8 @@ class Connection implements ConnectionInterface
         $this->event(new QueryExecuted($query, $bindings, $time, $this));
 
         if ($this->loggingQueries) {
-            $this->queryLog[] = compact('query', 'bindings', 'time');
+            $callstack = callstack();
+            $this->queryLog[] = compact('query', 'bindings', 'time', 'callstack');
         }
     }
 

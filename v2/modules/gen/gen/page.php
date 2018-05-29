@@ -6,7 +6,6 @@ if(!can_d(DROIT_PLAY))
 else {
 require_once("lib/res.lib.php");
 require_once("lib/unt.lib.php");
-require_once("lib/btc.lib.php");
 require_once("lib/src.lib.php");
 require_once("lib/mch.lib.php");
 
@@ -23,7 +22,7 @@ $_tpl->set("res_array", $prim_res);
 $_tpl->set("trn_array", Trn::get($_user['mid']));
 
 /* Bâtiments */
-$btc_array = get_btc($_user['mid'],array(),array(BTC_ETAT_TODO,BTC_ETAT_REP,BTC_ETAT_BRU));
+$btc_array = Btc::get($_user['mid'],array(),array(BTC_ETAT_TODO,BTC_ETAT_REP,BTC_ETAT_BRU));
 
 $btc_todo = array();
 $btc_rep = array();
@@ -50,7 +49,7 @@ $_tpl->set("btc_bru", $btc_bru);
 $_tpl->set("btc_conf",get_conf("btc"));
 $_tpl->set("src_conf",get_conf("src"));
 
-$btc_array = get_nb_btc($_user['mid']);
+$btc_array = Btc::getNb($_user['mid']);
 $nb_btc = 0;
 foreach($btc_array as $value)
 	$nb_btc += $value['btc_nb'];

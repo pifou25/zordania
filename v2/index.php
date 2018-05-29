@@ -69,6 +69,8 @@ $_sql->set_debug(SITE_DEBUG);
 
 mark('mysql');
 
+class DB extends Illuminate\Database\Capsule\Manager{}
+
 // New database Connection (Eloquent)
 $_sql2 = new Illuminate\Database\Capsule\Manager();
 $_sql2->addConnection($settings['database']);
@@ -302,7 +304,7 @@ if($_display == "xml") { /* Sortie en XML */
 		$_tpl->set('sv_site_debug',true);
 		$_tpl->set('sv_total_sql_time',$_sql->total_time);
 		$_tpl->set_ref('sv_queries',$_sql->queries);
-                $_tpl->set('eloQueries',$_sql2->getConnection()->getQueryLog());
+                $_tpl->set('eloQueries',DB::connection()->getQueryLog());
 		$t2 = mtime();
 	}
 

@@ -4,7 +4,6 @@ if(!can_d(DROIT_PLAY)){
 	$_tpl->set("need_to_be_loged",true); 
 }else{
 
-require_once("lib/btc.lib.php");
 require_once("lib/src.lib.php");
 
 if($_user['race'] == 2 || $_user['race'] == 3 || $_user['race'] == 5){
@@ -14,15 +13,15 @@ if($_user['race'] == 2 || $_user['race'] == 3 || $_user['race'] == 5){
 	// la forteresse est un batiment normal
 	$forteresse = false;
 }
-$btc_array = get_nb_btc_done($_user['mid']);
+$btc_array = Btc::getNbDone($_user['mid']);
 // img de fond du village
 $imgvlg = 'vlg0.jpg';
 if($forteresse !== false){
-	foreach($btc_array as $value){
-		if($value['btc_type'] == $forteresse){
+	foreach($btc_array as $type => $value){
+		if($type == $forteresse){
 			$imgvlg = 'vlgf0.jpg';
 			break;
-			}
+		}
 	}
 }
 	

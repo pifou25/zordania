@@ -40,7 +40,6 @@ require_once(SITE_DIR . "lib/alliances.lib.php");
 require_once(SITE_DIR . "lib/res.lib.php");
 require_once(SITE_DIR . "lib/unt.lib.php");
 require_once(SITE_DIR . "lib/src.lib.php");
-require_once(SITE_DIR . "lib/btc.lib.php");
 require_once(SITE_DIR . "lib/rec.lib.php");
 mark('lib');
 
@@ -342,8 +341,7 @@ function get_mbr(&$dep) {
 		$user['hro'] = $hro_array[$user['mbr_mid']];
 
 	if(in_array("btc", $dep)) {
-		$user["btc"] = get_nb_btc($user['mbr_mid'], array(), array(BTC_ETAT_OK));
-		$user["btc"] = index_array($user["btc"], "btc_type");
+		$user["btc"] = Btc::getNb($user['mbr_mid'], array(), array(BTC_ETAT_OK));
 		$btc_nb = get_conf_gen($user["mbr_race"], "race_cfg", "btc_nb");
 		for($j = 1; $j <= $btc_nb; ++$j)
 			$user["btc"][$j] = isset($user["btc"][$j]) ? $user["btc"][$j]["btc_nb"] : 0;

@@ -155,7 +155,6 @@ if(!$_act || $_act == "new") {
 			require_once("lib/unt.lib.php");
 			require_once("lib/res.lib.php");
 			require_once("lib/src.lib.php");
-			require_once("lib/btc.lib.php");
 			require_once("lib/map.lib.php");
 			require_once("lib/alliances.lib.php");
 			require_once("lib/mch.lib.php");

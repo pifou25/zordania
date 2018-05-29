@@ -8,7 +8,6 @@ require_once("../conf/conf.inc.php");
 
 require_once(SITE_DIR . "lib/mysql.class.php");
 require_once(SITE_DIR . 'lib/divers.lib.php');
-require_once(SITE_DIR . 'lib/btc.lib.php');
 require_once(SITE_DIR . 'lib/unt.lib.php');
 require_once(SITE_DIR . 'lib/member.lib.php');
 require_once(SITE_DIR . "lib/res.lib.php");
@@ -53,7 +52,7 @@ foreach($mid_array as $_user)
 	if ($exec) { /* init mbr */
 		cls_aly($mid);
 		cls_unt($mid);
-		cls_btc($mid);
+		Btc::clear($mid);
 		cls_res($mid);
 		cls_src($mid);
 		Trn::clear($mid);
