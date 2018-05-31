@@ -40,7 +40,7 @@
 		$mid = protect($mid, "uint");
 		$text = protect($text, "bbcode");
 	
-		$sql="INSERT INTO ".$_sql->prebdd."diplo_shoot VALUES ('','$mid','$alid',NOW(),'$text')";
+		$sql="INSERT INTO ".$_sql->prebdd."diplo_shoot VALUES (NULL,'$mid','$alid',NOW(),'$text')";
 		return $_sql->query($sql);
 	}
 	

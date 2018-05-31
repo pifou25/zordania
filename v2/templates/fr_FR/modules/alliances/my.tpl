@@ -39,6 +39,17 @@
 		[ <a href="alliances-part.html">Quitter l'Alliance</a> ]
 		</if>
 
+		<if cond="!empty({mespactes})">
+			<i>Liens Diplomatiques :</i>
+			<foreach cond="{mespactes} as {did} => {pacte}">
+			<if cond="{pacte[dpl_etat]} == {DPL_ETAT_OK}">
+				<a href="diplo-shoot.html?did={did}" title="Ecrire à l'ensemble des membres de {pacte[al_name]}">
+				<img src="img/dpl/shoot.png" alt="Ecrire à l'ensemble des membres de {pacte[al_name]}" /> shoot de {pacte[al_name]}
+				</a>
+			</if>
+			</foreach>
+		</if>
+		
 	<h3>Liste des Joueurs</h3>
 	<table class="liste">
 	<tr>
