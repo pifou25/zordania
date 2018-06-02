@@ -29,7 +29,7 @@
 	</form>
 	<div id="preview"></div>
 
-	<math oper="print_debug({dpl_shoot_array})" />
+
 	
 	<if cond='is_array({dpl_shoot_array})'>
 		<for cond='{i} = {current_i} ; {i} < {dpl_nb} AND {i}-{current_i} < LIMIT_NB_PAGE*LIMIT_PAGE; {i}+=LIMIT_PAGE'>

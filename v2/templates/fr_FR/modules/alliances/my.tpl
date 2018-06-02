@@ -36,15 +36,15 @@
 		Points : {ally[al_points]}
 		<hr/>
 		<if cond='{_user[mid]} != {ally[al_mid]}'>
-		[ <a href="alliances-part.html">Quitter l'Alliance</a> ]
+		( <a href="alliances-part.html">Quitter l'Alliance</a> )
 		</if>
 
 		<if cond="!empty({mespactes})">
-			<i>Liens Diplomatiques :</i>
+			<br/><i><img src="img/dpl/shoot.png"  /> Réunions Diplomatiques avec:</i>
 			<foreach cond="{mespactes} as {did} => {pacte}">
 			<if cond="{pacte[dpl_etat]} == {DPL_ETAT_OK}">
 				<a href="diplo-shoot.html?did={did}" title="Ecrire à l'ensemble des membres de {pacte[al_name]}">
-				<img src="img/dpl/shoot.png" alt="Ecrire à l'ensemble des membres de {pacte[al_name]}" /> shoot de {pacte[al_name]}
+				<img class="mini_al_logo" src="img/al_logo/{pacte[dpl_al]}-thumb.png" alt="Ecrire à l'ensemble des membres de {pacte[al_name]}" /> {pacte[al_name]}
 				</a>
 			</if>
 			</foreach>
