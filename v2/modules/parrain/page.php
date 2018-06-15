@@ -12,7 +12,7 @@ else
 	$cond = array();
 	$cond['parrain'] = $_user['mid'];
 	$cond['list'] = true;
-	$filleuls = get_mbr_gen($cond);
+	$filleuls = Mbr::get($cond);
 	$filleuls = can_atq_lite($filleuls, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid']);
 	$_tpl->set("filleuls", $filleuls);
 }

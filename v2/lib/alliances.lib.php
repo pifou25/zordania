@@ -380,7 +380,7 @@ function cls_aly($mid) {
 	$mid = protect($mid, "uint");
 
 	/* Il est dans une alliance ? */
-	$mbr_infos = get_mbr_by_mid_full($mid);
+	$mbr_infos = Mbr::getFull($mid);
 	if(!$mbr_infos)
 		return 0;
 

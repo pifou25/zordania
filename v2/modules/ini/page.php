@@ -35,7 +35,7 @@ else {
 
 if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 	if($reini) {
-		$array = get_mbr_by_mid_full($_user['mid']);
+		$array = Mbr::getFull($_user['mid']);
 		$_ses->set('map_region', $array[0]['map_region']);
 		$pseudo = request("pseudo", "string", "post", $_user['pseudo']);
 		$vlg = request("vlg", "string", "post", $_user['vlg']);
@@ -105,9 +105,9 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 
 				// vérifier l'unicité du pseudo
 				if ($ini)
-					$have_pseudo = get_mbr_gen(array('count'=>true, 'pseudo' => $pseudo));
+					$have_pseudo = Mbr::get(array('count'=>true, 'pseudo' => $pseudo));
 				else // reini: on peut conserver le même pseudo
-					$have_pseudo = get_mbr_gen(array('count'=>true, 'pseudo' => $pseudo, 'mid_excl'=>$_user['mid'], 'op'=>'AND'));
+					$have_pseudo = Mbr::get(array('count'=>true, 'pseudo' => $pseudo, 'mid_excl'=>$_user['mid'], 'op'=>'AND'));
 				$have_pseudo = ($have_pseudo[0]['mbr_nb']>0 ? true: false);
 
 				if($region < 10 && !$regions_infos['libre'][$region][$race]) {
@@ -138,9 +138,9 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 					$_ses->set("mapcid", $cid);
 
 					if($reini){
-						reini_mbr($_user['mid'], $pseudo, $vlg , $race, $cid, $oldcid, $_user['groupe'], $sexe);
+						Mbr::reinit($_user['mid'], $pseudo, $vlg , $race, $cid, $oldcid, $_user['groupe'], $sexe);
 					} else {
-						ini_mbr($_user['mid'], $pseudo, $vlg, $race, $cid, GRP_JOUEUR, $sexe);
+						Mbr::init($_user['mid'], $pseudo, $vlg, $race, $cid, GRP_JOUEUR, $sexe);
 						/* envoyer le message de bienvenue */
 						$msg = nl2br($_tpl->get("modules/inscr/msg/welcome.txt.tpl",1));
 						$titre = $_tpl->get("modules/inscr/msg/welcome.obj.tpl",1);

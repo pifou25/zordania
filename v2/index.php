@@ -28,10 +28,10 @@ mark('start');
 
 /* Includes généraux */
 require_once 'vendor/autoload.php';
+require_once("lib/divers.lib.php");
 require_once("conf/conf.inc.php");
 ini_set("include_path", SITE_DIR);
 
-require_once("lib/divers.lib.php");
 $_cache = new cache('global');
 /*  infos admin en cache : variable globale */
 $admin_cache = new cache('admin');

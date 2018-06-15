@@ -59,11 +59,3 @@ function can_res($mid, $type, $nb, &$cache = [])
 
 	return ['need_src' => $bad_src, 'need_btc' => $bad_btc, 'prix_res' => $bad_res];
 }
-
-/* Quand on le vire */
-function cls_res($mid)
-{
-	// Additionne les deux requêtes pour avoir le nombre total de lignes supprimés
-	return Res::where('res_mid', '=', $mid)->delete() +
-		   ResTodo::where('rtdo_mid', '=', $mid)->delete();
-}

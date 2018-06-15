@@ -32,7 +32,7 @@ foreach($points as $value) {
 		echo "$mid\n";
 		$new = array();
 		$new['gid'] = GRP_CHEF_REG;
-		edit_mbr($mid, $new);
+		Mbr::edit($mid, $new);
 	}
 }
 ?>

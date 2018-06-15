@@ -50,7 +50,7 @@ else
 	$cond = array();
 	$cond['gid'] = array(GRP_DIEU,GRP_DEMI_DIEU,GRP_ADM_DEV,GRP_PRETRE,GRP_DEV,GRP_GARDE,GRP_SAGE,GRP_NOBLE);
 	//$cond['orderby'] = array('ASC','gid');
-	$team_array = get_mbr_gen($cond);
+	$team_array = Mbr::get($cond);
 	//regrouper & ordonner
 	$team_order=array();
 	foreach($cond['gid'] as $grp)

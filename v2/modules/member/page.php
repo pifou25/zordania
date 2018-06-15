@@ -20,7 +20,7 @@ if(!can_d(DROIT_PLAY) && ($_act != "view" && $_act != "liste"))
 	$_tpl->set("mbr_not_loged",true);
 else if(!$_act) {
 	/* Afficher les détails sur mon compte */
-	$array = get_mbr_by_mid_full($_user['mid']);
+	$array = Mbr::getFull($_user['mid']);
 	$array = $array[0];
 	if($array['ambr_etat'] == ALL_ETAT_DEM) {
 		$array['al_name'] = "";
@@ -77,7 +77,7 @@ else if(!$_act) {
 			require_once("lib/msg.lib.php");
 			require_once("lib/nte.lib.php");
 
-			cls_mbr($_user['mid'], $_user['mapcid'], $_user['race']);
+			Mbr::cls($_user['mid'], $_user['mapcid'], $_user['race']);
 			$_tpl->set("mbr_cls", true);	
 		}
 	}
@@ -91,14 +91,12 @@ else if(!$_act) {
 	$diffpoint = request("diffpoint", "uint", "post", request("diffpoint", "uint", "get"));
 	$diffpts_arm = request("diffpts_arm","uint", "post", request("diffpts_arm","uint", "get"));
 	
-	$cond = array();
-	$cond['etat'] = array(MBR_ETAT_OK);
+        $cond = ['etat' => [MBR_ETAT_OK], 'op' => 'AND'];
 	if(can_d(DROIT_PLAY))
 		$cond['dst'] = array($_user['map_x'], $_user['map_y']);
 	else
 		$cond['dst'] = array(0, 0);
 
-	$cond['op'] = "AND";
 	if($pseudo)
 		$cond['pseudo'] = "%$pseudo%";
 	if($race && in_array($race, $_races))
@@ -111,7 +109,8 @@ else if(!$_act) {
 		$cond['ltpts_arm'] = $_user['pts_arm'] + $diffpts_arm;
 		$cond['gtpts_arm'] = $_user['pts_arm'] - $diffpts_arm;
 	}
-
+        
+      
 	$_tpl->set("mbr_pseudo", $pseudo);
 	$_tpl->set("mbr_race", $race);
 	$_tpl->set("mbr_diffpoint", $diffpoint);
@@ -135,30 +134,31 @@ else if(!$_act) {
 
 	$mbr_page = request("mbr_page", "int", "get", -1);
 
-	$mbr_nb = count_mbr($cond);
-	$limite_page = LIMIT_MBR_PAGE;
+	$mbr_nb = Mbr::count($cond);
+        
+
 	$current_i = $mbr_page - LIMIT_NB_PAGE/2;
 	$current_i = round($current_i < 0 ? 0 : $current_i)*LIMIT_MBR_PAGE;
-	$nombre_page = ($mbr_nb / $limite_page);
+	$nombre_page = ($mbr_nb / LIMIT_MBR_PAGE);
 	$nombre_total = ceil($nombre_page);
 	$nombre = $nombre_total - 1;
 
-	$_tpl->set('limite_page',$limite_page);
+	$_tpl->set('limite_page',LIMIT_MBR_PAGE);
 	$_tpl->set('limite_nb_page',LIMIT_NB_PAGE);
 	$_tpl->set('current_i',$current_i);
 	$_tpl->set("mbr_nb",$mbr_nb);
 
 	if($mbr_page > 0 || $order_by != array('DESC','points'))
-		$limite_mysql = $limite_page * $mbr_page;
+		$limite_mysql = LIMIT_MBR_PAGE * $mbr_page;
 	elseif(can_d(DROIT_PLAY) && $mbr_page < 0)
 	{
 		$tmp_cond = $cond;
 		$tmp_cond['ltpoint'] = $_user['points'];
 
-		$position = count_mbr($tmp_cond);
+		$position = Mbr::count($tmp_cond);
 		$position = ($mbr_nb - $position);
-		$limite_mysql = (floor($position / $limite_page) * $limite_page);
-		$mbr_page = $limite_mysql / $limite_page;
+		$limite_mysql = (floor($position / LIMIT_MBR_PAGE) * LIMIT_MBR_PAGE);
+		$mbr_page = $limite_mysql / LIMIT_MBR_PAGE;
 	}
 	else
 		$limite_mysql = 0;
@@ -167,7 +167,8 @@ else if(!$_act) {
 	$dpl_atq = new diplo(array('aid' => $_user['alaid']));
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 
-	$mbr_array = get_liste_mbr($cond, $limite_mysql, $limite_page, $order_by);
+	$mbr_array = Mbr::get(array_merge($cond, 
+                ['limite1'=>$limite_mysql, 'limite2'=>LIMIT_MBR_PAGE, 'orderby'=>$order_by,'list'=>true]));
 	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
 
 	$_tpl->set("mbr_array",$mbr_array);	
@@ -183,14 +184,13 @@ elseif($_act == "liste_online")
 	$mbr_page = request("mbr_page", "uint", "get");
 	$_tpl->set("mbr_page",$mbr_page);
 	$mbr_nb = nb_online();
-	$limite_page = LIMIT_MBR_PAGE;
-	$_tpl->set("limite_page",$limite_page);
+	$_tpl->set("limite_page",LIMIT_MBR_PAGE);
 	$_tpl->set("mbr_nb",$mbr_nb);
-	$nombre_page = $mbr_nb / $limite_page;
+	$nombre_page = $mbr_nb / LIMIT_MBR_PAGE;
 	$nombre_total = ceil($nombre_page) - 1;
 
 	if($mbr_page)
-		$limite_mysql = $limite_page * $mbr_page;
+		$limite_mysql = LIMIT_MBR_PAGE * $mbr_page;
 	else
 		$limite_mysql = 0;
 
@@ -198,7 +198,7 @@ elseif($_act == "liste_online")
 	$dpl_atq = new diplo(array('aid' => $_user['alaid']));
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 
-	$mbr_array = get_liste_online($limite_mysql,$limite_page);
+	$mbr_array = get_liste_online($limite_mysql,LIMIT_MBR_PAGE);
 	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
 	$_tpl->set("mbr_array",$mbr_array);
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
@@ -233,7 +233,7 @@ elseif($_act == "edit")
 	if(!$_sub) {
 		$_tpl->set("mbr_sub","");
 
-		$array = get_mbr_by_mid_full($_user['mid']);
+		$array = Mbr::getFull($_user['mid']);
 		$array = $array[0];
 		$_tpl->set("mbr_pseudo",$array['mbr_pseudo']);
 		$_tpl->set("mbr_mail",$array['mbr_mail']);
@@ -255,7 +255,7 @@ elseif($_act == "edit")
 			$_tpl->set("mbr_not_same_pass",true);
 		else {
 			$pass = $_ses->crypt($_user['login'], $pass);
-			$_tpl->set("mbr_edit",edit_mbr($_user['mid'], array("pass" => $pass)));
+			$_tpl->set("mbr_edit",Mbr::edit($_user['mid'], array("pass" => $pass)));
 			$_ses->set("pass",$pass); /* On change pour pas avoir a se déco */
 		}
 	} elseif($_sub == "mail") {
@@ -266,7 +266,7 @@ elseif($_act == "edit")
 		elseif($_ses->crypt($_user['login'], $pass) != $_user['pass'])
 			$_tpl->set("mbr_not_same_pass",true);
 		else
-			$_tpl->set("mbr_edit",edit_mbr($_user['mid'], array("mail" => $mail)));
+			$_tpl->set("mbr_edit",Mbr::edit($_user['mid'], array("mail" => $mail)));
 		
 	} elseif($_sub == "reset") {
 		$_tpl->set("mbr_sub","reset");
@@ -295,7 +295,7 @@ elseif($_act == "edit")
 			$edit['design'] = $design;
 			$edit['ldate'] = true;
 		
-			$_tpl->set("mbr_edit", edit_mbr($_user['mid'], $edit));
+			$_tpl->set("mbr_edit", Mbr::edit($_user['mid'], $edit));
 			$_user['design'] = $design;
 		}
 	} elseif($_sub == "oth") {
@@ -315,7 +315,7 @@ elseif($_act == "edit")
 		$edit['descr'] = parse($descr);
 		$edit['ldate'] = true; /* Dans le cas ou rien n'a changé, pour ne pas afficher d'erreur */
 
-		$_tpl->set("mbr_edit", edit_mbr($_user['mid'], $edit));
+		$_tpl->set("mbr_edit", Mbr::edit($_user['mid'], $edit));
 	}	
 	elseif($_sub == 'logo')
 	{
@@ -363,7 +363,7 @@ elseif($mid) //elseif($_act == "view" && $mid)
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
 
 	//Infos sur un type
-	$mbr_array = get_mbr_by_mid_full($mid);
+	$mbr_array = Mbr::getFull($mid);
 
 	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
 
@@ -397,7 +397,7 @@ elseif($mid) //elseif($_act == "view" && $mid)
 		$cond = array();
 		$cond['parrain'] = $mid;
 		$cond['list'] = true;
-		$filleuls = get_mbr_gen($cond);
+		$filleuls = Mbr::get($cond);
 		$filleuls = can_atq_lite($filleuls, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid']);
 		$_tpl->set("filleuls", $filleuls);
 

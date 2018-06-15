@@ -89,7 +89,7 @@ class member{
 
 	function mbr(){
 		if(!$this->mbr_load){
-			$this->mbr = get_mbr_gen(array('mid' => $this->mid));
+			$this->mbr = Mbr::get(array('mid' => $this->mid));
 			$this->mbr = $this->mbr[0];
 			$this->mbr_load = true;
 		}
@@ -99,7 +99,7 @@ class member{
 	/*** unites et unites en legion ***/
 	function unt(){
 		if(!$this->unt_load){
-			$this->unt = get_leg_gen(array('mid' => $this->mid, 'unt' => true, 'leg'=>true));
+			$this->unt = Leg::get(array('mid' => $this->mid, 'unt' => true, 'leg'=>true));
 			
 			$tmp = array();
 			foreach($this->unt as $value) {
@@ -170,7 +170,7 @@ class member{
     /*** unites en legion ***/
 	function leg(){
 		if(!$this->leg_load){
-			$this->leg = get_leg_gen(array('mid' => $this->mid, 'leg' => true));
+			$this->leg = Leg::get(array('mid' => $this->mid, 'leg' => true));
 			$this->leg_load = true;
 		}
 		return $this->leg;
@@ -179,7 +179,7 @@ class member{
     /***  unites en todo list ***/
 	function unt_todo(){
 		if(!$this->unt_todo_load){
-			$this->unt_todo = get_unt_todo($this->mid);
+			$this->unt_todo = UntTodo::get($this->mid);
 			$this->unt_todo_load = true;
 		}
 		return $this->unt_todo;

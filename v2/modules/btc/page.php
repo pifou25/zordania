@@ -44,8 +44,8 @@ if($_act == 'btc')
 				$_tpl->set("btc_infos", $array);
 				$_tpl->set("const_btc_ok", $ok);
 				if($ok) {
-					edit_unt_vlg($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
-					edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"));
+					Unt::editVlg($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
+					unt::editBtc($_user['mid'], get_conf("btc", $type, "prix_unt"));
 					
 					Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), -1);
 					Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), -1);
@@ -70,8 +70,8 @@ if($_act == 'btc')
 				$type = $infos[$bid]['btc_type'];
 				Btc::del($_user['mid'], $bid);
 				
-				edit_unt_vlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
-				edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
+				Unt::editVlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
+				unt::editBtc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
 					
 				Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
 				Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
@@ -193,15 +193,15 @@ if($_act == 'btc')
 				if($infos) {
 					$type = $infos[$btc_bid]['btc_type'];
 					Btc::del($_user['mid'], $btc_bid);
-					edit_unt_vlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
-					edit_unt_btc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
+					Unt::editVlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
+					unt::editBtc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
 
 					Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
 					Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
 
 					$place = get_conf("btc", $type, "prod_pop");
 					if($place) {
-						edit_mbr($_user['mid'], array("place" => $_user['place'] - $place));
+						Mbr::edit($_user['mid'], array("place" => $_user['place'] - $place));
 						$_user['place'] -= $place;
 					}
 				}

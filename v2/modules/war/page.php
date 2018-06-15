@@ -82,7 +82,7 @@ case 'make_atq':
 		break;
 	}
 
-	$mbr_def_array = get_mbr_gen(array('mapcid'=>$leg_1->cid, 'full'=>true)); /* le défenseur principal */
+	$mbr_def_array = Mbr::get(array('mapcid'=>$leg_1->cid, 'full'=>true)); /* le défenseur principal */
 	if (!isset($mbr_def_array[0]['mbr_mid'])) {
 		$_tpl->set("atq_no_mbr",true);
 		break;
@@ -144,7 +144,7 @@ case 'make_atq':
 		foreach($legions->legs as $lid => $leg)
 			if (!isset($mbr_all_mid[$leg->mid]))
 				$mbr_all_mid[$leg->mid] = $leg->mid;
-		$mbr_all_array = get_mbr_gen(array('mid'=>$mbr_all_mid));
+		$mbr_all_array = Mbr::get(array('mid'=>$mbr_all_mid));
 		$mbr_all_array = index_array($mbr_all_array, 'mbr_mid'); // indexer sur le mid
 
 		/* on peut maintenant vérifier pour chaque membre s'il a un pacte avec le défenseur (et l'attaquant?) */
@@ -222,7 +222,7 @@ case 'make_atq':
 	/* mettre toutes les legions en presence en etat ATQ */
 
 	foreach ($legs['combat'] as $lid)
-		edit_leg($legions->legs[$lid]->mid, $lid, $new);
+		Leg::edit($legions->legs[$lid]->mid, $lid, $new);
 	
 	/* structure du tableau $bilan :
 
@@ -567,7 +567,7 @@ case 'make_atq':
 	foreach ($legs['combat'] as $lid) { // parcourrir les legions
 		$leg = $legions->legs[$lid];
 		if (!isset($edit_mid[$leg->mid]))
-			$edit_mid[$leg->mid]['population'] = count_pop($leg->mid);
+			$edit_mid[$leg->mid]['population'] = Leg::countUnt($leg->mid);
 		// pour les évènements : attaquant & défenseur seulement sont cités
 		$tmp = array('lid' => $lid, 'leg' => $leg->infos['leg_name'],
 			'name' => $leg->infos['mbr_pseudo'], 'mid' => $leg->mid);
@@ -581,7 +581,7 @@ case 'make_atq':
 
 	foreach ($edit_mid as $mid => $edit_tmp) {
 		if (!empty($edit_tmp)) // éditer les membres : table 'mbr'
-			edit_mbr($mid, $edit_tmp);
+			Mbr::edit($mid, $edit_tmp);
 		// ajouter un evenement dans l'historique sauf pour l'attaquant
 		if ($mid != $_user['mid'])
 			$_histo->add($mid, $_user['mid'], ($mid == $mid_def ? HISTO_LEG_ATQ_VLG : HISTO_LEG_ATQ_LEG), $histo);
@@ -594,7 +594,7 @@ case 'make_atq':
 	// Mise a jour des ressources
 	foreach ($legs['combat'] as $lid) // parcourrir les legions
 		if ($lid == $lid1)
-			mod_res_leg($lid1, $bilan['butin']['att']);
+			LegRes::edit($lid1, $bilan['butin']['att']);
 		else if ($bilan['def'][$lid]['ratio'] > 0) {
 			$butin = array(); // le bilan est reparti entre les defenseurs selon le ratio
 			foreach($bilan['butin']['def'] as $res => $nb)
@@ -605,7 +605,7 @@ case 'make_atq':
 				
 				Res::mod($legions->legs[$lid]->mid, $butin);
 			else
-				mod_res_leg($lid, $butin);
+				LegRes::edit($lid, $butin);
 		}
 	
 	// Ajout du journal de guerre

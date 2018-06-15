@@ -18,7 +18,7 @@ function mbr_btc(&$_user) {
 	if(!$btc_array)
 		return;
 
-	$trav = get_unt_done($mid, array(1));
+	$trav =  Leg::get(['mid' => $mid, 'unt' => [1], 'etat' => [LEG_ETAT_VLG]]);
 	if($trav)
 		$trav = $trav[0]['unt_nb'];
 	else
@@ -84,7 +84,7 @@ function mbr_btc(&$_user) {
 	}
 
 	if($update_place)
-		edit_mbr($mid, array("place" => $_user['mbr_place'] + $update_place));
+		Mbr::edit($mid, array("place" => $_user['mbr_place'] + $update_place));
 	if($update_btc) {
 	foreach($update_btc as $bid => $value) {
 		$sql = "UPDATE ".$_sql->prebdd."btc SET ";

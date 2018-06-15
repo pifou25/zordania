@@ -17,7 +17,7 @@ if($type==0)
 $_tpl->set("class_race",$race);
 $_tpl->set("class_type",$type);
 $_tpl->set("class_region",$region);
-$array = get_nb_race();
+$array = Mbr::getNbRace();
 $array = index_array($array, "mbr_race");
 foreach($_races as $key => $value)
 	if(!$value)

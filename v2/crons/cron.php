@@ -327,7 +327,7 @@ function get_mbr(&$dep) {
 	$cond = array();
 	$cond['full'] = true;
 	$cond['mid'] = $mid['mbr_mid'];
-	$user = get_mbr_gen($cond);
+	$user = Mbr::get($cond);
 
 	if(!$user)
 		return array();
@@ -347,7 +347,7 @@ function get_mbr(&$dep) {
 			$user["btc"][$j] = isset($user["btc"][$j]) ? $user["btc"][$j]["btc_nb"] : 0;
 	}
 	if(in_array("unt", $dep)) {
-		$user["unt"] = get_unt_done($user['mbr_mid']);
+		$user["unt"] = Leg::get(['mid' => $user['mbr_mid'], 'etat' => [LEG_ETAT_VLG]]);
 		$user["unt"] = index_array($user["unt"], "unt_type");
 	}
 	if(in_array("res", $dep)) {

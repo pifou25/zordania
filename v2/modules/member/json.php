@@ -11,15 +11,14 @@ case 'search' :
 	$term = str_replace('*', '%', request('term', 'string', 'get'));
 	if($term){
 
-		$cond = array();
-		$cond['op'] = 'AND';
-		$cond['etat'] = array(MBR_ETAT_OK);
-		$cond['pseudo'] = "%$term%";
-		$cond['mid_excl'] = "1";
-		$cond['orderby'] = array('ASC', 'pseudo');
-		$cond['limite1'] = 10;
+		$cond = ['op' => 'AND', 
+		'etat' => [MBR_ETAT_OK],
+		'pseudo' => "%$term%",
+		'mid_excl' => "1",
+		'orderby' => ['ASC', 'pseudo'],
+		'limite1' => 10];
 
-		$mbr = get_mbr_gen($cond);
+		$mbr = Mbr::get($cond);
 		$Res = array();
 		foreach($mbr as $key => $value)
 			$Res[$key] = array('value'=>$value['mbr_pseudo']);

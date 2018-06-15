@@ -23,7 +23,7 @@ if(!$_act || $_act == "new") {
 
 	if ($parrain)
 	{
-		$mbr_array = get_mbr_by_mid_full($parrain);
+		$mbr_array = Mbr::getFull($parrain);
 		if (!$mbr_array)
 			$parrain = 0;
 	}
@@ -44,7 +44,7 @@ if(!$_act || $_act == "new") {
 	$questions = request("questions", "array", "post");
 
 	$max_inscrits = SITE_MAX_INSCRITS;
-	$inscrits = get_nb_mbr();
+	$inscrits = Mbr::count();
 
 	if($max_inscrits <= $inscrits) {
 		$_tpl->set("mbr_max_inscrit",true);
@@ -71,10 +71,10 @@ if(!$_act || $_act == "new") {
 		if ($score)
 		{
 			// v�rifier unicit� du login et du mail
-			$count = get_mbr_gen(array('count'=>true, 'login'=>$login, 'mail'=>$mail, 'op'=>'OR'));
-			if($count[0]['mbr_nb']>0)
+			$count = Mbr::where('mbr_login', $login)->orWhere('mbr_mail', $mail)->count();
+			if($count > 0)
 				$_tpl->set("mbr_error",true);
-			else if($mid = add_mbr($login, $_ses->crypt($login,$pass), $mail, $lang, MBR_ETAT_INI, GRP_JOUEUR, $decal, get_ip(), $_css[0], $parrain)) {// membre ajout�, envoyer le mail
+			else if($mid = Mbr::add($login, $_ses->crypt($login,$pass), $mail, $lang, MBR_ETAT_INI, GRP_JOUEUR, $decal, get_ip(), $_css[0], $parrain)) {// membre ajout�, envoyer le mail
 				$_tpl->set("mbr_show_form",false);
 				$_tpl->set("mbr_ok", mail_init($mid, $login, $pass, $mail));
 				$_ses->login($login, $pass);// se connecter (!)
@@ -98,9 +98,8 @@ if(!$_act || $_act == "new") {
 	foreach($vld_array as $value) {
 		if($value['vld_act'] == 'edit' && $key == $value['vld_rand']) {
 			vld($key, $mid);
-			edit_mbr($mid, array("pass" =>$pass));// modifier le mot de passe
-			$mbr_array = get_mbr_by_mid_lite($mid);
-			$mbr_array = $mbr_array[0];
+			Mbr::edit($mid, array("pass" =>$pass));// modifier le mot de passe
+			$mbr_array = Mbr::get(['mid' => $mid])[0];
 			$_tpl->set("mbr_edit", true);
 			if($mbr_array['mbr_etat']==MBR_ETAT_INI){// compte non encore valid�: relancer mail
 				del_vld($mid);// on annule tout ancien changement
@@ -124,7 +123,7 @@ if(!$_act || $_act == "new") {
 	if(!$login || !$mail)
 		$_tpl->set("mbr_form",true);
 	else {
-		$mbr_array = get_mbr_gen(array('login' => $login, 'mail' => $mail, 'op' => 'AND'));
+		$mbr_array = Mbr::get(array('login' => $login, 'mail' => $mail, 'op' => 'AND'));
 
 		if(!$mbr_array){
 			$_tpl->set("mbr_not_exist",true);
@@ -163,7 +162,7 @@ if(!$_act || $_act == "new") {
 			require_once("lib/nte.lib.php");
 
 			if($mbr_user = init_get_mbr(array('mid'=>$mid))){
-				cls_mbr($mid, $mbr_user['mbr_mapcid'], $mbr_user['mbr_race']);
+				Mbr::cls($mid, $mbr_user['mbr_mapcid'], $mbr_user['mbr_race']);
 				$_tpl->set("mbr_cls", true);
 			}else
 				$_tpl->set("mbr_cls", false);

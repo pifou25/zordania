@@ -60,7 +60,7 @@ case "move":
 			break;
 		}
 
-		$mbr_cible = get_mbr_by_mid_full($map_array['mbr_mid']);
+		$mbr_cible = Mbr::getFull($map_array['mbr_mid']);
 
 		$sub = 'atq'; // par défaut c'est toujours une attaque
 		if($_user['alaid'] != 0 and $mbr_cible[0]['ambr_aid'] != 0){ // tt les 2 dans une alliance
@@ -166,9 +166,9 @@ case "new": // nouvelle légion
 
 	if(!can_ren_leg($_user['mid'],0,$name))
 		$_tpl->set('err', 'ren_leg_name_exists');
-	elseif(get_leg_nb($_user['mid'], array(LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_ALL, LEG_ETAT_DPL,
-		LEG_ETAT_RET, LEG_ETAT_ATQ)) < LEG_MAX_NB && $name)
-		$_tpl->set("leg_new", add_leg($_user['mid'], $_user['mapcid'], LEG_ETAT_GRN, $name));
+	elseif(Leg::count($_user['mid'], [LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_ALL, LEG_ETAT_DPL,
+		LEG_ETAT_RET, LEG_ETAT_ATQ]) < LEG_MAX_NB && $name)
+		$_tpl->set("leg_new", Leg::add($_user['mid'], $_user['mapcid'], LEG_ETAT_GRN, $name));
 
 	$_act = "";
 	break;
@@ -180,13 +180,13 @@ case "del": // supprimer légion
 	$cond['leg'] = array($lid);
 	$cond['etat'] = array(LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_POS, LEG_ETAT_ALL, LEG_ETAT_RET);
 	$cond['mid'] = $_user['mid'];
-	$leg_array = get_leg_gen($cond);
+	$leg_array = Leg::get($cond);
 
 	$cond = array();
 	$cond['leg'] = array($lid);
 	$cond['mid'] = $_user['mid'];
 	$cond['unt'] = true;
-	$unt_array = get_leg_gen($cond);
+	$unt_array = Leg::get($cond);
 
 	if(!$lid || !$leg_array || $unt_array)
 		$_tpl->set("leg_bad_lid", true);
@@ -196,7 +196,7 @@ case "del": // supprimer légion
 		$_tpl->set("leg_lid", $lid);
 		$_tpl->set("leg_need_ok", true);
 	} else
-		$_tpl->set("leg_del", del_leg($_user['mid'], $lid));
+		$_tpl->set("leg_del", Leg::del($_user['mid'], $lid));
 
 	$_act = "";
 	break;
@@ -207,13 +207,13 @@ case "recup": // TODO
 	$cond['leg'] = array($lid);
 	$cond['etat'] = array(LEG_ETAT_POS);
 	$cond['mid'] = $_user['mid'];
-	$leg_array = get_leg_gen($cond);
+	$leg_array = Leg::get($cond);
 
 	$cond = array();
 	$cond['leg'] = array($lid);
 	$cond['mid'] = $_user['mid'];
 	$cond['unt'] = true;
-	$unt_array = get_leg_gen($cond);
+	$unt_array = Leg::get($cond);
 
 	if(!$lid || !$leg_array)
 		$_tpl->set('err', "leg_bad_lid");
@@ -221,16 +221,16 @@ case "recup": // TODO
 		$_tpl->set('err', "leg_no_empty");
 	else { // récupérer la légion : on perd 30% XP et 50% des ressources
 		$leg_array = $leg_array[0];
-		$res_leg = get_res_leg($_user['mid'],  $lid);
+		$res_leg = LegRes::get($_user['mid'],  $lid);
 		$mod_res = array();
 		foreach($res_leg as $key => $value)
 			$mod_res[$value['lres_type']] = -1 * $value['lres_nb'] * 0.5;
 
-		mod_res_leg($lid, $mod_res);
+		LegRes::edit($lid, $mod_res);
 		$edit_leg = array();
 		$edit_leg['cid'] = $_user['mapcid'];
 		$edit_leg['etat'] = LEG_ETAT_GRN;
-		edit_leg($_user['mid'], $lid, $edit_leg);
+		Leg::edit($_user['mid'], $lid, $edit_leg);
 	}
 	break;
 
@@ -281,8 +281,8 @@ case "hero":
 			if(isset($rep) && $rep == "Oui"){
 				$nb = del_hero($_user['hro_lid'], $_user['hro_type']);
 				if ($nb > 0) { // recompter la population
-					$pop = count_pop($_user['mid']);
-					edit_mbr($_user['mid'], array('population' => $pop));
+					$pop = Leg::countUnt($_user['mid']);
+					Mbr::edit($_user['mid'], array('population' => $pop));
 				}
 				$_tpl->set("ok_del_hro", $_user['hro_nom']);
 				$_ses->update_heros();
@@ -305,7 +305,7 @@ case "hero":
 						$_tpl->set("move_error",true);
 					// les 2 légions sont sur la même case : déplacer le héros
 					else if ($legions->legs[$_user['hro_lid']]->cid == $legions->legs[$to]->cid) {
-						if(edit_hero($_user['mid'], array('lid'=>$to))){ // ça marche !
+						if(Hro::edit($_user['mid'], array('lid'=>$to))){ // ça marche !
 							$_tpl->set("ok_hero_move", true);
 							$_ses->update_heros();
 						} else

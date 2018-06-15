@@ -74,7 +74,7 @@ foreach($mid_array as $_user)
 
 	if ($place_totale != $_user['mbr_place']) {
 		echo "{$_user['mbr_pseudo']} place : {$_user['mbr_place']} corrigee $place_totale\n";
-		if ($exec) edit_mbr($mid, array('place' => $place_totale));
+		if ($exec) Mbr::edit($mid, array('place' => $place_totale));
 	}
 
 	/* vérifier la légion batiment */
@@ -103,7 +103,7 @@ foreach($mid_array as $_user)
 	if (!empty($edit_unt)){
 		echo "edit de la légion btc aussi...\n";
 		if($exec)
-			edit_unt_gen($mid, LEG_ETAT_BTC, $edit_unt);
+			Unt::editBtc($mid, $edit_unt);
 	}
 	
 	/* vérifier les terrains libres ou occupés

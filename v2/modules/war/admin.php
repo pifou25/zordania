@@ -17,7 +17,7 @@ $_tpl->set("war_sub", $_sub);
 switch($_act) {
 case 'histo':
 	$mid = request('mid', 'uin', 'get');
-	$mbr_array = get_mbr_by_mid_full($mid);
+	$mbr_array = Mbr::getFull($mid);
 	if($mbr_array)
 		$mbr_array = $mbr_array[0];
 
@@ -72,7 +72,7 @@ case 'histo':
 	break;
 default:
 	// membres anim
-	$mbrs = get_mbr_gen(array('gid' => array(GRP_EVENT)));
+	$mbrs = Mbr::get(array('gid' => array(GRP_EVENT)));
 	
 	echo "attaquant; date; defenseur; bilan: nb defs; nb tues; nb pertes;dégats héros; vie restante; degats bat; bat detruits<br/>\n";
 

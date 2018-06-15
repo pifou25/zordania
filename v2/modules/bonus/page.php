@@ -39,7 +39,7 @@ if($id == 66656) {
 		Res::mod($_user['mid'], array($type_res => $nb_res));
 		if ($_user['parrain'])
 		{
-			$parrain = get_mbr_by_mid_full($_user['parrain']);
+			$parrain = Mbr::getFull($_user['parrain']);
 			if ($parrain)
 			{
 				$nb = ceil($nb_res * PARRAIN_BONUS_PRC / 100);

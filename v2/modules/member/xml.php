@@ -11,7 +11,7 @@ if(!$mid)
 
 $_module_tpl = "modules/member/member_xml.tpl";
 
-$mbr_array = get_mbr_by_mid_full($mid);
+$mbr_array = Mbr::getFull($mid);
 
 if($mbr_array) {
 	$mbr_array = $mbr_array[0];

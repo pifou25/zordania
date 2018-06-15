@@ -66,7 +66,7 @@ if($_act == "lite" || $_act == "ajax") {
 	$_tpl->set('map_cid', request("view", "uint", "get"));
 	$_tpl->set('map_usr_x', $_user['map_x'] - $diff / 2);
 	$_tpl->set('map_usr_y', $_user['map_y'] - $diff / 2);
-	$_tpl->set('leg_usr', get_leg_map($_user['mid']));
+	$_tpl->set('leg_usr', Leg::getMap($_user['mid']));
 
 }
 
@@ -94,7 +94,7 @@ if($_act == "view") {
 	$map_array = get_square($map_cid,true);
 
 	if (isset($map_array['mbr_mid']) && $map_array['mbr_mid']) {
-		$mbr = get_mbr_by_mid_full($map_array['mbr_mid']);
+		$mbr = Mbr::getFull($map_array['mbr_mid']);
 		$mbr = can_atq_lite($mbr,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr); 
 		$mbr = $mbr[0];
 		$map_array['can_atq'] = $mbr['can_atq'];

@@ -101,7 +101,7 @@ case "new":
 			$_tpl->set('msg_pseudo',$msg_infos['mbr_pseudo']);
 		}
 	} else if($midto) {
-		$mbr_infos = get_mbr_by_mid_lite($midto);
+		$mbr_infos = Mbr::get(['mid'=>$midto]);
 		
 		if($mbr_infos)
 			$_tpl->set('msg_pseudo',$mbr_infos[0]['mbr_pseudo']);
@@ -155,7 +155,7 @@ case "send":
 				if(isset($result[$pseudo])) /* Pas faire deux fois le même */
 					continue;
 					
-				$mbr_infos = get_mbr_gen(array('pseudo' => $pseudo));
+				$mbr_infos = Mbr::get(array('pseudo' => $pseudo));
 				if(!$mbr_infos)
 					$result[$pseudo] = false;
 				else {

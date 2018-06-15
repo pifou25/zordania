@@ -10,7 +10,7 @@ if(!$_sub)
 	$_tpl->set("btc_act",false);
 
 	
-	$unt_todo = get_unt_todo($_user['mid']);
+	$unt_todo = UntTodo::get($_user['mid']);
 	
 	foreach($unt_todo as $id => $value) {
 		if(!in_array($btc_type,get_conf("unt",$value['utdo_type'],"need_btc")))

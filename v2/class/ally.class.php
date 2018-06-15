@@ -71,7 +71,7 @@ class ally {
 		$cond['aid'] = $this->al_aid;
 		if(!isset($cond['orderby']))
 			$cond['orderby'] = array('DESC', 'points');
-		$al_mbr = get_mbr_gen($cond);
+		$al_mbr = Mbr::get($cond);
 
 		foreach($al_mbr as $row){
 			foreach($row as $key => $value)

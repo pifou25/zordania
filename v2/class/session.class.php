@@ -8,10 +8,7 @@ class session
 	{
 		$this->sql = &$db; //objet de la classe mysql
 		if(!CRON){
-			if(empty($_SESSION['user']['mobile'])) // init desktop value
-				$_SESSION['user']['mobile'] = false;
-			$_SESSION['user']['btc'] = $_SESSION['user']['mobile'] == true ? '/2' : '';
-			$this->vars = & $_SESSION['user'];
+                    $this->vars = & $_SESSION['user'];
 		}
 	}
 
@@ -342,6 +339,13 @@ class session
 	
 	function update($act)
 	{
+                if(!$this->get('mobile')){
+                    $this->set('mobile', false);
+                    $this->set('btc', '');
+                }else{
+                    $this->set('btc', '/2');
+                }
+                
 		$mid = $this->get("mid");
 		$pass = $this->get("pass");
 		$login = $this->get("login");

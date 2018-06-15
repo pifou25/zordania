@@ -36,7 +36,7 @@ if($_act == "del") {
 	if(!$mid)
 		$_tpl->set("mbr_no_mid",true);
 	elseif($ok == "ok") {
-		$array = get_mbr_by_mid_full($mid);
+		$array = Mbr::getFull($mid);
 		if($array) {
 			$array = $array[0];
 			$race = $array['mbr_race'];
@@ -46,7 +46,7 @@ if($_act == "del") {
 			require_once("lib/unt.lib.php");
 			require_once("lib/src.lib.php");
 
-			if(cls_mbr($mid, $cid, $race))
+			if(Mbr::cls($mid, $cid, $race))
 				$_tpl->set("mbr_ok",true);
 			else
 				$_tpl->set("mbr_error",true);
@@ -59,12 +59,12 @@ if($_act == "del") {
 	
 	$mid = request("mid", "uint", "get");
 	
-	if(!mbr_exists($mid)) {
+	if(!Mbr::count(['mid' => $mid])) {
 		$_tpl->set("mbr_not_exist",true);
 	} else {
 		if($_sub == "edit") {
 			$new = array();
-			$array = get_mbr_by_mid_full($mid);
+			$array = Mbr::getFull($mid);
 			$array = $array[0];
 
 			$new['mail'] = request("mail", "string", "post");
@@ -75,7 +75,7 @@ if($_act == "del") {
 			$new['pass'] = request("admpass", "string", "post");
 
 			// verifier l'unicite du pseudo
-			$have_pseudo = get_mbr_gen(array('count'=>true, 'pseudo' => $new['pseudo'], 'mid_excl'=>$mid, 'op'=>'AND'));
+			$have_pseudo = Mbr::get(array('count'=>true, 'pseudo' => $new['pseudo'], 'mid_excl'=>$mid, 'op'=>'AND'));
 			if($have_pseudo[0]['mbr_nb']>0)
 				$_tpl->set('mbr_pseudo_exist', true);
 			else{
@@ -88,7 +88,7 @@ if($_act == "del") {
 				foreach($new as $key => $val)
 					if(!$val) unset($new[$key]);
 			
-				$_tpl->set("mbr_edit", edit_mbr($mid, $new));
+				$_tpl->set("mbr_edit", Mbr::edit($mid, $new));
 			}
 		} elseif($_sub == "add_rec") {
 			$rec_type = request("rec_type", "uint", "post");
@@ -110,7 +110,7 @@ if($_act == "del") {
 			elseif(!can_ren_leg($mid,$lid,$leg_name))
 				$_tpl->set("ren_leg_name_exists", true);
 			else
-				$_tpl->set("ren_leg_ok", edit_leg($mid,$lid,array('name'=>$leg_name)));
+				$_tpl->set("ren_leg_ok", Leg::edit($mid,$lid,array('name'=>$leg_name)));
 		} elseif($_sub == "move_mbr") { /* déplacer village */
 			$map_x = request("map_x", "uint", "post");
 			$map_y = request("map_y", "uint", "post");
@@ -123,7 +123,8 @@ if($_act == "del") {
 				$arr_cid = get_square($map_cid);
 				if(!empty($arr_cid)) { // destination connue
 					if($arr_cid['map_type'] == MAP_LIBRE) // emplacement libre
-						$_tpl->set('depl_ok', move_member($mid, $map_cid));
+						$_tpl->set('depl_ok', 
+                                                        DB::select('CALL move_member(?, ?)', [$mid, $map_cid]));
 					else
 						$_tpl->set('depl_ok', 'no_free');
 				} else
@@ -131,7 +132,7 @@ if($_act == "del") {
 			} else
 				$_tpl->set('depl_ok', 'out');
 		}
-		$array = get_mbr_by_mid_full($mid);
+		$array = Mbr::getFull($mid);
 		$array = $array[0];
 		$_tpl->set("mbr_act","edit");
 
@@ -150,7 +151,7 @@ if($_act == "del") {
 
 		// champs pour renommer les lÃ©gions
 		require_once("lib/unt.lib.php");
-		$_tpl->set('leg',get_legions($mid));
+		$_tpl->set('leg',Leg::getAll($mid));
 	}
 		
 	
@@ -165,10 +166,13 @@ if($_act == "del") {
 	$cond = array();
 	$cond['op'] = "AND";
 	
+        $request = [];
 	if($pseudo)
-		$cond['pseudo'] = "%".$pseudo."%";
+            $request[] = ['mbr_pseudo', 'LIKE', "%$pseudo%"];
+            //$cond['pseudo'] = "%".$pseudo."%";
 	if($ip )
-		$cond['ip'] = $ip;
+            $request[] = ['mbr_ip', '=', $ip];
+            //$cond['ip'] = $ip;
 
 	$_tpl->set("mbr_pseudo", $pseudo);
 	$_tpl->set("mbr_ip", $ip);	
@@ -195,26 +199,26 @@ if($_act == "del") {
 	
 	$mbr_page = request("mbr_page", "int", "get", -1);
 	
-	$mbr_nb = count_mbr($cond);
+        $mbr_nb = Mbr::where($request)->count();
 	
-	$limite_page = LIMIT_MBR_PAGE;
 	$current_i = $mbr_page - LIMIT_NB_PAGE/2;
 	$current_i = round($current_i < 0 ? 0 : $current_i)*LIMIT_MBR_PAGE;
-	$nombre_page = ($mbr_nb / $limite_page);
+	$nombre_page = ($mbr_nb / LIMIT_MBR_PAGE);
 	$nombre_total = ceil($nombre_page);
 	$nombre = $nombre_total - 1;
 	
-	$_tpl->set('limite_page',$limite_page);
+	$_tpl->set('limite_page',LIMIT_MBR_PAGE);
 	$_tpl->set('limite_nb_page',LIMIT_NB_PAGE);
 	$_tpl->set('current_i',$current_i);
 	$_tpl->set("mbr_nb",$mbr_nb);
 	
 	if($mbr_page > 0)
-		$limite_mysql = $limite_page * $mbr_page;
+		$limite_mysql = LIMIT_MBR_PAGE * $mbr_page;
 	else
 		$limite_mysql = 0;
 
-	$mbr_array = get_liste_mbr($cond, $limite_mysql, $limite_page, $order_by);
+	$mbr_array = Mbr::get(array_merge($cond, 
+                ['limite1'=>$limite_mysql, 'limite2'=>LIMIT_MBR_PAGE, 'orderby'=>$order_by,'list'=>true]));
 	
 	$_tpl->set("mbr_array",$mbr_array);	
 	$_tpl->set('mbr_page',$mbr_page);
@@ -249,19 +253,18 @@ if($_act == "del") {
 	$mbr_page = request("mbr_page", "uint", "get");
 	$_tpl->set("mbr_page",$mbr_page);
 	$mbr_nb = nb_online();
-	$limite_page = LIMIT_MBR_PAGE;
-	$_tpl->set("limite_page",$limite_page);
+	$_tpl->set("limite_page",LIMIT_MBR_PAGE);
 	$_tpl->set("mbr_nb",$mbr_nb);
-	$nombre_page = $mbr_nb / $limite_page;
+	$nombre_page = $mbr_nb / LIMIT_MBR_PAGE;
 	$nombre_total = ceil($nombre_page);
 	$nombre = $nombre_total - 1;
 	
 	if($mbr_page)
-		$limite_mysql = $limite_page * $mbr_page;
+		$limite_mysql = LIMIT_MBR_PAGE * $mbr_page;
 	else
 		$limite_mysql = 0;
 	
-	$mbr_array = get_liste_online($limite_mysql,$limite_page);
+	$mbr_array = get_liste_online($limite_mysql,LIMIT_MBR_PAGE);
 	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid']);
 	$_tpl->set("mbr_array",$mbr_array);
 
@@ -269,7 +272,7 @@ if($_act == "del") {
 	$mid = request("mid", "uint", "get");
 	$_tpl->set("mbr_act","view");
 
-	$mbr_array = get_mbr_by_mid_full($mid);
+	$mbr_array = Mbr::getFull($mid);
 	$mbr_staff = false;
 	if($mbr_array){
 		$mbr_array = $mbr_array[0];
@@ -326,6 +329,7 @@ if($_act == "del") {
 					$_tpl->set("lres_ok", true);
 				}
 			}
+			$btc_array = Btc::getNb($mid, array(), array(BTC_ETAT_OK,BTC_ETAT_BRU,BTC_ETAT_DES,BTC_ETAT_REP));
 
 			$_tpl->set("res_leg", $legions->get_all_res());
 			$_tpl->set("unt_leg", $legions->get_all_unts());
@@ -353,7 +357,6 @@ if($_act == "del") {
                         }
                         
                         $_tpl->set("leg_race", $mbr_array['mbr_race']);
-			$btc_array = Btc::getNb($mid, array(), array(BTC_ETAT_OK,BTC_ETAT_BRU,BTC_ETAT_DES,BTC_ETAT_REP));
 			$_tpl->set('btc_done', $btc_array);
 			$_tpl->set('btc_todo', Btc::get($mid, [], [BTC_ETAT_TODO]));
 			$conf_btc = get_conf_gen($mbr_array['mbr_race'], 'btc');
@@ -387,8 +390,7 @@ if($_act == "del") {
 			$_tpl->set('src_done', get_src_done($mid));
 			$_tpl->set('src_todo', get_src_todo($mid));
 
-			//$_tpl->set('unt_done',get_leg_gen(array('mid' => $mid, 'leg' => true, 'unt' => true)));
-			$_tpl->set('unt_todo', get_unt_todo($mid));
+			$_tpl->set('unt_todo', UntTodo::get($mid));
 
 
 			/* comptage des points */
@@ -405,7 +407,7 @@ if($_act == "del") {
 			$mbr_array['pts']['btc']['vie'] = $btc_vie ;
 			$mbr_array['pts']['btc']['pts'] = $btc_vie / 3;
 
-			$unt_array = get_unt_total($mid);
+			$unt_array = Leg::get(['mid' => $mid, 'sum' => true]);
 			$pts_armee = 0;
 			foreach($unt_array as $key => $value){
 				$unt_cfg = get_conf_gen($mbr_array['mbr_race'], "unt", $value['unt_type']);

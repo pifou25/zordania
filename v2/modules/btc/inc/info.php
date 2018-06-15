@@ -40,8 +40,8 @@ if(!$_sub) {
 			}
 		}
 
-		$leg_bouf_tmp = get_res_leg($_user['mid']);
-		$leg_unt = get_legions_unt( $_user['mid']);
+		$leg_bouf_tmp = LegRes::get($_user['mid']);
+		$leg_unt = Leg::getUnt( $_user['mid']);
 		$leg_unt = index_array($leg_unt, "leg_id");
 
 		foreach ($leg_bouf_tmp as $value)
@@ -65,7 +65,7 @@ if(!$_sub) {
 				$leg_need_bouf += $nb;// on les comptabilise
 		}
 
-		$vlg_need_bouf = count_pop($_user['mid'], array(LEG_ETAT_VLG, LEG_ETAT_BTC));
+		$vlg_need_bouf = Leg::countUnt($_user['mid'], array(LEG_ETAT_VLG, LEG_ETAT_BTC));
 
 		$_tpl->set('btc_bouf', true);
 		$_tpl->set('btc_bouf_utils',$btc_bouf_utils);

@@ -103,7 +103,7 @@ foreach($mid_array as $_user)
 
 		if (!empty($arr_unt)) { /* suppr unités */
 			if ($exec)
-				echo "\n".edit_unt_gen($mid, LEG_ETAT_BTC, $arr_unt, -1). ' type d\'unités del.';
+				echo "\n".Unt::editBtc($mid, $arr_unt, -1). ' type d\'unités del.';
 		}
 
 		if (!empty($arr_res)) { /* payer le prix ressources */
@@ -114,7 +114,7 @@ foreach($mid_array as $_user)
 
 	if ($place_totale != $_user['mbr_place']) {
 		echo "\n{$_user['mbr_pseudo']} place : {$_user['mbr_place']} corrigee $place_totale\n";
-		if ($exec) edit_mbr($mid, array('place' => $place_totale));
+		if ($exec) Mbr::edit($mid, array('place' => $place_totale));
 	}
 
 } /* foreach $mid */

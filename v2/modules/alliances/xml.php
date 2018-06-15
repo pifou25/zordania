@@ -9,7 +9,7 @@ require_once("lib/alliances.lib.php");
 if(!$mid OR !$key)
 	exit;
 
-$mbr_array = get_mbr_by_mid_full($mid);
+$mbr_array = Mbr::getFull($mid);
 if(!$mbr_array)
 	exit;
 if($key != calc_key($_file, $mbr_array[0]['mbr_login']))

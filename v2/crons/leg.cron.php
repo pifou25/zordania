@@ -161,15 +161,15 @@ function glob_leg() {
 			if (isset($leg_move_array[$lid]) && $value['dest_type'] == MAP_LIBRE) {
 				$leg = $leg_move_array[$lid];
 				/*déplacement du village*/
-				move_member($mid, $value['leg_dest']);
+                                DB::select('CALL move_member(?, ?)', [$mid, $value['leg_dest']]);
 				/* edit = rang => array(type => nb) */
 				$edit = $unt_move_list[$leg['mbr_race']];
 				foreach($edit as $rang => $unt)
 					if ($unt == $leg['unt_type']) // en principe toujours vrai (!)
 						$edit[$rang] = array($leg['unt_type'] => $leg['unt_nb']);
 				/* tuer la caravane */
-				edit_unt_leg($mid, $lid, $edit, -1);
-				edit_mbr($mid, array('population' => count_pop($mid)));
+                                Leg::edit($lid, $edit);
+				Mbr::edit($mid, array('population' => Leg::countUnt($mid)));
 			}
 		}
 		$sql.= " WHERE leg_id = $lid";

@@ -21,18 +21,18 @@ if($_sub == "cancel_unt")
 	elseif(!$nb)
 		$_tpl->set("btc_no_nb",true);
 	else {
-		$infos = get_unt_todo($_user['mid'], array('uid' => $uid));
+		$infos = UntTodo::get($_user['mid'], array('uid' => $uid));
 		
 		if($infos && $infos[0]['utdo_nb'] >= $nb) {
 			$_tpl->set("btc_ok",true);
 			$_tpl->set("unt_canceled",$infos);
 
 			$type = $infos[0]['utdo_type'];
-			cnl_unt($_user['mid'], $uid, $nb);
+			UntTodo::del($_user['mid'], $uid, $nb);
 			/* on récupère les unités mais que 50% des ressources: */
-			edit_unt_vlg($_user['mid'], get_conf("unt", $type, "prix_unt"), 1 * $nb);
+			Unt::editVlg($_user['mid'], get_conf("unt", $type, "prix_unt"), 1 * $nb);
 			Res::mod($_user['mid'], get_conf("unt", $type, "prix_res"), 0.5 * $nb);
-			edit_mbr($_user['mid'], array('population' => count_pop($_user['mid'])));
+			Mbr::edit($_user['mid'], array('population' => Leg::countUnt($_user['mid'])));
 		} else
 			$_tpl->set("btc_ok",false);
 	}
@@ -134,10 +134,10 @@ elseif($_sub == "add_unt")
 				$_tpl->set("unt_infos", $array);
 				$_tpl->set("btc_ok", $ok);
 				if($ok) {
-					edit_unt_vlg($_user['mid'], get_conf("unt", $type, "prix_unt"), -1 * $nb);
+					Unt::editVlg($_user['mid'], get_conf("unt", $type, "prix_unt"), -1 * $nb);
 					Res::mod($_user['mid'], get_conf("unt", $type, "prix_res"), -1 * $nb);
-					scl_unt($_user['mid'], array($type =>$nb));
-					edit_mbr($_user['mid'], array('population' => count_pop($_user['mid'])));
+					UntTodo::add($_user['mid'], array($type =>$nb));
+					Mbr::edit($_user['mid'], array('population' => Leg::countUnt($_user['mid'])));
 				}
 			}
 	}

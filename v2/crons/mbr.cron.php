@@ -45,7 +45,7 @@ function glob_mbr() {
 
 				$new = array();
 				$new['gid'] = GRP_CHEF_REG;
-				edit_mbr($mid, $new);
+				Mbr::edit($mid, $new);
 			}
 		}
 
@@ -55,7 +55,7 @@ function glob_mbr() {
 		$champ = $_sql->make_array($sql);
 		if(!empty($champ)){ // si existe un champion dans cette province
 			$new['gid'] = GRP_CHAMP_REG;
-			edit_mbr($champ[0]['mbr_mid'], $new);
+			Mbr::edit($champ[0]['mbr_mid'], $new);
 		}
 
 		/* effacer puis remettre les récompenses liées au parrainage */

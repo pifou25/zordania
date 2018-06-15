@@ -34,7 +34,7 @@ $arr_mail = array(
 );
 
 foreach($arr_mail as $mail){
-	$array = get_mbr_gen(array('mail' => $mail, 'full' => true));
+	$array = Mbr::get(array('mail' => $mail, 'full' => true));
 
 	if($array) {
 		$array = $array[0];
@@ -42,7 +42,7 @@ foreach($arr_mail as $mail){
 		$cid = $array['mbr_mapcid'];
 		$mid = $array['mbr_mid'];
 
-		cls_mbr($mid, $cid, $race);
+		Mbr::cls($mid, $cid, $race);
 		echo "$mail supprimé\n";
 	}
 	else

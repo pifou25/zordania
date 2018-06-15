@@ -51,9 +51,10 @@ foreach($mid_array as $_user)
 
 	if ($exec) { /* init mbr */
 		cls_aly($mid);
-		cls_unt($mid);
+		UntTodo::clear($mid);
 		Btc::clear($mid);
-		cls_res($mid);
+                Res::clear($mid);
+                ResTodo::where('rtdo_mid', '=', $mid)->delete();
 		cls_src($mid);
 		Trn::clear($mid);
 		cls_com($mid);

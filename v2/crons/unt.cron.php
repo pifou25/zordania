@@ -9,7 +9,7 @@ function mbr_unt(&$_user) {
 	$mid = $_user['mbr_mid'];
 	$race = $_user['mbr_race'];
 
-	$unt_todo = get_unt_todo($mid);
+	$unt_todo = UntTodo::get($mid);
 
 	$have_btc = $_user["btc"]; // batiments construits
 	$prod_btc = array(); // productions d'unités maxi par batiments
@@ -98,7 +98,7 @@ function mbr_unt(&$_user) {
 
 	Res::mod($mid, array(GAME_RES_BOUF => -$nb));// nourriture consommée
 
-	edit_unt_vlg($mid, $update_unt);// MAJ unités formées ou mort de faim
+	Unt::editVlg($mid, $update_unt);// MAJ unités formées ou mort de faim
 
 	$sql = "";
 	foreach($update_unt_todo as $id => $nb) {

@@ -102,7 +102,7 @@ foreach($btc_array as $value)
 $_tpl->set('gen_nb_btc',$nb_btc);
 
 /* Unités */
-$unt_todo = get_unt_todo($_user['mid']);
+$unt_todo = UntTodo::get($_user['mid']);
 $_tpl->set('unt_todo',$unt_todo);
 
 /* Recherches  en cours */
