@@ -73,7 +73,7 @@ function make_class($type, $race = 0, $region = 0)
 			$sql.="ORDER BY al_points DESC LIMIT 50";
 			break;
 		case 6: // XP héros
-			$sql = "SELECT hro_id, hro_mid, hro_nom, hro_type, hro_lid, hro_xp, hro_vie, hro_bonus AS bonus, 
+			$sql = "SELECT hro_id, hro_mid, hro_nom, hro_type, hro_lid, hro_xp, hro_xp_tot, hro_vie, hro_bonus AS bonus, 
 				hro_bonus_from, hro_bonus_to AS bonus_to, mbr_gid,mbr_mid,mbr_pseudo,mbr_race ";
 			$sql.= "FROM ".$_sql->prebdd."hero ";
 			$sql.="INNER JOIN ".$_sql->prebdd."mbr ON hro_mid = mbr_mid AND mbr_etat = ".MBR_ETAT_OK;
