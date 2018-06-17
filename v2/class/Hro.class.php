@@ -37,9 +37,9 @@ class Hro extends Illuminate\Database\Eloquent\Model {
     }
 
     /* supprimer un héros */
-    static function del(int $hid = 0) {
+    static function del(int $mid) {
 
-        return Hro::where(['leg_cid', $lid])->delete();
+        return Hro::where('hro_mid', $mid)->delete();
     }
 
     /**

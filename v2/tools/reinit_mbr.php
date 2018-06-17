@@ -55,7 +55,7 @@ foreach($mid_array as $_user)
 		Btc::clear($mid);
                 Res::clear($mid);
                 ResTodo::where('rtdo_mid', '=', $mid)->delete();
-		cls_src($mid);
+		SrcTodo::del($mid);
 		Trn::clear($mid);
 		cls_com($mid);
 		cls_atq($mid);

@@ -11,7 +11,7 @@ function mbr_src(&$_user) {
 	if(isset($_user["no_src_todo"]))
 		return;
 
-	$src_todo = get_src_todo($mid);
+	$src_todo = SrcTodo::get($mid);
 
 	if(!$src_todo)
 		return;

@@ -387,14 +387,14 @@ if($_act == "del") {
 
 			$_tpl->set('trn_done', Trn::get($mid));
 
-			$_tpl->set('src_done', get_src_done($mid));
-			$_tpl->set('src_todo', get_src_todo($mid));
+			$_tpl->set('src_done', Src::get($mid));
+			$_tpl->set('src_todo', SrcTodo::get($mid));
 
 			$_tpl->set('unt_todo', UntTodo::get($mid));
 
 
 			/* comptage des points */
-			$src_array = get_src_done($mid);
+			$src_array = Src::get($mid);
 			$mbr_array['pts']['src']['nb'] = count($src_array);
 			$mbr_array['pts']['src']['coef'] = get_conf_gen($mbr_array['mbr_race'], "race_cfg", "src_nb");
 			$mbr_array['pts']['src']['pts'] = count($src_array) 

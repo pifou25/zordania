@@ -69,7 +69,7 @@ if ($_sub == "cancel_res") {
 
     $cache = array();
     $cache['btc'] = Btc::getNbActive($_user['mid'], [$need_btc]);
-    $cache['src'] = get_src_done($_user['mid'], $need_src);
+    $cache['src'] = Src::get($_user['mid'], $need_src);
     $cache['src'] = index_array($cache['src'], "src_type");
     $cache['res'] = Res::get($_user['mid'], $need_res);
 

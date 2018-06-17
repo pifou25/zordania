@@ -10,7 +10,7 @@ $max_ventes = 0;
 $com_conf = get_conf("btc", $btc_type, "com");
 
 $need_src = array_keys($com_conf);
-$have_src = get_src_done($_user['mid'], $need_src);
+$have_src = Src::get($_user['mid'], $need_src);
 $have_src = index_array($have_src, "src_type");
 
 /* nb max de ventes, et prix maxi, selon recherche faite */

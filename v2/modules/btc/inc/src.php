@@ -14,7 +14,7 @@ require_once("lib/src.lib.php");
 	if(!$sid)
 		$_tpl->set("btc_no_sid",true);
 	else {
-		if(cnl_src($_user['mid'], $sid)) {
+		if(SrcTodo::del($_user['mid'], $sid)) {
 			Res::mod($_user['mid'], get_conf("src", $sid, "prix_res"), 0.5);
 			$_tpl->set("btc_ok",true);
 		} else
@@ -27,7 +27,7 @@ elseif($_sub == "src")
 {
 	$_tpl->set("btc_act","src");
 	
-	$src_todo = get_src_todo($_user['mid']);
+	$src_todo = SrcTodo::get($_user['mid']);
 	
 	$_tpl->set("src_todo",index_array($src_todo, 'stdo_type'));
 	
@@ -53,7 +53,7 @@ elseif($_sub == "src")
 	asort($need_btc);
 
 	$cache = array();
-	$cache['src'] = get_src_done($_user['mid'], $need_src);
+	$cache['src'] = Src::get($_user['mid'], $need_src);
 	$cache['src'] = index_array($cache['src'], "src_type");
 	$cache['res'] = Res::get($_user['mid'], $need_res);
 	$cache['src_todo'] = index_array($src_todo, "stdo_type");
@@ -82,7 +82,7 @@ elseif($_sub == "add_src")
 {
 	$type = request("type", "uint", "post");
 	
-	$src_todo = get_src_todo($_user['mid']);
+	$src_todo = SrcTodo::get($_user['mid']);
 	$src_todo = index_array($src_todo, 'stdo_type');
 	$_tpl->set("btc_act","add_src");
 	$_tpl->set("src_type", $type);
@@ -102,7 +102,7 @@ elseif($_sub == "add_src")
 			$_tpl->set("src_infos", $array);
 			$_tpl->set("btc_ok", $ok);
 			if($ok) {
-				scl_src($_user['mid'], $type);
+				SrcTodo::add($_user['mid'], $type);
 				Res::mod($_user['mid'], get_conf("src", $type, "prix_res"), -1);
 			}
 		}

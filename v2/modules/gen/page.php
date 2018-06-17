@@ -106,7 +106,7 @@ $unt_todo = UntTodo::get($_user['mid']);
 $_tpl->set('unt_todo',$unt_todo);
 
 /* Recherches  en cours */
-$src_todo = get_src_todo($_user['mid']);
+$src_todo = SrcTodo::get($_user['mid']);
 foreach($src_todo as $key => $src) { // calculer RAF
 	$conf = get_conf('src', $src['stdo_type'], 'tours');
 	if ($conf) $src_todo[$key]['raf'] = (int) $conf - $src['stdo_tours'];

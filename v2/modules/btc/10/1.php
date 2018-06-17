@@ -18,7 +18,7 @@ if(!$_sub)
 	}
 	
 
-	$src_todo = get_src_todo($_user['mid']);
+	$src_todo = SrcTodo::get($_user['mid']);
 	$src_todo = index_array($src_todo, "stdo_type");
 
 	$_tpl->set("unt_todo",$unt_todo);

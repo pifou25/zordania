@@ -30,7 +30,7 @@ $_tpl->set("module_tpl","modules/vlg/vlg.tpl");
 $_tpl->set("btc_max", get_conf("race_cfg", "btc_nb"));
 $_tpl->set("btc_conf", get_conf("btc"));
 $_tpl->set("src_conf", get_conf("src"));
-$_tpl->set("src_array", get_src_done($_user['mid']));
+$_tpl->set("src_array", Src::get($_user['mid']));
 $_tpl->set("btc_array", $btc_array);
 $_tpl->set("forteresse", $forteresse);
 $_tpl->set("imgvlg", $imgvlg);

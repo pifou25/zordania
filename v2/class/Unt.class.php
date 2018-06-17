@@ -22,15 +22,12 @@ class Unt extends Illuminate\Database\Eloquent\Model {
         return index_array($unts, 'unt_type');
     }
 
-    /* Initialisation des unités & les légions */
-    static function init(int $mid, int $cid, string $vlg) {
-
-        Leg::add($mid, $cid, LEG_ETAT_VLG, $vlg);
-        Leg::add($mid, $cid, LEG_ETAT_BTC, $vlg);
+    /* Initialisation des unités */
+    static function init(int $lid) {
 
         // init des unités
         $debut = get_conf("race_cfg", "debut", "unt");
-        Unt::editVlg($mid, $debut);
+        Unt::edit($lid, $debut);
     }
 
     /* del unités d'une légion */
@@ -43,7 +40,7 @@ class Unt extends Illuminate\Database\Eloquent\Model {
         return Unt::whereIn('unt_lid', function($query) use ($mid) {
             $query->select('leg_id')
                     ->from('leg')
-                    ->where(['leg_mid' => $mid]);
+                    ->where('leg_mid', $mid);
         })->delete();
     }
 
@@ -75,18 +72,25 @@ class Unt extends Illuminate\Database\Eloquent\Model {
 
         $leg = Unt::get($lid);
 	foreach($unt as $rang => $value) {
-            foreach($value as $type => $nb) {
-                if(isset($leg[$type])){ // incrementer nb d'unites
-                    Unt::where([['unt_lid', $lid], ['unt_type', $type]])->increment($nb * $factor);
-                } else { // inserer le nouveau rang
-                    $request = ['unt_lid' => $lid,
-                        'unt_type' => $type,
-                        'unt_rang' => $rang,
-                        'unt_nb' => $nb * $factor];
-                    Unt::insertGetId($request);
+            if(!is_array($value)){ // si array simple: toutes les unités sur rang 0
+                $unt1[0][$rang] = $value;
+            }else{
+                foreach($value as $type => $nb) {
+                    if(isset($leg[$type])){ // incrementer nb d'unites
+                        Unt::where([['unt_lid', $lid], ['unt_type', $type]])->increment($nb * $factor);
+                    } else { // inserer le nouveau rang
+                        $request = ['unt_lid' => $lid,
+                            'unt_type' => $type,
+                            'unt_rang' => $rang,
+                            'unt_nb' => $nb * $factor];
+                        Unt::insertGetId($request);
+                    }
                 }
             }
 	}
+        if(isset($unt1)){
+            Unt::edit($lid, $unt1, $factor);
+        }
     }
     
 }

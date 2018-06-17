@@ -244,7 +244,7 @@ $_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif',
 $_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
 		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
 
-define('SITE_DEBUG',false);
+define('SITE_DEBUG',true);
 define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
 define('CRON', substr(php_sapi_name(), 0, 3) == 'cli');

@@ -308,7 +308,7 @@ class member{
     /*** recherches ***/
 	function src(){
 		if(!$this->src_load){
-			$tmp = get_src_done($this->mid);
+			$tmp = Src::get($this->mid);
 			$this->src = index_array($tmp, 'src_type');
 			$this->src_load = true;
 		}
@@ -317,7 +317,7 @@ class member{
 	
 	function src_todo(){
 		if(!$this->src_todo_load){ // TODO?
-			$this->src_todo = get_src_todo($this->mid);
+			$this->src_todo = SrcTodo::get($this->mid);
 			$this->src_todo_load = true;
 		}
 		return $this->src_todo;

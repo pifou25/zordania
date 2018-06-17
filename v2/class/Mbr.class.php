@@ -307,10 +307,14 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
 
         ini_map($mid, $cid);
 
-        Unt::init($mid, $cid, $vlg);
+        // légion village avec ses unités
+        $lid = Leg::add($mid, $cid, LEG_ETAT_VLG, $vlg);
+        Unt::init($lid);
+        // légion des batiments - vide
+        Leg::add($mid, $cid, LEG_ETAT_BTC, $vlg);
         Res::init($mid);
         ResTodo::where('rtdo_mid', '=', $mid)->delete();
-        ini_src($mid);
+        Src::init($mid);
         Btc::init($mid);
         Trn::init($mid);
     }
@@ -321,11 +325,12 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
         cls_map($mid, $oldcid);
         cls_aly($mid);
         UntTodo::clear($mid);
+        Leg::del($mid);
         Hro::del($mid);
         Btc::clear($mid);
         Res::clear($mid);
         ResTodo::where('rtdo_mid', '=', $mid)->delete();
-        cls_src($mid);
+        SrcTodo::del($mid);
         Trn::clear($mid);
         cls_com($mid);
         cls_atq($mid);
@@ -388,7 +393,7 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
         Btc::clear($mid);
         Res::clear($mid);
         ResTodo::where('rtdo_mid', '=', $mid)->delete();
-        cls_src($mid);
+        SrcTodo::del($mid);
         Trn::clear($mid);
         cls_com($mid);
         cls_atq($mid);

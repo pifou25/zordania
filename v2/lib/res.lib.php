@@ -26,7 +26,7 @@ function can_res($mid, $type, $nb, &$cache = [])
 	$cond_src = $need_src;
 
 	if(!isset($cache['src'])) {
-		$have_src = get_src_done($mid, $cond_src);
+		$have_src = Src::get($mid, $cond_src);
 		$have_src = index_array($have_src, 'src_type');
 	} else
 		$have_src = $cache['src'];
