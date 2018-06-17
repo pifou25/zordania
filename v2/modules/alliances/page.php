@@ -89,6 +89,8 @@ case 'my':
 		$_tpl->set('ally',$ally->getInfos());
 		$_tpl->set('chef',$ally->getMembers($ally->al_mid));
 		$_tpl->set('al_logo',$ally->getLogo());
+		$mespactes = new diplo(array('aid'=>$_user['alaid'], 'full' => true));
+		$_tpl->set("mespactes",$mespactes->result);
 	
 		$chef = ($ally->al_mid == $_user['mid']);
 		//Sub = post => post un message sur la shootbox
@@ -113,6 +115,7 @@ case 'my':
 	
 		$_tpl->set('al_mbr',$al_mbr);
 		$_tpl->set('al_key',calc_key($_file, $_user['login']));
+
 	}
 	break;
 

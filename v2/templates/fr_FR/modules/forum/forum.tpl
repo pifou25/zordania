@@ -52,7 +52,17 @@
 					</optgroup>
 				</foreach>
 			</select>
-			</label><br />
+			</label>
+			<if cond="{pst[forum_id]} == FORUM_BUG_FID || {pst[forum_id]} == FORUM_SUGGEST_FID ">	
+				<label for="statut">Statut : </label>				
+					<select id="statut" name="statut">
+						<option value="-1" >Laisser</option>
+						<option value="{FORUM_REPORT_NEW}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Déclaré</if><else>Proposée</else></option>
+						<option value="{FORUM_REPORT_OK}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Valider</if><else>Accepter</else></option>
+						<option value="{FORUM_REPORT_NOK}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Pas bug</if><else>Refuser</else></option>
+						<option value="{FORUM_REPORT_ON}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Corrigé</if><else>Codée</else></option>						
+					</select>
+				</if><br />
 		</if>
 		</if>
 <#
@@ -286,7 +296,18 @@
 					</foreach>
 					</optgroup>
 				</foreach>
-				</select>
+				</select>				
+				
+				<if cond="{tpc[forum_id]} == FORUM_BUG_FID || {tpc[forum_id]} == FORUM_SUGGEST_FID ">	
+				<label for="statut">Statut : </label>				
+					<select id="statut" name="statut">
+						<option value="-1" >Laisser</option>
+						<option value="{FORUM_REPORT_NEW}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Déclaré</if><else>Proposée</else></option>
+						<option value="{FORUM_REPORT_OK}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Valider</if><else>Accepter</else></option>
+						<option value="{FORUM_REPORT_NOK}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Pas bug</if><else>Refuser</else></option>
+						<option value="{FORUM_REPORT_ON}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Corrigé</if><else>Codée</else></option>						
+					</select>
+				</if>
 
 				<input type="submit" name="modo" value="Effectuer" />
 			</p>
@@ -344,14 +365,20 @@
 
 			<foreach cond="{topic_array} as {topic}">
 			<tr>
-				<td><!-- Image pour l'état du topic -->
-
+				<td><!-- Image pour l'état du topic -->				
+				
 				<if cond="({lu_forum_ldate} > {topic[posted_unformat]}) || isset({forum_lus[{topic[tid]}]})"><set name="etat" value="lu" /></if>
 				<else><set name="etat" value="non_lu" /></else>
 				<if cond="{topic[sticky]} == 1 AND {topic[closed]} == 1"><img src="img/forum/sticky-closed-{etat}.png" title="Post-it Fermé - {etat}" /></if>
 				<elseif cond="{topic[closed]} == 1"><img src="img/forum/closed-{etat}.png" title="Fermé - {etat}" /></elseif>
 				<elseif cond="{topic[sticky]} == 1"><img src="img/forum/sticky-{etat}.png" title="Post-it - {etat}" /></elseif>
 				<else><img src="img/forum/{etat}.png" title="{etat}" /></else>
+				<if cond="{topic[forum_id]} == FORUM_BUG_FID  ">				
+					<img src="img/forum/{topic[statut]}.png" title="{bug_statut[{topic[statut]}]}" />				
+				</if>
+				<elseif cond="{topic[forum_id]} == FORUM_SUGGEST_FID ">
+					<img src="img/forum/{topic[statut]}.png" title="{suggest_statut[{topic[statut]}]}" />
+				</elseif>
 
 				</td>
 

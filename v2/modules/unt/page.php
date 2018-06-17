@@ -39,35 +39,12 @@ if($_act == "pend") {
 }
 
 if(!$_act) {
-	// config des unités: vie/group/role/prix_res/in_btc/need_btc ...
-	$conf_unt = $mbr->get_conf("unt");
-
-	$unt_tmp = array();
-
-	// calculer tout ce qu'on peut former ... ou pas
-	foreach($conf_unt as $type => $value) {
-        // requete pour 1 seul type d'unité
-        if(!empty($unt_type) && $unt_type != $type) continue;
-		$unt_tmp[$type]['bad'] = $mbr->can_unt($type, 1);
-		$unt_tmp[$type]['conf'] = $value;
-	}
-
-	foreach($unt_tmp as $uid => $array) {
-        // requete pour 1 seul type d'unité
-        if(!empty($unt_type) && $unt_type != $uid) continue;
-        // si manque une recherche ou un bat, on ignore cette unité
-        if(!empty($array['bad']['need_src']) || !empty($array['bad']['need_btc'])) continue;
-		$unt_array[$uid] = $array;
-	}
-	unset($unt_tmp);
-
-	$unt_done = array();
 	$nb = $mbr->get_conf("race_cfg", "unt_nb");
 	for($i = 1; $i <= $nb; ++$i)
 		$unt_done['tot'][$i] = $unt_done['vlg'][$i] = $unt_done['btc'][$i] = 0;
 
-	$unt_tmp = $mbr->unt();
-	foreach($unt_tmp as $value) {
+        //unités au village et en légions
+	foreach( $mbr->unt() as $value) {
 		if($value['leg_etat'] == LEG_ETAT_VLG)
 			$unt_done['vlg'][$value['unt_type']] = $value['unt_nb'];
 		else
@@ -80,6 +57,19 @@ if(!$_act) {
 
 	$_tpl->set("unt_done", $unt_done);
 	
+	// config des unités: vie/group/role/prix_res/in_btc/need_btc ...
+	// calculer tout ce qu'on peut former ... ou pas
+	foreach($mbr->get_conf("unt") as $type => $value) {
+            // requete pour 1 seul type d'unité
+            if(!empty($unt_type) && $unt_type != $type)
+                continue;
+            $bad = $mbr->can_unt($type, 1);
+            if(!empty($bad['need_src']) || !empty($bad['need_btc']))
+                if($unt_done['tot'][$type] == 0)
+                    continue;
+            $unt_array[$type] = ['bad'=>$bad, 'conf'=>$value];
+	}
+
 	if(empty($unt_type)){
 		// grouper les todo par bat et par type
 		$unt_todo = array();
@@ -90,9 +80,8 @@ if(!$_act) {
 		}
 		$_tpl->set('unt_todo', $unt_todo);
 		$_tpl->set("unt_dispo",$unt_array);
-	}
 
-	if($unt_type) {
+	} else {
 		if ($mbr->get_conf('unt', $unt_type, 'role') == TYPE_UNT_HEROS)
 			$_tpl->set('no_heros',false);
 		else {
@@ -101,6 +90,7 @@ if(!$_act) {
 				$_tpl->set('unt_type',$unt_type);
 				$_tpl->set('btc_type',$btc[0]);
 			}
+                $_tpl->set("unt_dispo",$unt_array[$unt_type]);
         }
     }
 }

@@ -19,7 +19,7 @@
 		Total: <math oper='{btc_value[btc_pop]}*{btc_value[btc_nb]}'/> <img src="img/{_user[race]}/{_user[race]}.png" title="Place" alt="Place" /><br/>
 		<br/><br/>
 	</foreach>
-	Limite de Population : {TOTAL_MAX_UNT}<br />
+	Limite de Population : <if cond="{_user[race]} == 7">{TOTAL_MAX_UNT_2}</if> <else>{TOTAL_MAX_UNT_1}</else><br />
 	Population : {btc_pop_used}/{btc_pop_max} <img src="img/{_user[race]}/{_user[race]}.png" alt="Place" title="Place" /><br/>
 </if>
 <if cond="isset({btc_bouf})">

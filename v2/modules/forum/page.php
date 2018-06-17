@@ -182,6 +182,9 @@ case 'post' : // valider le formulaire & créer le topic / message
 				$move = request('move', 'uint', 'post', -1);
 				if($is_modo && $move >=0)
 					$edit['fid'] = $move;
+				$statut = request('statut', 'uint', 'post', -1);
+				if($is_modo && $statut >=0)
+					$edit['statut'] = $statut;
 				// possible d'éditer le sujet hormis modo ??
 				$title = request('pst_titre', 'string', 'post');
 				if($is_modo && $title)
@@ -221,7 +224,13 @@ case 'post' : // valider le formulaire & créer le topic / message
 						$edit['fid'] = $move;
 						$info['forum_id'] = $move;
 					}
-					if(isset($edit['closed']) or isset($edit['sticky']) or isset($edit['fid']))
+					
+					$statut = request('statut', 'int', 'post', -1);
+					if($statut){
+						$edit['statut'] = $statut;
+					}
+					
+					if(isset($edit['closed']) or isset($edit['sticky']) or isset($edit['fid']) or isset($edit['statut']))
 					{ //on édite le message, et on met à jour la bdd
 						edit_post_gen($edit);
 						$_tpl->set('edit_tpc',true);
@@ -261,6 +270,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 
 	//et enfin l'affichage de message
 	//on vérifie qu'on a le droit
+		
 	if (isset($info) && $info['read_forum'] == 1)
 	{
 		ajout_view($tid);
