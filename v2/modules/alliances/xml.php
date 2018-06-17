@@ -18,7 +18,7 @@ if($key != calc_key($_file, $mbr_array[0]['mbr_login']))
 $_module_tpl = 'modules/alliances/xml.tpl';
 $mbr_array = $mbr_array[0];
 
-$_tpl->set("msg_array", get_aly_msg($mbr_array['ambr_aid'], LIMIT_PAGE, 0));
+$_tpl->set("msg_array", AlShoot::get($mbr_array['ambr_aid'], LIMIT_PAGE, 0));
 //$_tpl->set("mbr_array", $mbr_array);
 $_tpl->set("key", $key);
 $_tpl->set("mid", $mid);

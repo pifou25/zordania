@@ -31,11 +31,7 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
     }
 
     /* un seul joueur */
-
     static function get(array $cond) {
-        //$result = mbr::where('mbr_mid', '=', $mid)->get()->toArray();
-        //return (empty($result) ? false : $result[0]);
-
 
         $count = false;
         $list = false;
@@ -262,8 +258,8 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
             'mbr_etat' => $etat,
             'mbr_gid' => $gid,
             'mbr_decal' => $decal,
-            'mbr_ldate',
-            'mbr_inscr_date',
+            'mbr_ldate' => DB::raw('NOW()'),
+            'mbr_inscr_date' => DB::raw('NOW()'),
             'mbr_lip' => $ip,
             'mbr_design' => $design,
             'mbr_parrain' => $parrain

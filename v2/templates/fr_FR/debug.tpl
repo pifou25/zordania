@@ -1,4 +1,4 @@
-<div style="text-align:left" class="block">
+<div class="debug block">
 	<h1>Debug</h1>
 	<dl>
 		<if cond="false"><math oper="print_debug()" /></if>
@@ -47,7 +47,10 @@
 				Bindings: <math oper="print_debug({values[bindings]})" />
 				Temps: <math oper="round({values[time]},2)" /> ms
 				<if cond="is_array({values[callstack]})"><pre>Callstack:
-				<math oper='implode("<br/>",{values[callstack]})' /></pre></if>
+				<foreach cond="{values[callstack]} as {line}">
+					{line}
+				</foreach>
+				</pre></if>
 			</li>
                                 </foreach>
                             </if>
@@ -76,7 +79,10 @@
 					</div>
 				</if>
 				<pre>Callstack:
-				<math oper='implode("<br/>",{values[callstack]})' /></pre>
+				<foreach cond="{values[callstack]} as {line}">
+					{line}
+				</foreach>
+				</pre>
 				Temps: <math oper="round({values[time]}*1000,2)" /> ms
 			</li>
 			</foreach>

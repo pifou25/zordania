@@ -39,6 +39,10 @@ $admin_cache = new cache('admin');
 /* Gestion des erreurs : fonctions dans lib/divers.lib.php */
 $_error = array();
 set_error_handler("error_handler");
+if(SITE_DEBUG){
+    register_shutdown_function( "fatal_handler" );
+}
+
 
 mark('lib');
 

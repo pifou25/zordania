@@ -62,11 +62,11 @@ elseif($_act == 'view')
 		switch($_sub) {
 		case "add_res": // ressources du grenier
 			$nb = request("res_nb", "array", "post");
-			mod_aly_res($al_aid, $_user['mid'], $nb);
+			AlRes::mod($al_aid, $_user['mid'], $nb);
 			break;
 		case "shoot": // ajouter un msg
 			$text = parse(request("text", "string", "post"));
-			add_aly_msg($al_aid, $text, $_user['mid']);
+			AlShoot::add($al_aid, $text, $_user['mid']);
 			break;
 		case 'chef': 
 			$mid = request("mid", "uint", "get");

@@ -1,4 +1,4 @@
-<div style="text-align:left" class="block">
+<div class="debug block">
 	<h1>Debug</h1>
 	<dl>
 		<math oper="print_debug({debugvars})" />
@@ -60,7 +60,10 @@
 					</foreach>
 					</div>
 				<pre>Callstack:
-				<math oper='implode("<br/>",{values[callstack]})' /></pre>
+				<foreach cond="{values[callstack]} as {line}">
+					{line}
+				</foreach>
+				</pre>
 				</if>
 				Temps: <math oper="round({values[time]}*1000,2)" /> ms
 			</li>

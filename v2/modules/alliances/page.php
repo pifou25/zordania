@@ -16,7 +16,7 @@ $_tpl->set("smileys_base", $smileys_base);
 $_tpl->set("smileys_more", $smileys_more);
 
 $al_aid = request("al_aid", "uint", "get");
-$order = array('DESC','points');
+$order = ['DESC','points'];
 
 $_tpl->set('module_tpl','modules/alliances/alliances.tpl');
 $_tpl->set('al_sub','');
@@ -38,10 +38,10 @@ if($_user['aetat'] != ALL_ETAT_NULL){
 	}
 }
 
-$acts = array('admin', 'res', 'reslog', 'join', 'part', 'descr_rules', 'resally');
+$acts = ['admin', 'res', 'reslog', 'join', 'part', 'descr_rules', 'resally'];
 if($_user['aetat'] == ALL_ETAT_DEM && in_array($_act, $acts))
 	$_act = "my";
-$acts = array('admin', 'res', 'reslog', 'part', 'descr_rules', 'resally');
+$acts = ['admin', 'res', 'reslog', 'part', 'descr_rules', 'resally'];
 if($_user['aetat'] == ALL_ETAT_NULL && in_array($_act, $acts))
 	$_act = "my";
 if (empty($_act)) $_act = 'liste';
@@ -49,12 +49,12 @@ $_tpl->set('al_act',$_act);
 
 if($_user['alaid'] and $_user['aetat'] != ALL_ETAT_DEM) {
 	/* mes pactes */
-	$dpl_atq = new diplo(array('aid' => $_user['alaid']));
+	$dpl_atq = new diplo(['aid' => $_user['alaid']]);
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
 }
 else
-	$dpl_atq_arr = array();
+	$dpl_atq_arr = [];
 
 
 switch($_act) {
@@ -95,32 +95,17 @@ case 'my':
 		if($_sub == 'post') {
 			$msg = request('pst_msg', 'string', 'post');
 			if($msg)
-				$_tpl->set('al_msg_post',add_aly_msg($_user['alaid'],parse($msg),$_user['mid']));
+				$_tpl->set('al_msg_post',AlShoot::add($_user['alaid'],parse($msg),$_user['mid']));
 		} else if($_sub == "del") {
 			$msgid = request('msgid', 'uint', 'get');
 			if($msgid)
-				$_tpl->set('al_msg_del',del_aly_msg($_user['alaid'],$msgid,$_user['mid'],$chef));
+				$_tpl->set('al_msg_del',AlShoot::del($_user['alaid'],$msgid,$_user['mid'],$chef));
 		}
 		
 		$_tpl->set('al_admin',$chef);
 	
-		$al_page = request('al_page', 'uint', 'get');
-		$al_nb = count_aly_msg($_user['alaid']);
-		$_tpl->set("al_nb",$al_nb);
-		
-		$current_i = $al_page - LIMIT_NB_PAGE/2;
-		$current_i = 0+round($current_i < 0 ? 0 : $current_i)*LIMIT_PAGE;
-	
-		$_tpl->set('current_i',$current_i);
-		$_tpl->set('al_page',$al_page);
-
-		if($al_page)
-			$limite_mysql = LIMIT_PAGE * $al_page;
-		else
-			$limite_mysql = 0;
-
-		$al_shoot_array = get_aly_msg($_user['alaid'], LIMIT_PAGE, $limite_mysql);
-		$_tpl->set('al_shoot_array',$al_shoot_array);
+                $paginator = new Paginator(AlShoot::page($_user['alaid']));
+                $_tpl->set_ref('pg', $paginator);
 
 		$al_mbr = $ally->getMembers();
 		foreach($al_mbr as $key => $value)
@@ -149,7 +134,7 @@ case 'admin':
 			$al_array['al_rules'] = unparse($al_array['al_rules']);
 			$al_array['al_diplo'] = unparse($al_array['al_diplo']);
 
-			$droits = array();
+			$droits = [];
 			foreach(allyFactory::$_drts_all as $key => $value)
 				if ($ally->isAccesOk($_user['mid'], $key))
 					$droits[$key] = true;
@@ -160,16 +145,16 @@ case 'admin':
 			$al_in_mbr = $ally->getMembers();
 			$al_race = $ally->getRaces();
 
-			$arr_algrp = array(); // droits transmissibles pour le grade
+			$arr_algrp = []; // droits transmissibles pour le grade
 			if($_user['aetat'] == ALL_ETAT_INTD)
-				$arr_algrp = array(
-					ALL_ETAT_OK,ALL_ETAT_NOP,ALL_ETAT_INTD,ALL_ETAT_DPL,ALL_ETAT_RECR);
+				$arr_algrp = [
+					ALL_ETAT_OK,ALL_ETAT_NOP,ALL_ETAT_INTD,ALL_ETAT_DPL,ALL_ETAT_RECR];
 			else if($_user['aetat'] == ALL_ETAT_SECD)
-				$arr_algrp = array(
-					ALL_ETAT_OK,ALL_ETAT_NOP,ALL_ETAT_INTD,ALL_ETAT_DPL,ALL_ETAT_RECR,ALL_ETAT_SECD);
+				$arr_algrp = [
+					ALL_ETAT_OK,ALL_ETAT_NOP,ALL_ETAT_INTD,ALL_ETAT_DPL,ALL_ETAT_RECR,ALL_ETAT_SECD];
 			else if($_user['aetat'] == ALL_ETAT_CHEF)
-				$arr_algrp = array(
-					ALL_ETAT_OK,ALL_ETAT_NOP,ALL_ETAT_INTD,ALL_ETAT_DPL,ALL_ETAT_RECR,ALL_ETAT_SECD,ALL_ETAT_CHEF);
+				$arr_algrp = [
+					ALL_ETAT_OK,ALL_ETAT_NOP,ALL_ETAT_INTD,ALL_ETAT_DPL,ALL_ETAT_RECR,ALL_ETAT_SECD,ALL_ETAT_CHEF];
 			$_tpl->set('arr_algrp',$arr_algrp);
 
 			if ($_sub != '' && !$ally->isAccesOk($_user['mid'], $_sub)){ // action non autorisée pour ce membre
@@ -185,22 +170,22 @@ case 'admin':
 					break;
 
 				case 'param': //Param -> (description + ouvert)
-					$edit = array();
+					$edit = [];
 					$edit['descr'] = parse(request("al_descr", "string", "post"));
 					$edit['open'] = request("al_open", "bool", "post");
-					$_tpl->set('al_param',edit_aly($_user['alaid'],$edit));
+					$_tpl->set('al_param',Al::edit($_user['alaid'],$edit));
 					break;
 
 				case 'rules': //rules -> (règles du grenier)
-					$edit = array();
+					$edit = [];
 					$edit['rules'] = parse(request("al_rules", "string", "post"));
-					$_tpl->set('al_param',edit_aly($_user['alaid'],$edit));
+					$_tpl->set('al_param',Al::edit($_user['alaid'],$edit));
 					break;
 
 				case 'diplo': //diplo -> (règles du diplomate)
-					$edit = array();
+					$edit = [];
 					$edit['diplo'] = parse(request("al_diplo", "string", "post"));
-					$_tpl->set('al_param',edit_aly($_user['alaid'],$edit));
+					$_tpl->set('al_param',Al::edit($_user['alaid'],$edit));
 					break;
 
 				case 'accept':
@@ -216,7 +201,7 @@ case 'admin':
 							//Verifier que le membre demande bien.
 							$_tpl->set('al_bad_mid',true);
 						} else {
-							$ally->mod_mbr(array($mid => ALL_ETAT_NOOB));
+							$ally->mod_mbr([$mid => ALL_ETAT_NOOB]);
 
 							$text = $_tpl->get('modules/alliances/msg/accept.tpl',1);
 							$titre = $_tpl->get('modules/alliances/msg/titre.tpl',1);
@@ -235,9 +220,9 @@ case 'admin':
 					if($mbr_infos && $mid != $_user['mid']) {
 						if($mbr_infos['ambr_aid'] == $_user['alaid']
 							&& $mbr_infos['ambr_etat'] == ALL_ETAT_DEM) {
-							del_aly_mbr($_user['alaid'], $mid);
+							AlMbr::del($_user['alaid'], $mid);
 							// rembourser le postulant
-							Res::mod($mid, array(GAME_RES_PRINC => ALL_JOIN_PRICE));
+							Res::mod($mid, [GAME_RES_PRINC => ALL_JOIN_PRICE]);
 							
 							$text = $_tpl->get('modules/alliances/msg/refuse.tpl',1);
 							$titre = $_tpl->get('modules/alliances/msg/titre.tpl',1);
@@ -260,8 +245,8 @@ case 'admin':
 						$_tpl->set('need_conf', $mid); // confirmation
 					} else if($mbr_infos && $mid != $_user['mid']) {
 						if($mbr_infos['ambr_aid'] == $_user['alaid']) {
-							edit_aly($_user['alaid'], array('nb_mbr' => -1));
-							del_aly_mbr($_user['alaid'], $mid);
+							Al::edit($_user['alaid'], ['nb_mbr' => -1]);
+							AlMbr::del($_user['alaid'], $mid);
 							
 							$_tpl->set('al_ok',true);
 							$_tpl->set('al_pseudo',$mbr_infos['mbr_pseudo']);
@@ -290,7 +275,7 @@ case 'admin':
 				case 'perm':
 					$aletat = request("aletat", "array", "post");
 					// modifier toutes les permissions pour tout le monde
-					$cond = array();
+					$cond = [];
 					foreach($al_in_mbr as $result) {
 						$mid = $result['mbr_mid'];
 						// brider les membres qu'on peut modifier, et les droits qu'on peut leur affecter
@@ -337,7 +322,7 @@ case 'res': /* grenier */
 	$_tpl->set('_limite_grenier', $_limite_grenier);
 	$_tpl->set('liste_res', array_fill(1, get_conf('race_cfg', 'res_nb'), 0));
 
-	$res_nb = protect(request('res_nb', 'array', 'post'), array('int'));
+	$res_nb = protect(request('res_nb', 'array', 'post'), ['int']);
 	if(request('get', 'string', 'post') != '')
 		$coef = -1;
 	else if(request('put', 'string', 'post') != '')
@@ -349,9 +334,9 @@ case 'res': /* grenier */
 	
 	$aly_res = $ally->getRessources(); // Ressources du grenier
 
-	$res_limite = array(); /* si limite atteinte */
-	$res_taxed = array();
-	$res_ok = array();
+	$res_limite = []; /* si limite atteinte */
+	$res_taxed = [];
+	$res_ok = [];
 
 	if($coef != 0 and $ally->isGrenierAcces($_user['mid'])) { /* droit à utiliser le grenier */
 		foreach($res_nb as $type => $nb){
@@ -393,7 +378,7 @@ case 'res': /* grenier */
 				$_tpl->get_config("race/{$_user['race']}.config");
 				$msg = nl2br($_tpl->get("modules/admin/msg/pillage_$_act.txt.tpl",1));
 				$titre = $_tpl->get("modules/admin/msg/pillage.obj.tpl",1);
-				send_to_all(MBR_WELC, $titre, $msg, array(GRP_GARDE, GRP_DEMI_DIEU));
+				send_to_all(MBR_WELC, $titre, $msg, [GRP_GARDE, GRP_DEMI_DIEU]);
 			}
 
 			$res_taxed[$type] = $nb_tax;
@@ -405,7 +390,7 @@ case 'res': /* grenier */
 
 		/* maj des ressources */
 		Res::mod($_user['mid'], $res_ok, -1);
-		mod_aly_res($_user['alaid'], $_user['mid'], $res_taxed);
+		AlRes::mod($_user['alaid'], $_user['mid'], $res_taxed);
 	} // fin if ( droits grenier )
 
 	$_tpl->set('res_limit', $res_limite);
@@ -435,7 +420,7 @@ case 'resally': /* donner des ressources à un allié */
 		if(!$ally2) break;
 		$_tpl->set('arr_al2',$ally2->getInfos());
 		/* vérifier le pacte commercial valide */
-		$pactes = new diplo(array('aid'=>$_user['alaid'], 'full'=>true));
+		$pactes = new diplo(['aid'=>$_user['alaid'], 'full'=>true]);
 		if ($pactes->exist_pacte($al2, DPL_TYPE_COM) or $pactes->exist_pacte($al2, DPL_TYPE_MC)) {
 			/* ressources du grenier de l'allié */
 			$res2_array = $ally2->getRessources();
@@ -451,8 +436,8 @@ case 'resally': /* donner des ressources à un allié */
 
 	$aly_res = $ally->getRessources(); // ressources du grenier
 	$nb_aly_mbr = $ally->al_nb_mbr;
-	$res_limite = array(); /* si limite atteinte */
-	$res_taxed = array();
+	$res_limite = []; /* si limite atteinte */
+	$res_taxed = [];
 
 	foreach($res_nb as $type => $nb){
 		$nb *= -1; /* on retire du grenier */
@@ -494,7 +479,7 @@ case 'resally': /* donner des ressources à un allié */
 					$_tpl->get_config("race/{$_user['race']}.config");
 					$msg = nl2br($_tpl->get("modules/admin/msg/pillage_$_act.txt.tpl",1));
 					$titre = $_tpl->get("modules/admin/msg/pillage.obj.tpl",1);
-					send_to_all(MBR_WELC, $titre, $msg, array(GRP_GARDE, GRP_DEMI_DIEU));
+					send_to_all(MBR_WELC, $titre, $msg, [GRP_GARDE, GRP_DEMI_DIEU]);
 				}
 
 				$res_taxed[$type] = $nb_tax;
@@ -511,8 +496,8 @@ case 'resally': /* donner des ressources à un allié */
 	} // fin foreach $res_nb...
 
 	/* maj des ressources */
-	mod_aly_res($_user['alaid'], $ally2->al_mid, $res_nb);
-	mod_aly_res($al2, $_user['mid'], $res_taxed);
+	AlRes::mod($_user['alaid'], $ally2->al_mid, $res_nb);
+	AlRes::mod($al2, $_user['mid'], $res_taxed);
 
 	$_tpl->set('res_limit', $res_limite);
 	$_tpl->set('res_array',$aly_res);
@@ -533,8 +518,8 @@ case 'ressyn': // synthèse détaillée format tableau
 	$res_log = get_log_aly_res($_user['alaid'],0,0, true);
 
 	$nb_res = get_conf('race_cfg', 'res_nb');
-	$row_res = array();
-	$tcd = array();
+	$row_res = [];
+	$tcd = [];
 	for($id = 1; $id <= $nb_res; $id++) $row_res[$id] = 0;
 	foreach($res_log as $value) {
 		if(!isset($tcd[$value['mbr_mid']])) {
@@ -549,7 +534,7 @@ case 'ressyn': // synthèse détaillée format tableau
 
 case 'new': // créer une alliance
 	
-	$aly_res = Res::get($_user['mid'], array(GAME_RES_PRINC));
+	$aly_res = Res::get($_user['mid'], [GAME_RES_PRINC]);
 	$name = request("al_name", "string", "post");
 	
 	if($_user['aetat'] != ALL_ETAT_NULL)
@@ -561,10 +546,10 @@ case 'new': // créer une alliance
 	else if(!strverif($name) || !$name)
 		$_tpl->set('al_name_not_correct',true);
 	else {
-		$al_id = add_aly($_user['mid'], $name);
+		$al_id = Al::add($_user['mid'], $name);
 		exec("cp img/al_logo/0.png img/al_logo/$al_id.png");
-		Res::mod($_user['mid'], array(GAME_RES_PRINC => ALL_CREATE_PRICE), -1);
-		add_aly_mbr($al_id, $_user['mid'], ALL_ETAT_CHEF);
+		Res::mod($_user['mid'], [GAME_RES_PRINC => ALL_CREATE_PRICE], -1);
+		AlMbr::add($al_id, $_user['mid'], ALL_ETAT_CHEF);
 		$_ses->update_aly();
 		$_tpl->set('al_new',$al_id);
 	}
@@ -594,7 +579,7 @@ case 'join': // demander à rejoindre une alliance
 			else if($_user['points'] < ALL_MIN_PTS) /* Pas assez de points */
 				$_tpl->set('al_not_enought_pts',ALL_MIN_PTS);
 			else {
-				$have_res = Res::get($_user['mid'], array(GAME_RES_PRINC));
+				$have_res = Res::get($_user['mid'], [GAME_RES_PRINC]);
 				$chef = $ally->getChef();
 
 				if($have_res[GAME_RES_PRINC] < ALL_JOIN_PRICE) /* Pas assez d'or */
@@ -607,8 +592,8 @@ case 'join': // demander à rejoindre une alliance
 				else {
 					require_once("lib/msg.lib.php");
 			
-					add_aly_mbr($al_aid, $_user['mid'], ALL_ETAT_DEM);
-					Res::mod($_user['mid'], array(GAME_RES_PRINC => ALL_JOIN_PRICE), -1);
+					AlMbr::add($al_aid, $_user['mid'], ALL_ETAT_DEM);
+					Res::mod($_user['mid'], [GAME_RES_PRINC => ALL_JOIN_PRICE], -1);
 					$_ses->update_aly();
 					/* envoyer un msg au chef */
 					$text = $_tpl->get('modules/alliances/msg/demande.tpl',1);
@@ -639,8 +624,8 @@ case 'part': // quitter une alliance
 		if($ally && $_user['mid'] == $ally->al_mid) /* le chef ne peut pas quitter */
 			$_tpl->set('al_part', false);
 		else {
-			del_aly_mbr($_user['alaid'],$_user['mid']);
-			edit_aly($_user['alaid'], array('nb_mbr' => -1));
+			AlMbr::del($_user['alaid'],$_user['mid']);
+			Al::edit($_user['alaid'], ['nb_mbr' => -1]);
 			$_ses->update_aly();
 			$_tpl->set('al_part', true);
 		}
@@ -650,7 +635,7 @@ case 'part': // quitter une alliance
 case  'cancel': // annuler une demande de rejoindre une alliance
 	
 	if($_user['aetat'] == ALL_ETAT_DEM) {
-		del_aly_mbr($_user['alaid'],$_user['mid']);
+		AlMbr::del($_user['alaid'],$_user['mid']);
 		$_tpl->set('al_cancel', true);
 	} else
 		$_tpl->set('al_cancel',false);
@@ -670,7 +655,7 @@ default: // liste des alliances créées
 	
 	$limite_mysql = $al_page ? LIMIT_PAGE * $al_page : 0;
 	
-	$cond = array('limite2'=>$limite_mysql, 'limite1'=>LIMIT_PAGE, 'mini3' => true);
+	$cond = ['limite2'=>$limite_mysql, 'limite1'=>LIMIT_PAGE, 'mini3' => true];
 	
 	$name = request("name", "string", "post", request("al_name", "string", "get"));
 	if($name)
