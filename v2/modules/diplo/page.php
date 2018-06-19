@@ -4,7 +4,6 @@ if(!can_d(DROIT_PLAY)) {
 	$_tpl->set("need_to_be_loged",true);
 } else {
 
-require_once ('lib/diplo.lib.php');
 require_once ('lib/alliances.lib.php');
 require_once ('lib/member.lib.php');
 require_once ('lib/msg.lib.php');
@@ -14,8 +13,8 @@ $_tpl->set("module_tpl","modules/diplo/diplo.tpl");
 $_tpl->set("act",$_act);
 $_tpl->set("sub",$_sub);
 // constantes
-$_tpl->set('max_pactes', diplo::$max);
-$_tpl->set('prix_pactes', diplo::$prix);
+$_tpl->set('max_pactes', diplo::MAX);
+$_tpl->set('prix_pactes', diplo::PRIX);
 // droit de diplomate ?
 $droits = array();
 if($_user['aetat'] != ALL_ETAT_NULL and $_user['aetat'] != ALL_ETAT_DEM){
@@ -74,7 +73,7 @@ case 'add': // al1 propose l'alliance à al2
 	
 				if ($dpl_add && $type) {
 					// vérifier que mon alliance n'a pas déjà atteint son quota de pactes
-					if ($al1_pactes->count($type) >= diplo::$max[$type])
+					if ($al1_pactes->count($type) >= diplo::MAX[$type])
 						$_tpl->set('err','nb_pactes ('.$al1_pactes->count($type).')');
 					else {
 						// si ok ajouter le pacte : dpl_al2 propose le pacte à dpl_al1=al2
@@ -175,32 +174,17 @@ case 'shoot':
 		if($_sub == 'post') {
 			$msg = request('pst_msg', 'string', 'post');
 			if($msg)
-				$_tpl->set('dpl_msg_post',add_diplo_msg($did,parse($msg),$_user['mid']));
+				$_tpl->set('dpl_msg_post',DplShoot::add($did,parse($msg),$_user['mid']));
 		} else if($_sub == "del") {
 			$msgid = request('msgid', 'uint', 'get');
 			if($msgid)
-				$_tpl->set('dpl_msg_del',del_diplo_msg($did,$msgid,$_user['mid'],$chef));
+				$_tpl->set('dpl_msg_del',DplShoot::del($did,$msgid,$_user['mid'],$chef));
 		}
 		
 		$_tpl->set('dpl_admin',$chef);
-	
-		$dpl_page = request('dpl_page', 'uint', 'get');
-		$dpl_nb = count_diplo_msg($_user['alaid']);
-		$_tpl->set("dpl_nb",$dpl_nb);
 		
-		$current_i = $dpl_page - LIMIT_NB_PAGE/2;
-		$current_i = 0+round($current_i < 0 ? 0 : $current_i)*LIMIT_PAGE;
-	
-		$_tpl->set('current_i',$current_i);
-		$_tpl->set('dpl_page',$dpl_page);
-
-		if($dpl_page)
-			$limite_mysql = LIMIT_PAGE * $dpl_page;
-		else
-			$limite_mysql = 0;
-
-		$dpl_shoot_array = get_diplo_msg($did, LIMIT_PAGE, $limite_mysql);
-		$_tpl->set('dpl_shoot_array',$dpl_shoot_array);
+                $paginator = new Paginator(DplShoot::get($did));
+                $_tpl->set_ref('pg', $paginator);
 
 		$dpl_mbr = $ally->getMembers();
 		/*foreach($dpl_mbr as $key => $value)

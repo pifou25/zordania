@@ -36,4 +36,3 @@ $_tpl->set("forteresse", $forteresse);
 $_tpl->set("imgvlg", $imgvlg);
 
 }
-?>

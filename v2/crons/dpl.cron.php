@@ -18,7 +18,7 @@ function glob_dpl() {
 			$al = Al::get($pacte['dpl_al1']);
 			$_ally[$pacte['dpl_al1']]['al'] = $al[0];
 			$_ally[$pacte['dpl_al1']]['grenier'] = AlRes::get($pacte['dpl_al1']);
-			$manque_res_al1 = array_compare($_ally[$pacte['dpl_al1']]['grenier'], diplo::$prix[$pacte['dpl_type']]);
+			$manque_res_al1 = array_compare($_ally[$pacte['dpl_al1']]['grenier'], diplo::PRIX[$pacte['dpl_type']]);
 		}
 		if (!isset($_ally[$pacte['dpl_al2']])) {
 			$al = Al::get($pacte['dpl_al2']);
@@ -26,13 +26,13 @@ function glob_dpl() {
 			if(empty($al)) continue;
 			$_ally[$pacte['dpl_al2']]['al'] = $al[0];
 			$_ally[$pacte['dpl_al2']]['grenier'] = AlRes::get($pacte['dpl_al2']);
-			$manque_res_al2 = array_compare($_ally[$pacte['dpl_al2']]['grenier'], diplo::$prix[$pacte['dpl_type']]);
+			$manque_res_al2 = array_compare($_ally[$pacte['dpl_al2']]['grenier'], diplo::PRIX[$pacte['dpl_type']]);
 		}
 
 		// décompter les 2 grenier du prix du pacte si OK
 		// pour l'instant c'est un membre par défaut qui retire les ressources
 		if (empty($manque_res_al1) and empty($manque_res_al2)) {
-			foreach(diplo::$prix[$pacte['dpl_type']] as $res_type => $nb) {
+			foreach(diplo::PRIX[$pacte['dpl_type']] as $res_type => $nb) {
 				$_ally[$pacte['dpl_al1']]['grenier'][$res_type] -= $nb;
 				AlRes::add($pacte['dpl_al1'], $_ally[$pacte['dpl_al2']]['al']['al_mid'], $res_type, -$nb);
 				$_ally[$pacte['dpl_al2']]['grenier'][$res_type] -= $nb;
@@ -40,7 +40,7 @@ function glob_dpl() {
 			}
 			// MAJ état pacte
 			$cond = array('etat'=>DPL_ETAT_OK, 'deb'=>'now', 'did'=>$did);
-			diplo::edit($cond);
+			Dpl::edit($cond);
 		} else {
 			$_tpl->set('pacte',$pacte);
 			// si manque de ressource dans l'1 des 2 greniers : msg dans la shoot!

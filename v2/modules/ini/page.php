@@ -63,8 +63,7 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 	else if(!can_d(DROIT_ANTI_FLOOD) and !$_races[$race]) // accès limité
 		$race = 0;
 
-	$infos_races = get_race_info();
-	$infos_races = index_array($infos_races, "mbr_race");
+	$infos_races = countRaces();
 	$regions_infos = get_regions_infos($_regions);
 
 	/* virer les races inutiles = inaccessible au joueur lambda

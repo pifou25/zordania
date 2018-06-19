@@ -1,41 +1,5 @@
 <?php
 
-	
-/* Permet de détecter les multis comptes */
-function get_infos_ip($ip = '',$gid = 0)
-{
-
-	global $_sql;
-
-	$gid = protect($gid, "uint");
-	$ip = protect($ip, 'string');
-
-	if(!$ip){
-		$sql="SELECT COUNT(*) as ip_nb,mbr_lip FROM ".$_sql->prebdd."mbr GROUP BY mbr_lip HAVING ip_nb > 1";
-		$temp_array = $_sql->make_array($sql);
-	
-		if(!$temp_array)
-			return array();
-		
-		$where_ip = "(";
-		foreach($temp_array as $key => $value) {
-			$where_ip .= " OR mbr_lip = '".$value['mbr_lip']."'";
-		}
-			
-		$where_ip = str_replace('( OR','(',$where_ip).')';
-	}else
-		$where_ip = " mbr_lip = '$ip' ";
-			
-	$sql = "SELECT mbr_pseudo,mbr_mid,mbr_mail,mbr_login,mbr_lip,mbr_ldate ";
-	$sql.= "FROM ".$_sql->prebdd."mbr ";
-	$sql.= "WHERE ".$where_ip." ";
-	if($gid != GRP_DIEU)
-		$sql.= " AND mbr_gid NOT IN (".GRP_GARDE.",".GRP_PRETRE.",".GRP_DEMI_DIEU.",".GRP_DIEU.",".GRP_DEV.",".GRP_ADM_DEV.") ";
-	$sql.= "ORDER BY mbr_lip,mbr_pseudo,mbr_ldate DESC";
-	
-	return $_sql->make_array($sql);
-}
-
 /**
  * vérifier sur chaque membre de $mbr_array s'il peut attaquer / défendre qq1
  * @param type $mbr_array = liste des membres à enrichir
@@ -146,33 +110,6 @@ function upload_logo_mbr($mid, $fichier)
 	}
 }
 
-/* Récupere la position */
-function get_mbr_pos($cond) {
-	global $_sql;
-	
-	$mid = 0;
-	$pseudo = "";
-	
-	if(isset($cond['mid']))
-		$mid = protect($cond['mid'], "uint");
-	else if(isset($cond['pseudo']))
-		$pseudo = protect($cond['pseudo'], "string");
-	else
-		return array();
-	
-	$sql = "SELECT mbr_mid, mbr_gid, mbr_race, mbr_mapcid, map_x, map_y, mbr_pseudo, mbr_points ";
-	$sql.= "FROM ".$_sql->prebdd."mbr ";
-	$sql.= "JOIN ".$_sql->prebdd."map ON mbr_mapcid = map_cid ";
-	$sql.= "WHERE ";
-	
-	if($mid) 
-		$sql.= "mbr_mid = $mid ";
-	else
-		$sql.= "mbr_pseudo LIKE '%$pseudo%' LIMIT 1 ";
-	
-	return $_sql->make_array($sql);
-}
-
 function get_mbr_logo($mid) {
 	$mid = protect($mid, "uint");
 	
@@ -183,25 +120,6 @@ function get_mbr_logo($mid) {
 		return 'img/mbr_logo/0.png';
 }
 
-function get_race_info($races = array()) {
-	global $_sql, $_races;
-
-	$races = protect($races, "array");
-
-	$sql = "SELECT mbr_race,COUNT(*) as race_nb ";
-	$sql.= "FROM ".$_sql->prebdd."mbr ";
-	if($races) {
-		$sql.= "WHERE ";
-		foreach($races as $race_value) {
-			$race_id = protect($race_id, "uint");
-			$sql.= "mbr_race = $race_id OR ";	
-		}
-		$sql = substr($sql, 0, strlen($sql) - 3);
-	}
-	$sql.= "GROUP BY mbr_race ORDER BY mbr_race ASC";
-
-	return $_sql->make_array($sql);
-}
 
 function calc_dst($x1, $y1, $x2, $y2) {
 	$x1 = protect($x1, "uint");

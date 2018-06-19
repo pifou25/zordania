@@ -39,8 +39,8 @@ if($_act == "lite" || $_act == "ajax") {
 			$map_y = $coord['map_y'] - $diff / 2;
 		}
 	} else if($map_pseudo) {
-		$cond = array("pseudo" => $map_pseudo);
-		$mbr_array = get_mbr_pos($cond);
+		$cond = ['pseudo' => $map_pseudo, 'limit1' => 1, 'list' => true];
+		$mbr_array = Mbr::get($cond);
 		if($mbr_array && !($mbr_array[0]['mbr_race'] == 6 || $mbr_array[0]['mbr_gid'] == GRP_PNJ)) {
 			$map_x = $mbr_array[0]['map_x'] - $diff / 2;
 			$map_y = $mbr_array[0]['map_y'] - $diff / 2;

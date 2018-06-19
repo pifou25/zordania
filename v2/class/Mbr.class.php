@@ -191,7 +191,7 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
                     $req->where("mbr_mid", $mid);
             }
             if ($mid_excl)
-                $req->where("mbr_mid", '<>', $mid);
+                $req->where("mbr_mid", '<>', $mid_excl);
             if ($parrain)
                 $req->where("mbr_parrain", $parrain);
             if ($login)
@@ -245,6 +245,42 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
         }
 
         return $req->get()->toArray();
+    }
+
+    static function countRaces(array $races = []) {
+    $req = Mbr::selectRaw('mbr_race,COUNT(*) as race_nb');
+    if(!empty($races)){
+            $req->whereIn('mbr_race', $races);
+    }
+     $result = $req->groupBy('mbr_race')->orderBy('mbr_race', 'asc')->get()->toArray();
+     return index_array($result, 'mbr_race');
+}
+
+
+/* Permet de détecter les multis comptes */
+static function getIps(string $ip = '', int $gid = 0)
+{
+
+	if(!$ip){
+            $temp_array = Mbr::selectRaw('mbr_lip')
+                    ->groupBy('mbr_lip')->havingRaw('COUNT(mbr_mid) > 1')->get()->toArray();
+	
+		if(empty($temp_array))
+			return [];
+		
+		foreach($temp_array as $value) {
+			$where_ip[] = $value['mbr_lip'];
+		}
+			
+	}else
+		$where_ip[] = $ip;
+
+        $req = Mbr::select('mbr_pseudo','mbr_mid','mbr_mail','mbr_login','mbr_lip','mbr_ldate')
+                ->whereIn('mbr_lip', $where_ip);
+	if($gid != GRP_DIEU && $gid != GRP_DEMI_DIEU){
+		$req->whereNotIn('mbr_gid', [GRP_GARDE,GRP_PRETRE,GRP_DEMI_DIEU,GRP_DIEU,GRP_DEV,GRP_ADM_DEV]);            
+        }
+        return $req->orderBy('mbr_lip')->orderBy('mbr_ldate', 'desc')->get()->toArray();
     }
 
     /* ajouter un joueur */

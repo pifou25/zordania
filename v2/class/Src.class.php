@@ -46,7 +46,7 @@ class Src extends Illuminate\Database\Eloquent\Model {
         if (!empty($src)) {
             $req->whereIn('src_type', $src);
         }
-        return $req->delete();
+        return $req->get()->toArray();
     }
 
     

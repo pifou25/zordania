@@ -31,17 +31,17 @@
 
 
 	
-	<if cond='is_array({dpl_shoot_array})'>
-		<for cond='{i} = {current_i} ; {i} < {dpl_nb} AND {i}-{current_i} < LIMIT_NB_PAGE*LIMIT_PAGE; {i}+=LIMIT_PAGE'>
-			<if cond='{i} / LIMIT_PAGE != {dpl_page}'>
-				<a href="diplo-shoot.html?did={pacte[dpl_did]}&amp;dpl_page=<math oper='({i} / LIMIT_PAGE)' />"><math oper='(({i} / LIMIT_PAGE)+1)' /></a>
-			</if>
-			<else>
-				<math oper='(({i} / LIMIT_PAGE)+1)' />
-			</else>
-		</for>
+	<if cond='is_array({pg->get})'>
+	<p class="pages">
+	<foreach cond="{pg->links} as {page}">
+		<if cond='is_numeric({page})'>
+		<a href="diplo-shoot.html?did={pacte[dpl_did]}&amp;page={page}">{page}</a>
+		</if>
+		<else>{page}</else>
+	</foreach>
+	</p>
 
-		<foreach cond='{dpl_shoot_array} as {result}'>
+		<foreach cond='{pg->get} as {result}'>
 			<div class="block" id="{result[dpl_shoot_msgid]}">
 			<img class="blason" title="{result[mbr_pseudo]}" src="img/mbr_logo/{result[dpl_shoot_mid]}.png" />
 			<h4><zurlmbr mid="{result[dpl_shoot_mid]}" pseudo="{result[mbr_pseudo]}"/> le {result[dpl_shoot_date_formated]}<br/></h4>
@@ -58,13 +58,13 @@
 			<br />
 		</foreach>
 		
-		<for cond='{i} = {current_i} ; {i} < {dpl_nb} AND {i}-{current_i} < LIMIT_NB_PAGE*LIMIT_PAGE; {i}+=LIMIT_PAGE'>
-			<if cond='{i} / LIMIT_PAGE != {dpl_page}'>
-				<a href="diplo-shoot.html?did={pacte[dpl_did]}&amp;dpl_page=<math oper='({i} / LIMIT_PAGE)' />"><math oper='(({i} / LIMIT_PAGE)+1)' /></a>
-			</if>
-			<else>
-				<math oper='(({i} / LIMIT_PAGE)+1)' />
-			</else>
-		 </for>
+	<p class="pages">
+	<foreach cond="{pg->links} as {page}">
+		<if cond='is_numeric({page})'>
+		<a href="diplo-shoot.html?did={pacte[dpl_did]}&amp;page={page}">{page}</a>
+		</if>
+		<else>{page}</else>
+	</foreach>
+	</p>
 	</if>
 </elseif>

@@ -8,7 +8,6 @@ require_once("lib/msg.lib.php");
 require_once("lib/alliances.lib.php");
 require_once("lib/res.lib.php");
 require_once("lib/member.lib.php");
-require_once("lib/diplo.lib.php");
 require_once("lib/parser.lib.php");
 $smileys_base = getSmileysBase();
 $smileys_more = getSmileysMore($smileys_base);

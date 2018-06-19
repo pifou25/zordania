@@ -45,8 +45,8 @@ if(!$type && is_numeric($page) && $page >= 0 && $page <= 26)
 	$_tpl->set('man_url',"manual.html?page=$page");
 	// diplomatie
 	if ($page == 10) {
-		$_tpl->set('dpl_prix', diplo::$prix);
-		$_tpl->set('dpl_max', diplo::$max);
+		$_tpl->set('dpl_prix', diplo::PRIX);
+		$_tpl->set('dpl_max', diplo::MAX);
 		$_tpl->set('dpl_proba', diplo::DUREE_PROBA);
 		$_tpl->set('dpl_tax', diplo::DPL_TAX);
 	}

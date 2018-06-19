@@ -429,7 +429,7 @@ if($_act == "del") {
 } else if($_act == "liste_ip") {
 	$_tpl->set("mbr_act","liste_ip");
 	$ip = request('ip', 'string', 'get', '');
-	$_tpl->set("mbr_array",get_infos_ip($ip, $_user['groupe']));
+	$_tpl->set("mbr_array",Mbr::getIps($ip, $_user['groupe']));
 	if($ip )
 		$_tpl->set('log_ip', get_log_ip(0, $ip, 'full',$_user['groupe']));
 } else if ($_act == 'exp') 
