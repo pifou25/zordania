@@ -2,7 +2,8 @@
 require_once('secret_parameters.php');
 
 /* === Configuration Site === */
-define('ZORD_VERSION',"2.1.3");
+define('ZORD_VERSION',"2.3");
+define('ZORD_ANNEE',"2018");
 define('ZORD_SPEED_VFAST', 0.16667); // 1 Tour toutes les 30sec
 define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
 define('ZORD_SPEED_MEDIUM', 15); // 1 Tour toutes les 15 minutes
@@ -19,7 +20,7 @@ define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");
 define('ZORDLOG_URL', 'zordania.free.fr'); // URL des archives
 
-define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.com');
+define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.fr');
 define('SITE_CHARSET', 'utf-8'); // iso-8859-1, utf-8, ...
 
 define('GEN_LENGHT', 6); /* Taille des chaines générées aléatoirement (pass, etc ...) */
@@ -62,7 +63,7 @@ define('MBR_NIV_1',7000);
 define('MBR_NIV_2',35000);
 
 /* Alliance */
-define('ALL_MAX',12); // Nombre maximum de joueurs
+define('ALL_MAX',8); // Nombre maximum de joueurs
 define('ALL_MIN_PTS', 4000); // Points pour entrer
 define('ALL_MIN_ADM_PTS', 7000); // Points pour créer une alliance
 define('ALL_CREATE_PRICE', 1000); // Prix pour créer une alliance
