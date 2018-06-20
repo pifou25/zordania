@@ -180,15 +180,39 @@ class session
 		
 		/* alliance */
 		if($this->get("login") != "guest") {
-			$sql = "SELECT ambr_aid, ambr_etat, al_mid, al_name ";
+			$sql = "SELECT ambr_aid, ambr_etat, ambr_date, al_mid, al_name ";
 			$sql.= "FROM ".$this->sql->prebdd."al_mbr ";
 			$sql.= "INNER JOIN ".$this->sql->prebdd."al ON ambr_aid = al_aid ";
 			$sql.= "WHERE ambr_mid = $mid"; //AND ambr_etat <> ".ALL_ETAT_DEM;
 			
 			$array = $this->sql->make_array($sql);
 			if($array) {
+			//temps restant avant acces grenier
+				$now = time();
+				$space = explode(" ", $array[0]['ambr_date']); //sépare la date de l'heure
+				//date
+				$date = explode("-", $space[0]); // YYYY-MM-DD
+					$annee = $date[0];
+					$mois = $date[1];
+					$jours = $date[2];
+				//heure
+				$tim = explode(":", $space[1]); //h:m:s
+					$h = $tim[0];
+					$min  = $tim[1];
+					$sec = $tim[2];
+				
+				//calcul
+				$i_restantes = $min - date(i);
+				$H_restantes = $h - date(H);
+				$d_restants = $jours + ALL_NOOB_TIME - date(d);
+
+				$timeleft = ", reste : $d_restants J $H_restantes h $i_restantes min" ;
+				if ($d_restants<0 || $H_restantes<0 )
+					$timeleft = " (Temps terminé, demandez l'accès à votre chef!)" ;
 				$this->set("alaid", $array[0]['ambr_aid']);
 				$this->set("aetat", $array[0]['ambr_etat']);
+				$this->set("atimeleft", $timeleft);
+				$this->set("adate", $array[0]['ambr_date']);
 				$this->set("achef", $array[0]['al_mid']);
 			}
 		}

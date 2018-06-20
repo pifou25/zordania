@@ -68,7 +68,7 @@ define('ALL_MIN_PTS', 4000); // Points pour entrer
 define('ALL_MIN_ADM_PTS', 7000); // Points pour créer une alliance
 define('ALL_CREATE_PRICE', 1000); // Prix pour créer une alliance
 define('ALL_JOIN_PRICE', 200); //Prix pour rejoindre une alliance
-define('ALL_NOOB_TIME', 3); // Temps en jour pendant le quel on reste "NOOB"
+define('ALL_NOOB_TIME', 1); // Temps en jour pendant le quel on reste "NOOB"
 define('ALL_MIN_DEP', 10); // Dépot minimal
 
 define('ALL_TAX',10); // Taxe du grenier (%)
