@@ -341,7 +341,7 @@ static function getIps(string $ip = '', int $gid = 0)
 
         Mbr::edit($mid, $edit);
 
-        ini_map($mid, $cid);
+        Map::init($cid);
 
         // légion village avec ses unités
         $lid = Leg::add($mid, $cid, LEG_ETAT_VLG, $vlg);
@@ -358,7 +358,7 @@ static function getIps(string $ip = '', int $gid = 0)
     /* Réinitialise un compte */
 
     static function reinit($mid, $pseudo, $vlg, $race, $cid, $oldcid, $gid, $sexe = 1) {
-        cls_map($mid, $oldcid);
+        Map::reset($oldcid);
         cls_aly($mid);
         UntTodo::clear($mid);
         Leg::del($mid);
@@ -436,7 +436,7 @@ static function getIps(string $ip = '', int $gid = 0)
         cls_histo($mid);
         // cls_msg($mid); // on garde les messages
         cls_vld($mid);
-        cls_map($mid, $cid);
+        Map::reset($cid);
         cls_nte($mid);
         //cls_frm($mid);
 

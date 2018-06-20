@@ -7,7 +7,6 @@ else {
 
 $_tpl->set("module_tpl","modules/carte/carte.tpl");
 
-require_once('lib/map.lib.php');
 require_once('lib/member.lib.php');
 require_once('lib/unt.lib.php');
 
@@ -33,7 +32,7 @@ if($_act == "lite" || $_act == "ajax") {
 	$diff = ($_display == "module") ? 30 : 20;
 
 	if($map_cid != -1) {
-		$coord = get_square($map_cid, true);
+		$coord = Map::getGen($map_cid, ['x'=>$_user['map_x'], 'y'=>$_user['map_y']]);
 		if($coord) {
 			$map_x = $coord['map_x'] - $diff / 2;
 			$map_y = $coord['map_y'] - $diff / 2;
@@ -85,13 +84,13 @@ if($_act == "view") {
 		$map_x = request("map_x", "uint", "get", -1);
 		$map_y = request("map_y", "uint", "get", -1);
 		if($map_x != -1 and $map_y != -1)
-			$map_cid = get_cid($map_x,$map_y);
+			$map_cid = Map::getCid($map_x,$map_y);
 	}
 
-	$leg_array = leg_can_atq_lite(get_square_leg($map_cid), $_user['pts_arm'], $_user['mid'], $_user["groupe"], $_user['alaid'], $dpl_atq_arr);
+	$leg_array = leg_can_atq_lite(Map::getLegGen([$map_cid]), $_user['pts_arm'], $_user['mid'], $_user["groupe"], $_user['alaid'], $dpl_atq_arr);
 	$_tpl->set("leg_array", $leg_array);
 
-	$map_array = get_square($map_cid,true);
+	$map_array = Map::getGen($map_cid, ['x'=>$_user['map_x'], 'y'=>$_user['map_y']]);
 
 	if (isset($map_array['mbr_mid']) && $map_array['mbr_mid']) {
 		$mbr = Mbr::getFull($map_array['mbr_mid']);
@@ -125,7 +124,7 @@ if($_act == "view") {
 		$max_y2 = $map_y + 19;
 	}
 
-	$map_array = get_map($_user["mid"], $map_x,  $map_y, $max_x2, $max_y2);
+	$map_array = Map::get($_user["mid"], $map_x,  $map_y, $max_x2, $max_y2);
 	$_tpl->set('map_array',$map_array);
 }
 }

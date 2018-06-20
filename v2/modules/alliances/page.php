@@ -299,7 +299,7 @@ case 'admin':
 					if(!$ok)
 						$_tpl->set('al_del','need_ok');
 					else
-						$_tpl->set('al_del',del_aly($_user['alaid']));
+						$_tpl->set('al_del',Al::del($_user['alaid']));
 					break;
 
 				default:
@@ -401,8 +401,7 @@ case 'res': /* grenier */
 	$_tpl->set("have_res", $have_res);
 	$_tpl->set('res_array',$aly_res);
 	
-	$res_log = get_log_aly_res($_user['alaid'],LIMIT_PAGE);
-	$_tpl->set('log_array',$res_log);
+	$_tpl->set('log_array',new Paginator( AlResLog::get($_user['alaid'])));
 
 	$_tpl->set('al_sub',$_sub);
 	break;
@@ -505,19 +504,19 @@ case 'resally': /* donner des ressources à un allié */
 	$_tpl->set('res_array',$aly_res);
 	$_tpl->set('res_ok',$res_nb);
 
-	$res_log = get_log_aly_res($_user['alaid'],LIMIT_PAGE);
+	$res_log = AlResLog::get($_user['alaid'],LIMIT_PAGE);
 	$_tpl->set('log_array',$res_log);
 
 	$_tpl->set('al_sub',$_sub);
 	break;
 
 case 'reslog': // historique du grenier
-	$res_log = get_log_aly_res($_user['alaid'],2000); // (?) pas de pagination 
+	$res_log = AlResLog::get($_user['alaid'],2000); // (?) pas de pagination 
 	$_tpl->set('log_array',$res_log);
 	break;
 
 case 'ressyn': // synthèse détaillée format tableau
-	$res_log = get_log_aly_res($_user['alaid'],0,0, true);
+	$res_log = AlResLog::get($_user['alaid'],0,0, true);
 
 	$nb_res = get_conf('race_cfg', 'res_nb');
 	$row_res = [];

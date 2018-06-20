@@ -4,7 +4,7 @@
  * grenier d'Alliances
  * lien avec l'alliance : al.al_aid = ares.ares_aid
  */
-class AlRes extends Illuminate\Database\Eloquent\Model {
+class AlResLog extends Illuminate\Database\Eloquent\Model {
 
     /**
      * Indicates if the model should be timestamped.
@@ -23,7 +23,7 @@ class AlRes extends Illuminate\Database\Eloquent\Model {
      * @param bool $synth
      * @return type
      */
-    static function get(int $aid, int $limite2, int $limite1 = 0, bool $synth = false) {
+    static function get(int $aid, int $limite2 = 0, int $limite1 = 0, bool $synth = false) {
 
         if ($synth) {
             $sql = "mbr_pseudo, mbr_gid,mbr_mid,arlog_mid,arlog_type,SUM(arlog_nb) as total,arlog_ip ";
@@ -43,8 +43,10 @@ class AlRes extends Illuminate\Database\Eloquent\Model {
             $req->orderBy('arlog_date', 'desc');
             if ($limite1) {
                 $req->offset($limite1)->limit($limite2);
+            } else if($limite2) {
+                $req->limit($limite2);
             } else {
-                $req->limit($limite1);
+                return $req; // return query as it for paginator
             }
         }
 

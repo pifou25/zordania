@@ -181,7 +181,7 @@
 	
 	<h3 id="res_histo">Dernières actions</h3>
 	<ul>
-	<foreach cond="{log_array} as {result}">
+	<foreach cond="{log_array->get} as {result}">
 	<li>
 	Le {result[arlog_date_formated]} - 
    <if cond="isset({result[mbr_gid]})">
@@ -200,13 +200,16 @@
 	</li>
 	</foreach>
 	</ul>
-	<a href="admin-view.html?module=alliances&amp;al_aid={al_array[al_aid]}&amp;al_page=<math oper="{al_page}-1" />#res_histo">
-	<img src="img/left.png" alt="<<" />
-	</a>
-	-
-	<a href="admin-view.html?module=alliances&amp;al_aid={al_array[al_aid]}&amp;al_page=<math oper="{al_page}+1" />#res_histo">
-	<img src="img/right.png" alt=">>" />
-	</a>
+              
+        <p class="pages">
+           <foreach cond="{log_array->links} as {page}">
+                <if cond='is_numeric({page})'>
+                <a href="admin-view.html?module=alliances&amp;al_aid={al_array[al_aid]}&amp;page={page}">{page}</a>
+                </if>
+                <else>{page}</else>
+           </foreach>
+        </p>
+
 	<hr/>
 	<h3>Description</h3>
   	{al_array[al_descr]}

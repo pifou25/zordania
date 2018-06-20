@@ -12,7 +12,6 @@ require_once(SITE_DIR . 'lib/unt.lib.php');
 require_once(SITE_DIR . 'lib/member.lib.php');
 require_once(SITE_DIR . "lib/res.lib.php");
 require_once(SITE_DIR . "lib/src.lib.php");
-require_once(SITE_DIR . "lib/map.lib.php");
 require_once(SITE_DIR . "lib/alliances.lib.php");
 require_once(SITE_DIR . "lib/mch.lib.php");
 require_once(SITE_DIR . "lib/war.lib.php");
@@ -61,7 +60,7 @@ foreach($mid_array as $_user)
 		cls_atq($mid);
 		cls_histo($mid);
 		cls_vld($mid);
-		cls_map($mid, $cid);
+		Map::reset($cid);
 		//cls_frm($mid);
 
 		/* réinitialise la carte pour $mid */ /* , mbr_pts_armee = 0 */

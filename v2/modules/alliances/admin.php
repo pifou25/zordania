@@ -90,16 +90,7 @@ elseif($_act == 'view')
 		$_tpl->set('al_array',$ally->getInfos());
 		$_tpl->set('res_array',$ally->getRessources());
 	
-		$al_page = request("al_page", "uint", "get");
-		$_tpl->set('al_page',$al_page);
-		$limite_page = LIMIT_PAGE;
-		if($al_page)
-			$limite_mysql = $limite_page * $al_page;
-		else
-			$limite_mysql = 0;
-	
-		$res_log = get_log_aly_res($al_aid, LIMIT_PAGE, $limite_mysql);
-		$_tpl->set('log_array',$res_log);
+		$_tpl->set('log_array',new Paginator(AlResLog::get($al_aid)));
 	
 		$_tpl->set('al_logo',$ally->getLogo());
 		$_tpl->set('al_mbr',$ally->getMembers());

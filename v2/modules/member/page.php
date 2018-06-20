@@ -11,8 +11,6 @@ $_tpl->set("smileys_more", $smileys_more);
 
 require_once("lib/rec.lib.php");
 require_once("lib/vld.lib.php");
-require_once("lib/member.lib.php");
-require_once("lib/map.lib.php");
 $mid = request("mid", "uint", "get");
 
 
@@ -70,7 +68,6 @@ else if(!$_act) {
 			require_once("lib/unt.lib.php");
 			require_once("lib/res.lib.php");
 			require_once("lib/src.lib.php");
-			require_once("lib/map.lib.php");
 			require_once("lib/alliances.lib.php");
 			require_once("lib/mch.lib.php");
 			require_once("lib/war.lib.php");

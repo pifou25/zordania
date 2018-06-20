@@ -6,7 +6,6 @@ if(!can_d(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else
 {
-require_once("lib/map.lib.php");
 require_once("lib/unt.lib.php");
 require_once("lib/res.lib.php");
 require_once("lib/member.lib.php");

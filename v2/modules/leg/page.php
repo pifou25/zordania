@@ -7,7 +7,6 @@ else
 {
 require_once("lib/unt.lib.php");
 require_once("lib/res.lib.php");
-require_once("lib/map.lib.php");
 require_once("lib/member.lib.php");
 require_once("lib/heros.lib.php");
 require_once("lib/war.lib.php");
@@ -37,7 +36,7 @@ case "move":
 	$arr_lid = request("move", "array", "post",array($lid_get => 1));
 	$tele_lid = request("tele", "array", "post"); // téléportation
 
-	$map_array = get_square($cid, true); // destination
+	$map_array = Map::getGen($cid, ['x'=>$_user['map_x'], 'y'=>$_user['map_y']]); // destination
 	$_tpl->set("map_array", $map_array);
 	$_tpl->set("map_cid", $cid);
 /*	$_tpl->set("leg_sub",$sub);
@@ -418,12 +417,14 @@ if($_display == "ajax") print_r($_POST);
 		}
 
 		if($legions->legs[$lid]->etat != LEG_ETAT_VLG && $_act == 'view') { // position de la légion
-			$pos_array = get_square($legions->legs[$lid]->cid, true);
+			$pos_array = Map::getGen($legions->legs[$lid]->cid, 
+                                ['x'=>$_user['map_x'], 'y'=>$_user['map_y']]);
 			if($pos_array['mbr_mid'] == $_user['mid'])
 				$pos_array['mbr_mid'] = 0;
 			$_tpl->set('pos_array', $pos_array);
 			if($legions->legs[$lid]->infos['leg_dest']) {// destination
-				$dst_array = get_square($legions->legs[$lid]->infos['leg_dest'], true);
+				$dst_array = Map::getGen($legions->legs[$lid]->infos['leg_dest'], 
+                                        ['x'=>$_user['map_x'], 'y'=>$_user['map_y']]);
 				if($dst_array['mbr_mid'] == $_user['mid'])
 					$dst_array['mbr_mid'] = 0;
 				$_tpl->set('dst_array', $dst_array);

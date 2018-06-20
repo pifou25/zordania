@@ -20,7 +20,6 @@ require_once(SITE_DIR ."lib/histo.class.php");
 require_once(SITE_DIR ."lib/vld.lib.php");
 require_once(SITE_DIR ."lib/nte.lib.php");
 require_once(SITE_DIR ."lib/msg.lib.php");
-require_once(SITE_DIR ."lib/map.lib.php");
 
 /* BDD */
 $_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);

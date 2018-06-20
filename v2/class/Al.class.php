@@ -71,7 +71,11 @@ class Al extends Illuminate\Database\Eloquent\Model {
 
     /* supprimer une alliance */
     static function del(int $aid) {
-        return Al::where('al_aid', $aid)->delete();
+	$rows = AlShoot::where('shoot_aid', $aid)->delete();
+        $rows += AlRes::where('ares_aid', $aid)->delete();
+        $rows += AlResLog::where('arlog_aid', $aid)->delete();
+        $rows += AlMbr::del($aid);
+        return $row + Al::where('al_aid', $aid)->delete();
     }
 
     /**

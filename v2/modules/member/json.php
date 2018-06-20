@@ -3,8 +3,6 @@ if(!defined("_INDEX_")){ exit; }
 //if(!can_d(DROIT_PLAY)){ exit; }
 
 require_once("lib/member.lib.php");
-require_once("lib/map.lib.php");
-
 
 switch($_act){
 case 'search' :
@@ -32,7 +30,7 @@ case 'map':
 	if($x>0 and $x<MAP_W and $y>0 and $y<MAP_H){
 		//$result = get_map(0, $x-10, $y-10, $x+10, $y+10);
 		// les 5 emplacements libres les + proches
-		$result = select_free_map( $x, $y);
+		$result = Map::getFree( $x, $y);
 		echo json_encode($result);
 	}
 	break;

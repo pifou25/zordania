@@ -5,17 +5,6 @@
  * @param type $aid
  * @return type
  */	
-function del_aly($aid)
-{
-	
-	$rows = AlShoot::where('shoot_aid', $aid)->delete();
-        $rows += AlRes::where('ares_aid', $aid)->delete();
-        $rows += AlResLog::where('arlog_aid', $aid)->delete();
-        $rows += AlMbr::del($aid);
-        $rows += Al::del($aid);
-	return $rows;
-	
-}
 	
 function upload_aly_logo($alid, $fichier)
 {
@@ -75,41 +64,10 @@ function make_aly_thumb($alid,$owidth,$oheight)
 }
 
 
-function get_log_aly_res($aid, $limite2, $limite1 = 0, $synth = false)/* qui a pris quoi au grenier */
-{
-	global $_sql;
-	
-	$aid = protect($aid, "uint");
-	$limite1 = protect($limite1, "uint");
-	$limite2 = protect($limite2, "uint");
-	$synth = protect($synth, 'bool');
-
-	if ($synth)
-		$sql="SELECT mbr_pseudo, mbr_gid,mbr_mid,arlog_mid,arlog_type,SUM(arlog_nb) as total,arlog_ip ";
-	else
-		$sql="SELECT mbr_pseudo, mbr_gid,mbr_mid,arlog_mid,arlog_type,arlog_nb,_DATE_FORMAT(arlog_date) as arlog_date_formated ,arlog_ip ";
-
-	$sql.=" FROM ".$_sql->prebdd."al_res_log ";
-	$sql.=" LEFT JOIN ".$_sql->prebdd."mbr ON mbr_mid = arlog_mid ";
-	$sql.=" WHERE arlog_aid = $aid";
-	if ($synth)
-		$sql .= ' GROUP BY arlog_mid,arlog_type';
-
-	$sql.=" ORDER BY arlog_date DESC ";
-	if($synth === false)
-		$sql.="LIMIT ". ($limite1 ? "$limite1,$limite2" : $limite2);
-
-	return $_sql->make_array($sql);	
-}
-
-
 /**
- * membres d'alliance
+ * virer un membre d'une alliance
  */
-function cls_aly($mid) {
-	global $_sql;
-
-	$mid = protect($mid, "uint");
+function cls_aly(int $mid) {
 
 	/* Il est dans une alliance ? */
 	$mbr_infos = Mbr::getFull($mid);
@@ -117,7 +75,6 @@ function cls_aly($mid) {
 		return 0;
 
 	$aid = $mbr_infos[0]['ambr_aid'];
-	$race = $mbr_infos[0]['mbr_race'];
 	$etat = $mbr_infos[0]['ambr_etat'];
 
 	if(!$aid)
@@ -146,7 +103,7 @@ function cls_aly($mid) {
 				break;
 
 	if(empty($chef) or $chef['mbr_mid'] == $mid) /* Personne ne peut la prendre en charge */
-		return del_aly($aid);
+		return Al::del($aid);
 	else
 		return AlMbr::del($aid, $mid) +
 			Al::edit($aid, array('mid' => $chef['mbr_mid'], 'nb_mbr' => -1));

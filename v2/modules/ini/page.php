@@ -2,7 +2,6 @@
 if(!defined("_INDEX_")){ exit; }
 
 require_once("lib/vld.lib.php");
-require_once("lib/map.lib.php");
 require_once("lib/member.lib.php");
 
 $_tpl->set("module_tpl","modules/ini/ini.tpl");
@@ -63,8 +62,8 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 	else if(!can_d(DROIT_ANTI_FLOOD) and !$_races[$race]) // accès limité
 		$race = 0;
 
-	$infos_races = countRaces();
-	$regions_infos = get_regions_infos($_regions);
+	$infos_races = Mbr::countRaces();
+	$regions_infos = Map::getRegions($_regions);
 
 	/* virer les races inutiles = inaccessible au joueur lambda
 	 DROIT_ANTI_FLOOD à partir de sage */
@@ -100,7 +99,7 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 				if($region == $_user['map_region'] && $reini)
 					$cid = $_user['mapcid'];
 				else
-					$cid = get_rand_map($region); 
+					$cid = Map::getRand($region); 
 
 				// vérifier l'unicité du pseudo
 				if ($ini)
@@ -126,7 +125,6 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 					require_once("lib/unt.lib.php");
 					require_once("lib/res.lib.php");
 					require_once("lib/src.lib.php");
-					require_once("lib/map.lib.php");
 					require_once("lib/alliances.lib.php");
 					require_once("lib/mch.lib.php");
 					require_once("lib/war.lib.php");

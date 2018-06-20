@@ -11,7 +11,6 @@ $smileys_more = getSmileysMore($smileys_base);
 $_tpl->set("smileys_base", $smileys_base);
 $_tpl->set("smileys_more", $smileys_more);
 
-require_once("lib/map.lib.php");
 require_once("lib/alliances.lib.php");
 require_once("lib/mch.lib.php");
 require_once("lib/war.lib.php");
@@ -117,10 +116,10 @@ if($_act == "del") {
 			$map_cid = request("map_cid", "uint", "post");
 
 			if($map_x and $map_y) // chercher map_cid
-				$map_cid = get_cid($map_x,$map_y);
+				$map_cid = Map::getCid($map_x,$map_y);
 
 			if($map_cid) { // vérifier que la destination est libre
-				$arr_cid = get_square($map_cid);
+				$arr_cid = Map::getGen($map_cid);
 				if(!empty($arr_cid)) { // destination connue
 					if($arr_cid['map_type'] == MAP_LIBRE) // emplacement libre
 						$_tpl->set('depl_ok', 

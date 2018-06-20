@@ -97,7 +97,7 @@ Le grenier de votre allié ne peut pas stocker plus de cette ressource, ou bien 
 <hr/>
 <h3>Dernières actions</h3>
 <ul>
-<foreach cond="{log_array} as {result}">
+<foreach cond="{log_array->get} as {result}">
 	<li>
 	Le {result[arlog_date_formated]} -
 	   <if cond="isset({result[mbr_gid]})">
@@ -120,6 +120,16 @@ Le grenier de votre allié ne peut pas stocker plus de cette ressource, ou bien 
 	</li>
 </foreach>
 </ul>
+        
+<p class="pages">
+   <foreach cond="{log_array->links} as {page}">
+        <if cond='is_numeric({page})'>
+        <a href="alliances-res.html?page={page}">{page}</a>
+        </if>
+        <else>{page}</else>
+   </foreach>
+</p>
+
 <div class="menu_module">
 <a href="alliances-reslog.html" title="Historique">Voir tout l'historique</a> -
 <a href="alliances-ressyn.html" title="Synthèse">Voir la synthèse</a>

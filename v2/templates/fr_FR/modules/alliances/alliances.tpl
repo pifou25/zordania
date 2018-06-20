@@ -102,8 +102,8 @@
 	</ul>
 	<div class="infos">Ces chiffres concernent les actions des {HISTO_DEL_LOG_ALLY} derniers jours.</div>
 	<div class="menu_module">
-	[ <a href="alliances-reslog.html" title="Historique">Voir tout l'historique</a> -
-	<a href="alliances-ressyn.html" title="Synthèse">Voir la synthèse</a> ]
+	<a href="alliances-reslog.html" title="Historique">Voir tout l'historique</a> -
+	<a href="alliances-ressyn.html" title="Synthèse">Voir la synthèse</a>
 	</div>
 </elseif>
 
@@ -131,8 +131,8 @@
 
 	<div class="infos">Ces chiffres concernent les actions des {HISTO_DEL_LOG_ALLY} derniers jours.</div>
 	<div class="menu_module">
-	[ <a href="alliances-reslog.html" title="Historique">Voir tout l'historique</a> -
-	<a href="alliances-ressyn.html" title="Synthèse">Voir la synthèse</a> ]
+	<a href="alliances-reslog.html" title="Historique">Voir tout l'historique</a> -
+	<a href="alliances-ressyn.html" title="Synthèse">Voir la synthèse</a>
 	</div>
 </elseif>
 

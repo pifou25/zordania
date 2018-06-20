@@ -142,10 +142,15 @@ class legions { /* classe pour plusieurs légions ... */
 		return false;
 	}
 
-	function get_cids($dst = false) { // get_square pour toutes les légions
-	/* $dst = true pour la distance au village
-	ou array(x=>xx, y=>yy)  pour distance Ã  {xx,yy} */
-		$squares = get_square_gen($this->cids, $dst);
+        /**
+         * unused
+         * get_square pour toutes les légions
+         * dst = array(x=>xx, y=>yy)  pour distance à {xx,yy}
+         * @param type $dst
+         * @return type
+         */
+	function get_cids($dst = false) { 
+		$squares = Map::getGen($this->cids, $dst);
 		$this->cids = array();
 		foreach ($squares as $key => $sqr)
 			$this->cids[$sqr['map_cid']] = $sqr;

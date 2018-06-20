@@ -8,7 +8,6 @@ require_once("lib/res.lib.php");
 require_once("lib/unt.lib.php");
 require_once("lib/src.lib.php");
 require_once("lib/mch.lib.php");
-require_once("lib/map.lib.php");
 require_once("lib/member.lib.php");
 
 
@@ -132,13 +131,13 @@ if($demn_ok){
 	$map_cid = request("map_cid", "uint", "post");
 
 	if($map_x and $map_y){ // chercher map_cid
-		$map_cid = get_cid($map_x,$map_y);
+		$map_cid = Map::getCid($map_x,$map_y);
 		if($map_cid == false)
 			$_tpl->set('depl_ok', 'out');
 	}
 
     if($map_cid) { // vérifier que la destination est libre
-            $arr_cid = get_square($map_cid);
+            $arr_cid = Map::getGen($map_cid);
             if(!empty($arr_cid)) { // destination connue
                 if($arr_cid['map_type'] == MAP_LIBRE){ // emplacement libre
                     	/*
@@ -175,9 +174,9 @@ if($demn_ok){
 			$unts = $leg->getUntByRole(TYPE_UNT_DEMENAGEMENT);
 			if (!empty($unts) and $leg->etat == LEG_ETAT_ALL) {
 				/* calcul de l'avancement */
-				$squares = get_square_gen(
-					array($leg->infos['leg_dest'], $leg->cid), 
-					array('x'=>$_user['map_x'], 'y'=>$_user['map_y']));
+				$squares = Map::getGen(
+					[$leg->infos['leg_dest'], $leg->cid], 
+					['x'=>$_user['map_x'], 'y'=>$_user['map_y']]);
 				$squares = index_array($squares, 'map_cid');
 				$_tpl->set('depl_ok', $squares[$leg->cid]['map_dst'] / $squares[$leg->infos['leg_dest']]['map_dst']);
 			}

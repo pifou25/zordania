@@ -7,7 +7,7 @@ require_once("lib/alliances.lib.php");
 require_once("lib/msg.lib.php");
 
 $_tpl->set("module_tpl","modules/surv/admin.tpl");
-$_tpl->set("admin_name","Membres surveillés");
+$_tpl->set("admin_name","Membres surveillï¿½s");
 $_tpl->set("array_type", array(SURV_TYPE_ALY => "Alliance", SURV_TYPE_IP => "Adresse IP", SURV_TYPE_MP => "Messagerie", SURV_TYPE_FRM => "Forum", SURV_TYPE_ALL => "Totale"));
 $_tpl->set('act',$_act);
 
@@ -24,7 +24,7 @@ case "view":
 		switch ($surv[0]['surv_type'])
 		{
 			case SURV_TYPE_ALY:
-				$info_surv[SURV_TYPE_ALY] = get_log_aly_res($mbr_info[0]['ambr_aid'], 50, 0);
+				$info_surv[SURV_TYPE_ALY] = AlResLog::get($mbr_info[0]['ambr_aid'], 50, 0);
 				$_tpl->set("info_ally", $info_surv[SURV_TYPE_ALY]);
 				break;
 			case SURV_TYPE_IP:
@@ -38,7 +38,7 @@ case "view":
 				$_tpl->set("info_mp", $info_surv[SURV_TYPE_MP]);
 				break;*/
 			case SURV_TYPE_ALL:
-				$info_surv[SURV_TYPE_ALY] = get_log_aly_res($mbr_info[0]['ambr_aid'], 50, 0);
+				$info_surv[SURV_TYPE_ALY] = AlResLog::get($mbr_info[0]['ambr_aid'], 50, 0);
 				$_tpl->set("mbr_array",get_infos_ip($mbr_info[0]['mbr_lip']));
 				if($mbr_info[0]['mbr_lip'])
 					$_tpl->set('log_ip', get_log_ip(0, $mbr_info[0]['mbr_lip'], 'full'));
