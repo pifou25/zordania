@@ -28,17 +28,12 @@ if(!$_act || $_act == "new") {
 			$parrain = 0;
 	}
 
-	//$ayah = new AYAH();
-	// If the PlayThru does not work correctly, enable debug mode.
-	//$ayah->debug_mode(TRUE);
-
 	$_tpl->set("mbr_login", $login);
 	$_tpl->set("mbr_parrain", $parrain);
 	$_tpl->set("mbr_mail", $mail);
 	$_tpl->set("mbr_lang", $lang);
 	$_tpl->set("mbr_decal", $decal);
 	$_tpl->set("mbr_date", date("H:i:s"));
-	//$_tpl->set("ayah_html_form", $ayah->getPublisherHTML());
 
 
 	$questions = request("questions", "array", "post");
@@ -65,9 +60,7 @@ if(!$_act || $_act == "new") {
 	} else if(!count($questions) || in_array(0,$questions)) {
 		$_tpl->set("mbr_questionaire_faux",true);
 	} else { // verifier si humain
-		// Use the AYAH object to get the score.
-		$score = true; //$ayah->scoreResult();
-		// Check the score to determine what to do.
+		$score = true;
 		if ($score)
 		{
 			// v�rifier unicit� du login et du mail

@@ -43,7 +43,7 @@
  *
  */
 // ------- PHP code ----------
-require_once 'defines.php';
+require_once 'SmartIRC/defines.php';
 define('SMARTIRC_VERSION', '1.1.0-dev ($Revision: 302734 $)');
 define('SMARTIRC_VERSIONSTRING', 'Net_SmartIRC '.SMARTIRC_VERSION);
 
@@ -1096,7 +1096,7 @@ class Net_SmartIRC_base
     {
         if ($this->_state() == SMARTIRC_STATE_CONNECTED) {
             if ($quickdisconnect == false) {
-                $this->_send("QUIT", SMARTIRC_CRITICAL);
+                $this->_send('QUIT', SMARTIRC_CRITICAL);
                 usleep($this->_disconnecttime*1000);
             }
             
@@ -2198,7 +2198,6 @@ class Net_SmartIRC_base
                     return SMARTIRC_TYPE_CHANNELMODE;
                 case SMARTIRC_ERR_NICKNAMEINUSE:
                 case SMARTIRC_ERR_NOTREGISTERED:
-				case SMARTIRC_ERR_NOTEXTTOSEND: 
                     return SMARTIRC_TYPE_ERROR;
                 default:
                     $this->log(SMARTIRC_DEBUG_IRCMESSAGES, 'DEBUG_IRCMESSAGES: replycode UNKNOWN ('.$code.'): "'.$line.'"', __FILE__, __LINE__);
@@ -2590,8 +2589,8 @@ class Net_SmartIRC_base
 }
 
 // includes must be after the base class definition, required for PHP5
-require_once 'irccommands.php';
-require_once 'messagehandler.php';
+require_once 'SmartIRC/irccommands.php';
+require_once 'SmartIRC/messagehandler.php';
 
 class Net_SmartIRC extends Net_SmartIRC_messagehandler
 {
