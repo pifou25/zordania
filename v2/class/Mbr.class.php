@@ -423,7 +423,7 @@ static function getIps(string $ip = '', int $gid = 0)
     /* Libère les trucs d'un compte */
 
     static function cls($mid, $cid) {
-        add_old_mbr($mid);
+        MbrOld::add($mid);
         cls_aly($mid);
         UntTodo::clear($mid);
         Btc::clear($mid);

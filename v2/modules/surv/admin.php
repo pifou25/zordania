@@ -18,9 +18,10 @@ case "view":
 	$msg_id = request("msg_id", "uint", "get");
 	$msg_mid = request("msg_mid", "uint", "get");
 	if(!empty($sid)){
-		$surv = get_surv_by_sid($sid);
+		$surv = Surv::getBySid($sid);
 		$info_surv = array();
-		$mbr_info = get_mbr_gen(array('mid' => $surv[0]['surv_mid'], 'full' => true));
+		$mbr_info = Mbr::get(['mid' => $surv[0]['surv_mid'], 'full' => true]);
+                //get_mbr_gen(array('mid' => $surv[0]['surv_mid'], 'full' => true));
 		switch ($surv[0]['surv_type'])
 		{
 			case SURV_TYPE_ALY:
@@ -29,9 +30,9 @@ case "view":
 				break;
 			case SURV_TYPE_IP:
 				//$_tpl->set("log_ip", get_log_ip($surv[0]['surv_mid'] , 0, 'full'));
-				$_tpl->set("mbr_array",get_infos_ip($mbr_info[0]['mbr_lip']));
+				$_tpl->set("mbr_array",Mbr::getIps($mbr_info[0]['mbr_lip']));
 				if($mbr_info[0]['mbr_lip'])
-					$_tpl->set('log_ip', get_log_ip(0, $mbr_info[0]['mbr_lip'], 'full'));
+					$_tpl->set('log_ip', MbrLog::get(0, $mbr_info[0]['mbr_lip'], true));
 				break;
 			/*case SURV_TYPE_MP:
 				$info_surv[SURV_TYPE_MP] = get_msg_env($surv[0]['surv_mid']);
@@ -39,9 +40,9 @@ case "view":
 				break;*/
 			case SURV_TYPE_ALL:
 				$info_surv[SURV_TYPE_ALY] = AlResLog::get($mbr_info[0]['ambr_aid'], 50, 0);
-				$_tpl->set("mbr_array",get_infos_ip($mbr_info[0]['mbr_lip']));
+				$_tpl->set("mbr_array",Mbr::getIps($mbr_info[0]['mbr_lip']));
 				if($mbr_info[0]['mbr_lip'])
-					$_tpl->set('log_ip', get_log_ip(0, $mbr_info[0]['mbr_lip'], 'full'));
+					$_tpl->set('log_ip', MbrLog::get(0, $mbr_info[0]['mbr_lip'], true));
 				$info_surv[SURV_TYPE_MP] = get_msg_env($surv[0]['surv_mid']);
 				$_tpl->set("info_ally", $info_surv[SURV_TYPE_ALY]);
 				//$_tpl->set("info_mp", $info_surv[SURV_TYPE_MP]);
@@ -65,7 +66,7 @@ break;
 case 'new': // formulaire nouvelle surveillance
 	$mid = request("mid", "uint", "get");
 	if(!empty($mid)){
-		$mbr_array = get_mbr_gen(array('mid' => $mid));
+		$mbr_array = Mbr::get(['mid' => $mid]);
 		$_tpl->set("mbr_array", $mbr_array[0]);
 	}
 break;
@@ -76,32 +77,32 @@ case 'add': // ajouter une surveillance
 	$cause = trim(request("cause", "string", "post"));
 	
 	if(!empty($mid)){
-		$mbr_infos = get_mbr_gen(array('mid' => $mid));
-		if(get_surv($mbr_infos[0]['mbr_mid']))
+		$mbr_infos = Mbr::get(['mid' => $mid]);
+		if(Surv::get($mbr_infos[0]['mbr_mid']))
 			$_tpl->set("all_assign", true);
 		elseif(in_array($mbr_infos[0]['mbr_gid'], array(GRP_GARDE,GRP_ADM_DEV,GRP_DEMI_DIEU,GRP_DIEU)))
 			$_tpl->set("no_surv_admin", true);
 		else {
-			add_surv($mbr_infos[0]['mbr_mid'], $_user['mid'], $type, $cause);
+			Surv::add($mbr_infos[0]['mbr_mid'], $_user['mid'], $type, $cause);
 			$_tpl->set("add_surv", true);
 		}
 	}
 	else
 		$_tpl->set("no_member", true);
 
-	$_tpl->set("list_surv", get_surv_list());
-	$_tpl->set("list_fin_surv", get_fin_surv_list());
+	$_tpl->set("list_surv", Surv::getList());
+	$_tpl->set("list_fin_surv", Surv::getFin());
 	/* continue to default ! */
 
 default: /* case 'close': */
 	$sid = request("sid", "uint", "get");
 	if($sid){ // fermer la surveillance
-		close_surv($sid);
+		Surv::close($sid);
 		$_tpl->set("close_surv", true);
 	}
 
-	$_tpl->set("list_surv", get_surv_list());
-	$_tpl->set("list_fin_surv", get_fin_surv_list());
+	$_tpl->set("list_surv", Surv::getList());
+	$_tpl->set("list_fin_surv", Surv::getFin());
 } /* fin switch $_act */
 
 } /* fin si droits ok */

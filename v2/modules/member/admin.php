@@ -242,7 +242,7 @@ if($_act == "del") {
 	$_tpl->set("mbr_ip", $ip);
 	$_tpl->set("mbr_mid", $mid);
 	
-	$mbr_array = get_old_mbr($cond);
+	$mbr_array = MbrOld::get($cond);
 	$_tpl->set("mbr_array",$mbr_array);
 } elseif($_act == "liste_online") {
 	//liste online
@@ -287,7 +287,7 @@ if($_act == "del") {
 		$_tpl->set("mbr_staff", $mbr_staff);
 	else {
 		$_tpl->set_ref("mbr_array",$mbr_array);
-		$_tpl->set('log_ip', get_log_ip($mid));
+		$_tpl->set('log_ip', MbrLog::get($mid));
 		
 		if($mbr_array['mbr_etat'] == MBR_ETAT_OK || $mbr_array['mbr_etat'] == MBR_ETAT_ZZZ) {
 			/* if($mbr_array['ambr_aid']) {
@@ -411,11 +411,14 @@ if($_act == "del") {
 			foreach($unt_array as $key => $value){
 				$unt_cfg = get_conf_gen($mbr_array['mbr_race'], "unt", $value['unt_type']);
 
-				$unt_array[$key]['pts'] = (isset($unt_cfg['def']) ? $unt_cfg['def'] : 0)
+                                if ($unt_cfg['role'] == TYPE_UNT_CIVIL){
+                                    $unt_array[$key]['pts'] = 0;
+                                }else{
+                                    $unt_array[$key]['pts'] = (isset($unt_cfg['def']) ? $unt_cfg['def'] : 0)
 					 + (isset($unt_cfg['atq_unt']) ? $unt_cfg['atq_unt'] : 0 )
 					 + ( isset($unt_cfg['atq_btc']) ? $unt_cfg['atq_btc']*1.8 : 0 )
 					 + $unt_cfg['vie'];
-				if ($unt_cfg['role'] == TYPE_UNT_CIVIL) $unt_array[$key]['pts'] = 0;
+                                }
 
 				$unt_array[$key]['total'] = $unt_array[$key]['pts'] * $value['unt_sum'];
 				$pts_armee += $unt_array[$key]['total'];
@@ -430,7 +433,7 @@ if($_act == "del") {
 	$ip = request('ip', 'string', 'get', '');
 	$_tpl->set("mbr_array",Mbr::getIps($ip, $_user['groupe']));
 	if($ip )
-		$_tpl->set('log_ip', get_log_ip(0, $ip, 'full',$_user['groupe']));
+		$_tpl->set('log_ip', MbrLog::get(0, $ip, true, $_user['groupe']));
 } else if ($_act == 'exp') 
 { // exporter membre
 	$mid = request("mid", "uint", "get");

@@ -180,7 +180,7 @@ class Map extends Illuminate\Database\Eloquent\Model {
         global $_regions, $_races;
 
         $req = Map::selectRaw('COUNT(*) AS mbr_nb, mbr_race, map_region')
-                        ->join('mbr', 'map_cid', 'mbr_mapcid')
+                ->join('mbr', 'map_cid', 'mbr_mapcid')
                 ->where('mbr_etat', MBR_ETAT_OK);
         if ($regions) {
             $req->whereIn('map_region', $regions);
@@ -218,6 +218,25 @@ class Map extends Illuminate\Database\Eloquent\Model {
         }
 
         return ['libre' => $libre, 'occ' => $sum];
+    }
+
+    /**
+     * On ne calcule pas la distance a vol d'oiseau, mais la distance que la légion devrais parcourir
+     * @param int $x1
+     * @param int $y1
+     * @param int $x2
+     * @param int $y2
+     * @return type
+     */
+    static function distance(int $x1, int $y1, int $x2, int $y2) {
+
+        $diffx = abs($x1 - $x2);
+        $diffy = abs($y1 - $y2);
+        if ($diffx == $diffy) { /* juste une diagonale */
+            return $diffx;
+        } else {
+            return max($diffx, $diffy);
+        }
     }
 
 }

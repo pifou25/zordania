@@ -176,7 +176,7 @@ case "send":
 case "sign";
 	$msgid = request("msgid", "uint", "get");
 	$com = '<em>'.$_user['pseudo'] .' le '.date("d/m/Y H:i:s")."</em><br/>\n".parse(request("com", "string", "post"));
-	if(isset($msgid) && !is_surv($msgid) && isset($com)){
+	if(isset($msgid) && !Surv::isSurv($msgid) && isset($com)){
 		add_sign($msgid,$com);
 		/*  infos admin en cache */
 		$admin_cache->msg_report++;
@@ -188,7 +188,7 @@ case "sign";
 
 case "fsign";
 	$msgid = request("msgid", "uint", "get");
-	if(isset($msgid) && !is_surv($msgid)){
+	if(isset($msgid) && !Surv::isSurv($msgid)){
 		$_tpl->set('msgid',$msgid);}
 	else {
 		$_tpl->set("no_msg",false);}

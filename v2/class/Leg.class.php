@@ -140,7 +140,7 @@ class Leg extends Illuminate\Database\Eloquent\Model {
 
 	if(!$get_unt) {
             if($count_unt || $sum) {
-                $req->leftJoin('unt', 'leg.leg_id', 'unt.unt_lid');
+                $req->join('unt', 'leg.leg_id', 'unt.unt_lid');
             } else if ($map) {
                 $req->join('map AS p', 'leg.leg_cid', 'p.map_cid');
                 $req->leftJoin('map AS d', 'leg.leg_dest', 'd.map_cid');

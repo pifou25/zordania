@@ -9,6 +9,7 @@ $smileys_more = getSmileysMore($smileys_base);
 $_tpl->set("smileys_base", $smileys_base);
 $_tpl->set("smileys_more", $smileys_more);
 
+require_once("lib/member.lib.php");
 require_once("lib/rec.lib.php");
 require_once("lib/vld.lib.php");
 $mid = request("mid", "uint", "get");
@@ -27,7 +28,6 @@ else if(!$_act) {
 	$_tpl->set("mbr_array",$array);
 	$_tpl->set('rec_array', get_rec($_user['mid']));
 
-	$_tpl->set('mbr_logo',get_mbr_logo($_user['mid']));
 	$vld_array = get_vld($_user['mid']);
 	$_tpl->set('vld_array',$vld_array);
 } elseif($_act == "del") {
@@ -221,7 +221,6 @@ elseif($_act == "edit")
 	$_tpl->set("mbr_descr", htmlspecialchars($descr));
 	$_tpl->set("mbr_date",date("H:i:s"));
 	$_tpl->set("mbr_sexe",$sexe);
-	$_tpl->set("mbr_logo", get_mbr_logo($mid));
 	
 	$_tpl->set('logo_type',MBR_LOGO_TYPE);
 	$_tpl->set('logo_x_y',MBR_LOGO_MAX_X_Y);
@@ -377,16 +376,15 @@ elseif($mid) //elseif($_act == "view" && $mid)
 		//Pour avoir la distance
 		if($mbr_array['mbr_etat'] != MBR_ETAT_INI) {
 			if($_user['loged'])
-				$_tpl->set("mbr_dst", calc_dst($_user['map_x'], $_user['map_y'], $mbr_array['map_x'], $mbr_array['map_y']));
+				$_tpl->set("mbr_dst", Map::distance($_user['map_x'], $_user['map_y'], $mbr_array['map_x'], $mbr_array['map_y']));
 			else
 				$_tpl->set("mbr_dst", 0);
 		}
 
 		$_tpl->set("mbr_online", is_online($mid));
-		$mbr_surv = get_surv($mid);  // surveillance en cours ?
+		$mbr_surv = Surv::get($mid);  // surveillance en cours ?
 		if(!empty($mbr_surv))
 			$_tpl->set("mbr_surv", $mbr_surv[0]);
-		$_tpl->set("mbr_logo", get_mbr_logo($mid));
 		$rec_array = get_rec($mid);
 		$_tpl->set("mbr_rec", $rec_array);
 

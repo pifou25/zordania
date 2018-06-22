@@ -1,8 +1,7 @@
 <if cond='!empty({mbr_array})'>
-	<if cond='{mbr_logo}'>
-				<img class="blason blason" src="{mbr_logo}" alt="Blason" />
-	</if>
-	<h3>{mbr_array[mbr_pseudo]}</h3>
+    <img class="blason" src="img/mbr_logo/{mbr_array[mbr_mid]}.png" alt="Blason" />
+
+    <h3>{mbr_array[mbr_pseudo]}</h3>
 
 <!-- sous-menu membre -->
 <script type="text/javascript">

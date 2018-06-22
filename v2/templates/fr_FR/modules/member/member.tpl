@@ -4,9 +4,7 @@
 	</if>
 	<elseif cond='isset({mbr_array}) AND {mbr_array}'>
 
-	<if cond='{mbr_logo}'>
-			<img class="blason" src="{mbr_logo}" alt="Blason" />
-	</if>
+	<img class="blason" src="img/mbr_logo/{mbr_array[mbr_mid]}.png" alt="Blason" />
 	<p>
 	Id : {mbr_array[mbr_mid]}<br />
 	Mail : {mbr_array[mbr_mail]}<br />
@@ -182,9 +180,7 @@
 	<else>
 	<p class="infos">Le Blason doit être une image de type {logo_type}, de taille inférieure ou égale à {logo_size} octets et {logo_x_y}px.</p>
 		<form class="block" enctype="multipart/form-data" action="member-edit.html?sub=logo" method="post">
-		<if cond='{mbr_logo}'>
-			<img class="blason" src="{mbr_logo}" alt="Blason" />
-		</if>
+		<img class="blason" src="img/mbr_logo/{mbr_array[mbr_mid]}.png" alt="Blason" />
 		Envoyez ce fichier: <input name="mbr_logo" type="file" />
 		<input type="submit" value="Envoyer" />
 		</form>

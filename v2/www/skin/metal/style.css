@@ -23,7 +23,7 @@ background: url(img/texture_centre.png);
   line-height: 20px; /* hauteur de ligne (identique) */
 }
 /*
-* Design Général
+* Design Gï¿½nï¿½ral
 */
 a{ 
 	font-size: 11px;
@@ -103,7 +103,7 @@ hr {
 	width: 50%;
 }
 
-/* Utilisé dans le manuel et les listes de bâtiments */
+/* Utilisï¿½ dans le manuel et les listes de bï¿½timents */
 dt { font-weight: bold;}
 
 dd{
@@ -200,7 +200,7 @@ div#toolTip p em {
     height /**/:33px; /* for IE5.5's bad box model */
 }
 
-/* Y'a écrit "zordania" */
+/* Y'a ï¿½crit "zordania" */
 #text_logo{
 	display: none;
 	visibility: hidden;
@@ -457,7 +457,7 @@ div#toolTip p em {
 	border-color: #000000;
 	border-style: solid; 
 	border-width: 1px; 
-	Background-color: #231E17;
+	background-color: #231E17;
 	background-repeat: repeat-y ;
 	height: 35px;
 	}
@@ -518,7 +518,7 @@ margin: 2px;
 	border-color: #111111;
 }
 
-/* Quand c'est un alliée dans une liste */
+/* Quand c'est un alliï¿½e dans une liste */
 .allie td, .allie tr {
 	background-color: #463D32;
 	border-color: #111111;
@@ -594,7 +594,7 @@ margin: 2px;
 }
 
 
-/* Quelque chose de désactivé */
+/* Quelque chose de dï¿½sactivï¿½ */
 .disabled{ background-color: #101010; }
 
 
@@ -625,7 +625,7 @@ margin: 2px;
 /* Pour le forum, mais pas seulement */
 .quote {
 	-moz-border-radius: 1%;
-	background-image: url(img/quote1.png)
+	background-image: url(img/quote1.png);
 	width:90%;
 	text-align:left;
 	background-color: #332B19;
@@ -679,7 +679,7 @@ margin: 2px;
 }
 
 
-/* Permet de faire des espaces, utilisé sur la page des bâtiments et sur l'index */
+/* Permet de faire des espaces, utilisï¿½ sur la page des bï¿½timents et sur l'index */
 .blason{ float: right; }
 
 /*Forums*/
@@ -728,7 +728,7 @@ color: #ffffff;
 
 .forum h4 a{
 	background-image: none;
-	Color: #B5B6B0;
+	color: #B5B6B0;
 	font-family: Papyrus,Tahoma,Arial,sans-serif;
 	border: none;
 	text-decoration: none;

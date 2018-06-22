@@ -1,14 +1,10 @@
 <?php
 header("Content-type: image/png");
 
-$id = (int) isset($_GET['mid']) ? $_GET['mid'] : 0;
+$id = filter_input(INPUT_GET, 'mid', FILTER_SANITIZE_NUMBER_INT);
 
-if(file_exists($id.".png"))
-{
-	readfile($id.".png");
+if (file_exists($id . ".png")) {
+    readfile($id . ".png");
+} else {
+    readfile("0.png");
 }
-else
-{
-	readfile("0.png");
-}
-?>

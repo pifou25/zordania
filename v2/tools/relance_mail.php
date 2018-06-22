@@ -26,7 +26,7 @@ $_tpl->set("cfg_url",SITE_URL);
 $sql = 'SELECT mbr_mid, mbr_login, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
 $sql.= ' FROM zrd_mbr WHERE ';
 if($mid) $sql .= "mbr_mid > $mid AND ";
-$sql.= ' mbr_gid ='.GRP_DEMI_DIEU. 'AND mbr_etat ='.MBR_ETAT_ZZZ.'AND mbr_etat ='.MBR_ETAT_INI.;
+$sql.= ' mbr_gid ='.GRP_DEMI_DIEU. 'AND mbr_etat ='.MBR_ETAT_ZZZ.'AND mbr_etat ='.MBR_ETAT_INI;
 $sql.= ' ORDER BY zrd_mbr.mbr_lmodif_date ASC';
 
 /* sélection des comptes validés en veille sauf exilés et visiteur vieux de + de 30 jours 
