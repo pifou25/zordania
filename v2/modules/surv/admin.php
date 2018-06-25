@@ -32,7 +32,7 @@ case "view":
 				//$_tpl->set("log_ip", get_log_ip($surv[0]['surv_mid'] , 0, 'full'));
 				$_tpl->set("mbr_array",Mbr::getIps($mbr_info[0]['mbr_lip']));
 				if($mbr_info[0]['mbr_lip'])
-					$_tpl->set('log_ip', MbrLog::get(0, $mbr_info[0]['mbr_lip'], true));
+					$_tpl->set('log_ip', MbrLog::getByIp($mbr_info[0]['mbr_lip'], true));
 				break;
 			/*case SURV_TYPE_MP:
 				$info_surv[SURV_TYPE_MP] = get_msg_env($surv[0]['surv_mid']);
@@ -42,7 +42,7 @@ case "view":
 				$info_surv[SURV_TYPE_ALY] = AlResLog::get($mbr_info[0]['ambr_aid'], 50, 0);
 				$_tpl->set("mbr_array",Mbr::getIps($mbr_info[0]['mbr_lip']));
 				if($mbr_info[0]['mbr_lip'])
-					$_tpl->set('log_ip', MbrLog::get(0, $mbr_info[0]['mbr_lip'], true));
+					$_tpl->set('log_ip', MbrLog::getByIp($mbr_info[0]['mbr_lip'], true));
 				$info_surv[SURV_TYPE_MP] = get_msg_env($surv[0]['surv_mid']);
 				$_tpl->set("info_ally", $info_surv[SURV_TYPE_ALY]);
 				//$_tpl->set("info_mp", $info_surv[SURV_TYPE_MP]);

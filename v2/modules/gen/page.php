@@ -195,7 +195,7 @@ $_tpl->set('pos_array', get_leg_pos($_user['mid']));
 $_tpl->set('dst_view_max', DST_VIEW_MAX);
 
 //ventes
-$vente_array = get_mch_by_mid($_user['mid']);
+$vente_array = Mch::getByMid($_user['mid']);
 $_tpl->set('vente_array',$vente_array);
 }
 ?>

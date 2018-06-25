@@ -35,7 +35,7 @@ class Btc extends Illuminate\Database\Eloquent\Model {
         $predicate = DB::raw('COUNT(btc_id) as btc_nb');
         $req = Btc::select('btc_mid', 'btc_type', $predicate)->where('btc_mid', '=', $mid);
         if (!empty($btc))
-            $req->whereIn('btc_id', $btc);
+            $req->whereIn('btc_type', $btc);
         if (!empty($etat))
             $req->whereIn('btc_etat', $etat);
         // indexer le resultat sur btc_type

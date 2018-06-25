@@ -65,7 +65,7 @@ class session
 		$this->set("login", $mbr_infos['mbr_login']);
 		$this->set("pseudo", $mbr_infos['mbr_pseudo']);
 		$this->set("vlg", $mbr_infos['mbr_vlg']);
-		$this->set("pass", $mbr_infos['mbr_pass']);
+		//$this->set("pass", $mbr_infos['mbr_pass']);
 		$this->set("lang", $mbr_infos['mbr_lang']);
 		$this->set("race", $mbr_infos['mbr_race']);
 		$this->set("droits", get_droits($mbr_infos['mbr_gid']));
@@ -89,6 +89,11 @@ class session
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
 		$this->set("mobile", isset($_SESSION['mobile']) ? $_SESSION['mobile'] : false);
+                if(!$this->get('mobile')){
+                    $this->set('btc', '');
+                }else{
+                    $this->set('btc', '/2');
+                }
 
 		/* Visiteur */
 		if($this->get("login") == "guest") {
@@ -114,25 +119,31 @@ class session
 	function update_msg() {
 		$mid = $this->get("mid");
 		
-		/* Nouveaux messages */
 		if($this->get("login") != "guest") {
-			$sql="SELECT COUNT(*) AS nb FROM ".$this->sql->prebdd."msg_rec JOIN ".$this->sql->prebdd."mbr ON mrec_from = mbr_mid WHERE mrec_mid = $mid AND mrec_readed = 0";
+                    /* Nouveaux messages */
+			$sql="SELECT COUNT(*) AS nb FROM ".$this->sql->prebdd."msg_rec JOIN "
+                                .$this->sql->prebdd."mbr ON mrec_from = mbr_mid WHERE mrec_mid = $mid "
+                                . "AND mrec_readed = 0";
 			$result = $this->sql->make_array_result($sql);
 			$this->set("msg", $result['nb']);
 		
 		
 			/* Nouvelle news? mbr_ldate = dernière connexion heure locale */
 			$sql="SELECT count(*) AS nb FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd.
-			  " WHERE forum_id =".ZORD_NEWS_FID." AND posted > " . $this->get("ldate") ;
+			  " WHERE forum_id =".ZORD_NEWS_FID." AND posted > (SELECT mbr_ldate FROM "
+                                .$this->sql->prebdd."mbr WHERE mbr_mid = $mid)";
 			$result = $this->sql->make_array_result($sql);
 			$this->set("news", $result['nb']);
-			
-			/*Select la dernière news*/
-			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
-			$result = $this->sql->make_array_result($sql);
-			$this->set("tid", $result['id']);
-			$this->set("sub", $result['subject']);
-			
+                        
+			if($result['nb'] > 0){
+                            /*Select la dernière news*/
+                            $sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd
+                                    ." WHERE forum_id =".ZORD_NEWS_FID." AND posted="
+                                    . "(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
+                            $result = $this->sql->make_array_result($sql);
+                            $this->set("tid", $result['id']);
+                            $this->set("sub", $result['subject']);
+                        }
 		}	
 		
 		
@@ -144,12 +155,7 @@ class session
 		
 		if($this->get("login") != "guest") {
 			/* si on a un héros ? et une compétence active ? */
-			$sql = "SELECT hro_id, hro_nom, hro_type, hro_lid, hro_xp, hro_vie, 
-				hro_bonus AS bonus, hro_bonus_from, hro_bonus_to AS bonus_to ";
-			$sql.= "FROM ".$this->sql->prebdd."hero ";
-			$sql.= "WHERE hro_mid = $mid";
-			$result = $this->sql->make_array($sql);
-
+                    $result = Hro::get($mid);
 			if(!$result){ // aucun héros
 				$this->set('hro_id', 0);
 				$this->set("hro_nom", null);
@@ -161,9 +167,10 @@ class session
 				$this->set("hro_bonus_from", null);
 				$this->set("hro_bonus_to", null);
 			} else { // placer en session toutes les infos du héros
-				foreach($result[0] as $key => $value)
+				foreach($result as $key => $value)
 					$this->set($key, $value);
-				$this->set('hro_vie_conf', get_conf_gen($this->get('race'), 'unt', $result[0]['hro_type'], 'vie'));
+				$this->set('hro_vie_conf',
+                                        get_conf_gen($this->get('race'), 'unt', $result['hro_type'], 'vie'));
 			}
 		}
 	}
@@ -177,16 +184,12 @@ class session
 		
 		/* alliance */
 		if($this->get("login") != "guest") {
-			$sql = "SELECT ambr_aid, ambr_etat, al_mid, al_name ";
-			$sql.= "FROM ".$this->sql->prebdd."al_mbr ";
-			$sql.= "INNER JOIN ".$this->sql->prebdd."al ON ambr_aid = al_aid ";
-			$sql.= "WHERE ambr_mid = $mid"; //AND ambr_etat <> ".ALL_ETAT_DEM;
-			
-			$array = $this->sql->make_array($sql);
+                    $array = AlMbr::get($mid);
+                    
 			if($array) {
-				$this->set("alaid", $array[0]['ambr_aid']);
-				$this->set("aetat", $array[0]['ambr_etat']);
-				$this->set("achef", $array[0]['al_mid']);
+				$this->set("alaid", $array['ambr_aid']);
+				$this->set("aetat", $array['ambr_etat']);
+				$this->set("achef", $array['al_mid']);
 			}
 		}
 	}
@@ -195,8 +198,7 @@ class session
 		$mapcid = $this->get("mapcid");
 
 		if($mapcid) {
-			$sql = "SELECT map_x, map_y FROM ".$this->sql->prebdd."map WHERE map_cid = $mapcid";
-			$map_array = $this->sql->make_array($sql);
+                    $map_array = Map::where('map_cid', $mapcid)->get()->toArray();
 			if($map_array) {
 				$this->set("map_x", $map_array[0]['map_x']);
 				$this->set("map_y", $map_array[0]['map_y']);
@@ -215,32 +217,20 @@ class session
 		return md5($login.strrev($pass));
 	}
 	
-	function login($login, $pass, $raw = false)
+	function login(string $login, string $pass, bool $raw = false)
 	{
-		$login = protect($login, "string");
-
 		/* $pass est censé être le mot de passe en md5 */
 		if(!$raw) $pass = $this->crypt($login, $pass);
-		
-		$sql="SELECT mbr_mid,mbr_login,mbr_pseudo,mbr_vlg,mbr_pass,mbr_lang,mbr_race,
-			mbr_atq_nb,mbr_gid,mbr_decal,mbr_sign,mbr_population,mbr_place,
-			mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,mbr_design,mbr_parrain,mbr_numposts,mbr_lip,
-			UNIX_TIMESTAMP(mbr_lmodif_date) as mbr_lmodif_date";
-		$sql.=",UNIX_TIMESTAMP(mbr_ldate + INTERVAL '".$this->sql->decal."' HOUR_SECOND) as mbr_ldate ";
-		$sql.=" FROM ".$this->sql->prebdd."mbr";
-		$sql.=" WHERE mbr_login='$login' AND mbr_pass='$pass'";
-		$req = $this->sql->make_array($sql);
+                $req = Mbr::get(['login' => $login, 'pass' => $pass, 'full' => true]);
 
 		if($req)
 		{
 			$req = $req[0];
-			
 			$mid = $req['mbr_mid'];
 			$this->set('mid',$mid);
 
 			if(CRON) { /* récupérer la session WEB active si existe */
-				$sql="SELECT * FROM ".$this->sql->prebdd."ses WHERE ses_mid = $mid";
-				$resultat = $this->sql->make_array($sql);
+				$resultat = Ses::get($mid);
 				if($resultat){ // déjà co sur web
 					$this->set('sesid', $resultat[0]['ses_sesid']);
 					$this->set('ip', $resultat[0]['ses_ip']);
@@ -255,39 +245,25 @@ class session
 			}
 
 			/* On vire les anciennes sessions qu'il pouvait avoir */
-			$sql = "DELETE FROM ".$this->sql->prebdd."ses ";
-			$sql.= "WHERE ses_sesid='$sesid' ";
-			//$sql.= "OR (ses_mid = '$mid' AND ses_ip = '$ip') ";
-			$sql.= "OR (ses_mid='$mid' AND ses_mid != 1 AND ses_ip != '$ip') ";
-
-			$this->sql->query($sql);
+                        Ses::del($sesid, $mid, $ip);
 			
 			/* On en remet une, en disant qu'il est sur la page session */
-			$sql="INSERT INTO ".$this->sql->prebdd."ses VALUES ('$sesid','$mid','$ip','session', NOW(),0);";
-			$this->sql->query($sql);
+                        Ses::add($sesid, $mid, $ip);
 			
 			if($login != "guest" and !CRON) {
 			/* Sa derniere ip ..  la dernière fois qu'il s'est connecté -> dans zrd_mbr */
-				$sql=" UPDATE ".$this->sql->prebdd."mbr SET mbr_lip = '$ip'";
-				if($req['mbr_etat'] != MBR_ETAT_ZZZ) { /* Seulement si pas en veille */
-					$sql.=",mbr_ldate = NOW() ";
-				}
-				$sql.=" WHERE mbr_mid = '$mid'";
-				$this->sql->query($sql);
+                            $request = ['mbr_lip' => $ip];
+                            if($req['mbr_etat'] != MBR_ETAT_ZZZ) { /* Seulement si pas en veille */
+                                    $request['mbr_ldate'] = DB::raw('NOW()');
+                            }
+                            Mbr::where('mbr_mid', $mid)->update($request);
 				
 			/* On rajoute son ip et la date_heure dans zrd_mbr_log à chaque changement d'ip. 
 			   Les anciennes ip sont conservées. */
-				$sql="SELECT mlog_ip";
-				$sql.=" FROM ".$this->sql->prebdd."mbr_log";
-				$sql.=" WHERE mlog_mid = $mid";
-				$sql.=" ORDER BY mlog_date DESC LIMIT 0,1";
-				$req2 = $this->sql->make_array($sql);
+                            $req2 = MbrLog::get($mid, 1);
 				
 				if ( (!isset($req2[0])) || ($ip != $req2[0]['mlog_ip']) ){
-					$sql="INSERT INTO ".$this->sql->prebdd."mbr_log";
-					$sql.=" (mlog_id , mlog_mid , mlog_ip , mlog_date)";
-					$sql.=" VALUES (NULL , '$mid', '$ip', NOW() )";
-					$this->sql->query($sql);
+                                    MbrLog::add($mid, $ip);
 				}
 			}
 			
@@ -310,7 +286,7 @@ class session
 	
 	function logout()
 	{
-		$this->sql->query("DELETE FROM ".$this->sql->prebdd."ses WHERE ses_sesid='".$this->id()."'");
+            Ses::del($this->id());
 		if(!CRON){ // interdit en CLI
 			unset($_SESSION);
 			$this->del_cookie();
@@ -320,6 +296,12 @@ class session
 		return true;
 	}
 	
+        /**
+         * chercher le cookie 'zrd':
+         * si OK -> login avec les infos cookie
+         * si KO -> login visiteur
+         * @return boolean
+         */
 	function auto_login()
 	{
 		$zrd = request("zrd", "array", "cookie");
@@ -339,13 +321,6 @@ class session
 	
 	function update($act)
 	{
-                if(!$this->get('mobile')){
-                    $this->set('mobile', false);
-                    $this->set('btc', '');
-                }else{
-                    $this->set('btc', '/2');
-                }
-                
 		$mid = $this->get("mid");
 		$pass = $this->get("pass");
 		$login = $this->get("login");
@@ -355,42 +330,23 @@ class session
 		/* Est ce que la ligne a changée depuis la dernière fois ? on peut utiliser mid, parce que si elle est pas changée, elle a pas changée :D 
 		   Par contre, si on vient de régénérer la session, il ne faut pas verifier la date, puisqu'on vient de la changer !
 		*/
-		$sql="SELECT UNIX_TIMESTAMP(mbr_lmodif_date) FROM ".$this->sql->prebdd."mbr WHERE mbr_mid = $mid";
-		$res = $this->sql->query($sql);
-
-		if(!$this->sql->num_rows($res)) 
+                $res = Mbr::selectRaw('UNIX_TIMESTAMP(mbr_lmodif_date) AS ldate')
+                        ->where('mbr_mid', $mid)
+                        ->get()->toArray();
+		if(empty($res)) 
 			return false;
+
+		$lmodif = $res[0]['ldate'];
 		
-		$lmodif = $this->sql->result($res, 0);
-		
-		/* Mise a jour des sessions */
-		$rand = gettimeofday(); /* Pour être sur de mettre a jour */
-		$rand = $rand['usec'];
-		$sql="UPDATE ".$this->sql->prebdd."ses SET ses_lact = '$act', ses_ldate = NOW(), ses_rand = $rand WHERE ses_sesid = '$sesid'";
-		$this->sql->query($sql);
-		if(!$this->sql->affected_rows()) {
-			/* useless - on permet d'avoir plusieurs IP car elle change tout le temps
-			if(!CRON) { // on peut etre connecté à la fois sur IRC et sur le jeu
-				$sql = "SELECT COUNT(*) FROM ".$this->sql->prebdd."ses WHERE ses_mid = $mid ";
-				if($this->sql->result($this->sql->query($sql), 0)) // On est connecté ailleur, donc on part ....
-					$this->del_cookie();
-			}*/
-			/* Sinon, c'est juste qu'on a pas touché a la page depuis longtemps, mais qu'on a laissé le nav ouvert */
+		/* Mise a jour de la session: sinon elle a expiré */
+		if(!Ses::edit($sesid, $act)) {
 			return false;
 		}	
 		
-		if(!CRON and (!$lmodif OR $lmodif > $this->get("lmodif"))) /* une modif, on reprend tout - sauf CRON */
+                /* une modif, on reprend tout - sauf CRON */
+		if(!CRON and (!$lmodif OR $lmodif > $this->get("lmodif")))
 		{
-			$sql="SELECT mbr_mid,mbr_pseudo,mbr_vlg,mbr_login,mbr_pass,mbr_atq_nb,mbr_lang,mbr_race,mbr_gid,mbr_decal,
-					mbr_sign,mbr_population,mbr_place,mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,
-					mbr_design,mbr_parrain,mbr_numposts";
-			$sql.=",UNIX_TIMESTAMP(mbr_ldate + INTERVAL '".$this->sql->decal."' HOUR_SECOND) as mbr_ldate ";
-			$sql.=" FROM ".$this->sql->prebdd."ses";
-			$sql.=" JOIN ".$this->sql->prebdd."mbr ON ses_sesid = '$sesid'";
-			$sql.=" WHERE mbr_login='$login' AND mbr_pass='$pass' GROUP BY mbr_mid";
-			
-			$req = $this->sql->make_array($sql);
-			
+                        $req = Mbr::get(['login' => $login, 'pass' => $pass, 'full' => true]);
 			if(!$req) {
 				return false;
 			} else {
@@ -412,57 +368,3 @@ class session
 		}
 	}
 }
-
-function del_old_ses()
-{
-	global $_sql;
-	
-	$sql = "DELETE FROM ".$_sql->prebdd."ses WHERE ";
-	$sql.= "ses_ldate < (NOW() - INTERVAL 300 SECOND)";
-	return $_sql->query($sql);
-}
-
-/* Nombre de membres en ligne */
-function nb_online()
-{
-	global $_sql;
-	
-	$sql = "SELECT COUNT(*) AS nb FROM ".$_sql->prebdd."ses ";
-	$sql.= "JOIN ".$_sql->prebdd."mbr ON mbr_mid = ses_mid ";
-	$sql.= "WHERE ses_mid != 1 AND mbr_etat = ".MBR_ETAT_OK;
-	return $_sql->make_array_result($sql)['nb'];
-}
-	
-function is_online($mid) {
-	global $_sql;
-	
-	$mid = protect($mid, "uint");
-	
-	$sql = "SELECT COUNT(*) AS nb FROM ".$_sql->prebdd."ses WHERE ses_mid = $mid";
-	return $_sql->make_array_result($sql)['nb'];
-}
-
-/* Liste */
-function get_liste_online($limite1, $limite2)
-{
-	global $_sql;
-	
-	$limite1 = protect($limite1, "uint");
-	$limite2 = protect($limite2, "uint");
-
-	$sql = "SELECT ";
-	$sql.= "mbr_etat,mbr_gid,mbr_mid,mbr_pseudo,mbr_mapcid,mbr_race,mbr_population,mbr_place,";
-	$sql.= "mbr_gid,ses_ip,ses_lact, mbr_points,mbr_pts_armee, ses_mid,mbr_lang,";
-	$sql.= "DATE_FORMAT(ses_ldate + INTERVAL '".$_sql->decal."' HOUR_SECOND,'".$_sql->dateformat."') as ses_ldate,";
-	$sql.= " ambr_etat, IF(ambr_etat=".ALL_ETAT_DEM.", 0, IFNULL(ambr_aid,0)) as ambr_aid, ";
-	$sql.= " IF(ambr_etat=".ALL_ETAT_DEM.", NULL, al_name) as al_name  ";
-	$sql.= " FROM ".$_sql->prebdd."ses ";	
-	$sql.= " JOIN ".$_sql->prebdd."mbr ON ses_mid=mbr_mid ";
-	$sql.= " LEFT JOIN ".$_sql->prebdd."al_mbr ON mbr_mid = ambr_mid ";
-	$sql.= " LEFT JOIN ".$_sql->prebdd."al ON al_aid = ambr_aid ";
-	$sql.= "WHERE mbr_mid != 1 AND mbr_etat = ".MBR_ETAT_OK." ";
-	$sql.= "ORDER BY ses_ldate DESC LIMIT $limite1, $limite2";
-
-	return $_sql->make_array($sql);
-}
-?>

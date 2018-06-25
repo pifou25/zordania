@@ -32,6 +32,6 @@ if(!$mbr_array || !in_array($race, $_races))
 
 	$_tpl->set("res_array",$prim_res);
 	$_tpl->set('mbr_array',$mbr_array);
-	$_tpl->set('mbr_online',is_online($mid));
+	$_tpl->set('mbr_online',Ses::isOnline($mid));
 }
 ?>

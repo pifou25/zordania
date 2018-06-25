@@ -39,4 +39,15 @@ class AlMbr extends Illuminate\Database\Eloquent\Model {
         return  AlMbr::insertGetId($request);
     }
 
+    /**
+     * info d'alliance d'un joueur
+     * @param int $mid
+     * @return array
+     */
+    static function get(int $mid){
+        $result = AlMbr::select('ambr_aid', 'ambr_etat', 'al_mid', 'al_name')
+                ->join('al', 'ambr_aid', 'al_aid')->where('ambr_mid', $mid)
+                ->get()->toArray();
+        return empty($result) ? false : $result[0];
+    }
 }

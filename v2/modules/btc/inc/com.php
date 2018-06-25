@@ -37,7 +37,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 	$ok = request("ok", "bool", "get");
 
 	if(!$com_cid) {
-		$vente_array = get_mch_by_mid($_user['mid']);
+		$vente_array = Mch::getByMid($_user['mid']);
 		$_tpl->set('vente_array',$vente_array);
 	} elseif($ok != 'ok')
 		$_tpl->set('com_cid',$com_cid);
@@ -51,7 +51,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 
 	$mch_cnl = request("com_cnl", "array", "post");
 
-	$have_mch = get_mch_by_mid($_user['mid']);
+	$have_mch = Mch::getByMid($_user['mid']);
 	$have_mch = index_array($have_mch, "mch_cid");
 
 	$mod_res = array();
@@ -66,7 +66,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 		}
 	}
 	Res::mod($_user['mid'], $mod_res);
-	cnl_mch($_user['mid'], array_keys($have_mch));
+	Mch::del($_user['mid'], array_keys($have_mch));
 	$_tpl->set("com_cnl", $have_mch);
 } elseif($_sub == "ach") { /* marché / achat */
 	$_tpl->set('btc_act','ach');
@@ -77,13 +77,13 @@ if($_sub == "my") { /* liste des ventes en cours */
 
 	if(!$com_cid) /* liste des achats dispo : matière première */
 	{
-		$com_liste = list_mch($_user['mid']);
+		$com_liste = Mch::getList($_user['mid']);
 		$_tpl->set('com_liste',$com_liste);
 
 		$com_type = request("com_type", "uint","get");
 
 		if($com_type) { /* liste des achats dispo : détail d'une ressource */
-			$cours_tmp = mch_get_cours($com_type);
+			$cours_tmp = MchCour::get($com_type);
 			$cours = array();
 			foreach($cours_tmp as $key => $cours_value)
 				$cours[$cours_value['mcours_res']] = $cours_value['mcours_cours']; 
@@ -92,10 +92,10 @@ if($_sub == "my") { /* liste des ventes en cours */
 
 			$_tpl->set('com_type', $com_type);
 
-			$com_array = list_mch_res($_user['mid'], $com_type);
+			$com_array = Mch::getRes($_user['mid'], $com_type);
 			$_tpl->set('com_array',$com_array);
 
-			$com_infos = mch_make_infos($com_array, $com_type);
+			$com_infos = mch_make_infos($com_array);
 			$_tpl->set('com_infos',$com_infos);
 		}
 
@@ -127,7 +127,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 			$com_mod = $com_mod*(1-$bonus/100);
 		}
 
-		$mch_array = get_mch($com_cid);
+		$mch_array = Mch::get($com_cid);
 		if(!$mch_array || $mch_array[0]['mch_etat'] != COM_ETAT_OK) { // déjà vendu?
 			$_tpl->set('btc_achat','error');
 		} else {
@@ -146,7 +146,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 					Res::mod($_user['mid'], array(1 => ($mch_array['mch_prix'] * $com_mod * -1), $mch_array['mch_type'] => $mch_array['mch_nb']));
 					Res::mod($mch_array['mch_mid'], array(1 => $mch_array['mch_prix']));
 
-					mch_achat($_user['mid'], $com_cid);
+					Mch::achat($com_cid);
 
 					$histo_array = array("mch_type" => $mch_array['mch_type'], 'mch_nb' => $mch_array['mch_nb'], 'mch_prix' => $mch_array['mch_prix']);
 					$_histo->add($mch_array['mch_mid'], $_user['mid'], HISTO_COM_ACH, $histo_array); // évènement
@@ -158,11 +158,11 @@ if($_sub == "my") { /* liste des ventes en cours */
 elseif($_sub == "ven") /* faire une vente */
 {
 	$_tpl->set('btc_act','ven');
-	$nb_ventes = count(get_mch_by_mid($_user['mid']));
-	
+	$nb_ventes = count(Mch::getByMid($_user['mid']));
+
 	$_tpl->set('max_ventes',$max_ventes);
 	$_tpl->set('nb_ventes',$nb_ventes);
-	
+        
 	if($max_ventes > $nb_ventes)
 	{
 		$com_type = request("com_type", "uint", "post");
@@ -177,7 +177,7 @@ elseif($_sub == "ven") /* faire une vente */
 			$_tpl->set('com_list_res',$list_res);
 			
 			// tous les cours
-			$cours = mch_get_cours();
+			$cours = MchCour::get();
 			$cours1 = array();
 			foreach($cours as $row){
 				$rid = $row['mcours_res'];
@@ -187,7 +187,7 @@ elseif($_sub == "ven") /* faire une vente */
 			$_tpl->set('com_cours',$cours1);
 		} else {
 			//Cours
-			$cours = mch_get_cours($com_type);
+			$cours = MchCour::get($com_type);
 			$cours = $cours[0]['mcours_cours'];
 			$_tpl->set('com_cours',$cours);
 			
@@ -206,9 +206,9 @@ elseif($_sub == "ven") /* faire une vente */
 				if ($com_nb && $com_prix)
 					$_tpl->set('btc_error', ($com_cours > $cours_max || $com_cours < $cours_min));
 
-				$prices = mch_get_price($com_type);
-				$com_array = list_mch_res(0, $com_type);
-				$com_infos = mch_make_infos($com_array, $com_type);
+				$prices = Mch::getPrice($com_type);
+				$com_array = Mch::getRes(0, $com_type);
+				$com_infos = mch_make_infos($com_array);
 
 				$_tpl->set('com_infos',$com_infos);
 				$_tpl->set('com_other_price',$prices);
@@ -246,7 +246,7 @@ elseif($_sub == "ven") /* faire une vente */
 							/* Enlever les ressources */
 							Res::mod($_user['mid'], array($com_type => $com_nb), -1);	
 							/* Mettre en vente */
-							mch_vente($_user['mid'], $com_type, $com_nb, $com_prix);
+							Mch::add($_user['mid'], $com_type, $com_nb, $com_prix);
 						}
 						$_tpl->set("vente_ok", $ok);
 					}
@@ -262,7 +262,7 @@ elseif($_sub == "cours")
 	$com_nb = request("com_nb", "uint", "post", 1);
 
 	$_tpl->set('btc_act','cours');
-	$_tpl->set('mch_cours',mch_get_cours());
+	$_tpl->set('mch_cours',MchCour::get());
 	
 	$_tpl->set('com_nb',$com_nb);
 }
@@ -296,14 +296,14 @@ elseif($_sub == "cours_sem")
 	
 	if(!$com_type)
 	{
-		$tmp = mch_get_cours_sem(0,$diff);
+		$tmp = MchSem::get(0,$diff);
 		$mch_cours = array();
 		foreach($tmp as $result)
 			$mch_cours[$result['msem_res']][] = $result;
 			
 		$_tpl->set('mch_cours',$mch_cours);
 	} else {	
-		$tmp = mch_get_cours_sem($com_type,$diff);
+		$tmp = MchSem::get($com_type,$diff);
 		$mch_cours = array();
 		foreach($tmp as $result)
 			$mch_cours[$com_type][] = $result;

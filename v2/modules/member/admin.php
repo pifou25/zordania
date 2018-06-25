@@ -249,23 +249,9 @@ if($_act == "del") {
 	$_tpl->set("module_tpl","modules/member/liste.tpl");
 	$_tpl->set("mbr_act","liste_online");
 	
-	$mbr_page = request("mbr_page", "uint", "get");
-	$_tpl->set("mbr_page",$mbr_page);
-	$mbr_nb = nb_online();
-	$_tpl->set("limite_page",LIMIT_MBR_PAGE);
-	$_tpl->set("mbr_nb",$mbr_nb);
-	$nombre_page = $mbr_nb / LIMIT_MBR_PAGE;
-	$nombre_total = ceil($nombre_page);
-	$nombre = $nombre_total - 1;
-	
-	if($mbr_page)
-		$limite_mysql = LIMIT_MBR_PAGE * $mbr_page;
-	else
-		$limite_mysql = 0;
-	
-	$mbr_array = get_liste_online($limite_mysql,LIMIT_MBR_PAGE);
-	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid']);
-	$_tpl->set("mbr_array",$mbr_array);
+        $pg = new Paginator(Ses::getOnline());
+        $pg->get = can_atq_lite($pg->get, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid']);
+	$_tpl->set('pager',$pg);
 
 } else if($_act == "view") {
 	$mid = request("mid", "uint", "get");
@@ -433,7 +419,7 @@ if($_act == "del") {
 	$ip = request('ip', 'string', 'get', '');
 	$_tpl->set("mbr_array",Mbr::getIps($ip, $_user['groupe']));
 	if($ip )
-		$_tpl->set('log_ip', MbrLog::get(0, $ip, true, $_user['groupe']));
+		$_tpl->set('log_ip', MbrLog::getByIp($ip, true, $_user['groupe']));
 } else if ($_act == 'exp') 
 { // exporter membre
 	$mid = request("mid", "uint", "get");

@@ -56,7 +56,7 @@ foreach($mid_array as $_user)
                 ResTodo::where('rtdo_mid', '=', $mid)->delete();
 		SrcTodo::del($mid);
 		Trn::clear($mid);
-		cls_com($mid);
+		Mch::del($mid);
 		cls_atq($mid);
 		cls_histo($mid);
 		cls_vld($mid);

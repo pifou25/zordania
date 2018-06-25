@@ -28,7 +28,7 @@ if($id == 66656) {
 	$or = ((MIN_BONUS_NB) + $coef * $_user['points']);
 	$res_cfg[1] = round(($or > GAME_MAX_BONUS) ? GAME_MAX_BONUS : $or);
 
-	$cours = mch_get_cours($type_res);
+	$cours = MchCour::get($type_res);
 	foreach($cours as $value) {
 		$res_cfg[$value['mcours_res']] = ceil($or / max(0.1, $value['mcours_cours']));
 	}
@@ -65,7 +65,7 @@ if($id == 66656) {
 	$or = ((MIN_BONUS_NB) + $coef * $_user['points']);
 	$res_cfg[1] = round(($or > GAME_MAX_BONUS) ? GAME_MAX_BONUS : $or);
 
-	$cours = mch_get_cours();
+	$cours = MchCour::get();
 	foreach($cours as $value) {
 		$res_cfg[$value['mcours_res']] = ceil($or / max(0.1,$value['mcours_cours']));
 	}

@@ -178,26 +178,13 @@ elseif($_act == "liste_online")
 	$_tpl->set("module_tpl","modules/member/liste.tpl");
 	$_tpl->set("mbr_act","liste_online");
 
-	$mbr_page = request("mbr_page", "uint", "get");
-	$_tpl->set("mbr_page",$mbr_page);
-	$mbr_nb = nb_online();
-	$_tpl->set("limite_page",LIMIT_MBR_PAGE);
-	$_tpl->set("mbr_nb",$mbr_nb);
-	$nombre_page = $mbr_nb / LIMIT_MBR_PAGE;
-	$nombre_total = ceil($nombre_page) - 1;
-
-	if($mbr_page)
-		$limite_mysql = LIMIT_MBR_PAGE * $mbr_page;
-	else
-		$limite_mysql = 0;
-
 	/* mes pactes */
 	$dpl_atq = new diplo(array('aid' => $_user['alaid']));
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 
-	$mbr_array = get_liste_online($limite_mysql,LIMIT_MBR_PAGE);
-	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
-	$_tpl->set("mbr_array",$mbr_array);
+        $pg = new Paginator(Ses::getOnline());
+        $pg->get = can_atq_lite($pg->get, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+	$_tpl->set('pager',$pg);
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
 }
 elseif($_act == "edit")
@@ -381,7 +368,7 @@ elseif($mid) //elseif($_act == "view" && $mid)
 				$_tpl->set("mbr_dst", 0);
 		}
 
-		$_tpl->set("mbr_online", is_online($mid));
+		$_tpl->set("mbr_online", Ses::isOnline($mid));
 		$mbr_surv = Surv::get($mid);  // surveillance en cours ?
 		if(!empty($mbr_surv))
 			$_tpl->set("mbr_surv", $mbr_surv[0]);

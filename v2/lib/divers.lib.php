@@ -669,7 +669,7 @@ function fatal_handler() {
     $error = error_get_last();
     if( $error !== NULL) {
 
-        echo "<pre>";
+        echo "<pre>DEBUG STACKTRACE\n";
         var_dump($error);
         var_dump(callstack());
         if(!empty(DB::connection()->getQueryLog())){

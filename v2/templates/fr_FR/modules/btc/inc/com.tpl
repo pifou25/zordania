@@ -200,7 +200,7 @@
 		<p>
 		Prix unitaire minimum : {com_cours_min}<br/>
 		<if cond="{com_infos}">
-			Prix unitaire moyen : <math oper="round({com_infos[ventes][2]}/{com_infos[ventes][1]},2)" /><br/>
+			Prix unitaire moyen : {com_infos[ventes][0]}<br/>
 		</if>
 		Prix unitaire maximum :
   		{com_cours_max}
@@ -265,7 +265,7 @@
 					</p>
 				</if>
 				<p>
-				Prix unitaire moyen : <math oper="round({com_infos[ventes][2]}/{com_infos[ventes][1]},2)" /><br/>
+				Prix unitaire moyen : {com_infos[ventes][0]}<br/>
 				</p>
 			</if>
 		</if>

@@ -172,7 +172,7 @@
 </if>
 </if>
 <if cond='{mbr_act} == "liste_online"'>
-<if cond='is_array({mbr_array})'>
+<if cond='is_array({pager->get})'>
 	<table class="liste">
 	<tr>
 		<th>Pseudo</th>
@@ -185,8 +185,9 @@
 		<th>Actions</th>
 	</tr>
 
-	<foreach cond='{mbr_array} as {result}'>
-	<tr<if cond='{_user[alaid]} == {result[ambr_aid]} AND {_user[alaid]} != 0'> class="allie"</if>>
+	<foreach cond='{pager->get} as {result}'>
+        <set name="classLst" value="({_user[alaid]} == {result[ambr_aid]} && {_user[alaid]} != 0) ? 'allie' : ''"/>
+        <tr class="{classLst}">
 		<td>
 			<zurlmbr gid="{result[mbr_gid]}" mid="{result[mbr_mid]}" pseudo="{result[mbr_pseudo]}"/>
 		</td>
@@ -224,14 +225,15 @@
 	</tr>
 	</foreach>
 	</table>
-	Page : 
-	<for cond='{i} = 0; {i} < {mbr_nb}; {i}+={limite_page}'>
-		<if cond='{i} / {limite_page} != {mbr_page}'>
-		<a href="member-liste_online.html?mbr_page=<math oper='({i} / {limite_page})' />"><math oper='(({i} / {limite_page})+1)' /></a>
-		</if>
-		<else>
-			<math oper='(({i} / {limite_page})+1)' />
-		</else>
-	</for>
-	</if>
+                                        
+<p class="pages">
+<foreach cond="{pager->links} as {page}">
+        <if cond='is_numeric({page})'>
+        <a href="member-liste_online.html?page={page}">{page}</a>
+        </if>
+        <else>{page}</else>
+</foreach>
+</p>
+</if>
+
 </if>

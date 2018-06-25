@@ -19,9 +19,9 @@ if($_act == "cours") {
 	$com_mod = request("com_mod", "array", "post");
 	
 	foreach($com_mod as $res_id => $res_cours) 
-		mch_update_cours($res_id, ($res_cours/$com_nb) );
+		MchCour::edit($res_id, ($res_cours/$com_nb) );
 		
-	$_tpl->set('mch_cours',mch_get_cours());
+	$_tpl->set('mch_cours',MchCour::get());
 	$_tpl->set('com_nb',$com_nb);
 } else if($_act == "cours_sem") {
 	$_tpl->set('btc_act','cours_sem');
@@ -29,9 +29,9 @@ if($_act == "cours") {
 	$com_mod = request("com_mod", "array", "post");
 	foreach($com_mod as $res_jour => $res_value)
 		foreach($res_value as $res_id => $res_cours)
-			mch_update_cours_sem($res_id,$res_cours,$res_jour); 
+			MchSem::edit($res_id,$res_cours,$res_jour); 
 	
-	$tmp = mch_get_cours_sem(0,7);
+	$tmp = MchSem::get(0,7);
 	foreach($tmp as $result)
 		$mch_cours[$result['msem_res']][] = $result;
 		

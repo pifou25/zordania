@@ -143,7 +143,7 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
             $sql .= "_DATE_FORMAT(mbr_lmodif_date) as mbr_lmodif_date,mbr_lip,mbr_sexe,";
             $sql .= " ambr_etat, al_name, ambr_aid, al_nb_mbr,al_open ";
             $sql .= ",mbr_sign, mbr_descr, mbr_lip ";
-            $sql .= ",map_cid,map_x,map_y,map_type,map_region, mbr_parrain, mbr_numposts ";
+            $sql .= ",map_cid,map_x,map_y,map_type,map_region, mbr_parrain, mbr_numposts,mbr_design ";
             // replace date formatting:
             $sql = mysqliext::$bdd->parse_query($sql);
         } else if ($list) {
@@ -368,7 +368,7 @@ static function getIps(string $ip = '', int $gid = 0)
         ResTodo::where('rtdo_mid', '=', $mid)->delete();
         SrcTodo::del($mid);
         Trn::clear($mid);
-        cls_com($mid);
+        Mch::del($mid);
         cls_atq($mid);
         cls_histo($mid);
         cls_vld($mid);
@@ -431,7 +431,7 @@ static function getIps(string $ip = '', int $gid = 0)
         ResTodo::where('rtdo_mid', '=', $mid)->delete();
         SrcTodo::del($mid);
         Trn::clear($mid);
-        cls_com($mid);
+        Mch::del($mid);
         cls_atq($mid);
         cls_histo($mid);
         // cls_msg($mid); // on garde les messages

@@ -18,7 +18,7 @@ class Hro extends Illuminate\Database\Eloquent\Model {
 
     /* un seul héros par joueur */
     static function get(int $mid) {
-        $result =  Btc::where('hro_mid', '=', $mid)->get()->toArray();
+        $result = Hro::where('hro_mid', '=', $mid)->get()->toArray();
         return (empty($result) ? false : $result[0]);
     }
 
@@ -33,7 +33,7 @@ class Hro extends Illuminate\Database\Eloquent\Model {
             'hro_vie' => $vie,
             'hro_xp' => 0 ];
 
-        return Btc::insertGetId($request);
+        return Hro::insertGetId($request);
     }
 
     /* supprimer un héros */

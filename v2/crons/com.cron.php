@@ -43,7 +43,7 @@ function glob_com() {
 		$res_array = array(2 ,3 ,4 ,5 ,6 ,8 ,9);
 		$nb_ventes_max = 5; // config
 
-		$vente_array = get_mch_by_mid(MBR_WELC);
+		$vente_array = Mch::getByMid(MBR_WELC);
 		$vente_nb = array();
 		foreach($vente_array as $row)
 			if(isset($vente_nb[$row['mch_type']]))
@@ -51,7 +51,7 @@ function glob_com() {
 			else
 				$vente_nb[$row['mch_type']]=1;
 
-		$cours = mch_get_cours();
+		$cours = MchCour::get();
 		$cours = index_array($cours, 'mcours_res');
 		foreach($res_array as $res_type){
 			if(!isset($vente_nb[$res_type]))
@@ -61,7 +61,7 @@ function glob_com() {
 			$res_nb = floor(COM_MAX_NB1 / $cours[$res_type]['mcours_cours'] / COM_TAUX_MAX);
 			// rajouter jusqu'à 5 ventes par ressources
 			for($i=$vente_nb[$res_type]; $i < $nb_ventes_max; $i++)
-				mch_vente(MBR_WELC, $res_type, $res_nb, $res_nb * $cours[$res_type]['mcours_cours'] * COM_TAUX_MAX);
+				Mch::add(MBR_WELC, $res_type, $res_nb, $res_nb * $cours[$res_type]['mcours_cours'] * COM_TAUX_MAX);
 		}
 	//} // fin de la vente auto pour le PNJ
 
