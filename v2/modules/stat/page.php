@@ -2,10 +2,7 @@
 //Verif
 if(!defined("_INDEX_")){ exit; }
 
-require_once('lib/stat.lib.php');
-
 $_tpl->set('module_tpl', 'modules/stat/stat.tpl');
-
 			
 $annee = request("annee", "int", "get",date("Y"));
 $mois = request("mois", "int", "get",date("m"));
@@ -45,6 +42,6 @@ if($jour2 < 1){ $jour2 = cal_days_in_month(CAL_GREGORIAN, $mois2, $annee2);}
 if(strlen ($jour2) < 2){ $jour2 = "0".$jour2; }
 if(strlen ($mois2) < 2){ $mois2 = "0".$mois2; }
 
-$_tpl->set('stq_infos', get_stats("$annee-$mois-$jour","$annee2-$mois2-$jour2"));
+$_tpl->set('stq_infos', Stq::get("$annee-$mois-$jour","$annee2-$mois2-$jour2"));
 
 ?>

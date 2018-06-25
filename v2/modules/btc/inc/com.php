@@ -95,7 +95,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 			$com_array = Mch::getRes($_user['mid'], $com_type);
 			$_tpl->set('com_array',$com_array);
 
-			$com_infos = mch_make_infos($com_array);
+			$com_infos = Mch::makeSum($com_array);
 			$_tpl->set('com_infos',$com_infos);
 		}
 
@@ -208,7 +208,7 @@ elseif($_sub == "ven") /* faire une vente */
 
 				$prices = Mch::getPrice($com_type);
 				$com_array = Mch::getRes(0, $com_type);
-				$com_infos = mch_make_infos($com_array);
+				$com_infos = Mch::makeSum($com_array);
 
 				$_tpl->set('com_infos',$com_infos);
 				$_tpl->set('com_other_price',$prices);

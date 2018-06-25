@@ -1,7 +1,6 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
 
-require_once("lib/vld.lib.php");
 require_once("lib/member.lib.php");
 
 $_tpl->set("module_tpl","modules/ini/ini.tpl");
@@ -12,7 +11,7 @@ $ini = false;
 if($_user['groupe'] == GRP_VISITEUR)
 	$_tpl->set("need_to_be_loged", true);
 else {
-	$vld = get_vld($_user['mid']);
+	$vld = Vld::get($_user['mid']);
 
 	if($_user['etat'] == MBR_ETAT_INI)
 		$ini = true; // initialisation
@@ -145,7 +144,7 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 					}
 					/* On vire la clef */
 					if($_user['etat'] != MBR_ETAT_INI)
-						del_vld($_user['mid']);
+						Vld::del($_user['mid']);
 
 					$_tpl->set("mbr_ini_ok", true);
 				}

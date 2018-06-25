@@ -7,7 +7,6 @@ require_once("../conf/conf.inc.php");
 require_once(SITE_DIR . "lib/divers.lib.php");
 require_once(SITE_DIR . "lib/mysql.class.php");
 require_once(SITE_DIR . "lib/Template.class.php");
-require_once(SITE_DIR . "lib/vld.lib.php");
 require_once(SITE_DIR . "lib/member.lib.php");
 
 /* BDD */

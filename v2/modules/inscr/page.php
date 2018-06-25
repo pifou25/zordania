@@ -3,7 +3,6 @@ if(!defined("_INDEX_")){ exit; }
 
 $_tpl->set("module_tpl","modules/inscr/inscr.tpl");
 
-require_once("lib/vld.lib.php");
 require_once("lib/member.lib.php");
 require_once("lib/ini.lib.php");
 
@@ -87,15 +86,15 @@ if(!$_act || $_act == "new") {
 	$mid = request("mid", "uint", "get");
 	$pass = request("pass", "string", "get");
 
-	$vld_array = get_vld($mid);
+	$vld_array = Vld::get($mid);
 	foreach($vld_array as $value) {
 		if($value['vld_act'] == 'edit' && $key == $value['vld_rand']) {
-			vld($key, $mid);
+			Vld::del($key, $mid);
 			Mbr::edit($mid, array("pass" =>$pass));// modifier le mot de passe
 			$mbr_array = Mbr::get(['mid' => $mid])[0];
 			$_tpl->set("mbr_edit", true);
 			if($mbr_array['mbr_etat']==MBR_ETAT_INI){// compte non encore valid�: relancer mail
-				del_vld($mid);// on annule tout ancien changement
+				Vld::del($mid);// on annule tout ancien changement
 				$_tpl->set("mbr_newkey", mail_init($mid));
 			}
 			break;
@@ -123,7 +122,7 @@ if(!$_act || $_act == "new") {
 			$_tpl->set("mbr_form",true);
 		}else{
 			$mid = $mbr_array[0]['mbr_mid'];
-			del_vld($mid);// on annule tout ancien changement
+			Vld::del($mid);// on annule tout ancien changement
 			$_tpl->set("mbr_edit",mail_chg_pass(array('mid' => $mid)));
 		}
 	}
@@ -134,7 +133,7 @@ if(!$_act || $_act == "new") {
 	$mail = request("mail", "string", "get");
 
 	if($key && $mid){ // rechercher la validation
-		$vld_array = get_vld($mid);
+		$vld_array = Vld::get($mid);
 
 		if(!$vld_array) {
 			$_tpl->set("mbr_no_del", true);
@@ -161,7 +160,7 @@ if(!$_act || $_act == "new") {
 		}
 
 	}else if($mid && $mail){//envoyer un mail de confirmation
-		del_vld($mid);// on annule tout ancien changement
+		Vld::del($mid);// on annule tout ancien changement
 		$_tpl->set('send_mail',mail_del($mid, $mail));
 	}
 } else if($_act == 'rest') { /* relance mail : quitter ou r�activer */
@@ -176,7 +175,7 @@ if(!$_act || $_act == "new") {
 			$_tpl->set("mbr_bad_pass", true);
 		else {
 			$mid = $_ses->get('mid');
-			$vld_array = get_vld($mid);
+			$vld_array = Vld::get($mid);
 			$_tpl->set("key",$key);
 
 			if(!$vld_array) {

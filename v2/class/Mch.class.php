@@ -79,33 +79,45 @@ class Mch extends Illuminate\Database\Eloquent\Model {
         return $req->get()->toArray();
     }
 
-    
-    static function getPrice(int $type)
-{
+    /**
+     * convert getRes info into total and avg
+     * @param array $com_array
+     * @return [total_ventes => $val1, ventes => [mch_nb => $nb, mch_prix => $tot]]
+     */
+    static function makeSum(array $com_array) {
+        $total = [0, 0, 0];
+        foreach ($com_array as $value) {
+            $total[1] += $value['mch_nb']; //ressoures au total contre ca
+            $total[2] += $value['mch_prix']; //idem
+        }
+        $total[0] = round($total[2] / $total[1], 2);
+        return ['total_ventes' => count($com_array), 'ventes' => $total];
+    }
+
+    static function getPrice(int $type) {
 
         $tmp = Mch::where('mch_type', $type)->where('mch_etat', COM_ETAT_OK)
-                ->get()->toArray();
-	if(!$tmp) 
-		return [];
-	$total = [1 => 0, 2 => 0];
-	foreach($tmp as $value)
-	{
-		$total[1] += $value['mch_nb'];
-		$total[2] += $value['mch_prix'];
-		$prix_unit = $value['mch_prix'] /$value['mch_nb'];
-		if(!isset($min) || $prix_unit < $min)
-			$min = $prix_unit;
-		if(!isset($max) || $prix_unit > $max)
-			$max = $prix_unit;
-	}
-	
-	if(!$total[1])
-		$avg = 0;
-	else
-		$avg = round($total[2] / $total[1]);
+                        ->get()->toArray();
+        if (!$tmp)
+            return [];
+        $total = [1 => 0, 2 => 0];
+        foreach ($tmp as $value) {
+            $total[1] += $value['mch_nb'];
+            $total[2] += $value['mch_prix'];
+            $prix_unit = $value['mch_prix'] / $value['mch_nb'];
+            if (!isset($min) || $prix_unit < $min)
+                $min = $prix_unit;
+            if (!isset($max) || $prix_unit > $max)
+                $max = $prix_unit;
+        }
 
-	return ['min'=> round($min,2), 'max' => round($max,2), 'avg' => $avg];
-}
+        if (!$total[1])
+            $avg = 0;
+        else
+            $avg = round($total[2] / $total[1]);
+
+        return ['min' => round($min, 2), 'max' => round($max, 2), 'avg' => $avg];
+    }
 
     /**
      * acheter la vente $cid

@@ -17,7 +17,6 @@ require_once(SITE_DIR . "lib/mch.lib.php");
 require_once(SITE_DIR . "lib/war.lib.php");
 require_once(SITE_DIR . "lib/msg.lib.php");
 require_once(SITE_DIR . "lib/nte.lib.php");
-require_once(SITE_DIR . "lib/vld.lib.php");
 require_once(SITE_DIR . "lib/histo.class.php");
 
 $_sql = new mysql(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
@@ -59,7 +58,7 @@ foreach($mid_array as $_user)
 		Mch::del($mid);
 		cls_atq($mid);
 		cls_histo($mid);
-		cls_vld($mid);
+		Vld::init($mid);
 		Map::reset($cid);
 		//cls_frm($mid);
 

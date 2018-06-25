@@ -6,7 +6,6 @@ require_once("../conf/conf.inc.php");
 require_once(SITE_DIR . "lib/divers.lib.php");
 require_once(SITE_DIR . "lib/mysql.class.php");
 require_once(SITE_DIR . "lib/Template.class.php");
-require_once(SITE_DIR . "lib/vld.lib.php");
 require_once(SITE_DIR . "lib/member.lib.php");
 
 require_once(SITE_DIR ."lib/res.lib.php");
@@ -17,7 +16,6 @@ require_once(SITE_DIR ."lib/heros.lib.php");
 require_once(SITE_DIR ."lib/mch.lib.php");
 require_once(SITE_DIR ."lib/war.lib.php");
 require_once(SITE_DIR ."lib/histo.class.php");
-require_once(SITE_DIR ."lib/vld.lib.php");
 require_once(SITE_DIR ."lib/nte.lib.php");
 require_once(SITE_DIR ."lib/msg.lib.php");
 

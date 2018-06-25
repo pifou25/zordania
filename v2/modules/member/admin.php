@@ -15,7 +15,6 @@ require_once("lib/alliances.lib.php");
 require_once("lib/mch.lib.php");
 require_once("lib/war.lib.php");
 require_once("lib/msg.lib.php");
-require_once("lib/vld.lib.php");
 require_once("lib/nte.lib.php");
 
 $_tpl->set("module_tpl","modules/member/admin.tpl");

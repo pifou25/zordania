@@ -371,7 +371,7 @@ static function getIps(string $ip = '', int $gid = 0)
         Mch::del($mid);
         cls_atq($mid);
         cls_histo($mid);
-        cls_vld($mid);
+        Vld::init($mid);
 
         Mbr::init($mid, $pseudo, $vlg, $race, $cid, $gid, $sexe);
     }
@@ -435,7 +435,7 @@ static function getIps(string $ip = '', int $gid = 0)
         cls_atq($mid);
         cls_histo($mid);
         // cls_msg($mid); // on garde les messages
-        cls_vld($mid);
+        Vld::init($mid);
         Map::reset($cid);
         cls_nte($mid);
         //cls_frm($mid);

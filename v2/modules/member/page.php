@@ -11,7 +11,6 @@ $_tpl->set("smileys_more", $smileys_more);
 
 require_once("lib/member.lib.php");
 require_once("lib/rec.lib.php");
-require_once("lib/vld.lib.php");
 $mid = request("mid", "uint", "get");
 
 
@@ -28,21 +27,20 @@ else if(!$_act) {
 	$_tpl->set("mbr_array",$array);
 	$_tpl->set('rec_array', get_rec($_user['mid']));
 
-	$vld_array = get_vld($_user['mid']);
+	$vld_array = Vld::get($_user['mid']);
 	$_tpl->set('vld_array',$vld_array);
 } elseif($_act == "del") {
 	$_tpl->set("mbr_act","del");
 
-	$vld_array = get_vld($_user['mid']);
+	$vld_array = Vld::get($_user['mid']);
 	if($_sub == "pre") { /* On prépare la suppression */
 		$_tpl->set("mbr_sub",$_sub);
 		if (!empty($vld_array)) {
 			$_tpl->set("mbr_another_valid", true);
 		}else{
 			$key = genstring(GEN_LENGHT);
-			$result = new_vld($key, $_user['mid'], 'del');
-		
-			if($_sql->err)
+			$result = Vld::add($key, $_user['mid'], 'del');
+			if(!$result)
 				$_tpl->set("mbr_another_valid", true);
 			else {
 				$_tpl->set("vld_key", $key);
@@ -254,7 +252,7 @@ elseif($_act == "edit")
 	} elseif($_sub == "reset") {
 		$_tpl->set("mbr_sub","reset");
 
-		$vld_array = get_vld($_user['mid']);
+		$vld_array = Vld::get($_user['mid']);
 		if (!empty($vld_array)) {
 			$_tpl->set("mbr_sub",$_sub);
 			$_tpl->set("mbr_another_valid", true);
@@ -263,7 +261,8 @@ elseif($_act == "edit")
 			$_tpl->set('vld_mid',$_user['mid']);
 			$_tpl->set('vld_key',$key);
 			
-			if(new_vld($key, $_user['mid'], 'res'))
+			$result = Vld::add($key, $_user['mid'], 'res');
+			if(!$result)
 			{
 				$objet = $_tpl->get("modules/member/mails/objet_reset.tpl",1);
 				$texte = $_tpl->get("modules/member/mails/text_reset.tpl",1);
@@ -312,7 +311,7 @@ elseif($_act == "edit")
 	elseif($_sub == 'del_vld')
 	{
 		$_tpl->set('mbr_sub','del_vld');
-		if(del_vld($_user['mid']))
+		if(Vld::init($_user['mid']))
 			$_tpl->set("mbr_edit",true);
 	}
 	//edit le compte 

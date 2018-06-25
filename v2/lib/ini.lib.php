@@ -34,7 +34,7 @@ function mail_chg_pass($cond){ // envoyer un mail de changement de pass
 		return false;
 
 	$key = genstring(GEN_LENGHT);// clé de validation aléatoire
-	if(new_vld($key, $mbr_array['mbr_mid'], 'edit'))
+	if(Vld::add($key, $mbr_array['mbr_mid'], 'edit'))
 	{
 
 		$pass = genstring(GEN_LENGHT); // générer un nouveau pass aléatoire
@@ -76,7 +76,7 @@ function mail_init($mid, $login='', $pass=false, $mail=''){// envoyer un mail d'
 	}
 
 	$key = genstring(GEN_LENGHT);
-	if(new_vld($key, $mid, 'new')){
+	if(Vld::add($key, $mid, 'new')){
 		$_tpl->set("vld_key", $key);
 		$_tpl->set("mbr_login", $login);
 		$_tpl->set("mbr_pass", $pass);
@@ -102,7 +102,7 @@ function mail_del($mid, $mail=''){// envoyer un mail pour suppression du compte
 	}
 
 	$key = genstring(GEN_LENGHT);
-	if(new_vld($key, $mid, 'del')){// ajouter validation pour del
+	if(Vld::add($key, $mid, 'del')){// ajouter validation pour del
 		$_tpl->set("vld_key", $key);
 		$_tpl->set("mid", $mid);
 		$_tpl->set("mail", $mail);
