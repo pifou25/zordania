@@ -12,9 +12,7 @@ $_tpl->set("smileys_base", $smileys_base);
 $_tpl->set("smileys_more", $smileys_more);
 
 require_once("lib/alliances.lib.php");
-require_once("lib/mch.lib.php");
 require_once("lib/war.lib.php");
-require_once("lib/msg.lib.php");
 require_once("lib/nte.lib.php");
 
 $_tpl->set("module_tpl","modules/member/admin.tpl");

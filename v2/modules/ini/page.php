@@ -125,9 +125,7 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 					require_once("lib/res.lib.php");
 					require_once("lib/src.lib.php");
 					require_once("lib/alliances.lib.php");
-					require_once("lib/mch.lib.php");
 					require_once("lib/war.lib.php");
-					require_once("lib/msg.lib.php");
 					require_once("lib/heros.lib.php");
 
 					$_ses->set("race", $race); /* Il faut absolument changer la race ! */
@@ -140,7 +138,7 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 						/* envoyer le message de bienvenue */
 						$msg = nl2br($_tpl->get("modules/inscr/msg/welcome.txt.tpl",1));
 						$titre = $_tpl->get("modules/inscr/msg/welcome.obj.tpl",1);
-						send_msg(MBR_WELC, $_user['mid'] ,$titre, $msg,true);
+						MsgRec::add(MBR_WELC, $_user['mid'] ,$titre, $msg,true);
 					}
 					/* On vire la clef */
 					if($_user['etat'] != MBR_ETAT_INI)

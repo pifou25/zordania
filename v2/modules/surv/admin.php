@@ -4,7 +4,6 @@ if(defined("_INDEX_") and can_d(DROIT_ADM_MBR)){
 
 require_once("lib/member.lib.php");
 require_once("lib/alliances.lib.php");
-require_once("lib/msg.lib.php");
 
 $_tpl->set("module_tpl","modules/surv/admin.tpl");
 $_tpl->set("admin_name","Membres surveill�s");
@@ -43,7 +42,7 @@ case "view":
 				$_tpl->set("mbr_array",Mbr::getIps($mbr_info[0]['mbr_lip']));
 				if($mbr_info[0]['mbr_lip'])
 					$_tpl->set('log_ip', MbrLog::getByIp($mbr_info[0]['mbr_lip'], true));
-				$info_surv[SURV_TYPE_MP] = get_msg_env($surv[0]['surv_mid']);
+				$info_surv[SURV_TYPE_MP] = MsgEnv::get($surv[0]['surv_mid']);
 				$_tpl->set("info_ally", $info_surv[SURV_TYPE_ALY]);
 				//$_tpl->set("info_mp", $info_surv[SURV_TYPE_MP]);
 				break;
@@ -55,7 +54,7 @@ case "view":
 		$_tpl->set("view_surv", true);
 	}
 	elseif(!empty($msg_id) && !empty($msg_mid)){
-		$array_msg = get_msg_env($msg_mid, $msg_id);
+		$array_msg = MsgEnv::get($msg_mid, $msg_id);
 		$_tpl->set("view_mp", true);
 		$_tpl->set("array_msg", $array_msg);
 	}

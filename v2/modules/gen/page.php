@@ -7,7 +7,6 @@ else {
 require_once("lib/res.lib.php");
 require_once("lib/unt.lib.php");
 require_once("lib/src.lib.php");
-require_once("lib/mch.lib.php");
 require_once("lib/member.lib.php");
 
 

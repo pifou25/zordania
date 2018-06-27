@@ -2,8 +2,6 @@
 //Verif
 if(!defined("_INDEX_") || !can_d(DROIT_ADM_COM)){ exit; }
 
-require_once("lib/mch.lib.php");
-
 $_tpl->set("admin_tpl","modules/com/admin.tpl");
 $_tpl->set("admin_name","Commerce");
 

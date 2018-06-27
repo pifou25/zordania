@@ -1,8 +1,6 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
 
-require_once("lib/mch.lib.php");
-
 $jours = request("jours", "uint", "post", request('jours', 'uint', 'get'));
 
 $_module_tpl = "modules/com/cours_xml.tpl";

@@ -4,7 +4,6 @@ if(!can_d(DROIT_PLAY)) {
 	$_tpl->set("need_to_be_loged",true);
 } else {
 
-require_once("lib/msg.lib.php");
 require_once("lib/alliances.lib.php");
 require_once("lib/res.lib.php");
 require_once("lib/member.lib.php");
@@ -207,7 +206,7 @@ case 'admin':
 
 							$text = $_tpl->get('modules/alliances/msg/accept.tpl',1);
 							$titre = $_tpl->get('modules/alliances/msg/titre.tpl',1);
-							send_msg($_user['mid'], $mid, $titre, parse($text));
+							MsgRec::add($_user['mid'], $mid, $titre, parse($text));
 							$_tpl->set('al_ok',true);
 							$_tpl->set('al_pseudo',$mbr_infos['mbr_pseudo']);
 						}
@@ -228,7 +227,7 @@ case 'admin':
 							
 							$text = $_tpl->get('modules/alliances/msg/refuse.tpl',1);
 							$titre = $_tpl->get('modules/alliances/msg/titre.tpl',1);
-							send_msg($_user['mid'], $mid, $titre, parse($text));
+							MsgRec::add($_user['mid'], $mid, $titre, parse($text));
 							$_tpl->set('al_ok',true);
 							$_tpl->set('al_pseudo',$mbr_infos['mbr_pseudo']);
 						} else {
@@ -380,7 +379,7 @@ case 'res': /* grenier */
 				$_tpl->get_config("race/{$_user['race']}.config");
 				$msg = nl2br($_tpl->get("modules/admin/msg/pillage_$_act.txt.tpl",1));
 				$titre = $_tpl->get("modules/admin/msg/pillage.obj.tpl",1);
-				send_to_all(MBR_WELC, $titre, $msg, [GRP_GARDE, GRP_DEMI_DIEU]);
+				MsgRec::addAll(MBR_WELC, $titre, $msg, [GRP_GARDE, GRP_DEMI_DIEU]);
 			}
 
 			$res_taxed[$type] = $nb_tax;
@@ -480,7 +479,7 @@ case 'resally': /* donner des ressources à un allié */
 					$_tpl->get_config("race/{$_user['race']}.config");
 					$msg = nl2br($_tpl->get("modules/admin/msg/pillage_$_act.txt.tpl",1));
 					$titre = $_tpl->get("modules/admin/msg/pillage.obj.tpl",1);
-					send_to_all(MBR_WELC, $titre, $msg, [GRP_GARDE, GRP_DEMI_DIEU]);
+					MsgRec::addAll(MBR_WELC, $titre, $msg, [GRP_GARDE, GRP_DEMI_DIEU]);
 				}
 
 				$res_taxed[$type] = $nb_tax;
@@ -591,19 +590,17 @@ case 'join': // demander à rejoindre une alliance
 				else if(!$post_aid) // confirmer par formulaire
 					$_tpl->set("al_join_price", ALL_JOIN_PRICE);
 				else {
-					require_once("lib/msg.lib.php");
-			
 					AlMbr::add($al_aid, $_user['mid'], ALL_ETAT_DEM);
 					Res::mod($_user['mid'], [GAME_RES_PRINC => ALL_JOIN_PRICE], -1);
 					$_ses->update_aly();
 					/* envoyer un msg au chef */
 					$text = $_tpl->get('modules/alliances/msg/demande.tpl',1);
 					$titre = $_tpl->get('modules/alliances/msg/titre.tpl',1);
-					send_msg($_user['mid'], $ally->al_mid, $titre, parse($text));
+					MsgRec::add($_user['mid'], $ally->al_mid, $titre, parse($text));
 					/* envoyer aussi au(x) recruteur(s) */
 					$recruteurs = $ally->getMembersByEtat(ALL_ETAT_RECR);
 					foreach($recruteurs as $mbr)
-						send_msg($_user['mid'], $mbr['mbr_mid'], $titre, parse($text));
+						MsgRec::add($_user['mid'], $mbr['mbr_mid'], $titre, parse($text));
 					$_tpl->set('al_join',true);
 					$al_ok = true;
 				}

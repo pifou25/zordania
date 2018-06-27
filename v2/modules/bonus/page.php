@@ -8,7 +8,6 @@ else
 //require_once("lib/votes.lib.php");
 require_once("lib/bonus.lib.php");
 require_once("lib/member.lib.php");
-require_once("lib/mch.lib.php");
 require_once("lib/res.lib.php");
 
 $_tpl->set('module_tpl', 'modules/bonus/bonus.tpl');

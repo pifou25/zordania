@@ -6,7 +6,6 @@ else if(!can_d(DROIT_MSG))
 	$_tpl->set("cant_view_this",true);
 else {
 
-require_once('lib/msg.lib.php');
 require_once('lib/member.lib.php');
 
 require_once('lib/parser.lib.php');
@@ -21,20 +20,20 @@ $_tpl->set('msg_act',$_act);
 switch($_act) {
 /* Liste des messages envoyés */
 case "env":
-	$msg_array = get_msg_env($_user['mid']);
+	$msg_array = MsgEnv::get($_user['mid']);
 	$_tpl->set('msg_array',$msg_array);
 	break;
 /* Lecture */
 case "read":
 	$mrec_id = request("mrec_id", "uint", "get");
 	if($mrec_id) {
-		$msg_infos = get_msg_rec($_user['mid'], $mrec_id);
+		$msg_infos = MsgRec::get($_user['mid'], $mrec_id);
 		
 		if(!$msg_infos)
 			$_tpl->set("msg_bad_id",true);
 		else {
 			if(!$msg_infos[0]['mrec_readed'])
-				mark_msg_as_readed($_user['mid'], $mrec_id);
+				MsgRec::mark($_user['mid'], $mrec_id);
 			
 			$_tpl->set('msg_infos',$msg_infos[0]);
 		}
@@ -46,7 +45,7 @@ case "read":
 case "read_env":
 	$menv_id = request("menv_id", "uint", "get");
 	if($menv_id) {
-		$msg_infos = get_msg_env($_user['mid'], $menv_id);
+		$msg_infos = MsgEnv::get($_user['mid'], $menv_id);
 		
 		if(!$msg_infos)
 			$_tpl->set("msg_bad_id",true);
@@ -63,14 +62,14 @@ case "del_env":
 	$msg_id = request("msg_id", "array", "post");
 	if (empty($msg_id))
 		$msg_id = array(request("msg_id", "uint", "get") => 'ok');
-	
+
 	$_tpl->set("msg_id",$msg_id);
 	if(!$conf)
 		$_tpl->set("msg_need_conf", true);
 	elseif ($_act == 'del_rec')
-		$_tpl->set("msg_del", del_msg_rec($_user['mid'], $msg_id));
+		$_tpl->set("msg_del", MsgRec::del($_user['mid'], $msg_id));
 	else // del_env
-		$_tpl->set("msg_del", del_msg_env($_user['mid'], $msg_id));
+		$_tpl->set("msg_del", MsgEnv::del($_user['mid'], $msg_id));
 	break;
 
 /* Nouveau */
@@ -83,12 +82,12 @@ case "new":
 	$_tpl->set('msg_pseudo',"");
 
 	if($mrec_id) {
-		$msg_infos = get_msg_rec($_user['mid'], $mrec_id);
+		$msg_infos = MsgRec::get($_user['mid'], $mrec_id);
 		
 		if($msg_infos) {
 			$msg_infos = $msg_infos[0];
 			if(!$msg_infos['mrec_readed'])
-				mark_msg_as_readed($_user['mid'], $mrec_id);
+				MsgRec::mark($_user['mid'], $mrec_id);
 
 			$texte = "\n\n\n\n";
 			$texte .= "[b]".$msg_infos['mbr_pseudo']." @ ".$msg_infos['mrec_date_formated']."[/b]\n";
@@ -161,7 +160,7 @@ case "send":
 				else {
 					$mid2 = $mbr_infos[0]['mbr_mid'];
 					
-					send_msg($_user['mid'], $mid2, $titre, parse($texte), true);
+					MsgRec::add($_user['mid'], $mid2, $titre, parse($texte), true);
 					$result[$pseudo] = $mbr_infos[0];
 					
 					$_histo->add($mid2, $_user['mid'], HISTO_MSG_NEW);
@@ -177,7 +176,7 @@ case "sign";
 	$msgid = request("msgid", "uint", "get");
 	$com = '<em>'.$_user['pseudo'] .' le '.date("d/m/Y H:i:s")."</em><br/>\n".parse(request("com", "string", "post"));
 	if(isset($msgid) && !Surv::isSurv($msgid) && isset($com)){
-		add_sign($msgid,$com);
+		Sign::add($msgid,$com);
 		/*  infos admin en cache */
 		$admin_cache->msg_report++;
 		$admin_cache->force_save();
@@ -211,11 +210,11 @@ case "send_massif"; // spam = message à un groupe de joueurs
 		$_tpl->set('msg_pas_tout',true);
 		$_tpl->set('forbidden',$forbidden);
 	}else
-		send_to_all($_user['mid'], $titre, parse($texte), $grp);
+		MsgRec::addAll($_user['mid'], $titre, parse($texte), $grp);
 	break;
 
 default:
-	$msg_array = get_msg_rec($_user['mid']);
+	$msg_array = MsgRec::get($_user['mid']);
 	$_tpl->set('msg_array',$msg_array);
 	break;
 }

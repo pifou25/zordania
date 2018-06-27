@@ -67,9 +67,7 @@ else if(!$_act) {
 			require_once("lib/res.lib.php");
 			require_once("lib/src.lib.php");
 			require_once("lib/alliances.lib.php");
-			require_once("lib/mch.lib.php");
 			require_once("lib/war.lib.php");
-			require_once("lib/msg.lib.php");
 			require_once("lib/nte.lib.php");
 
 			Mbr::cls($_user['mid'], $_user['mapcid'], $_user['race']);

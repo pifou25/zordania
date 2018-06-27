@@ -6,7 +6,6 @@ if(!can_d(DROIT_PLAY)) {
 
 require_once ('lib/alliances.lib.php');
 require_once ('lib/member.lib.php');
-require_once ('lib/msg.lib.php');
 require_once ('lib/parser.lib.php');
 
 $_tpl->set("module_tpl","modules/diplo/diplo.tpl");
@@ -83,7 +82,7 @@ case 'add': // al1 propose l'alliance à al2
 							// envoyer un mail au chef de l'ally
 							$text = $_tpl->get('modules/diplo/msg/propose.tpl',1);
 							$titre = $_tpl->get('modules/diplo/msg/titre.tpl',1);
-							send_msg($_user['mid'], $ally->al_mid, $titre, parse($text));
+							MsgRec::add($_user['mid'], $ally->al_mid, $titre, parse($text));
 						} else
 							$_tpl->set('err',$al2_pactes->err);
 					}
@@ -123,7 +122,7 @@ case 'del': // rompre un pacte / annuler une demande
 				}
 				$mid = $pacte->result[$did]['al_mid'];
 				$titre = $_tpl->get('modules/diplo/msg/titre.tpl',1);
-				send_msg($_user['mid'], $pacte->result[$did]['al_mid'], $titre, parse($text));
+				MsgRec::add($_user['mid'], $pacte->result[$did]['al_mid'], $titre, parse($text));
 			} else
 				$_tpl->set('err',$pacte->err);
 		} else

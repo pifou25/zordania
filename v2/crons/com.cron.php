@@ -1,7 +1,6 @@
 <?php
 
 $log_com = "Commerce";
-require_once(SITE_DIR . "lib/mch.lib.php");
 
 function glob_com() {
 	global $_sql, $_h, $_c;
