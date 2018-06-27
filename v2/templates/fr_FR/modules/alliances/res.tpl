@@ -22,7 +22,9 @@
 
 <if cond='{_user[aetat]} == {ALL_ETAT_NOOB}'>
 	<div class="error">Les nouveaux membres ne peuvent pas utiliser le grenier avant
-	{ALL_NOOB_TIME} jours {_user[atimeleft]}.</div>
+	{ALL_NOOB_TIME} jours : <if cond='{res_acces}'>Il reste {time_res_acces} tours (Attention, c'est un nain qui compte...).</if>
+	<else>Vous pouvez demander l'accès à votre chef!</else>
+	</div>
 </if>
 <elseif cond='{_user[aetat]} == {ALL_ETAT_NOP}'>
 	<div class="error">Le chef de l'alliance vous a interdit l'accès au grenier !</div>

@@ -423,6 +423,44 @@ case 'res': /* grenier */
 	$_tpl->set('log_array',$res_log);
 
 	$_tpl->set('al_sub',$_sub);
+	
+	//temps avant accès grenier
+		//recup ambr_date
+		$get_time = get_time_access($_user['mid']);
+		$date_acces= $get_time[0]['end_date'];
+		
+		//gestion date
+		$date_now = new DateTime(); //la date actuelle
+		$acces_conv = new DateTime($date_acces); //conversion de la date d'adhésion		
+		$date_sub= $date_now->diff($acces_conv)->format('%d'); //soustraction dates	
+		
+		//gestion heures
+		$hour_now= date("H:i:s");//l'heure actuelle
+		$space = explode(" ", $date_acces); //sépare la date d'adhésion
+		$heure = $space[1]; //heure d'adhésion
+			//conversion strtotime
+			$h_str=strtotime($heure);
+			$n_str=strtotime($hour_now);
+		$hour_sub = gmdate("H:i:s", $h_str-$n_str); //soustraction heures
+		
+		//conversion en tour
+		$h = explode(":", $hour_sub);//sépare h:m:s
+		$date_to_round=$date_sub*(60/ZORD_SPEED)*24;
+		$hour_to_round=$h[0]*(60/ZORD_SPEED);
+		$min_to_round=ceil($h[1]/ZORD_SPEED);//arrondi à la minute supérieur
+		
+		//calcul et affichage
+		if ($date_acces > date("Y-m-d H:i:s"))
+			{	//il manque toujours 1tour, bah +1 du coup!
+				$time_left= $date_to_round+$hour_to_round+$min_to_round;
+				$_tpl->set('time_res_acces',$time_left);
+				$res_acces_nok= true;				
+			}
+		elseif ($date_acces < date("Y-m-d H:i:s"))
+			{
+				$res_acces_nok= false;				
+			}		
+			$_tpl->set('res_acces',$res_acces_nok);
 	break;
 
 case 'resally': /* donner des ressources à un allié */

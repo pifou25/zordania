@@ -419,5 +419,16 @@ function cls_aly($mid) {
 		return del_aly_mbr($aid, $mid) +
 			edit_aly($aid, array('mid' => $chef['mbr_mid'], 'nb_mbr' => -1));
 }
-
+//Compter le temps qu'il reste avant accès grenier
+function get_time_access($mid){
+	global $_sql;
+	$acces_delay=ALL_NOOB_TIME;//délais d'attente
+	$mid = protect($mid, "uint");
+	
+	$sql="SELECT DATE_ADD(ambr_date, INTERVAL $acces_delay DAY) as end_date ";//ajout délais à la date d'entrée dans l'alli
+	$sql.=" FROM ".$_sql->prebdd."al_mbr ";
+	$sql.=" WHERE ambr_mid = $mid";
+	
+	return $_sql->make_array($sql);
+}
 ?>
