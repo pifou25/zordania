@@ -1,7 +1,7 @@
 <if cond="isset({btc_conf[defense]})">
 	<hr />
 	<h4>Défense</h4>
-	<img src="img/{_user[race]}/btc/{btc_id}.png" alt="{btc[{_user[race]}][alt][{btc_id}]}" title="{btc[{_user[race]}][alt][{btc_id}]}" /> 
+	<zimgbtc type="{btc_id}" race="{_user[race]}" />
 	{btc[{_user[race]}][alt][{btc_id}]}: {btc_nb}<br /> 
 	<if cond="{btc_def}">
 		Défense: {btc_def} * {btc_nb} = <math oper='({btc_def} * {btc_nb})' />
@@ -12,14 +12,14 @@
 	<hr />
 	<h4>Population</h4>
 	<foreach cond='{btc_pop_utils} as {btc_type} => {btc_value}'>
-		<img src="img/{_user[race]}/btc/{btc_type}.png" alt="{btc[{_user[race]}][alt][{btc_type}]}" title="{btc[{_user[race]}][alt][{btc_type}]}" /> 
+		<zimgbtc type="{btc_type}" race="{_user[race]}" />
 		{btc[{_user[race]}][alt][{btc_type}]}: {btc_value[btc_nb]}
 		<br />
 		Par Bâtiment: {btc_value[btc_pop]} <img src="img/{_user[race]}/{_user[race]}.png" title="Place" alt="Place" /><br/>
 		Total: <math oper='{btc_value[btc_pop]}*{btc_value[btc_nb]}'/> <img src="img/{_user[race]}/{_user[race]}.png" title="Place" alt="Place" /><br/>
 		<br/><br/>
 	</foreach>
-	Limite de Population : {TOTAL_MAX_UNT}<br />
+	Limite de Population : <if cond="{_user[race]} == 7">{TOTAL_MAX_UNT_2}</if> <else>{TOTAL_MAX_UNT_1}</else><br />
 	Population : {btc_pop_used}/{btc_pop_max} <img src="img/{_user[race]}/{_user[race]}.png" alt="Place" title="Place" /><br/>
 </if>
 <if cond="isset({btc_bouf})">
@@ -68,7 +68,7 @@
 <if cond="isset({btc_prod})">
 	<hr/>
 	<h4>Production</h4>
-	<img src="img/{_user[race]}/btc/{btc_id}.png" alt="{btc[{_user[race]}][alt][{btc_id}]}" title="{btc[{_user[race]}][alt][{btc_id}]}" /> 
+	<zimgbtc type="{btc_id}" race="{_user[race]}" />
 	{btc[{_user[race]}][alt][{btc_id}]} {btc_nb}
 	<if cond="is_array({gis_array})">
 		<br/><br/>
@@ -118,7 +118,7 @@
 	</if>
 </if>
 <if cond="!isset({btc_conf[defense]}) AND !isset({btc_conf[prod_res]}) AND !isset({btc_conf[prod_res_auto]}) AND !isset({btc_conf[prod_pop]})">
-	<img src="img/{_user[race]}/btc/{btc_id}.png" alt="{btc[{_user[race]}][alt][{btc_id}]}" title="{btc[{_user[race]}][alt][{btc_id}]}" /> 
+	<zimgbtc type="{btc_id}" race="{_user[race]}" />
 	{btc[{_user[race]}][alt][{btc_id}]} {btc_nb}<br /> 
 </if>
 

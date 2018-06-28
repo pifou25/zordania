@@ -1,5 +1,8 @@
 <if cond='isset({al_no_al})'>
 	<p class="infos">Vous n'êtes pas dans une Alliance.</p>
+	<h3>Réjoindre une Alliance</h3>
+	Vous pouvez en rejoindre une sur la page "<a href="alliances.html" title="Page Alliances">alliances</a>".<br/>
+	Pour cela cliquez sur <img src="img/join.png" title="Rejoindre" /> pour envoyer une demande à l'alliance de votre choix, cela vous coutera {ALL_JOIN_PRICE} <img src="img/{_user[race]}/res/{GAME_RES_PRINC}.png" alt="{res[{_user[race]}][alt][{GAME_RES_PRINC}]}" title="{res[{_user[race]}][alt][{GAME_RES_PRINC}]}" />
 	<if cond='{_user[points]} >= {ALL_MIN_ADM_PTS}'>
 		<h3>Créer une Alliance</h3>
 		Prix: {ALL_CREATE_PRICE} <img src="img/{_user[race]}/res/{GAME_RES_PRINC}.png" alt="{res[{_user[race]}][alt][{GAME_RES_PRINC}]}" title="{res[{_user[race]}][alt][{GAME_RES_PRINC}]}" />
@@ -33,9 +36,20 @@
 		Points : {ally[al_points]}
 		<hr/>
 		<if cond='{_user[mid]} != {ally[al_mid]}'>
-		[ <a href="alliances-part.html">Quitter l'Alliance</a> ]
+		( <a href="alliances-part.html">Quitter l'Alliance</a> )
 		</if>
 
+		<if cond="!empty({mespactes})">
+			<br/><i><img src="img/dpl/shoot.png"  /> Réunions Diplomatiques avec:</i>
+			<foreach cond="{mespactes} as {did} => {pacte}">
+			<if cond="{pacte[dpl_etat]} == {DPL_ETAT_OK}">
+				<a href="diplo-shoot.html?did={did}" title="Ecrire à l'ensemble des membres de {pacte[al_name]}">
+				<img class="mini_al_logo" src="img/al_logo/{pacte[dpl_al]}-thumb.png" alt="Ecrire à l'ensemble des membres de {pacte[al_name]}" /> {pacte[al_name]}
+				</a>
+			</if>
+			</foreach>
+		</if>
+		
 	<h3>Liste des Joueurs</h3>
 	<table class="liste">
 	<tr>

@@ -109,7 +109,7 @@ function edit_hero($mid, $new = array()) {
 	if($nom) $sql.= "hro_nom = '$nom',";
 	if($type) $sql.= "hro_type = $type,";
 	if($lid) $sql.= "hro_lid = $lid,";
-	if($xp) $sql.= "hro_xp = hro_xp + $xp,";
+	if($xp) $sql.= "hro_xp = hro_xp + $xp, hro_xp_tot = hro_xp_tot + $xp,";
 	if($vie !== false) $sql.= "hro_vie = $vie,";
 	if($bonus!==false) $sql.= "hro_bonus = $bonus,";
 	if($bonus_from) $sql.= "hro_bonus_from = '$bonus_from',";

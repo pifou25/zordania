@@ -7,7 +7,9 @@ class session
 	function __construct(&$db)
 	{
 		$this->sql = &$db; //objet de la classe mysql
-		if(!CRON) $this->vars = & $_SESSION['user'];
+		if(!CRON){
+			$this->vars = & $_SESSION['user'];
+		}
 	}
 
 	function __destruct()
@@ -127,8 +129,13 @@ class session
 			/*Select la dernière news*/
 			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
 			$result = $this->sql->make_array_result($sql);
-			$this->set("tid", $result['id']);
-			$this->set("sub", $result['subject']);
+                        if(count($result) > 0){
+                            $this->set("tid", $result['id']);
+                            $this->set("sub", $result['subject']);
+                        }else{
+                            $this->set("tid", 0);
+                            $this->set("sub", 0);
+                        }
 			
 		}	
 		
@@ -174,13 +181,14 @@ class session
 		
 		/* alliance */
 		if($this->get("login") != "guest") {
-			$sql = "SELECT ambr_aid, ambr_etat, al_mid, al_name ";
+			$sql = "SELECT ambr_aid, ambr_etat,  al_mid, al_name ";
 			$sql.= "FROM ".$this->sql->prebdd."al_mbr ";
 			$sql.= "INNER JOIN ".$this->sql->prebdd."al ON ambr_aid = al_aid ";
 			$sql.= "WHERE ambr_mid = $mid"; //AND ambr_etat <> ".ALL_ETAT_DEM;
 			
 			$array = $this->sql->make_array($sql);
 			if($array) {
+			
 				$this->set("alaid", $array[0]['ambr_aid']);
 				$this->set("aetat", $array[0]['ambr_etat']);
 				$this->set("achef", $array[0]['al_mid']);
@@ -336,6 +344,12 @@ class session
 	
 	function update($act)
 	{
+                if(!$this->get('mobile')){
+                    $this->set('mobile', false);
+                    $this->set('btc', '');
+                }else{
+                    $this->set('btc', '/2');
+                }
 		$mid = $this->get("mid");
 		$pass = $this->get("pass");
 		$login = $this->get("login");

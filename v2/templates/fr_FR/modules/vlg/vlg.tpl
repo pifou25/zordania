@@ -39,6 +39,10 @@
 			<zimgbtc race="{_user[race]}" type="{btc_vars[btc_type]}" class="btc" id="btc_{btc_vars[btc_type]}" /></a>
 		</else>
 		</if>
+		<else>
+			<a href="btc-use.html?btc_type={btc_vars[btc_type]}" class="zrdPopUp" title="{btc[{_user[race]}][alt][{btc_vars[btc_type]}]}">
+			<div class="btc" id="forteresse"><!-- div vide forteresse --></div></a>
+		</else>
 	</foreach>
 	
 	<script type="text/javascript" src="js/vlg.js"></script>

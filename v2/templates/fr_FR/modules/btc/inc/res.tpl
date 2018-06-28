@@ -4,8 +4,8 @@
 	</if>
 	<elseif cond='isset({btc_no_nb})'>
 		<p class="infos">Il faut choisir un nombre de ressources à annuler.</p>
-		<form action="btc-use.html?btc_type={btc_id}&amp;sub=cancel_res&amp;rid={btc_rid}" method="post">
-			<input type="text" name="nb" size="1" maxlength="2"  />
+		<form class="ajax" action="btc-use.html?btc_type={btc_id}&amp;sub=cancel_res&amp;rid={btc_rid}" method="post">
+			<input type="number" name="nb" size="1" maxlength="2"  />
 			<input type="submit" value="Annuler" />
 		</form>
 	</elseif>	
@@ -22,7 +22,8 @@
 		<if cond='{res_todo}'>
 			<foreach cond='{res_todo} as {res_result}'>
 				<set name="res_type" value="{res_result[rtdo_type]}" />
-				<zimgres race="{_user[race]}" type="{res_type}" /> {res[{_user[race]}][alt][{res_type}]} - {res_result[rtdo_nb]} - <a href="btc-use.html?btc_type={btc_id}&amp;sub=cancel_res&amp;rid={res_result[rtdo_id]}">Annuler</a><br />
+				<zimgres race="{_user[race]}" type="{res_type}" /> {res[{_user[race]}][alt][{res_type}]} - {res_result[rtdo_nb]}
+				- <a href="btc-use.html?btc_type={btc_id}&amp;sub=cancel_res&amp;rid={res_result[rtdo_id]}" class="zrdPopUp">Annuler</a><br />
 			</foreach>
 		</if>
 	</div>

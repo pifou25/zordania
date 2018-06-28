@@ -1989,7 +1989,7 @@ $this->comp[CP_VOLEE_DE_FLECHES]=array(
         'type'                => 1
 
 );
-
+/*
 $this->comp[CP_VITESSE]=array(
 
         'heros'                => array(U3_SEIGNEUR_DE_GUERRE),
@@ -2002,7 +2002,7 @@ $this->comp[CP_VITESSE]=array(
 
         'type'                => 1
 
-);
+);*/
 
 /* ### Def ### */
 

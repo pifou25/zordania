@@ -1,6 +1,6 @@
 <h3>Unités</h3>
 
-Il existe deux types d'unité dans Zordania : les unités civiles et les unités militaires. Le maximum d'unités qu'il est possible de former, civiles et militaires confondues, est de {TOTAL_MAX_UNT}.
+Il existe deux types d'unité dans Zordania : les unités civiles et les unités militaires. Le maximum d'unités qu'il est possible de former, civiles et militaires confondues, est de <if cond="{_user[race]} == 7">{TOTAL_MAX_UNT_2}</if> <else>{TOTAL_MAX_UNT_1}</else>.
 
 <h4>Les unités civiles</h4>
 <p>

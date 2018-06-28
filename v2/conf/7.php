@@ -536,7 +536,7 @@ $this->unt[U7_RESCAPE] = array(
 	'role' => TYPE_UNT_CIVIL,
 	'prix_res' => array(R7_OR => 2, ),
 	'need_btc' => array(B7_RUINE_OUBLIEE, ),
-	'in_btc' => array(B7_RUINE_OUBLIEE, ),
+	'in_btc' => array(B7_RUINE_OUBLIEE, B7_RUINE_RENFORCEE),
 );
 //</unt-1>
 

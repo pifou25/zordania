@@ -26,7 +26,7 @@
 	</li>
 </ul>
 <span id="copy_and_stats">
-     Iksaif / Pifou © 2004-2011 -
+     Iksaif / Pifou / Zor © 2004-{ZORD_ANNEE} -
      <a href="stat.html" title="Zordania en chiffres.">Connectés: <em>{_cache[nb_online]}</em> -
      Inscrits: <em>{_cache[nb_mbr]}</em></a> -
      <a href="index.php?file=a_propos">Zordania v {ZORD_VERSION}</a> -

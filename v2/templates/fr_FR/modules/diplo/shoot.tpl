@@ -1,3 +1,13 @@
+<if cond="{pacte[dpl_al1]} != {_user[alaid]} && {pacte[dpl_al2]} != {_user[alaid]}">
+	<p class="infos">Vous essayez d'espionner une autre coalition!</p>
+</if>
+<elseif cond=" {pacte[dpl_did]} == 0 || {pacte[dpl_etat]} == DPL_ETAT_FIN">
+	<p class="infos">Ce pacte n'existe pas ou plus!</p>
+</elseif>
+<elseif cond="{pacte[dpl_etat]} == DPL_ETAT_ATT || {pacte[dpl_etat]} == DPL_ETAT_PROP">
+	<p class="infos">Votre pacte n'est pas encore accepté!</p>
+</elseif>
+<elseif cond="{pacte[dpl_etat]} == DPL_ETAT_OK">
 	<h3>Discussion commune avec nos alliés: <a href="alliances-view.html?al_aid={pacte[dpl_al]}" title="{pacte[al_name]}">
 		<img class="mini_al_logo" alt="{pacte[al_name]}" src="img/al_logo/{pacte[dpl_al]}-thumb.png" />
 		{pacte[al_name]}</a></h3>
@@ -19,6 +29,8 @@
 	</form>
 	<div id="preview"></div>
 
+
+	
 	<if cond='is_array({dpl_shoot_array})'>
 		<for cond='{i} = {current_i} ; {i} < {dpl_nb} AND {i}-{current_i} < LIMIT_NB_PAGE*LIMIT_PAGE; {i}+=LIMIT_PAGE'>
 			<if cond='{i} / LIMIT_PAGE != {dpl_page}'>
@@ -55,3 +67,4 @@
 			</else>
 		 </for>
 	</if>
+</elseif>

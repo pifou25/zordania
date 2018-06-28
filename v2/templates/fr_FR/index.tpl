@@ -28,6 +28,8 @@
 	<script type="text/javascript">
 	var cfg_url = '{cfg_url}';
 	var user_css = {_user[design]};
+	<if cond="isset({_user[mobile]})">var mobilePhp = '{_user[mobile]}';
+	</if>
 	</script>
 	<# script type="text/javascript" src="js/functionAddEvent.js"></script #>
 	<# script type="text/javascript" src="js/toolTipLib.js"></script #>

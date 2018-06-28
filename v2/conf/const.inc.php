@@ -247,5 +247,14 @@ define('VOTES_TOP',  3); // xtreme top100
 
 /*ID Forum news*/
 define('ZORD_NEWS_FID',25);
+define('FORUM_PLAINTES_FID',30);
+
+/*Etat bug/suggestion*/
+define('FORUM_SUGGEST_FID',6); //fid suggestion
+define('FORUM_BUG_FID',8); //fid bug
+define('FORUM_REPORT_NEW',0); //nouvellement reporté
+define('FORUM_REPORT_OK',1); //avéré(bug) ou accepté (suggestion)
+define('FORUM_REPORT_NOK',2); //pas bug ou refusé
+define('FORUM_REPORT_ON',3); //codé
 
 ?>

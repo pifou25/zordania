@@ -2,7 +2,8 @@
 require_once('secret_parameters.php');
 
 /* === Configuration Site === */
-define('ZORD_VERSION',"2.1.3");
+define('ZORD_VERSION',"2.3");
+define('ZORD_ANNEE',"2018");
 define('ZORD_SPEED_VFAST', 0.16667); // 1 Tour toutes les 30sec
 define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
 define('ZORD_SPEED_MEDIUM', 15); // 1 Tour toutes les 15 minutes
@@ -19,7 +20,7 @@ define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");
 define('ZORDLOG_URL', 'zordania.free.fr'); // URL des archives
 
-define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.com');
+define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.fr');
 define('SITE_CHARSET', 'utf-8'); // iso-8859-1, utf-8, ...
 
 define('GEN_LENGHT', 6); /* Taille des chaines générées aléatoirement (pass, etc ...) */
@@ -38,8 +39,9 @@ define('TODO_MAX_RES',250);
 define('TODO_MAX_UNT',250);
 define('TODO_MAX_SRC',5);
 
-/* Nombre max */
-define('TOTAL_MAX_UNT', 1000);
+/* Nombre unité max */
+define('TOTAL_MAX_UNT_1', 700); //Toutes
+define('TOTAL_MAX_UNT_2', 1000); // Sauf les  gobelins
 
 /* Donjon */
 // Distance à partir de laquelle une légion est visible dans le donjon
@@ -61,12 +63,12 @@ define('MBR_NIV_1',7000);
 define('MBR_NIV_2',35000);
 
 /* Alliance */
-define('ALL_MAX',12); // Nombre maximum de joueurs
+define('ALL_MAX',8); // Nombre maximum de joueurs
 define('ALL_MIN_PTS', 4000); // Points pour entrer
 define('ALL_MIN_ADM_PTS', 7000); // Points pour créer une alliance
 define('ALL_CREATE_PRICE', 1000); // Prix pour créer une alliance
 define('ALL_JOIN_PRICE', 200); //Prix pour rejoindre une alliance
-define('ALL_NOOB_TIME', 3); // Temps en jour pendant le quel on reste "NOOB"
+define('ALL_NOOB_TIME', 1); // Temps en jour pendant le quel on reste "NOOB"
 define('ALL_MIN_DEP', 10); // Dépot minimal
 
 define('ALL_TAX',10); // Taxe du grenier (%)
@@ -188,9 +190,9 @@ $_races_aly = array(
 		8 => array(1 => 12, 2 => 12, 3 => 12, 4 => 12, 5 => 12, 7=> 12, 8=>12),
 );
 
-$_css = array(14,4,3,2,1,10,11,15,16,5,6);
+$_css = array(14,4,3,2,1,10,11,15,16,5,17);
 $_adsense_css = array(1 => '9107849390', 2 => '2158156650', 3 => '2158156650', 
-	4 => '2158156650',5 => '9107849390', 6 => '', 10 => '2087210871', 11 => '2087210871', 14 => '0166103822', 
+	4 => '2158156650',5 => '9107849390', 17 => '', 10 => '2087210871', 11 => '2087210871', 14 => '0166103822', 
 	15 => '6454056819', 16 => '');
 
 

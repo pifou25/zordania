@@ -251,8 +251,9 @@ class member{
         
         /* Verifications Bâtiments */
         foreach($need_btc as $btc_type) {
-            if(!isset($have_btc[$btc_type]))
-                $bad_btc[] = $cond_btc;
+            if(!isset($have_btc[$btc_type])){
+                $bad_btc[] = $cond_btc[0];
+            }
         }
 
         /* La limite */

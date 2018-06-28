@@ -152,7 +152,13 @@ class diplo {
 		$sql = '';
 		if ($al1) $sql .= ",dpl_al1 = $al1";
 		if ($al2) $sql .= ",dpl_al2 = $al2";
-		if ($etat) $sql .= ",dpl_etat =  $etat";
+		if ($etat) {$sql .= ",dpl_etat =  $etat";
+			/*if ($etat == DPL_ETAT_ATT){
+				
+			$sql="INSERT INTO ".$_sql->prebdd."diplo_shoot VALUES ('',7203,'$did',NOW(),'Votre pacte est finalisé et vous pouvez discutez entre vous ici!')";
+			return $_sql->query($sql);
+			}*/
+		}
 		if ($type) $sql .= ",dpl_type =  $type";
 		if ($debut) $sql .= ',dpl_debut = '.($debut==='now'?' NOW()':"'$debut'");
 		if ($fin) $sql .= ',dpl_fin = '.($fin==='now'?' NOW()':"'$fin'");
