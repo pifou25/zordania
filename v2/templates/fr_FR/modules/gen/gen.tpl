@@ -78,9 +78,10 @@
 			<a href="leg-hero.html"><zimgunt race="{_user[race]}" type="{_user[hro_type]}" /></a>
 			<zimgbar per="{_user[hro_vie]}" max="{_user[hro_vie_conf]}" /> Vie: {_user[hro_vie]} / {_user[hro_vie_conf]}
 			<p>Expérience: {_user[hro_xp]}</p>
-<if cond="{_user[bonus]} == 0"><p>Compétence : aucune activée</p>
+<if cond="{_user[hro_bonus]} == 0"><p>Compétence : aucune activée</p>
 </if>
-<else><p>Compétence : <a href="manual.html?race={_user[race]}&amp;type=comp#comp_{_user[bonus]}"><zimgcomp race="{_user[race]}" type="{_user[bonus]}" /> {comp[{_user[race]}][alt][{_user[bonus]}]} </a></p>
+<else><p>Compétence : <a href="manual.html?race={_user[race]}&amp;type=comp#comp_{_user[hro_bonus]}">
+            <zimgcomp race="{_user[race]}" type="{_user[hro_bonus]}" /> {comp[{_user[race]}][alt][{_user[hro_bonus]}]} </a></p>
 </else>
 
 </if>

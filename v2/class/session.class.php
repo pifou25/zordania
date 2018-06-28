@@ -8,7 +8,7 @@ class session
 	{
 		$this->sql = &$db; //objet de la classe mysql
 		if(!CRON){
-                    $this->vars = & $_SESSION['user'];
+			$this->vars = & $_SESSION['user'];
 		}
 	}
 
@@ -88,7 +88,6 @@ class session
 		$this->set("design", $mbr_infos['mbr_design']);
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
-		$this->set("mobile", isset($_SESSION['mobile']) ? $_SESSION['mobile'] : false);
                 if(!$this->get('mobile')){
                     $this->set('btc', '');
                 }else{
@@ -134,15 +133,16 @@ class session
                                 .$this->sql->prebdd."mbr WHERE mbr_mid = $mid)";
 			$result = $this->sql->make_array_result($sql);
 			$this->set("news", $result['nb']);
-                        
-			if($result['nb'] > 0){
-                            /*Select la dernière news*/
-                            $sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd
-                                    ." WHERE forum_id =".ZORD_NEWS_FID." AND posted="
-                                    . "(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
-                            $result = $this->sql->make_array_result($sql);
+			
+			/*Select la dernière news*/
+			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
+			$result = $this->sql->make_array_result($sql);
+                        if(count($result) > 0){
                             $this->set("tid", $result['id']);
                             $this->set("sub", $result['subject']);
+                        }else{
+                            $this->set("tid", 0);
+                            $this->set("sub", 0);
                         }
 		}	
 		
@@ -321,6 +321,12 @@ class session
 	
 	function update($act)
 	{
+                if(!$this->get('mobile')){
+                    $this->set('mobile', false);
+                    $this->set('btc', '');
+                }else{
+                    $this->set('btc', '/2');
+                }
 		$mid = $this->get("mid");
 		$pass = $this->get("pass");
 		$login = $this->get("login");

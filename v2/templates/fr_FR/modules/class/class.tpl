@@ -91,6 +91,7 @@
 		<load file="race/{race_id}.descr.config" />
 	</foreach>
 	<h3>Classement Héros</h3>
+ 	<p class="infos">L'XP correspond à l'expérience actuelle du héros, tant dis que l'XP cumulée représente l'expérience du Héros durant toute son existence.</p>
   	<table class="liste">
   	<tr>
   	 <th></th>
@@ -98,6 +99,7 @@
   	 <th>Race</th>
   	 <th>Héros</th>
   	 <th>XP</th>
+  	 <th>XP cumulée</th>
   	</tr>
    
    	<foreach cond='{class_array} as {bidule} => {result}'>
@@ -110,6 +112,9 @@
   	 </td>
   	 <td>
   	 	{result[hro_xp]}
+  	 </td>
+  	 <td>
+  	 	{result[hro_xp_tot]}
   	 </td>
 	</tr>
 	</foreach>

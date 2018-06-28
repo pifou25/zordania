@@ -10,11 +10,8 @@
  
 <h3>Contact</h3>
 
-<p>Iksaif
- - <a href="mailto:%77%65%62%6das%74%65r@&#122&#111rd%61%6e&#105a.%63%6f%6d?subject=Zordania">Contact</a></p>
-
-<p>Pifou
- - <a href="mailto:pifou@zordania.com" id="NoSpamEmailHyperlink1">pifou@zordania.com</a>
+<p>Mail:
+ - <a href="mailto:{SITE_WEBMASTER_MAIL}" id="NoSpamEmailHyperlink1">{SITE_WEBMASTER_MAIL}</a>
 </p>
  		  		 	  	
 <h3>Conditions d'utilisation</h3>
@@ -73,37 +70,32 @@ Les données personnelles collectées lors de votre inscription ne servent que s
 <h3>Cookies</h3>
 
 <p>
-Afin de pouvoir se connecter au site, un <a href="http://fr.wikipedia.org/wiki/Cookies" title="Plus d'infos">cookie</a> est créé. Vous pouvez le refuser, mais il sera alors impossible d'utiliser le site correctement.
+Afin de pouvoir se connecter au site, un <a href="https://fr.wikipedia.org/wiki/Cookie_(informatique)" title="Plus d'infos">cookie</a> est créé. Vous pouvez le refuser, mais il sera alors impossible d'utiliser le site correctement.
 </p>
 
 <h3>Hébergeur</h3>
 
 <p>
-Le Serveur de zordania.com est hébergé par la société Dedibox.
+Le Serveur de zordania.com est hébergé par la société 1and1.fr.
 </p>
 
 <p>
 <pre>
-DEDIBOX Société par action simplifiée au capital de 37000 Euros est une société du groupe Iliad, 
-immatriculée au Registre du Commerce et des Sociétés de Paris sous le numéro RCS PARIS B 484 961 206, 
-numéro de TVA FR30484961206.
-
+1and1
 Coordonnées :
-DEDIBOX SAS
-BP 80342
-75365 PARIS CEDEX 08
-Fax : 01 73 50 26 05
-Tel : 01 73 50 31 65 - Attention, pas de support par téléphone !
-Email site : http://www.dedibox.fr
-Email support technique : https://console.dedibox.fr/accueil/assistance/
-Horaires d'ouverture : du Lundi au Vendredi, de 9h-12h 14h30-16h
+7, place de la Gare
+57200 Sarreguemines
+France
+
+Site : 
+http://www.1and1.fr.
 </pre>
 </p>
 
 
 <h3>Licences</h3>
 <p>
-Copyright © 2004-2010
+Copyright © 2004-{ZORD_ANNEE}
 </p>
 <p>
 Le contenu de ce site Web (à savoir, le concept du jeu Zordania, les règles et les textes) est la propriété du gestionnaire de zordania.com. 
