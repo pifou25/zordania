@@ -104,12 +104,34 @@ function edit_hero($mid, $new = array()) {
 
 	// maj mbr
 	$_sql->query('UPDATE '.$_sql->prebdd.'mbr SET mbr_lmodif_date = NOW()');
+	//maj xp
+	if($xp) 
+		{
+			//NRJ > max?
+			global $_user;
+			$get_nrj = protect($_user['hro_xp'], "uint");
+			if ($get_nrj==HEROS_NRJ_MAX) 
+				$NRJ = 0;
+			elseif($get_nrj + $xp > HEROS_NRJ_MAX) 
+				$NRJ = HEROS_NRJ_MAX-$get_nrj;
+			elseif($vie == 0) 
+				$NRJ = -$get_nrj;
+			else 
+				$NRJ=$xp;
+			//add XP and NRJ
+			$sql = "UPDATE ".$_sql->prebdd."mbr, ".$_sql->prebdd."hero SET ";
+			$sql.= " ".$_sql->prebdd."mbr.mbr_xp = mbr_xp +$xp, ".$_sql->prebdd."hero.hro_xp = hro_xp + $NRJ ";
+			$sql.= " WHERE mbr_mid = $mid AND hro_mid = $mid ";
+			$_sql->query($sql);
+			return $_sql->affected_rows();
+			
+		}
 
 	$sql = "UPDATE ".$_sql->prebdd."hero SET ";
 	if($nom) $sql.= "hro_nom = '$nom',";
 	if($type) $sql.= "hro_type = $type,";
 	if($lid) $sql.= "hro_lid = $lid,";
-	if($xp) $sql.= "hro_xp = hro_xp + $xp, hro_xp_tot = hro_xp_tot + $xp,";
+	//if($xp) $sql.= "hro_xp = hro_xp + $xp, hro_xp_tot = hro_xp_tot + $xp,";
 	if($vie !== false) $sql.= "hro_vie = $vie,";
 	if($bonus!==false) $sql.= "hro_bonus = $bonus,";
 	if($bonus_from) $sql.= "hro_bonus_from = '$bonus_from',";

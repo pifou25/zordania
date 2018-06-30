@@ -110,6 +110,9 @@ define('ATQ_RATIO_DIST', 33); /* bonus unités à distance $nb*log($nb)/[ratio] 
 define('ATQ_FAT', 5); /* inutile ici */
 define('ATQ_LEG_IDLE', 5); /* legion idle en position d'attaque - nb jours */
 
+/*Héros*/
+define('HEROS_NRJ_MAX', 200);
+
 /* Butins */
 define('BUT_PILLAGE_COEF', 4); // On ne peux piller au maximum que le ($stock_d'une_ressource / BUT_PILLAGE_COEF)
 
@@ -245,7 +248,7 @@ $_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif',
 $_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
 		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
 
-define('SITE_DEBUG',false);
+define('SITE_DEBUG',true);
 define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
 define('CRON', substr(php_sapi_name(), 0, 3) == 'cli');

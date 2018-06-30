@@ -4,7 +4,7 @@
 
 <p class="menu_module">
     <a href="class.html?act=1&amp;race={class_race}&amp;region={class_region}" title="Top 50 Or">Or</a>
-    <a href="class.html?act=6&amp;race={class_race}&amp;region={class_region}" title="Top 50 Héros">Héros</a>
+    <a href="class.html?act=6&amp;race={class_race}&amp;region={class_region}" title="Top 50 Héros">Expérience</a>
     <a href="class.html?act=3&amp;race={class_race}&amp;region={class_region}" title="Top 50 Points">Points</a>
     <a href="class.html?act=7&amp;race={class_race}&amp;region={class_region}" title="Top 50 Armées">Armées</a>
     <a href="class.html?act=4&amp;race={class_race}&amp;region={class_region}" title="Top 50 Population">Population</a>
@@ -90,16 +90,15 @@
 		<load file="race/{race_id}.config" />
 		<load file="race/{race_id}.descr.config" />
 	</foreach>
-	<h3>Classement Héros</h3>
- 	<p class="infos">L'XP correspond à l'expérience actuelle du héros, tant dis que l'XP cumulée représente l'expérience du Héros durant toute son existence.</p>
+	<h3>Classement Expérience</h3>
+ 	<p class="infos">Concerne l'expérience acquise.</p>
   	<table class="liste">
   	<tr>
   	 <th></th>
   	 <th>Pseudo</th>
   	 <th>Race</th>
   	 <th>Héros</th>
-  	 <th>XP</th>
-  	 <th>XP cumulée</th>
+  	 <th>Expérience</th>
   	</tr>
    
    	<foreach cond='{class_array} as {bidule} => {result}'>
@@ -111,10 +110,7 @@
   	 	<zimgunt type="{result[hro_type]}" race="{result[mbr_race]}" /> {result[hro_nom]}
   	 </td>
   	 <td>
-  	 	{result[hro_xp]}
-  	 </td>
-  	 <td>
-  	 	{result[hro_xp_tot]}
+  	 	{result[mbr_xp]}
   	 </td>
 	</tr>
 	</foreach>

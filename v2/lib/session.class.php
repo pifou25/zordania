@@ -81,6 +81,7 @@ class session
 		$this->set("lmodif", $mbr_infos['mbr_lmodif_date']);
 		$this->set("sign", $mbr_infos['mbr_sign']);
 		$this->set("ldate", $mbr_infos['mbr_ldate']);
+		$this->set("xp", $mbr_infos['mbr_xp']);
 		$this->set("regen", true);
 		$this->set("atqnb", $mbr_infos['mbr_atq_nb']);
 		if(CRON) $this->set("ip", $mbr_infos['mbr_lip']);
@@ -386,7 +387,7 @@ class session
 		if(!CRON and (!$lmodif OR $lmodif > $this->get("lmodif"))) /* une modif, on reprend tout - sauf CRON */
 		{
 			$sql="SELECT mbr_mid,mbr_pseudo,mbr_vlg,mbr_login,mbr_pass,mbr_atq_nb,mbr_lang,mbr_race,mbr_gid,mbr_decal,
-					mbr_sign,mbr_population,mbr_place,mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,
+					mbr_sign,mbr_population,mbr_place,mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,mbr_xp,
 					mbr_design,mbr_parrain,mbr_numposts";
 			$sql.=",UNIX_TIMESTAMP(mbr_ldate + INTERVAL '".$this->sql->decal."' HOUR_SECOND) as mbr_ldate ";
 			$sql.=" FROM ".$this->sql->prebdd."ses";

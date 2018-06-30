@@ -73,14 +73,14 @@ function make_class($type, $race = 0, $region = 0)
 			$sql.="ORDER BY al_points DESC LIMIT 50";
 			break;
 		case 6: // XP héros
-			$sql = "SELECT hro_id, hro_mid, hro_nom, hro_type, hro_lid, hro_xp, hro_xp_tot, hro_vie, hro_bonus AS bonus, 
+			$sql = "SELECT hro_id, hro_mid, hro_nom, hro_type, hro_lid, mbr_xp, hro_vie, hro_bonus AS bonus, 
 				hro_bonus_from, hro_bonus_to AS bonus_to, mbr_gid,mbr_mid,mbr_pseudo,mbr_race ";
 			$sql.= "FROM ".$_sql->prebdd."hero ";
-			$sql.="INNER JOIN ".$_sql->prebdd."mbr ON hro_mid = mbr_mid AND mbr_etat = ".MBR_ETAT_OK;
+			$sql.="INNER JOIN ".$_sql->prebdd."mbr ON hro_mid = mbr_mid AND mbr_xp > 0  AND mbr_etat = ".MBR_ETAT_OK;
 			if ($region) $sql .= " JOIN ".$_sql->prebdd."map ON mbr_mapcid = map_cid ";
 			if($race) $sql.=" WHERE mbr_race = $race ";
 			if ($region) $sql .= " AND map_region = $region ";
-			$sql.=" ORDER BY hro_xp DESC LIMIT 50";
+			$sql.=" ORDER BY mbr_xp DESC LIMIT 50";
 			break;
 		case 7: // force armée
 			$sql = "SELECT mbr_gid,mbr_mid,mbr_pseudo, mbr_pts_armee, mbr_race, mbr_etat, mbr_mapcid,";

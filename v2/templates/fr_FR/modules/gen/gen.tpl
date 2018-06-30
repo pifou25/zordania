@@ -20,6 +20,7 @@
 			<li>Bâtiments : {gen_nb_btc}</li>
 			<li>Population : {_user[population]}</li>
 			<li>Points : {_user[points]}</li>
+           <li>Expérience : {_user[xp]}</li>
             <if cond='{ses_loged} && {_user[login]} != "guest"'>
 
                 <li><a href="notes.html" title="Gérez vos notes...">Notes</a>
@@ -74,10 +75,10 @@
     </td>
 	<td>
 		<if cond='isset({_user[hro_id]}) && isset({_user[hro_nom]})'>
-			<h4>Héros : {_user[hro_nom]}</h4>
-			<a href="leg-hero.html"><zimgunt race="{_user[race]}" type="{_user[hro_type]}" /></a>
-			<zimgbar per="{_user[hro_vie]}" max="{_user[hro_vie_conf]}" /> Vie: {_user[hro_vie]} / {_user[hro_vie_conf]}
-			<p>Expérience: {_user[hro_xp]}</p>
+			<h4>Héros : </br></br>
+			<a href="leg-hero.html"><zimgunt race="{_user[race]}" type="{_user[hro_type]}" /></a> {_user[hro_nom]}</h4>
+			 <zimgbar per="{_user[hro_vie]}" max="{_user[hro_vie_conf]}" /> <img src="img/{_user[race]}/div/vie.png" alt="Vie" /> {_user[hro_vie]} / {_user[hro_vie_conf]}</br>
+			Energie: <zimgnrj per="{_user[hro_xp]}" max="{HEROS_NRJ_MAX}" /> {_user[hro_xp]} / {HEROS_NRJ_MAX}
 <if cond="{_user[bonus]} == 0"><p>Compétence : aucune activée</p>
 </if>
 <else><p>Compétence : <a href="manual.html?race={_user[race]}&amp;type=comp#comp_{_user[bonus]}"><zimgcomp race="{_user[race]}" type="{_user[bonus]}" /> {comp[{_user[race]}][alt][{_user[bonus]}]} </a></p>
