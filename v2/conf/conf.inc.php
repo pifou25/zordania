@@ -251,6 +251,5 @@ $_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg',
 define('SITE_DEBUG',false);
 define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
-define('CRON', is_cli());
-
-?>
+define('CRON', !array_key_exists('SERVER_SOFTWARE', $_SERVER)
+        && (php_sapi_name() === 'cli' || !array_key_exists('REMOTE_ADDR', $_SERVER)));
