@@ -9,11 +9,11 @@
 
 <h4>Les Points et Limites</h4>
 
-<p>Sachez que vous ne pouvez pas faire plus de {LEG_MAX_NB} légions et qu'une légion peut accueillir autant d'unités que possible. La population maximale est de {TOTAL_MAX_UNT} unités, vous pouvez donc imaginer faire une légion importante tout en ayant un village totalement construit. Vous ne pourrez combattre qu'à partir de {ATQ_PTS_MIN} points et vous ne pourrez attaquer ou vous faire attaquer que par des joueurs ayant {ATQ_PTS_DIFF} points de plus ou moins que vous, par souci d'équité. À partir de {ATQ_LIM_DIFF} points se trouve l'arène. L'arène représente la frontière qui permet à tous ceux qui sont au-dessus de se battre entre eux sans restriction de points.</p>
+<p>Sachez que vous ne pouvez pas faire plus de {LEG_MAX_NB} légions et qu'une légion peut accueillir autant d'unités que possible. La population maximale de votre race est de <if cond="{_user[race]} == 7">{TOTAL_MAX_UNT_2}</if> <else>{TOTAL_MAX_UNT_1}</else> unités, vous pouvez donc imaginer faire une légion importante tout en ayant un village totalement construit. Vous ne pourrez combattre qu'à partir de {ATQ_PTS_MIN} points et vous ne pourrez attaquer ou vous faire attaquer que par des joueurs ayant {ATQ_PTS_DIFF} points de plus ou moins que vous, par souci d'équité. À partir de {ATQ_LIM_DIFF} points se trouve l'arène. L'arène représente la frontière qui permet à tous ceux qui sont au-dessus de se battre entre eux sans restriction de points.</p>
 
 <h4>La Force Armée</h4>
 
-<p>Il s'agit d'un sous-total de votre nombre de points, qui ne dépend que de la taille de votre armée et des unités qui la composent. C'est ce sous-total de points qui entre en compte pour savoir qui peut ou non vous attaquer (voir ci-dessus "Les Points et Limites"). Petite astuce pour finir, en comparant votre force armée à celle de vos ennemis ou alliés, vous aurez une vague idée de leur puissance.</p>
+<p>Il s'agit d'un sous-total de votre nombre de points, qui ne dépend que de la taille de votre armée, des unités qui la composent et de l'expérience de votre personnage. C'est ce sous-total de points qui entre en compte pour savoir qui peut ou non vous attaquer (voir ci-dessus "Les Points et Limites"). Petite astuce pour finir, en comparant votre force armée à celle de vos ennemis ou alliés, vous aurez une vague idée de leur puissance.</p>
 
 <p align="center" class="menu_module">
 <a href="manual.html?race={man_race}&page=12">Précédent : Guide du Débutant</a>

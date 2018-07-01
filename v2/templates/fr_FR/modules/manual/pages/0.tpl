@@ -45,7 +45,7 @@
 	<li><a href="manual.html?race={man_race}&page=20">Spécificités du Village</a></li>
 	<li><a href="manual.html?race={man_race}&page=21">Attaque des Bâtiments</a></li>
 	<li><a href="manual.html?race={man_race}&page=22">Défense Groupée</a></li>
-	<li><a href="manual.html?race={man_race}&page=24">XP et Butin</a></li>
+	<li><a href="manual.html?race={man_race}&page=24">Expérience, énergie et Butin</a></li>
 	<li><a href="manual.html?race={man_race}&page=25">Les Unités de Tir</a></li>
 	</ul>
  </li>
