@@ -171,6 +171,14 @@ function get_ip()
 	} 
 	return $realip; 
 }
+
+function is_cli() 
+{
+    return (
+        !array_key_exists('SERVER_SOFTWARE', $_SERVER)
+        && (php_sapi_name() === 'cli' || !array_key_exists('REMOTE_ADDR', $_SERVER))
+    );
+}
 		
 function genstring($longueur) //genere une chaine a x caracteres aleatoirement
 {
