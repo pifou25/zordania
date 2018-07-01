@@ -4,7 +4,7 @@
 
 <p class="menu_module">
     <a href="class.html?act=1&amp;race={class_race}&amp;region={class_region}" title="Top 50 Or">Or</a>
-    <a href="class.html?act=6&amp;race={class_race}&amp;region={class_region}" title="Top 50 Héros">Expérience</a>
+    <a href="class.html?act=8&amp;race={class_race}&amp;region={class_region}" title="Top 50 Héros">Expérience</a>
     <a href="class.html?act=3&amp;race={class_race}&amp;region={class_region}" title="Top 50 Points">Points</a>
     <a href="class.html?act=7&amp;race={class_race}&amp;region={class_region}" title="Top 50 Armées">Armées</a>
     <a href="class.html?act=4&amp;race={class_race}&amp;region={class_region}" title="Top 50 Population">Population</a>
@@ -85,7 +85,7 @@
 	</foreach>
 	</table>
 </if>
-<elseif cond='{class_type} == 6'>
+<elseif cond='{class_type} == 8'>
 	<foreach cond="{race} as {race_id} =>{race_name}">
 		<load file="race/{race_id}.config" />
 		<load file="race/{race_id}.descr.config" />
@@ -95,23 +95,49 @@
   	<table class="liste">
   	<tr>
   	 <th></th>
+  	 <th>Al</th>
   	 <th>Pseudo</th>
   	 <th>Race</th>
-  	 <th>Héros</th>
   	 <th>Expérience</th>
+	 <th>Actions</th>
   	</tr>
    
    	<foreach cond='{class_array} as {bidule} => {result}'>
 	<tr>
 	 <td><set name="class_pos" value="<math oper='{class_pos}+1' />" />{class_pos}</td>
+	 <td>
+	 	<if cond="{result[ambr_aid]}">
+			<a href="alliances-view.html?al_aid={result[ambr_aid]}" title="Infos sur {result[al_name]}">
+			<img src="img/al_logo/{result[ambr_aid]}-thumb.png" class="mini_al_logo" alt="{result[al_name]}" title="{result[al_name]}"/>
+   			</a>
+		</if>
+		<else>
+			&nbsp;
+		</else>
+	</td>
 	 <td><zurlmbr gid="{result[mbr_gid]}" mid="{result[mbr_mid]}" pseudo="{result[mbr_pseudo]}"/></td>
   	 <td><img src="img/{result[mbr_race]}/{result[mbr_race]}.png" alt="{race[{result[mbr_race]}]}" title="{race[{result[mbr_race]}]}" /></td>
   	 <td>
-  	 	<zimgunt type="{result[hro_type]}" race="{result[mbr_race]}" /> {result[hro_nom]}
+  	 	{result[mbr_xp]} 
   	 </td>
-  	 <td>
-  	 	{result[mbr_xp]}
-  	 </td>
+	 <td>
+		<if cond='{result[mbr_mid]} != {_user[mid]}'>
+			<a href="msg-new.html?mbr_mid={result[mbr_mid]}" title="Envoyer un message à {result[mbr_pseudo]}">
+				<img src="img/msg.png" alt="Msg" />
+			</a>
+			<if cond="isset({mbr_dpl[{result[ambr_aid]}]})">
+				<img src="img/dpl/{mbr_dpl[{result[ambr_aid]}]}.png" title="{dpl_type[{mbr_dpl[{result[ambr_aid]}]}]}"/>
+			</if>
+			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]}'>
+				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
+				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
+			</elseif>
+			<if cond='{result[can_atq]} && !({result[mbr_gid]} == GRP_PNJ || {result[mbr_race]} == 6)'>
+				- <a href="leg-move.html?sub=atq&amp;cid={result[mbr_mapcid]}" title="Attaquer {result[mbr_pseudo]}">
+				<img src="img/{_user[race]}/div/atq.png" alt="Attaquer" /></a> 
+			</if>
+		</if>
+	</td>
 	</tr>
 	</foreach>
 	</table>
