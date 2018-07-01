@@ -17,8 +17,8 @@
 		<fieldset><legend>{_user[hro_nom]}</legend>
 			<zimgunt race="{leg_race}" type="{_user[hro_type]}" />
 			<zimgbar per="{_user[hro_vie]}" max="{_user[hro_vie_conf]}" />
-			Vie: {_user[hro_vie]} / {_user[hro_vie_conf]}
-			<p>Expérience: {_user[hro_xp]}</p>
+			<img src="img/{_user[race]}/div/vie.png" alt="Vie" /> {_user[hro_vie]} / {_user[hro_vie_conf]}
+			<zimgnrj per="{_user[hro_xp]}" max="{HEROS_NRJ_MAX}" />Energie: {_user[hro_xp]} / {HEROS_NRJ_MAX}
 			<if cond='{_user[hro_vie]} <= 0'><p class="infos">Votre héros est mort...</p></if>
 		</fieldset>
 		</if>
