@@ -119,11 +119,9 @@ function edit_hero($mid, $new = array()) {
 			else 
 				$NRJ=$xp;
 			//add XP and NRJ
-			$sql = "UPDATE ".$_sql->prebdd."mbr, ".$_sql->prebdd."hero SET ";
-			$sql.= " ".$_sql->prebdd."mbr.mbr_xp = mbr_xp +$xp, ".$_sql->prebdd."hero.hro_xp = hro_xp + $NRJ ";
-			$sql.= " WHERE mbr_mid = $mid AND hro_mid = $mid ";
-			$_sql->query($sql);
-			return $_sql->affected_rows();
+			$_sql->query('UPDATE '.$_sql->prebdd.'mbr, '.$_sql->prebdd.'hero SET 
+			'.$_sql->prebdd.'mbr.mbr_xp = mbr_xp +'.$xp.', '.$_sql->prebdd.'hero.hro_xp = hro_xp + '.$NRJ.'  
+			WHERE mbr_mid = '.$mid.' AND hro_mid = '.$mid.' ');
 			
 		}
 

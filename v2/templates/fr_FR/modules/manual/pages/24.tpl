@@ -6,7 +6,7 @@
 
 <p>L'énergie du héros permet d'obtenir l'accès à différentes compétences ("<a href="manual.html?race={man_race}&type=comp">Compétences des Héros - Caractéristiques</a>") qui vous aideront à vaincre vos ennemis. Elle monte de manière égale que l'expérience jusqu'à un total de {HEROS_NRJ_MAX}.
 
-Vous pouvez aussi perdre votre énergie si votre héros meurt durant un combat. Ceci pour éviter toute course illégale et inutile à l'énergie.
+Vous pouvez aussi perdre votre énergie si votre héros meurt durant un combat.
 </p>
 
 <h5>Butin</h5>

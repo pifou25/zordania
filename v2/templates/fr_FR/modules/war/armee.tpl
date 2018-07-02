@@ -16,7 +16,7 @@
 </else>
 
 <if cond='{war_act} == "histo" && {leg[hro_vie]}'>
-menée par <zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]} (xp {leg[hro_xp]})
+menée par <zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]} (énergie {leg[hro_xp]} <zimgnrj per="{leg[hro_xp]}" max="{HEROS_NRJ_MAX}" />)
 	<if cond="!empty({leg[bonus]})">
 		<include file="modules/comp/{leg[bonus]}.tpl" cache="1" cpt="{leg[comp]}" />
 	</if>
@@ -47,7 +47,7 @@ menée par <zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_no
 <zimgbar per="{leg[pertes][hro_reste]}" max="{leg[hro_vie_conf]}" />&nbsp;
 <if cond='{leg[pertes][hro_reste]} == 0'>
 <if cond="{leg[bonus]} == {CP_RESURECTION}">
-<p class="ok"><zimgcomp type="{leg[bonus]}" race="{leg[mbr_race]}" /> Votre héros succombe à ses blessures... puis ressucite au village ! Ce combat lui rapporte {leg[xp_won]} XP.</p>
+<p class="ok"><zimgcomp type="{leg[bonus]}" race="{leg[mbr_race]}" /> Votre héros succombe à ses blessures... puis ressucite au village ! Ce combat vous rapporte {leg[xp_won]} XP.</p>
 </if><else>
 <span class="error">{leg[hro_nom]} a perdu {leg[pertes][deg_hro]} points de vie, il est mort au combat !</span>
 </else>

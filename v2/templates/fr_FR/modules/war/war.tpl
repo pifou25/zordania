@@ -63,7 +63,7 @@
 	<p><zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]}
 	<zimgbar per="{leg[hro_vie]}" max="{leg[hro_vie_conf]}" />
 	Vie: {leg[hro_vie]} / {leg[hro_vie_conf]},
-	Expérience: {leg[hro_xp]}
+	Energie: {leg[hro_xp]} <zimgnrj per="{leg[hro_xp]}" max="{HEROS_NRJ_MAX}" />
 	<if cond="!empty({leg[bonus]})">, Compétence active : <zimgcomp type="{leg[bonus]}" race="{leg[mbr_race]}" /></if>
 	</p>
 </if>
@@ -86,7 +86,7 @@
 		<p><zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]}
 		<zimgbar per="{leg[hro_vie]}" max="{leg[hro_vie_conf]}" />
 		Vie: {leg[hro_vie]} / {leg[hro_vie_conf]}, 
-		Expérience: {leg[hro_xp]}
+		Energie: {leg[hro_xp]} <zimgnrj per="{leg[hro_xp]}" max="{HEROS_NRJ_MAX}" />
 		<if cond="!empty({leg[bonus]})">, Compétence active : <zimgcomp type="{leg[bonus]}" race="{leg[mbr_race]}" /></if>
 		</p>
 	</if>
@@ -211,13 +211,13 @@
 	<if cond="!empty({bilan[att][hro_id]})">
 		<if cond="{bilan[att][pertes][hro_reste]} == 0">
 			<if cond="{bilan[att][bonus]} == {CP_RESURECTION}">
-				<p class="ok"><zimgcomp type="{bilan[att][bonus]}" race="{bilan[att][mbr_race]}" /> Votre héros succombe à ses blessures... puis ressucite au village ! Ce combat lui rapporte {bilan[att][xp_won]} XP.</p>
+				<p class="ok"><zimgcomp type="{bilan[att][bonus]}" race="{bilan[att][mbr_race]}" /> Votre héros succombe à ses blessures... puis ressucite au village ! Ce combat vous rapporte {bilan[att][xp_won]} XP.</p>
 			</if><else>
-				<p class="error">Votre héros est mort... Ce combat lui rapporte {bilan[att][xp_won]} XP à titre posthume.</p>
+				<p class="error">Votre héros est mort... Ce combat vous rapporte {bilan[att][xp_won]} XP à titre posthume.</p>
 			</else>
 		</if>
 		<else>
-			<p class="ok">Votre héros gagne {bilan[att][xp_won]} XP</p>
+			<p class="ok">Vous gagnez {bilan[att][xp_won]} XP</p>
 		</else>
 	</if>
 	<else>
