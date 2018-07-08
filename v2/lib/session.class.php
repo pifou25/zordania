@@ -81,7 +81,6 @@ class session
 		$this->set("lmodif", $mbr_infos['mbr_lmodif_date']);
 		$this->set("sign", $mbr_infos['mbr_sign']);
 		$this->set("ldate", $mbr_infos['mbr_ldate']);
-		$this->set("xp", $mbr_infos['mbr_xp']);
 		$this->set("regen", true);
 		$this->set("atqnb", $mbr_infos['mbr_atq_nb']);
 		if(CRON) $this->set("ip", $mbr_infos['mbr_lip']);
@@ -89,6 +88,13 @@ class session
 		$this->set("design", $mbr_infos['mbr_design']);
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
+		/* CSS version mobile ou desktop */
+                if(!$this->get('mobile')){
+                    $this->set('mobile', false);
+                    $this->set('btc', '');
+                }else{
+                    $this->set('btc', '/2');
+                }
 
 		/* Visiteur */
 		if($this->get("login") == "guest") {
@@ -231,7 +237,7 @@ class session
 		$sql="SELECT mbr_mid,mbr_login,mbr_pseudo,mbr_vlg,mbr_pass,mbr_lang,mbr_race,
 			mbr_atq_nb,mbr_gid,mbr_decal,mbr_sign,mbr_population,mbr_place,
 			mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,mbr_design,mbr_parrain,mbr_numposts,mbr_lip,
-			UNIX_TIMESTAMP(mbr_lmodif_date) as mbr_lmodif_date,mbr_xp";
+			UNIX_TIMESTAMP(mbr_lmodif_date) as mbr_lmodif_date";
 		$sql.=",UNIX_TIMESTAMP(mbr_ldate + INTERVAL '".$this->sql->decal."' HOUR_SECOND) as mbr_ldate ";
 		$sql.=" FROM ".$this->sql->prebdd."mbr";
 		$sql.=" WHERE mbr_login='$login' AND mbr_pass='$pass'";
@@ -345,12 +351,6 @@ class session
 	
 	function update($act)
 	{
-                if(!$this->get('mobile')){
-                    $this->set('mobile', false);
-                    $this->set('btc', '');
-                }else{
-                    $this->set('btc', '/2');
-                }
 		$mid = $this->get("mid");
 		$pass = $this->get("pass");
 		$login = $this->get("login");
@@ -387,7 +387,7 @@ class session
 		if(!CRON and (!$lmodif OR $lmodif > $this->get("lmodif"))) /* une modif, on reprend tout - sauf CRON */
 		{
 			$sql="SELECT mbr_mid,mbr_pseudo,mbr_vlg,mbr_login,mbr_pass,mbr_atq_nb,mbr_lang,mbr_race,mbr_gid,mbr_decal,
-					mbr_sign,mbr_population,mbr_place,mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,mbr_xp,
+					mbr_sign,mbr_population,mbr_place,mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,
 					mbr_design,mbr_parrain,mbr_numposts";
 			$sql.=",UNIX_TIMESTAMP(mbr_ldate + INTERVAL '".$this->sql->decal."' HOUR_SECOND) as mbr_ldate ";
 			$sql.=" FROM ".$this->sql->prebdd."ses";
@@ -470,4 +470,3 @@ function get_liste_online($limite1, $limite2)
 
 	return $_sql->make_array($sql);
 }
-?>
