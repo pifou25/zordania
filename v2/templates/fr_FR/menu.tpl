@@ -49,7 +49,6 @@
 		<li><a href="news.html" title="Voir les dernières news.">News</a></li>
 	</if>
 		
-		<li><a href="manual.html?race={_user[race]}" title="Comment jouer ?">Manuel</a></li>
 		<li><a href="forum.html" title="Participer à la vie de la communauté.">Forums</a> (<a href="irc.html" title="Discuter directement entre Zordaniens !">Chat</a>)</li>
 		<li><a href="sdg.html" title="Faites connaître votre avis !">Sondages</a></li>
 		<# <li><a href="http://{ZORDLOG_URL}" title="Lieu du savoir et de la mémoire.">Archives</a></li> #>
@@ -57,6 +56,20 @@
 		<li><a href="member.html" title="Modifier mes informations personnelles ou Supprimer mon compte.">Mon compte</a> (<a href="session-logout.html?display=module" title="Se déconnecter...">Quit</a>)</li>
 		</if>
 	</ul>
+</div>
+
+<div class="menu_gauche">
+<h2><label for="menu3">Manuel</label></h2>
+<input id="menu3" name="menu" type="radio" />
+<ul>
+	<li><a href="manual.html?race={_user[race]}" title="Comment jouer ?">Sommaire</a></li>
+	<li><a href="manual.html?race={_user[race]}&page=27" title="Comment jouer ?">Arbre technologique</a></li>
+	<li><a href="manual.html?race={_user[race]}&page=1" title="Comment jouer ?">Le Jeu</a></li>
+	<li><a href="manual.html?race={_user[race]}&page=6" title="Comment jouer ?">Le Monde de Zordania</a></li>
+	<li><a href="manual.html?race={_user[race]}&page=12" title="Comment jouer ?">Guide du Débutant</a></li>
+	<li><a href="manual.html?race={_user[race]}&page=8" title="Comment jouer ?">Art de la guerre</a></li>
+	<li><a href="manual.html?race={_user[race]}&page=17" title="Comment jouer ?">Alliances</a></li>
+</ul>
 </div>
 
 <div class="menu_gauche">

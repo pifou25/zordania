@@ -61,4 +61,5 @@
  <li><a href="manual-egeria.html">Egeria, Capitale de Zordania</a></li>
 
  <li><a href="manual.html?race={man_race}&page=9">Titres et Récompenses</a></li>
+ <li><a href="manual.html?race={man_race}&page=27">Arbre Technologique</a></li>
 </ul>

@@ -147,4 +147,5 @@ Contrairement aux récompenses, les Titres ne sont pas de simples reconnaissance
 <p align="center" class="menu_module">
 <a href="manual.html?race={man_race}&page=23">Précédent : Egeria, Capitale de Zordania</a>
 <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>
+<a href="manual.html?race={man_race}&page=27">Suivant : Arbre Technologique</a>
 </p>
