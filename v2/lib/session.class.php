@@ -88,6 +88,13 @@ class session
 		$this->set("design", $mbr_infos['mbr_design']);
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
+		/* CSS version mobile ou desktop */
+		if(!$this->get('mobile')){
+			$this->set('mobile', false);
+			$this->set('btc', '');
+		}else{
+			$this->set('btc', '/2');
+		}
 
 		/* Visiteur */
 		if($this->get("login") == "guest") {
@@ -344,12 +351,6 @@ class session
 	
 	function update($act)
 	{
-                if(!$this->get('mobile')){
-                    $this->set('mobile', false);
-                    $this->set('btc', '');
-                }else{
-                    $this->set('btc', '/2');
-                }
 		$mid = $this->get("mid");
 		$pass = $this->get("pass");
 		$login = $this->get("login");
