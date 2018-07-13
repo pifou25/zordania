@@ -16,7 +16,7 @@ $_tpl->set("war_sub", $_sub);
 
 switch($_act) {
 case 'histo':
-	$mid = request('mid', 'uin', 'get');
+	$mid = request('mid', 'uint', 'get');
 	$mbr_array = Mbr::getFull($mid);
 	if($mbr_array)
 		$mbr_array = $mbr_array[0];
@@ -24,49 +24,46 @@ case 'histo':
 	if($mbr_array){
 
 		$aid = request('aid', 'uint', 'get');
-		if(!$_sub || $_sub == "def") {
-			$_sub = "def";
-			$cond['type'][] = ATQ_TYPE_DEF;
-		} else {
-			$_sub = "atq";
-			$cond['type'][] = ATQ_TYPE_ATQ;
-		}
-
 		// prévisualisation ajax
 		if($_display == "ajax" && $aid) {
-			$cond['aid'] = $aid;
 			$_tpl->set('module_tpl', 'modules/war/bbcodelog.tpl');
-			$atq_array= get_atq_gen( $cond);
+			$atq_array= Atq::get($aid);
 			if (isset($atq_array[0]))
 				$_tpl->set('value',$atq_array[0]);
 		} else if ($aid && SITE_DEBUG) {
-			$cond['aid'] = $aid;
-			$atq_array= get_atq_gen( $cond);
+			$atq_array= Atq::get($aid);
 			$_tpl->set('atq_array',$atq_array);		
 			$_tpl->set("atq_nb", 0);
 			$_debugvars['bilan'] = $atq_array;
 		} else {
-			$war_page= request("war_page", "uint", "get");
-			$war_nb = get_atq_nb($mid, $cond);
-			$limite_page = LIMIT_PAGE;
-			$nombre_page = $war_nb / $limite_page;
-			$nombre_total = ceil($nombre_page);
-			$nombre = $nombre_total - 1;
+                    /** TODO add paginator here too */
+//			$war_page= request("war_page", "uint", "get");
+//			$war_nb = 10; // Atq::count($mid, $cond);
+//			$limite_page = LIMIT_PAGE;
+//			$nombre_page = $war_nb / $limite_page;
+//			$nombre_total = ceil($nombre_page);
+//			$nombre = $nombre_total - 1;
+//
+//			if($war_page)
+//				$limite_mysql = $limite_page * $war_page;
+//			else
+//				$limite_mysql = 0;
 
-			if($war_page)
-				$limite_mysql = $limite_page * $war_page;
-			else
-				$limite_mysql = 0;
+                    $cond['type'][] = ($_sub != 'def' ? ATQ_TYPE_DEF : ATQ_TYPE_ATQ);
+                    $cond['mid'] = $mid;
+//			$cond['limite1']  = 0;
+//			$cond['limite2'] =  LIMIT_PAGE;
+//
+//			$_tpl->set('limite_page', LIMIT_PAGE);
+//			$_tpl->set("atq_nb", $war_nb);
+//			$_tpl->set('war_page', $war_page);
+//			$atq_array= get_atq($mid , $cond);
+//			$_tpl->set('atq_array',$atq_array);
 
-			$cond['limite1']  = $limite_mysql;
-			$cond['limite2'] =  $limite_page;
-
-			$_tpl->set('limite_page', $limite_page);
-			$_tpl->set("atq_nb", $war_nb);
-			$_tpl->set('war_page', $war_page);
-			$atq_array= get_atq($mid , $cond);
-			$_tpl->set('atq_array',$atq_array);
-			$_tpl->set('mbr_array',$mbr_array);
+                    $_tpl->set('mid',$mid);
+                    $paginator = new Paginator(Atq::page($cond));
+                    $paginator->get = Atq::safeUnserialize($paginator->get);
+                    $_tpl->set_ref('pg', $paginator);
 		}
 	} // else mbr exist
 	break;
@@ -79,7 +76,7 @@ default:
 	foreach($mbrs as $mbr){
 		
 		// comptage des points du tournoi
-		$atqs = get_atq($mbr['mbr_mid']);
+		$atqs = Atq::get(['mid' => $mbr['mbr_mid']]);
 		
 		foreach($atqs as $atq){
 			// cumul defenses
@@ -107,5 +104,3 @@ default:
 }// switch($_act)
 
 }// else can_d(DROIT_PLAY)
-
-?>

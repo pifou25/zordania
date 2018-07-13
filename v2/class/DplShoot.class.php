@@ -23,7 +23,7 @@ class DplShoot extends Illuminate\Database\Eloquent\Model {
 
     /**
      * get the query for all message of a shootbox pact
-     * @param int $alid
+     * @param int $did
      * @return queryBuilder
      */
     static function get(int $did) {

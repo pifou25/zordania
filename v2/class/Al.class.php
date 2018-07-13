@@ -28,7 +28,7 @@ class Al extends Illuminate\Database\Eloquent\Model {
 
             $limite1 = 0; $limite2 = 0;
             $limite = 0;
-            $aid = 0; $name = 0;
+            $name = 0;
 
             if(isset($cond['limite1'])) {
                     $limite1 = protect($cond['limite1'], "uint");
@@ -75,7 +75,7 @@ class Al extends Illuminate\Database\Eloquent\Model {
         $rows += AlRes::where('ares_aid', $aid)->delete();
         $rows += AlResLog::where('arlog_aid', $aid)->delete();
         $rows += AlMbr::del($aid);
-        return $row + Al::where('al_aid', $aid)->delete();
+        return $rows + Al::where('al_aid', $aid)->delete();
     }
 
     /**
@@ -116,7 +116,7 @@ class Al extends Illuminate\Database\Eloquent\Model {
     /**
      *  création nouvelle alliance + image logo
      * @param int $mid
-     * @param string $nom
+     * @param string $name
      * @return type
      */
     static function add(int $mid, string $name){

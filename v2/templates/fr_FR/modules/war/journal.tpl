@@ -60,9 +60,20 @@ $(document).ready(  function()
 // -->
 </script>
 
-<dl>
-<foreach cond="{atq_array} as {value}">
+<if cond='is_array({pg->get})'>
+<p class="pages">
+<foreach cond="{pg->links} as {page}">
+        <if cond='is_numeric({page})'>
+        <a href="war-histo.html?sub={war_sub}&amp;page={page}">{page}</a>
+        </if>
+        <else>{page}</else>
+</foreach>
+</p>
 
+<dl>
+
+	<foreach cond="{pg->get} as {value}">
+            
 	<dt>
 	<a href="war-histo.html?aid={value[atq_aid]}&amp;sub={war_sub}">Le {value[atq_date_formated]}</a>
 	<if cond="{value[atq_mid1]} == {_user[mid]}">
@@ -161,15 +172,13 @@ $(document).ready(  function()
 </foreach>
 </dl>
 
-
-<p>Page :
-<for cond='{i} = 0; {i} < {atq_nb}; {i}+={limite_page}'>
-<if cond='{i} / {limite_page} != {war_page}'>
-	<a href="war-histo.html?sub={war_sub}&amp;war_page=<math oper='({i} / {limite_page})' />"><math oper='(({i} / {limite_page})+1)' /></a>
-</if>
-<else>
-	<math oper='(({i} / {limite_page})+1)' />
-</else>
-</for>
+<p class="pages">
+<foreach cond="{pg->links} as {page}">
+        <if cond='is_numeric({page})'>
+        <a href="war-histo.html?sub={war_sub}&amp;page={page}">{page}</a>
+        </if>
+        <else>{page}</else>
+</foreach>
 </p>
 
+    </if>

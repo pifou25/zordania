@@ -369,7 +369,7 @@ static function getIps(string $ip = '', int $gid = 0)
         SrcTodo::del($mid);
         Trn::clear($mid);
         Mch::del($mid);
-        cls_atq($mid);
+        Atq::del($mid);
         cls_histo($mid);
         Vld::init($mid);
 
@@ -432,7 +432,7 @@ static function getIps(string $ip = '', int $gid = 0)
         SrcTodo::del($mid);
         Trn::clear($mid);
         Mch::del($mid);
-        cls_atq($mid);
+        Atq::del($mid);
         cls_histo($mid);
         // cls_msg($mid); // on garde les messages
         Vld::init($mid);

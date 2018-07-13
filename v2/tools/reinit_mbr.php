@@ -54,7 +54,7 @@ foreach($mid_array as $_user)
 		SrcTodo::del($mid);
 		Trn::clear($mid);
 		Mch::del($mid);
-		cls_atq($mid);
+		Atq::del($mid);
 		cls_histo($mid);
 		Vld::init($mid);
 		Map::reset($cid);

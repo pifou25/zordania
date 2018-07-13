@@ -16,58 +16,26 @@ require_once("lib/heros.lib.php");
 $_tpl->set('module_tpl', 'modules/war/war.tpl');
 
 $_tpl->set("war_act", $_act);
-$_tpl->set("war_sub", $_sub);
 
 switch($_act) {
 case 'histo':
 	$aid = request('aid', 'uint', 'get');
-	if(!$_sub || $_sub == "def") {
-		$_sub = "def";
-		$cond['type'][] = ATQ_TYPE_DEF;
-	} else {
-		$_sub = "atq";
-		$cond['type'][] = ATQ_TYPE_ATQ;
-	}
-	$_tpl->set("war_sub", $_sub);
+	$_tpl->set("war_sub", ($_sub != 'atq' ? 'def' : 'atq' ));
 
-	// prévisualisation ajax
+	// prévisualisation ajax bbcode
 	if($_display == "ajax" && $aid) {
-		$cond['aid'] = $aid;
 		$_tpl->set('module_tpl', 'modules/war/bbcodelog.tpl');
-		$atq_array= get_atq_gen( $cond);
+		$atq_array= Atq::get($aid);
 		if (isset($atq_array[0]))
 			$_tpl->set('value',$atq_array[0]);
-	} else if ($aid && SITE_DEBUG) {
-		$cond['aid'] = $aid;
-		$atq_array= get_atq_gen( $cond);
-		$_tpl->set('atq_array',$atq_array);		
-		$_tpl->set("atq_nb", 0);
-		$_debugvars['bilan'] = $atq_array;
-
-		$cond = array('mid2' => $atq_array[0]['atq_mid1'], 'last' => true, 'type' => array(ATQ_TYPE_ATQ));
-		$nbatq = get_atq_vrai($atq_array[0]['atq_mid2'], $cond);
-		$_tpl->set("atq_vrai", $nbatq);
 	} else {
-		$war_page= request("war_page", "uint", "get");
-		$war_nb = get_atq_nb($_user['mid'], $cond);
-		$limite_page = LIMIT_PAGE;
-		$nombre_page = $war_nb / $limite_page;
-		$nombre_total = ceil($nombre_page);
-		$nombre = $nombre_total - 1;
 
-		if($war_page)
-			$limite_mysql = $limite_page * $war_page;
-		else
-			$limite_mysql = 0;
+                $cond['type'][] = ($_sub != 'def' ? ATQ_TYPE_DEF : ATQ_TYPE_ATQ);
+                $cond['mid'] = $_user['mid'];
 
-		$cond['limite1']  = $limite_mysql;
-		$cond['limite2'] =  $limite_page;
-
-		$_tpl->set('limite_page', $limite_page);
-		$_tpl->set("atq_nb", $war_nb);
-		$_tpl->set('war_page', $war_page);
-		$atq_array= get_atq($_user['mid'] , $cond);
-		$_tpl->set('atq_array',$atq_array);
+                $paginator = new Paginator(Atq::page($cond));
+                $paginator->get = Atq::safeUnserialize($paginator->get);
+                $_tpl->set_ref('pg', $paginator);
 	}
 	break;
 case 'make_atq':
@@ -117,9 +85,7 @@ case 'make_atq':
 	}
 
 	/* verif nombre d'attaques */
-	$cond = array('mid2' => $mid_def, 'last' => true, 'type' => array(ATQ_TYPE_ATQ));
-	$nbatq = get_atq_nb($_user['mid'], $cond);
-	
+	$nbatq = Atq::count($_user['mid'], $mid_def);
 	if ($nbatq >= ATQ_MAX_NB24H)
 	{
 		$_tpl->set("atq_max_atq", true);
@@ -470,9 +436,9 @@ case 'make_atq':
 	$bilan['butin']['att'] = array();
 	foreach ($legs['combat'] as $lid) { // parcourrir les légions 
 		if ($lid == $lid1) // le butin pris sur l'attaquant ira au(x) défenseur(s)
-			$bilan['butin']['def'] = w_butin($bilan['att']['pertes']['unt'], $_user['race']);
+			$bilan['butin']['def'] = Atq::calcButin($bilan['att']['pertes']['unt'], $_user['race']);
 		else // le butin pris sur le(s) défenseur(s) ira à l'attaquant (cumul)
-			$bilan['butin']['att'] = w_butin($bilan['def'][$lid]['pertes']['unt'],
+			$bilan['butin']['att'] = Atq::calcButin($bilan['def'][$lid]['pertes']['unt'],
 							$legions->legs[$lid]->race, $bilan['butin']['att']);
 	}
 
@@ -608,7 +574,7 @@ case 'make_atq':
 		}
 	
 	// Ajout du journal de guerre
-	add_atq_all($bilan);
+	Atq::addAll($bilan);
 
 
 	$_tpl->set("bilan", $bilan);
