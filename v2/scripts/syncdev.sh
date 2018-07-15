@@ -1,9 +1,11 @@
 #!/bin/bash
 # déploiement de la version xxx svn vers le rep zord (par défaut)
-# rep GIT
-LOCALPATH=/home/pi/github/zordania/zordania/v2
-# rep FTP
-LOCALPROD=/home/pi/github/zordania/master/zordania/v2
+LOCALPATH=/REP MASTER
+LOCALPROD=/REP DEV
+HOSTUSER=USER
+HOSTNAME=HOST
+HOSTPATH=/REP HOST
+#
 DATE=$(date "+%d_%m_%Y.%H")
 if [ $# -ge 2 ] # si nb d'arguments >= 2
 then
@@ -12,26 +14,26 @@ then
 		echo origine et source identique
 	else
 		case "$1" in
-		"git")
+		"master")
 		SRC=$LOCALPATH/  ;;
-		"gitm")
+		"dev")
 		SRC=$LOCALPROD/ ;;
 		"zordania")
-		SRC=zordania@zordania.fr:/ ;;
-#		"zorddev")
-#		SRC=zorddev@zordania.fr:/home/zorddev/ ;;
+		SRC=$HOSTUSER@$HOSTNAME:$HOSTPATH/zordania ;;
+		"zorddev")
+		SRC=$HOSTUSER@$HOSTNAME:$HOSTPATH/zorddev ;;
 		*)
 		SRC="" ;;
 		esac
 		case "$2" in
-		"git") 
+		"master") 
 		DEST=$LOCALPATH ;;
-		"gitm")
+		"dev")
 		DEST=$LOCALPROD ;;
 		"zordania")
-		DEST=zordania@zordania.fr:/ ;;
-#		"zorddev")
-#		DEST=zorddev@www.zordania.com:/home/zorddev ;;
+		DEST=$HOSTUSER@$HOSTNAME:$HOSTPATH/zordania ;;
+		"zorddev")
+		DEST=$HOSTUSER@$HOSTNAME:$HOSTPATH/zorddev ;;
 		*)
 		DEST="" ;;
 		esac
