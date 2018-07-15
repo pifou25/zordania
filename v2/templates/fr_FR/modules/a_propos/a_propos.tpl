@@ -73,6 +73,7 @@
 	<li>Janvier 2018 - 2.2 Reprise du site après une longue absence.</li>
 	<li>Mars 2018 - 2.2.5 Corrections de bugs.</li>
 	<li>Mai 2018 - 2.3 Nouveaux villages.</li>
+	<li>Juillet 2018 - 2.3.1 Changements Héros.</li>
 	</ul>
 </elseif>
 <elseif cond='{a_propos_act} == "boutons"'>

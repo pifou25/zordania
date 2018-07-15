@@ -14,10 +14,8 @@
 		<if cond='{hro_array[hro_id]} != 0 || isset({hro_array[leg_id]})'> 
 		<if cond='{leg[leg_id]} == {hro_array[leg_id]}'>
 		<fieldset><legend>{hro_array[hro_nom]}</legend>
-			<zimgunt race="{leg_race}" type="{hro_array[hro_type]}" />
-			<zimgbar per="{hro_array[hro_vie]}" max="{hro_array[hro_vie_conf]}" />
-			Vie: {hro_array[hro_vie]} / {hro_array[hro_vie_conf]}
-			<p>Expérience: {hro_array[hro_xp]}</p>
+			<p><img src="img/{leg_race}/unt/{hro_array[hro_type]}.png" title="{hro_array[hro_nom]}" />
+			<zimgbar per="{hro_array[hro_vie]}" max="{hro_array[hro_vie_conf]}" /> <img src="img/{leg_race}/div/vie.png" alt="Vie" /> {hro_array[hro_vie]} / {hro_array[hro_vie_conf]} </br><zimgnrj per="{hro_array[hro_xp]}" max="{HEROS_NRJ_MAX}" /> <img src="img/eclair.png" alt="Energie" /> {hro_array[hro_xp]} / {HEROS_NRJ_MAX} </br></p>
 			<if cond='{hro_array[hro_vie]} <= 0'><p class="infos">Votre héros est mort...</p></if>
 		</fieldset>
 		</if>

@@ -491,7 +491,7 @@ function get_mbr_gen($cond) {
 
 	if($full) {
 		$sql = "SELECT mbr_mid,mbr_login,mbr_pseudo,mbr_vlg,mbr_mail,mbr_lang,mbr_etat";
-		$sql.= ",mbr_gid,mbr_decal,mbr_race,mbr_mapcid,mbr_population,mbr_place,";
+		$sql.= ",mbr_gid,mbr_decal,mbr_race,mbr_mapcid,mbr_population,mbr_place,mbr_xp,";
 		$sql.= "mbr_points,mbr_pts_armee,mbr_atq_nb, _DATE_FORMAT(mbr_ldate) as mbr_ldate,";
 		$sql.= " _DATE_FORMAT(mbr_inscr_date) as mbr_inscr_date, ";
 		$sql.= "_DATE_FORMAT(mbr_lmodif_date) as mbr_lmodif_date,mbr_lip,mbr_sexe,";
@@ -499,14 +499,14 @@ function get_mbr_gen($cond) {
 		$sql.= ",mbr_sign, mbr_descr, mbr_lip ";
 		$sql.= ",map_cid,map_x,map_y,map_type,map_region, mbr_parrain, mbr_numposts ";
 	} else if($list) {
-		$sql = "SELECT mbr_mid,mbr_pseudo,mbr_lang,mbr_etat,mbr_gid,mbr_race,mbr_mapcid, mbr_population, mbr_place, mbr_points, mbr_pts_armee, ";
+		$sql = "SELECT mbr_mid,mbr_pseudo,mbr_lang,mbr_etat,mbr_gid,mbr_race,mbr_mapcid, mbr_population, mbr_place, mbr_points, mbr_pts_armee,mbr_xp, ";
 		$sql.= " mbr_lip,ambr_etat, IF(ambr_etat=".ALL_ETAT_DEM.", 0, IFNULL(ambr_aid,0)) as ambr_aid, ";
 		$sql.= " IF(ambr_etat=".ALL_ETAT_DEM.", NULL, al_name) as al_name  ";
 		$sql.= ",map_x,map_y ";
 	} else if($count) {
 		$sql = "SELECT COUNT(*) as mbr_nb ";
 	} else {
-		$sql = "SELECT mbr_mid, mbr_pseudo, mbr_gid, mbr_etat, mbr_points, mbr_pts_armee, IFNULL(ambr_aid,0) as ambr_aid , mbr_race, mbr_sexe ";
+		$sql = "SELECT mbr_mid, mbr_pseudo, mbr_gid, mbr_etat, mbr_points, mbr_pts_armee, IFNULL(ambr_aid,0) as ambr_aid , mbr_race, mbr_sexe ,mbr_xp";
 	}
 	if(!$count && count($dst) == 2) {
 		$sql .= ", GREATEST(ABS( ".$dst['x']." - map_x ), ABS( ".$dst['y']."- map_y)) AS mbr_dst ";

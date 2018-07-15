@@ -7,7 +7,7 @@
 <li>Héros spécialisé dans le Soutien</li>
 </ul></p>
 
-<h4>Energie du Héros</h4>
+<h4>Energie du Héros <img src="img/eclair.png" alt="Energie" /> </h4>  
 
 <p>Chaque fois que le héros participe à un combat, il gagne des points d'énergie jusqu'à un maximum de {HEROS_NRJ_MAX} qui lui permettra d'accéder aux compétences qui lui sont propres. 
 Posséder des donts surnaturels c'est bien, mais votre héros se fatigue à force de faire appel à des pouvoirs divins et autres magies! C'est pourquoi, l'utilisation d'une compétence coûte une certaine quantité d'énergie', et ne dure qu'un certain laps de temps. Le héros ne peut guère cumuler deux compétences à la fois.</p>

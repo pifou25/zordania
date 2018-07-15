@@ -83,9 +83,11 @@
 		<h3>{_user[hro_nom]}</h3>
 		<table class="liste"><tr><td style="width: 50%">
 
-			<p><img src="img/{_user[race]}/unt/{_user[hro_type]}.png" title="{_user[hro_nom]}" /></p>
-			<p><zimgbar per="{_user[hro_vie]}" max="{_user[hro_vie_conf]}" /><img src="img/{_user[race]}/div/vie.png" alt="Vie" /> {_user[hro_vie]} / {_user[hro_vie_conf]}
-			<zimgnrj per="{_user[hro_xp]}" max="{HEROS_NRJ_MAX}" />Energie: {_user[hro_xp]} / {HEROS_NRJ_MAX}</p>
+			<p><img src="img/{_user[race]}/unt/{_user[hro_type]}.png" title="{_user[hro_nom]}" />
+			     <img src="img/{_user[race]}/div/vie.png" alt="Vie" /> {_user[hro_vie]} / {_user[hro_vie_conf]} </br>
+			<zimgbar per="{_user[hro_vie]}" max="{_user[hro_vie_conf]}" /> </br>
+			<img src="img/eclair.png" alt="Energie" /> {_user[hro_xp]} / {HEROS_NRJ_MAX} </br>
+			<zimgnrj per="{_user[hro_xp]}" max="{HEROS_NRJ_MAX}" />  </br></p>
 		
 		</td><td style="width: 50%">
 

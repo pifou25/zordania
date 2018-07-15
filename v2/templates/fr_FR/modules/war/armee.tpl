@@ -16,7 +16,7 @@
 </else>
 
 <if cond='{war_act} == "histo" && {leg[hro_vie]}'>
-menée par <zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]} (énergie {leg[hro_xp]} <zimgnrj per="{leg[hro_xp]}" max="{HEROS_NRJ_MAX}" />)
+menée par <zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]} ( {leg[hro_xp]} <img src="img/eclair.png" alt="Energie" /> <zimgnrj per="{leg[hro_xp]}" max="{HEROS_NRJ_MAX}" />)
 	<if cond="!empty({leg[bonus]})">
 		<include file="modules/comp/{leg[bonus]}.tpl" cache="1" cpt="{leg[comp]}" />
 	</if>
@@ -53,7 +53,7 @@ menée par <zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_no
 </else>
 </if>
 <else>
-{leg[hro_nom]} a perdu {leg[pertes][deg_hro]} points de vie (reste {leg[pertes][hro_reste]}).
+{leg[hro_nom]} a perdu {leg[pertes][deg_hro]} points de vie (reste {leg[pertes][hro_reste]} <img src="img/{_user[race]}/div/vie.png" alt="Vie" />).
 </else>
 </if>
 </p>
