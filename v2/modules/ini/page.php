@@ -125,7 +125,6 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 					require_once("lib/res.lib.php");
 					require_once("lib/src.lib.php");
 					require_once("lib/alliances.lib.php");
-					require_once("lib/war.lib.php");
 					require_once("lib/heros.lib.php");
 
 					$_ses->set("race", $race); /* Il faut absolument changer la race ! */

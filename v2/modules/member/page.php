@@ -10,7 +10,6 @@ $_tpl->set("smileys_base", $smileys_base);
 $_tpl->set("smileys_more", $smileys_more);
 
 require_once("lib/member.lib.php");
-require_once("lib/rec.lib.php");
 $mid = request("mid", "uint", "get");
 
 
@@ -25,7 +24,7 @@ else if(!$_act) {
 		$array['ambr_aid'] = 0;
 	}
 	$_tpl->set("mbr_array",$array);
-	$_tpl->set('rec_array', get_rec($_user['mid']));
+	$_tpl->set('rec_array', Rec::get($_user['mid']));
 
 	$vld_array = Vld::get($_user['mid']);
 	$_tpl->set('vld_array',$vld_array);
@@ -67,7 +66,6 @@ else if(!$_act) {
 			require_once("lib/res.lib.php");
 			require_once("lib/src.lib.php");
 			require_once("lib/alliances.lib.php");
-			require_once("lib/war.lib.php");
 			require_once("lib/nte.lib.php");
 
 			Mbr::cls($_user['mid'], $_user['mapcid'], $_user['race']);
@@ -369,7 +367,7 @@ elseif($mid) //elseif($_act == "view" && $mid)
 		$mbr_surv = Surv::get($mid);  // surveillance en cours ?
 		if(!empty($mbr_surv))
 			$_tpl->set("mbr_surv", $mbr_surv[0]);
-		$rec_array = get_rec($mid);
+		$rec_array = Rec::get($mid);
 		$_tpl->set("mbr_rec", $rec_array);
 
 		//Lister les filleuls

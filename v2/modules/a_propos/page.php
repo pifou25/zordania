@@ -12,20 +12,18 @@ elseif($_act == "rec") // SI REC : n'affiche que les recompenses de get_rec_gen
 {
 	$_tpl->set('module_tpl','modules/a_propos/a_propos.tpl');
 	$_tpl->set("a_propos_act","rec");
-	require_once("lib/rec.lib.php");
 	$rec_rois = array ( 1,2,3,4,5,6,7,8,9,10);
-	foreach ($rec_rois as $i) $rec_array[$i]=get_rec_array($i);
+	foreach ($rec_rois as $i) $rec_array[$i]=Rec::getMbr($i);
 	$_tpl->set('rec_array',$rec_array);
 }
 elseif($_act == "roi") // SI ROI : les nouvelles recompenses
 {
 	$_tpl->set('module_tpl','modules/a_propos/a_propos.tpl');
 	$_tpl->set("a_propos_act","roi");
-	require_once("lib/rec.lib.php");
 	$rec_rois = array ( 11,12,21,22,31,32,41,42,51,52,71,72);
 	$rec_array = array();
 	foreach ($rec_rois as $i) {
-		$temp = get_rec_array($i);
+		$temp = Rec::getMbr($i);
 		if(!empty($temp))
 			$rec_array[$i] = $temp;
 	}

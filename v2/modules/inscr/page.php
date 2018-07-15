@@ -147,7 +147,6 @@ if(!$_act || $_act == "new") {
 			require_once("lib/res.lib.php");
 			require_once("lib/src.lib.php");
 			require_once("lib/alliances.lib.php");
-			require_once("lib/war.lib.php");
 			require_once("lib/nte.lib.php");
 
 			if($mbr_user = init_get_mbr(array('mid'=>$mid))){

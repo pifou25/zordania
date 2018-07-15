@@ -77,7 +77,7 @@ class Unt extends Illuminate\Database\Eloquent\Model {
             }else{
                 foreach($value as $type => $nb) {
                     if(isset($leg[$type])){ // incrementer nb d'unites
-                        Unt::where([['unt_lid', $lid], ['unt_type', $type]])->increment($nb * $factor);
+                        Unt::where([['unt_lid', $lid], ['unt_type', $type]])->increment('unt_nb', $nb * $factor);
                     } else { // inserer le nouveau rang
                         $request = ['unt_lid' => $lid,
                             'unt_type' => $type,

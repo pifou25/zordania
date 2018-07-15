@@ -2,7 +2,6 @@
 if(!defined("_INDEX_") || !can_d(DROIT_ADM_MBR)){ exit; }
 
 require_once("lib/member.lib.php");
-require_once("lib/rec.lib.php");
 require_once("lib/unt.lib.php");
 
 require_once('lib/parser.lib.php');
@@ -12,7 +11,6 @@ $_tpl->set("smileys_base", $smileys_base);
 $_tpl->set("smileys_more", $smileys_more);
 
 require_once("lib/alliances.lib.php");
-require_once("lib/war.lib.php");
 require_once("lib/nte.lib.php");
 
 $_tpl->set("module_tpl","modules/member/admin.tpl");
@@ -90,12 +88,12 @@ if($_act == "del") {
 			$rec_type = request("rec_type", "uint", "post");
 			
 			if($rec_type)
-				$_tpl->set("mbr_edit", add_rec($mid, $rec_type));
+				$_tpl->set("mbr_edit", Rec::add($mid, $rec_type));
 		} elseif($_sub == "del_rec") {
 			$rec_type = request("rec_type", "uint", "post");
 			
 			if($rec_type)
-				$_tpl->set("mbr_edit", del_rec($mid, $rec_type));
+				$_tpl->set("mbr_edit", Rec::del($mid, $rec_type));
 		} elseif($_sub == "ren_leg") {
 			$leg_name = request("leg_name", "string", "post");
 			$lid = request("lid", "uint", "get");
@@ -151,7 +149,7 @@ if($_act == "del") {
 	}
 		
 	
-	$_tpl->set('rec_array', get_rec($mid));
+	$_tpl->set('rec_array', Rec::get($mid));
 } elseif($_act == "liste" OR !$_act) {
 	$_tpl->set('mbr_act','liste');
 

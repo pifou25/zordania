@@ -9,7 +9,6 @@ require_once("lib/unt.lib.php");
 require_once("lib/res.lib.php");
 require_once("lib/member.lib.php");
 require_once("lib/heros.lib.php");
-require_once("lib/war.lib.php");
 
 $_tpl->set("module_tpl", "modules/leg/leg.tpl");
 $_tpl->set("leg_act", $_act);

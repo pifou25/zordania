@@ -13,7 +13,6 @@ require_once(SITE_DIR ."lib/unt.lib.php");
 require_once(SITE_DIR ."lib/src.lib.php");
 require_once(SITE_DIR ."lib/alliances.lib.php");
 require_once(SITE_DIR ."lib/heros.lib.php");
-require_once(SITE_DIR ."lib/war.lib.php");
 require_once(SITE_DIR ."lib/histo.class.php");
 require_once(SITE_DIR ."lib/nte.lib.php");
 

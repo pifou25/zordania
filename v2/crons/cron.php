@@ -40,7 +40,6 @@ require_once(SITE_DIR . "lib/alliances.lib.php");
 require_once(SITE_DIR . "lib/res.lib.php");
 require_once(SITE_DIR . "lib/unt.lib.php");
 require_once(SITE_DIR . "lib/src.lib.php");
-require_once(SITE_DIR . "lib/rec.lib.php");
 mark('lib');
 
 $_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);

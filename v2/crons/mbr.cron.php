@@ -64,9 +64,7 @@ function glob_mbr() {
 		$sql.= " GROUP BY mbr_parrain HAVING mbr_filleuls >= ".PARRAIN_GRD1;
 		$parrains = $_sql->make_array($sql);
 
-		del_rec(NULL, 7);
-		del_rec(NULL, 8);
-		del_rec(NULL, 9);
+                Rec::whereIn('rec_type', [7, 8, 9])->delete();
 		foreach ($parrains as $value)
 		{
 			$nb = $value['mbr_filleuls'];
@@ -79,7 +77,7 @@ function glob_mbr() {
 				$type = 7;
 			else
 				continue;
-			add_rec($mid, $type);
+			Rec::add($mid, $type);
 		}
 
 	}
