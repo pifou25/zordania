@@ -21,3 +21,4 @@ v2/cache/global.cache.php
 *.gz
 *.bat
 v2/scripts/cron.bat
+v2/scripts/syncdev.sh
