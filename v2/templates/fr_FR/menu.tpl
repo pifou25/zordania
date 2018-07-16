@@ -65,6 +65,7 @@
 	<li><a href="manual.html?race={_user[race]}" title="Comment jouer ?">Sommaire</a></li>
 	<li><a href="manual.html?race={_user[race]}&page=27" title="Comment jouer ?">Arbre technologique</a></li>
 	<li><a href="manual.html?race={_user[race]}&page=1" title="Comment jouer ?">Le Jeu</a></li>
+	<li><a href="manual.html?race={_user[race]}&page=26" title="Comment jouer ?">Le Héros</a></li>
 	<li><a href="manual.html?race={_user[race]}&page=6" title="Comment jouer ?">Le Monde de Zordania</a></li>
 	<li><a href="manual.html?race={_user[race]}&page=12" title="Comment jouer ?">Guide du Débutant</a></li>
 	<li><a href="manual.html?race={_user[race]}&page=8" title="Comment jouer ?">Art de la guerre</a></li>

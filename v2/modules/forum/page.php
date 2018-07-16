@@ -103,6 +103,43 @@ case 'post' : // valider le formulaire & créer le topic / message
 				maj_all($pid,$pseudo,$tid,$fid,true,$mid,$pst_titre,$pst_msg);	
 
 				header("Location: forum-post.html?pid=$pid#$pid");
+				
+				//si c'est une news on envoit sur discord
+				// source https://gist.github.com/thoanny/df9acea3ffabfc8db32113502a0c3e93#file-php-to-discord-php
+				if ($fid == ZORD_NEWS_FID)
+				{
+					//webhook
+					$url = 'https://discordapp.com/api/webhooks/'.DISCORD_WEBHOOK.'';
+					$data = array(
+						'username' => 'Barnabé le Tavernier', // Remplacer le nom du webhook, à enlever si inutilisé
+						'embeds' => array(
+							array(
+								'title' => $pst_titre, // Intitulé de la news
+								'url' => 'http://zordania.fr/forum-post.html?pid='.$pid.'#'.$pid.'', // Adresse de la news									  
+								'author' => array(
+									'name' => 'Nouvelle News postée:', // texte annonce 
+								  	),
+								)
+							),
+						);
+
+					$context = array(
+					  'http' => array(
+						'method' => 'POST',
+						'header' => "Content-type: application/json\r\n",
+						'content' => json_encode($data),
+					  )
+					);
+
+					$context  = stream_context_create($context);
+					$result = @file_get_contents($url, false, $context);
+
+					if($result === false) {
+					  return false;
+						}
+
+					return true;
+				}
 			}			
 		}
 	}
