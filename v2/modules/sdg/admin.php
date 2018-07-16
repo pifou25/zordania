@@ -1,8 +1,6 @@
 <?php
 if(!defined("_INDEX_") or !can_d(DROIT_SDG)){ exit; }
 
-require_once("lib/sdg.lib.php");
-
 require_once('lib/parser.lib.php');
 $smileys_base = getSmileysBase();
 $smileys_more = getSmileysMore($smileys_base);
@@ -27,7 +25,7 @@ case 'new':
 		$rep = array(); $err=0;
 
 		if($sdg_id)// sondage existant (modif)
-			$sdg_rep = get_sdg_result($sdg_id);
+			$sdg_rep = SdgRep::get($sdg_id);
 		for($a=0;$a<$nb;$a++) {
 			if($sdg_id){// modifier le sondage
 				$rep[$a]['srep_texte'] =  $sdg_request[$sdg_rep[$a]['srep_id']];
@@ -48,15 +46,15 @@ case 'new':
 			$_tpl->set("sdg_rep",$rep);
 		} else {
 			if(!$sdg_id){// ajout du sondage
-				$sid = add_sdg($texte);
+				$sid = Sdg::add($texte, count($rep));
 				foreach($rep as $value)
 					$rep2[]=parse($value['srep_texte']);
-				add_rep_sdg($sid, $rep2);
+				SdgRep::add($sid, $rep2);
 				$_tpl->set("sdg_ok",true);
 			}else{// modification du sondage
-				edit_sdg($sdg_id, $texte);
+				Sdg::edit($sdg_id, $texte);
 				foreach($rep as $value)
-					edit_rep_sdg($value['srep_id'], parse($value['srep_texte']));
+					SdgRep::edit($value['srep_id'], parse($value['srep_texte']));
 				$_tpl->set("mod_sdg_ok",true);
 			}
 		}
@@ -64,11 +62,11 @@ case 'new':
 	break;
 case 'mod':
 	$sdg_id = request("sdg_id", "uint", "get");
-	$sdg_array = get_sdg($sdg_id, $_user['mid']);
+	$sdg_array = Sdg::getSdg($sdg_id, $_user['mid']);
 	if($sdg_array) {
 		$_tpl->set('sdg_id', $sdg_id);
 		$_tpl->set("sdg_texte",unparse($sdg_array[0]['sdg_texte']));
-		$sdg_rep = get_sdg_result($sdg_id);
+		$sdg_rep = SdgRep::get($sdg_id);
 		foreach($sdg_rep as $key => $rep)
 			$sdg_rep[$key]['srep_texte']=unparse($rep['srep_texte']);
 		$_tpl->set("sdg_rep",$sdg_rep);
@@ -85,7 +83,7 @@ case 'del':
 	$valid = request("valid", "string", "get");
 	
 	if($sdg_id && $valid) {
-			del_sdg($sdg_id);
+			Sdg::del($sdg_id);
 			$_tpl->set("sdg_ok",true);
 	}
 
@@ -95,7 +93,7 @@ case 'view':
 default:
 	$_tpl->set('adm_act','view');
 	
-	$liste_array = get_sdg_gen();
+	$liste_array = Sdg::get();
 	// pour la liste, tronquer le texte à la 1ere ligne
 	foreach($liste_array as $key => $sdg){
 		$txt=explode('<br />', $sdg['sdg_texte'], 2);
