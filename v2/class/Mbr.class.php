@@ -417,7 +417,7 @@ static function getIps(string $ip = '', int $gid = 0)
         if ($race){
             $req->where('mbr_race', '=', $race);
         }
-        return $req->groupBy('mbr_race')->get()->toArray();
+        return $req->groupBy('mbr_race')->get()->keyBy('mbr_race');
     }
 
     /* Libère les trucs d'un compte */

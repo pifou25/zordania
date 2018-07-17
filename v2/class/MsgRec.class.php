@@ -65,13 +65,12 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
             $return = MsgRec::where('mrec_mid', $mid)->whereIn('mrec_id', $msgid)->delete();
         }
 
-        /* TODO : avec le msg reçu on supprime aussi les signalements */
-//        $sql = "DELETE FROM " . $_sql->prebdd . "sign ";
-//        if ($msgid)
-//            $sql .= " WHERE sign_msgid IN ($msgid)";
-//        else
-//            $sql .= " WHERE sign_msgid IN (SELECT mrec_id FROM zrd_msg_rec WHERE mrec_mid = $mid)";
-//        return $return + $_sql->affected_rows();
+        /* avec le msg reçu on supprime aussi les signalements */
+        if ($msgid)
+            return $return + Sign::whereIn('sign_msgid', $msgid)->delete();
+        else
+            $sql .= " WHERE sign_msgid IN (SELECT mrec_id FROM zrd_msg_rec WHERE mrec_mid = $mid)";
+        return $return + $_sql->affected_rows();
     }
 
     static function mark(int $mid, int $msgid = 0) {
@@ -103,7 +102,7 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
     }
 
     static function sign(int $msgid) {
-        return MsgRec::where(['mrec_id' => $msgid])->where('msg_sign', 1)->count() == 1;
+        return MsgRec::where('mrec_id', $msgid)->where('msg_sign', 1)->count() == 1;
     }
 
     static function getSign(array $cond = []) {
@@ -156,14 +155,14 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
 
         //$req->skip($limit1)->take(LIMIT_PAGE)->toSql();
         return $req->get()->toArray();
-        
+
+// TODO : pagination ?        
 //        $sql .= " ORDER BY " . $_sql->prebdd . "sign.sign_debut DESC";
 //        if ($limit1)
 //            $sql .= " LIMIT $limit1 " . LIMIT_PAGE;
 //        else
 //            $sql .= " LIMIT " . LIMIT_PAGE;
 //
-//        return $_sql->make_array($sql);
     }
 
 }

@@ -18,7 +18,6 @@ class MbrOld extends Illuminate\Database\Eloquent\Model {
 
     /**
      * MbrOld historique des membres
-     * @global type $_sql
      * @param type $mid
      * @return type
      */

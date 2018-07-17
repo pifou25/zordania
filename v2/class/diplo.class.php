@@ -1,7 +1,6 @@
 <?php
 class diplo {
 	/* variables */
-	//private static $sql; // objet mysql.class.php -> global $_sql
 	private $fields = [
 		'dpl_did' => false,
 		'dpl_etat' => false,

@@ -32,6 +32,14 @@ class Sign extends Illuminate\Database\Eloquent\Model {
         return MsgRec::sign($msgid);
     }
 
+    static function del(int $mid){
+        return Sign::whereIn('sign_msgid', function($query) use ($mid) {
+            $query->select('mrec_id')
+                    ->from('msg_rec')
+                    ->where('mrec_mid', $mid);
+        })->delete();
+    }
+    
     /**
      *  assigner le signalement à un admin
      * @param int $sid
