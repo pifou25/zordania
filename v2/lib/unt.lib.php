@@ -476,7 +476,7 @@ class legion {
 	function edit($new) {
 		global $_sql;
 		$etat = 0; $vit = 0; $cid = 0;
-		$dest = -1; $xp = 0; $fat = 0; $leg_name = '';
+		$dest = -1; $fat = 0; $leg_name = '';
 
 		// editer aussi le heros si existe
 		if ($this->hid) {
@@ -503,9 +503,6 @@ class legion {
 			if (!empty($edit_hro))
 				edit_hero($this->mid, $edit_hro);
 		}
-
-                //add XP 
-                $_sql->query('UPDATE '.$_sql->prebdd."mbr SET mbr_xp = mbr_xp + $xp WHERE mbr_mid = {$this->mid}");
 
 		if(isset($new['etat'])) {
 			$etat = protect($new['etat'], "uint");

@@ -546,21 +546,20 @@ case 'make_atq':
 	/* Mises a jour  Légions (table 'leg') */
 	foreach ($legs['combat'] as $lid) { // parcourrir les legions
 		$leg = $legions->legs[$lid];
-		if ($lid == $lid1) { // xp gagnee par l'attaquant + retour à la maison
-			$new = ['xp' => (int) ($bilan['att']['xp_won']),
-                            'hro_vie' => $bilan['att']['pertes']['hro_reste'],
-                            'etat' => LEG_ETAT_RET,
+		if ($lid == $lid1) { // retour à la maison
+			$new = ['etat' => LEG_ETAT_RET,
                             'vit' => $leg_1->calc_vit(),
                             'dest' => $_user['mapcid']];
-                        $nrj = (int) ($bilan['att']['hro_xp']);
-		} else {
-			$new = ['etat' => $etats_defs[$lid],
-			'hro_vie' => (int) $bilan['def'][$lid]['pertes']['hro_reste'],
-			'xp' => (int) ($bilan['def'][$lid]['xp_won'])];
+                    if($leg->hid){
+                        $hro_array[$leg->mid]= ['hro_vie' => $bilan['att']['pertes']['hro_reste']];
+                    }
+		} else { // état: au village ou en défense
+			$new = ['etat' => $etats_defs[$lid]];
                         $nrj = (int) ($bilan['def'][$lid]['hro_xp']);
+                    if($leg->hid){
+                        $hro_array[$leg->mid]= ['hro_vie' => $bilan['def'][$lid]['pertes']['hro_reste']];
+                    }
 		}
-                $nrj += $new['xp']; // ajouter l'xp gagnée à l'énergie actuelle
-                $news['nrj'] = ($nrj > HEROS_NRJ_MAX ? HEROS_NRJ_MAX : $nrj);
 		$leg->edit($new);
 	}
 
@@ -568,13 +567,23 @@ case 'make_atq':
 	$legions->flush_all_units();
 
 
-	// Population : 'recompter' la population pour tous les joueurs participants
+	// Population : 'recompter' la population pour tous les joueurs participants et l'XP gagnée
+        // héros : compter le gain d'énergie
 	$edit_mid = array(); // liste des joueurs concernés
 	$histo = array();
 	foreach ($legs['combat'] as $lid) { // parcourrir les legions
 		$leg = $legions->legs[$lid];
 		if (!isset($edit_mid[$leg->mid]))
 			$edit_mid[$leg->mid]['population'] = count_pop($leg->mid);
+
+                // cumul XP de toutes les légions par joueurs
+                if(!isset($edit_mid[$leg->mid]['xp']))
+                    $edit_mid[$leg->mid]['xp'] = 0;
+		if ($lid == $lid1)
+			$edit_mid[$leg->mid]['xp'] += (int) ($bilan['att']['hro_xp']);
+		else
+			$edit_mid[$leg->mid]['xp'] += (int) ($bilan['def'][$lid]['hro_xp']);
+                
 		// pour les évènements : attaquant & défenseur seulement sont cités
 		$tmp = array('lid' => $lid, 'leg' => $leg->infos['leg_name'],
 			'name' => $leg->infos['mbr_pseudo'], 'mid' => $leg->mid);
@@ -587,8 +596,16 @@ case 'make_atq':
 		$edit_mid[$mid_def]["place"] = $mbr_def_array['mbr_place'] - $update_place;
 
 	foreach ($edit_mid as $mid => $edit_tmp) {
-		if (!empty($edit_tmp)) // éditer les membres : table 'mbr'
+		if (!empty($edit_tmp)){ // éditer les membres : table 'mbr'
 			edit_mbr($mid, $edit_tmp);
+                    // maj du héros
+                    if(isset($hro_array[$mid])){
+                        $nrj = ($edit_tmp['xp'] > HEROS_NRJ_MAX ? HEROS_NRJ_MAX : $edit_tmp['xp']);
+                        $hro_array[$mid]['nrj'] = $nrj;
+                        edit_hero($mid, $hro_array[$mid]);
+                    }
+
+                }
 		// ajouter un evenement dans l'historique sauf pour l'attaquant
 		if ($mid != $_user['mid'])
 			$_histo->add($mid, $_user['mid'], ($mid == $mid_def ? HISTO_LEG_ATQ_VLG : HISTO_LEG_ATQ_LEG), $histo);

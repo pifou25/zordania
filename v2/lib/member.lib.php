@@ -127,6 +127,10 @@ function edit_mbr_gen($cond, $new) {
 			$sexe = protect($new['sexe'], "uint");
 			$sql .= "mbr_sexe=$sexe,";
 		}
+		if(isset($new['xp'])) {
+			$xp = protect($new['xp'], "uint");
+			$sql .= "mbr_xp=$xp,";
+		}
 				
 		$sql = substr($sql, 0, strlen($sql)-1);
 		
