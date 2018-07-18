@@ -547,17 +547,20 @@ case 'make_atq':
 	foreach ($legs['combat'] as $lid) { // parcourrir les legions
 		$leg = $legions->legs[$lid];
 		if ($lid == $lid1) { // xp gagnee par l'attaquant + retour à la maison
-			$new = array('xp' => (int) ($bilan['att']['xp_won']),
-				'hro_vie' => $bilan['att']['pertes']['hro_reste']);
-    		$new['etat'] = LEG_ETAT_RET;
-			$new['vit'] = $leg_1->calc_vit();
-    		$new['dest'] = $_user['mapcid'];
+			$new = ['xp' => (int) ($bilan['att']['xp_won']),
+                            'hro_vie' => $bilan['att']['pertes']['hro_reste'],
+                            'etat' => LEG_ETAT_RET,
+                            'vit' => $leg_1->calc_vit(),
+                            'dest' => $_user['mapcid']];
+                        $nrj = (int) ($bilan['att']['hro_xp']);
 		} else {
-			$new = array();
-			$new['etat'] = $etats_defs[$lid];
-			$new['hro_vie'] = (int) $bilan['def'][$lid]['pertes']['hro_reste'];
-			$new['xp'] = (int) ($bilan['def'][$lid]['xp_won']);
+			$new = ['etat' => $etats_defs[$lid],
+			'hro_vie' => (int) $bilan['def'][$lid]['pertes']['hro_reste'],
+			'xp' => (int) ($bilan['def'][$lid]['xp_won'])];
+                        $nrj = (int) ($bilan['def'][$lid]['hro_xp']);
 		}
+                $nrj += $new['xp']; // ajouter l'xp gagnée à l'énergie actuelle
+                $news['nrj'] = ($nrj > HEROS_NRJ_MAX ? HEROS_NRJ_MAX : $nrj);
 		$leg->edit($new);
 	}
 

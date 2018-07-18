@@ -69,7 +69,7 @@ function edit_hero($mid, $new = array()) {
 	global $_sql;
 
 	$type = 0; $lid = 0; $vie = false;
-	$bonus_from = 0; $bonus_to = 0; $xp = 0; $bonus = false; $nom = "";
+	$bonus_from = 0; $bonus_to = 0; $nrj = 0; $bonus = false; $nom = "";
 
 	$mid = protect($mid, "uint");
 	
@@ -81,8 +81,8 @@ function edit_hero($mid, $new = array()) {
 		$lid = protect($new['lid'], "uint");
 	if(isset($new['vie']))
 		$vie = protect($new['vie'], "uint");
-	if(isset($new['xp']))
-		$xp = protect($new['xp'], "int");
+	if(isset($new['nrj']))
+		$nrj = protect($new['nrj'], "int");
 	if(isset($new['bonus']))
 		$bonus = protect($new['bonus'], "uint");
 	if(isset($new['bonus_from']))
@@ -90,7 +90,7 @@ function edit_hero($mid, $new = array()) {
 	if(isset($new['bonus_to']))
 		$bonus_to = protect($new['bonus_to'], "uint");
 
-	if(!$mid || (!$nom && !$type && !$lid && ($vie==false) && !$xp && ($bonus===false) && !$bonus_from && !$bonus_to))
+	if(!$mid || (!$nom && !$type && !$lid && ($vie==false) && !$nrj && ($bonus===false) && !$bonus_from && !$bonus_to))
 		return 0; // aucune modif nécessaire
 
 	if($lid) { // transfer du héros de légions
@@ -103,33 +103,13 @@ function edit_hero($mid, $new = array()) {
 	}
 
 	// maj mbr
-	$_sql->query('UPDATE '.$_sql->prebdd.'mbr SET mbr_lmodif_date = NOW()');
-	//maj xp
-	if($xp) 
-		{
-			//NRJ > max?
-			global $_user;
-			$get_nrj = protect($_user['hro_xp'], "uint");
-			if ($get_nrj==HEROS_NRJ_MAX) 
-				$NRJ = 0;
-			elseif($get_nrj + $xp > HEROS_NRJ_MAX) 
-				$NRJ = HEROS_NRJ_MAX-$get_nrj;
-			elseif($vie == 0) 
-				$NRJ = -$get_nrj;
-			else 
-				$NRJ=$xp;
-			//add XP and NRJ
-			$_sql->query('UPDATE '.$_sql->prebdd.'mbr, '.$_sql->prebdd.'hero SET 
-			'.$_sql->prebdd.'mbr.mbr_xp = mbr_xp +'.$xp.', '.$_sql->prebdd.'hero.hro_xp = hro_xp + '.$NRJ.'  
-			WHERE mbr_mid = '.$mid.' AND hro_mid = '.$mid.' ');
-			
-		}
+	$_sql->query('UPDATE '.$_sql->prebdd.'mbr SET mbr_lmodif_date = NOW() WHERE mbr_mid = '.$mid);
 
 	$sql = "UPDATE ".$_sql->prebdd."hero SET ";
 	if($nom) $sql.= "hro_nom = '$nom',";
 	if($type) $sql.= "hro_type = $type,";
 	if($lid) $sql.= "hro_lid = $lid,";
-	//if($xp) $sql.= "hro_xp = hro_xp + $xp, hro_xp_tot = hro_xp_tot + $xp,";
+	if($nrj) $sql.= "hro_xp = $nrj,";
 	if($vie !== false) $sql.= "hro_vie = $vie,";
 	if($bonus!==false) $sql.= "hro_bonus = $bonus,";
 	if($bonus_from) $sql.= "hro_bonus_from = '$bonus_from',";

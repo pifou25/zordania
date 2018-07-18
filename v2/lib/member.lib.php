@@ -512,7 +512,7 @@ function get_mbr_gen($cond) {
 		$sql .= ", GREATEST(ABS( ".$dst['x']." - map_x ), ABS( ".$dst['y']."- map_y)) AS mbr_dst ";
 	}
 
-	$sql.= "FROM ".$_sql->prebdd."mbr ";
+	$sql.= " FROM ".$_sql->prebdd."mbr ";
 
 	if($aid && (!$full && !$list))
 		$sql.= "JOIN ".$_sql->prebdd."al_mbr ON mbr_mid = ambr_mid ";

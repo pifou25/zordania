@@ -487,8 +487,8 @@ class legion {
 				$edit_hro['type'] = $new['hro_type'];
 			if(isset($new['hro_lid']))
 				$edit_hro['lid'] = $new['hro_lid'];
-			if(isset($new['xp']))
-				$edit_hro['xp'] = $new['xp'];
+			if(isset($new['nrj']))
+				$edit_hro['nrj'] = $new['nrj'];
 			if(isset($new['bonus']))
 				$edit_hro['bonus'] = $new['bonus'];
 			if(isset($new['bonus_from']))
@@ -503,6 +503,9 @@ class legion {
 			if (!empty($edit_hro))
 				edit_hero($this->mid, $edit_hro);
 		}
+
+                //add XP 
+                $_sql->query('UPDATE '.$_sql->prebdd."mbr SET mbr_xp = mbr_xp + $xp WHERE mbr_mid = {$this->mid}");
 
 		if(isset($new['etat'])) {
 			$etat = protect($new['etat'], "uint");
