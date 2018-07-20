@@ -240,21 +240,31 @@ define('SURV_TYPE_MP',  3); // Message Privé
 define('SURV_TYPE_FRM', 4); // Forum
 define('SURV_TYPE_ALL', 5); // All
 
-/* Votes */
-define('VOTES_HIT', 1); // hit parade 
-define('VOTES_RPG',  2); // RPG paradize
-define('VOTES_TOP',  3); // xtreme top100
-
-/*ID Forum news*/
-define('ZORD_NEWS_FID',25);
-define('FORUM_PLAINTES_FID',30);
-
-/*Etat bug/suggestion*/
+/*ID Forum fid*/
+define('ZORD_NEWS_FID',25); //news
+define('FORUM_PLAINTES_FID',30); //plaintes
 define('FORUM_SUGGEST_FID',6); //fid suggestion
 define('FORUM_BUG_FID',8); //fid bug
+
+/*Etat bug/suggestion*/
 define('FORUM_REPORT_NEW',0); //nouvellement reporté
 define('FORUM_REPORT_OK',1); //avéré(bug) ou accepté (suggestion)
 define('FORUM_REPORT_NOK',2); //pas bug ou refusé
 define('FORUM_REPORT_ON',3); //codé
+define('FORUM_REPORT_DEV',4); //codé en dev
+define('FORUM_REPORT_TALK',5); //en discution
+define('FORUM_REPORT_DUBL',6); //double
 
+/*type de bug/sugg*/
+define('TYPE_REPORT_NEW',0); //Bah nouveau
+define('TYPE_REPORT_WAR',1); //legion et guerre
+define('TYPE_REPORT_HERO',2); //heros + comp
+define('TYPE_REPORT_UNT',3); //unités
+define('TYPE_REPORT_ALLI',4); //alliance
+define('TYPE_REPORT_GEN',5); //Donjon
+define('TYPE_REPORT_VLG',6); //Village
+define('TYPE_REPORT_GAME',7); //Interface et gameplay
+define('TYPE_REPORT_COM',8); //Marché
+define('TYPE_REPORT_MSG',9); //Messagerie
+define('TYPE_REPORT_ELSE',10); //Autres
 ?>

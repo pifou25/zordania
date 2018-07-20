@@ -57,10 +57,26 @@
 				<label for="statut">Statut : </label>				
 					<select id="statut" name="statut">
 						<option value="-1" >Laisser</option>
-						<option value="{FORUM_REPORT_NEW}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Déclaré</if><else>Proposée</else></option>
-						<option value="{FORUM_REPORT_OK}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Valider</if><else>Accepter</else></option>
-						<option value="{FORUM_REPORT_NOK}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Pas bug</if><else>Refuser</else></option>
-						<option value="{FORUM_REPORT_ON}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Corrigé</if><else>Codée</else></option>						
+						<option value="{FORUM_REPORT_TALK}">En discussion</option>
+						<option value="{FORUM_REPORT_OK}">Valider</option>
+						<option value="{FORUM_REPORT_NOK}">Refuser</option>
+						<option value="{FORUM_REPORT_DUBL}">Doublon</option>
+						<option value="{FORUM_REPORT_DEV}">Ok en DEV</option>
+						<option value="{FORUM_REPORT_ON}">Codé/corrigé</option>							
+					</select>
+				<label for="statut">Type : </label>				
+					<select id="type" name="type">
+						<option value="-1" >Laisser</option>
+						<option value="{TYPE_REPORT_WAR}">Leg/War</option>
+						<option value="{TYPE_REPORT_HERO}">Héros/Comp</option>
+						<option value="{TYPE_REPORT_UNT}">Unités</option>
+						<option value="{TYPE_REPORT_ALLI}">All/Diplo</option>
+						<option value="{TYPE_REPORT_GEN}">Donjon</option>
+						<option value="{TYPE_REPORT_VLG}">Village</option>
+						<option value="{TYPE_REPORT_GAME}">Inter/GameP</option>
+						<option value="{TYPE_REPORT_COM}">Marché</option>
+						<option value="{TYPE_REPORT_MSG}">Message</option>
+						<option value="{TYPE_REPORT_ELSE}">Autres</option>						
 					</select>
 				</if><br />
 		</if>
@@ -302,10 +318,26 @@
 				<label for="statut">Statut : </label>				
 					<select id="statut" name="statut">
 						<option value="-1" >Laisser</option>
-						<option value="{FORUM_REPORT_NEW}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Déclaré</if><else>Proposée</else></option>
-						<option value="{FORUM_REPORT_OK}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Valider</if><else>Accepter</else></option>
-						<option value="{FORUM_REPORT_NOK}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Pas bug</if><else>Refuser</else></option>
-						<option value="{FORUM_REPORT_ON}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Corrigé</if><else>Codée</else></option>						
+						<option value="{FORUM_REPORT_TALK}">En discussion</option>
+						<option value="{FORUM_REPORT_OK}">Valider</option>
+						<option value="{FORUM_REPORT_NOK}">Refuser</option>
+						<option value="{FORUM_REPORT_DUBL}">Doublon</option>
+						<option value="{FORUM_REPORT_DEV}">Ok en DEV</option>
+						<option value="{FORUM_REPORT_ON}">Codé/corrigé</option>						
+					</select>
+				<label for="statut">Type : </label>				
+					<select id="type" name="type">
+						<option value="-1" >Laisser</option>
+						<option value="{TYPE_REPORT_WAR}">Leg/War</option>
+						<option value="{TYPE_REPORT_HERO}">Héros/Comp</option>
+						<option value="{TYPE_REPORT_UNT}">Unités</option>
+						<option value="{TYPE_REPORT_ALLI}">All/Diplo</option>
+						<option value="{TYPE_REPORT_GEN}">Donjon</option>
+						<option value="{TYPE_REPORT_VLG}">Village</option>
+						<option value="{TYPE_REPORT_GAME}">Inter/GameP</option>
+						<option value="{TYPE_REPORT_COM}">Marché</option>
+						<option value="{TYPE_REPORT_MSG}">Message</option>
+						<option value="{TYPE_REPORT_ELSE}">Autres</option>						
 					</select>
 				</if>
 
@@ -373,12 +405,9 @@
 				<elseif cond="{topic[closed]} == 1"><img src="img/forum/closed-{etat}.png" title="Fermé - {etat}" /></elseif>
 				<elseif cond="{topic[sticky]} == 1"><img src="img/forum/sticky-{etat}.png" title="Post-it - {etat}" /></elseif>
 				<else><img src="img/forum/{etat}.png" title="{etat}" /></else>
-				<if cond="{topic[forum_id]} == FORUM_BUG_FID  ">				
-					<img src="img/forum/{topic[statut]}.png" title="{bug_statut[{topic[statut]}]}" />				
+				<if cond="{topic[forum_id]} == FORUM_BUG_FID || {topic[forum_id]} == FORUM_SUGGEST_FID  ">				
+					<img src="img/forum/{topic[statut]}.png" title="{forum_statut[{topic[statut]}]}" />				
 				</if>
-				<elseif cond="{topic[forum_id]} == FORUM_SUGGEST_FID ">
-					<img src="img/forum/{topic[statut]}.png" title="{suggest_statut[{topic[statut]}]}" />
-				</elseif>
 
 				</td>
 

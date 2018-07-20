@@ -222,6 +222,9 @@ case 'post' : // valider le formulaire & créer le topic / message
 				$statut = request('statut', 'uint', 'post', -1);
 				if($is_modo && $statut >=0)
 					$edit['statut'] = $statut;
+				$type = request('type', 'uint', 'post', -1);
+				if($is_modo && $type >=0)
+					$edit['type'] = $type;
 				// possible d'éditer le sujet hormis modo ??
 				$title = request('pst_titre', 'string', 'post');
 				if($is_modo && $title)
@@ -267,7 +270,12 @@ case 'post' : // valider le formulaire & créer le topic / message
 						$edit['statut'] = $statut;
 					}
 					
-					if(isset($edit['closed']) or isset($edit['sticky']) or isset($edit['fid']) or isset($edit['statut']))
+					$type = request('type', 'int', 'post', -1);
+					if($type){
+						$edit['type'] = $type;
+					}
+					
+					if(isset($edit['closed']) or isset($edit['sticky']) or isset($edit['fid']) or isset($edit['statut']) or isset($edit['type']))
 					{ //on édite le message, et on met à jour la bdd
 						edit_post_gen($edit);
 						$_tpl->set('edit_tpc',true);

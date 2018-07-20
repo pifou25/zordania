@@ -3,7 +3,7 @@ require_once('secret_parameters.php');
 
 /* === Configuration Site === */
 define('ZORD_VERSION',"2.3.1");
-define('ZORD_ANNEE',"2018");
+define('ZORD_ANNEE',date('Y'));
 define('ZORD_SPEED_VFAST', 0.16667); // 1 Tour toutes les 30sec
 define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
 define('ZORD_SPEED_MEDIUM', 15); // 1 Tour toutes les 15 minutes
@@ -238,15 +238,6 @@ $_droits[GRP_DEMI_DIEU] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_MMSG,
 $_droits[GRP_DIEU] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_MMSG,
 	DROIT_ADM, DROIT_ADM_AL, DROIT_ADM_COM, DROIT_ADM_MBR, DROIT_ADM_TRAV,DROIT_SDG, DROIT_ADM_EDIT,
 	DROIT_PUNBB_MEMBER,DROIT_PUNBB_MOD,DROIT_PUNBB_ADMIN, DROIT_ANTI_FLOOD);
-
-/* configuration des sites de vote */
-$_votes = array();
-$_votes[VOTES_HIT] = array('img' => 'http://www.jeux-alternatifs.com/im/bandeau/hitP_88x31_v3.gif',
-		'url' => 'http://www.jeux-alternatifs.com/Zordania-jeu177_hit-parade_1_1.html', 'delay' => 24);
-$_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif', 
-		'url' => 'https://www.rpg-paradize.com/site-Zordania.fr-110465', 'delay' => 3);
-$_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
-		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
 
 define('SITE_DEBUG',false);
 define('SITE_TRAVAUX',false);
