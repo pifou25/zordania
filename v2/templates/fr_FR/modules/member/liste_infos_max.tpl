@@ -13,13 +13,13 @@
 	<ul class="infos">
 	<li>{mbr_array[pts][src][nb]} Recherches (coef = {mbr_array[pts][src][coef]}) = {mbr_array[pts][src][pts]}</li>
 	<li>{mbr_array[pts][btc][nb]} Bâtiments (vie={mbr_array[pts][btc][vie]}) = {mbr_array[pts][btc][pts]}</li>
-	<li><if cond="{hro_array[hro_id]}"> XP heros = {hro_array[hro_xp]}</if><else>aucun héros</else></li>
+	<li><if cond="{hro_array[hro_id]}"> XP heros = {hro_array[hro_nrj]}</if><else>aucun héros</else></li>
 	<li>unités = {mbr_array[pts][unt][pts]} points. Détail (nb x pts = total) (les civils ne comptent pas)</li>
 	<li><foreach cond="{unt_done} as {value}">
 	{value[unt_sum]}<zimgunt type="{value[unt_type]}" race="{mbr_array[mbr_race]}" /> x {value[pts]} = {value[total]} /
 	</foreach>
 	</li>
-	<li>Armée = <math oper="{mbr_array[pts][unt][pts]}+(isset({hro_array[hro_xp]})?{hro_array[hro_xp]}:0)" /> / Total = <math oper="{mbr_array[pts][src][pts]}+{mbr_array[pts][btc][pts]}+{mbr_array[pts][unt][pts]}+(isset({hro_array[hro_xp]})?{hro_array[hro_xp]}:0)" /></li>
+	<li>Armée = <math oper="{mbr_array[pts][unt][pts]}+(isset({hro_array[hro_nrj]})?{hro_array[hro_nrj]}:0)" /> / Total = <math oper="{mbr_array[pts][src][pts]}+{mbr_array[pts][btc][pts]}+{mbr_array[pts][unt][pts]}+(isset({hro_array[hro_nrj]})?{hro_array[hro_nrj]}:0)" /></li>
 	</ul>
 </if>
 

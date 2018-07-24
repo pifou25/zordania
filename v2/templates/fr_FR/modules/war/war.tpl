@@ -62,7 +62,7 @@
 <if cond="{leg[hro_vie]}">
 	<p><zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]}
 	<zimgbar per="{leg[hro_vie]}" max="{leg[hro_vie_conf]}" /> <img src="img/{_user[race]}/div/vie.png" alt="Vie" /> Vie: {leg[hro_vie]} / {leg[hro_vie_conf]}
-	<zimgnrj per="{leg[hro_xp]}" max="{HEROS_NRJ_MAX}" /> <img src="img/eclair.png" alt="Energie" /> {leg[hro_xp]} 
+	<zimgnrj per="{leg[hro_nrj]}" max="{HEROS_NRJ_MAX}" /> <img src="img/eclair.png" alt="Energie" /> {leg[hro_nrj]} 
 	<if cond="!empty({leg[bonus]})">, Compétence active : <zimgcomp type="{leg[bonus]}" race="{leg[mbr_race]}" /></if>
 	</p>
 </if>
@@ -85,7 +85,7 @@
 		<p><zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]}
 		<zimgbar per="{leg[hro_vie]}" max="{leg[hro_vie_conf]}" />
 		<img src="img/{_user[race]}/div/vie.png" alt="Vie" /> {leg[hro_vie]} / {leg[hro_vie_conf]} 
-		<zimgnrj per="{leg[hro_xp]}" max="{HEROS_NRJ_MAX}" /> <img src="img/eclair.png" alt="Energie" /> {leg[hro_xp]} 
+		<zimgnrj per="{leg[hro_nrj]}" max="{HEROS_NRJ_MAX}" /> <img src="img/eclair.png" alt="Energie" /> {leg[hro_nrj]} 
 		<if cond="!empty({leg[bonus]})">, Compétence active : <zimgcomp type="{leg[bonus]}" race="{leg[mbr_race]}" /></if>
 		</p>
 	</if>
@@ -246,7 +246,7 @@
 			<th>Perte vie Heros</th>
 		</tr>
 		<tr>
-			<td>{bilan[att][leg_name]} ({bilan[att][hro_xp]})</td>
+			<td>{bilan[att][leg_name]} ({bilan[att][hro_nrj]})</td>
 			<td>{bilan[att][vie_leg]}</td>
 			<td>{bilan[att][stat][unt]}</td>
 			<td>{bilan[att][stat][bonus][atq]} %</td>

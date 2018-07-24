@@ -102,14 +102,11 @@ function edit_hero($mid, $new = array()) {
 		add_unt_leg($_user['mid'], $lid, $rang, $_user['hro_type'], 1);
 	}
 
-	// maj mbr
-	$_sql->query('UPDATE '.$_sql->prebdd.'mbr SET mbr_lmodif_date = NOW() WHERE mbr_mid = '.$mid);
-
 	$sql = "UPDATE ".$_sql->prebdd."hero SET ";
 	if($nom) $sql.= "hro_nom = '$nom',";
 	if($type) $sql.= "hro_type = $type,";
 	if($lid) $sql.= "hro_lid = $lid,";
-	if($nrj) $sql.= "hro_xp = hro_xp + $nrj,";
+	if($nrj) $sql.= "hro_xp = $nrj,";
 	if($vie !== false) $sql.= "hro_vie = $vie,";
 	if($bonus!==false) $sql.= "hro_bonus = $bonus,";
 	if($bonus_from) $sql.= "hro_bonus_from = '$bonus_from',";
@@ -184,12 +181,12 @@ function hro_resurrection($id, $mid, $lid) {
 		SET hro_lid = ('.$sql_leg_vlg.'),
 			hro_bonus = 0,
 			hro_xp = FLOOR(hro_xp/2),
-			hro_vie=FLOOR('.$this->hro('vie_conf').'/2)
+			hro_vie=FLOOR('.$this->getHro('vie_conf').'/2)
 		WHERE hro_id ='.$hid;
 	$_sql->query($sql); // héros retour maison
 	/* déplacer l'unité correspondante */
 	$sql = 'UPDATE '.$_sql->prebdd.'unt SET unt_lid = ('.$sql_leg_vlg.
-		') WHERE unt_lid ='.$lid.' AND unt_type='.$this->hro('type');
+		') WHERE unt_lid ='.$lid.' AND unt_type='.$this->getHro('type');
 	$_sql->query($sql);
 
 }
