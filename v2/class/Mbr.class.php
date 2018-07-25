@@ -437,7 +437,7 @@ static function getIps(string $ip = '', int $gid = 0)
         // cls_msg($mid); // on garde les messages
         Vld::init($mid);
         Map::reset($cid);
-        cls_nte($mid);
+        Nte::del($mid);
         //cls_frm($mid);
 
         Mbr::del($mid);

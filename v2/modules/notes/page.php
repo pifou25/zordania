@@ -5,7 +5,6 @@ if(!can_d(DROIT_PLAY)) {
 } else {
 $_tpl->set('module_tpl','modules/notes/notes.tpl');
 
-require_once('lib/nte.lib.php');
 
 require_once('lib/parser.lib.php');
 $smileys_base = getSmileysBase();
@@ -20,7 +19,7 @@ $_tpl->set('nte_act',$_act);
 switch($_act) {
 case "del":
 	//Effacer
-	if(del_nte($_user['mid'], $nid))
+	if(Nte::del($_user['mid'], $nid))
 		$_tpl->set('nte_ok',true);
 	else
 		$_tpl->set('nte_bad_nid',true);
@@ -34,7 +33,7 @@ case "edit":
 
 	if($nid) { // edit
 		$_tpl->set('nte_nid',$nid);
-		$nte_array = get_nte($_user['mid'], $nid);
+		$nte_array = Nte::get($_user['mid'], $nid);
 		if($nte_array) {
 			$nte_array = $nte_array[0];
 			$_tpl->set('nte_titre',$nte_array['nte_titre']);
@@ -44,13 +43,13 @@ case "edit":
 			$_tpl->set('nte_bad_nid',true);
 
 		if($titre && $texte)
-			$_tpl->set('nte_ok',edit_nte($_user['mid'], $nid, $titre, parse($texte), $import));
+			$_tpl->set('nte_ok',Nte::edit($_user['mid'], $nid, $titre, parse($texte), $import));
 
 	}else{ // new
 		$_tpl->set('nte_nid',0);
 
 		if($titre && $texte)
-			$_tpl->set('nte_ok',add_nte($_user['mid'], $titre, parse($texte), $import));
+			$_tpl->set('nte_ok',Nte::add($_user['mid'], $titre, parse($texte), $import));
 		else {
 			$_tpl->set('nte_titre',htmlspecialchars($titre));
 			$_tpl->set('nte_texte',htmlspecialchars($texte));
@@ -68,7 +67,7 @@ case "edit":
 case "view":
 	//Voir
 	if($nid) {
-		$nte_array = get_nte($_user['mid'], $nid);
+		$nte_array = Nte::get($_user['mid'], $nid);
 		if($nte_array)
 			$nte_array = $nte_array[0];
 		$_tpl->set('nte_array',$nte_array);
@@ -77,7 +76,7 @@ case "view":
 
 	break;
 default:
-	$nte_array = get_nte($_user['mid']);
+	$nte_array = Nte::get($_user['mid']);
 	$_tpl->set('nte_array',$nte_array);
 	break;
 }
