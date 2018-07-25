@@ -6,9 +6,7 @@ else if(!can_d(DROIT_PLAY))
 	$_tpl->set("cant_view_this", true);
 else {
 	$_tpl->set('module_tpl','modules/sdg/sdg.tpl');
-	
-	require_once('lib/parser.lib.php');
-	
+		
 	$sdg_id = request("sdg_id", "uint", "get");
 
 	if($sdg_id) {

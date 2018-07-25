@@ -4,11 +4,6 @@ if(!defined("_INDEX_")){ exit; }
 
 //include de la classe
 require_once('lib/forum.lib.php');
-require_once("lib/parser.lib.php");
-$smileys_base = getSmileysBase();
-$smileys_more = getSmileysMore($smileys_base);
-$_tpl->set("smileys_base", $smileys_base);
-$_tpl->set("smileys_more", $smileys_more);
 		
 $_tpl->set("module_tpl","modules/news/news.tpl");
 $_tpl->set('is_modo',can_d(DROIT_PUNBB_MOD));

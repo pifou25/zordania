@@ -3,13 +3,6 @@ if(!defined("_INDEX_") || !can_d(DROIT_ADM_MBR)){ exit; }
 
 require_once("lib/member.lib.php");
 require_once("lib/unt.lib.php");
-
-require_once('lib/parser.lib.php');
-$smileys_base = getSmileysBase();
-$smileys_more = getSmileysMore($smileys_base);
-$_tpl->set("smileys_base", $smileys_base);
-$_tpl->set("smileys_more", $smileys_more);
-
 require_once("lib/alliances.lib.php");
 
 $_tpl->set("module_tpl","modules/member/admin.tpl");
@@ -75,8 +68,8 @@ if($_act == "del") {
 				if($new['pass'])
 					$new['pass'] = $_ses->crypt($array['mbr_login'], $new['pass']);
 
-				$new['sign'] = parse(request("sign", "string", "post"), true);
-				$new['descr'] = parse(request("descr", "string", "post"));
+				$new['sign'] = Parser::parse(request("sign", "string", "post"), true);
+				$new['descr'] = Parser::parse(request("descr", "string", "post"));
 			
 				foreach($new as $key => $val)
 					if(!$val) unset($new[$key]);
@@ -139,8 +132,8 @@ if($_act == "del") {
 		$_tpl->set("mbr_date",date("H:i:s"));
 		$_tpl->set("mbr_race",$array['mbr_race']);
 		$_tpl->set("mbr_gid",$array['mbr_gid']);
-		$_tpl->set("mbr_descr", unparse($array['mbr_descr']));
-		$_tpl->set("mbr_sign", unparse($array['mbr_sign']));
+		$_tpl->set("mbr_descr", Parser::unparse($array['mbr_descr']));
+		$_tpl->set("mbr_sign", Parser::unparse($array['mbr_sign']));
 
 		// champs pour renommer les lÃ©gions
 		require_once("lib/unt.lib.php");

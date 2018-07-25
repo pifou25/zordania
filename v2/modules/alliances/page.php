@@ -7,11 +7,6 @@ if(!can_d(DROIT_PLAY)) {
 require_once("lib/alliances.lib.php");
 require_once("lib/res.lib.php");
 require_once("lib/member.lib.php");
-require_once("lib/parser.lib.php");
-$smileys_base = getSmileysBase();
-$smileys_more = getSmileysMore($smileys_base);
-$_tpl->set("smileys_base", $smileys_base);
-$_tpl->set("smileys_more", $smileys_more);
 
 $al_aid = request("al_aid", "uint", "get");
 $order = ['DESC','points'];
@@ -95,7 +90,7 @@ case 'my':
 		if($_sub == 'post') {
 			$msg = request('pst_msg', 'string', 'post');
 			if($msg)
-				$_tpl->set('al_msg_post',AlShoot::add($_user['alaid'],parse($msg),$_user['mid']));
+				$_tpl->set('al_msg_post',AlShoot::add($_user['alaid'],Parser::parse($msg),$_user['mid']));
 		} else if($_sub == "del") {
 			$msgid = request('msgid', 'uint', 'get');
 			if($msgid)
@@ -131,9 +126,9 @@ case 'admin':
 		if(in_array( $_user['aetat'], array
 			(ALL_ETAT_CHEF, ALL_ETAT_SECD, ALL_ETAT_RECR, ALL_ETAT_DPL, ALL_ETAT_INTD))) { // faut un grade
 		
-			$al_array['al_descr'] = unparse($al_array['al_descr']);
-			$al_array['al_rules'] = unparse($al_array['al_rules']);
-			$al_array['al_diplo'] = unparse($al_array['al_diplo']);
+			$al_array['al_descr'] = Parser::unparse($al_array['al_descr']);
+			$al_array['al_rules'] = Parser::unparse($al_array['al_rules']);
+			$al_array['al_diplo'] = Parser::unparse($al_array['al_diplo']);
 
 			$droits = [];
 			foreach(allyFactory::$_drts_all as $key => $value)
@@ -172,20 +167,20 @@ case 'admin':
 
 				case 'param': //Param -> (description + ouvert)
 					$edit = [];
-					$edit['descr'] = parse(request("al_descr", "string", "post"));
+					$edit['descr'] = Parser::parse(request("al_descr", "string", "post"));
 					$edit['open'] = request("al_open", "bool", "post");
 					$_tpl->set('al_param',Al::edit($_user['alaid'],$edit));
 					break;
 
 				case 'rules': //rules -> (règles du grenier)
 					$edit = [];
-					$edit['rules'] = parse(request("al_rules", "string", "post"));
+					$edit['rules'] = Parser::parse(request("al_rules", "string", "post"));
 					$_tpl->set('al_param',Al::edit($_user['alaid'],$edit));
 					break;
 
 				case 'diplo': //diplo -> (règles du diplomate)
 					$edit = [];
-					$edit['diplo'] = parse(request("al_diplo", "string", "post"));
+					$edit['diplo'] = Parser::parse(request("al_diplo", "string", "post"));
 					$_tpl->set('al_param',Al::edit($_user['alaid'],$edit));
 					break;
 
@@ -206,7 +201,7 @@ case 'admin':
 
 							$text = $_tpl->get('modules/alliances/msg/accept.tpl',1);
 							$titre = $_tpl->get('modules/alliances/msg/titre.tpl',1);
-							MsgRec::add($_user['mid'], $mid, $titre, parse($text));
+							MsgRec::add($_user['mid'], $mid, $titre, Parser::parse($text));
 							$_tpl->set('al_ok',true);
 							$_tpl->set('al_pseudo',$mbr_infos['mbr_pseudo']);
 						}
@@ -227,7 +222,7 @@ case 'admin':
 							
 							$text = $_tpl->get('modules/alliances/msg/refuse.tpl',1);
 							$titre = $_tpl->get('modules/alliances/msg/titre.tpl',1);
-							MsgRec::add($_user['mid'], $mid, $titre, parse($text));
+							MsgRec::add($_user['mid'], $mid, $titre, Parser::parse($text));
 							$_tpl->set('al_ok',true);
 							$_tpl->set('al_pseudo',$mbr_infos['mbr_pseudo']);
 						} else {
@@ -634,11 +629,11 @@ case 'join': // demander à rejoindre une alliance
 					/* envoyer un msg au chef */
 					$text = $_tpl->get('modules/alliances/msg/demande.tpl',1);
 					$titre = $_tpl->get('modules/alliances/msg/titre.tpl',1);
-					MsgRec::add($_user['mid'], $ally->al_mid, $titre, parse($text));
+					MsgRec::add($_user['mid'], $ally->al_mid, $titre, Parser::parse($text));
 					/* envoyer aussi au(x) recruteur(s) */
 					$recruteurs = $ally->getMembersByEtat(ALL_ETAT_RECR);
 					foreach($recruteurs as $mbr)
-						MsgRec::add($_user['mid'], $mbr['mbr_mid'], $titre, parse($text));
+						MsgRec::add($_user['mid'], $mbr['mbr_mid'], $titre, Parser::parse($text));
 					$_tpl->set('al_join',true);
 					$al_ok = true;
 				}

@@ -16,12 +16,12 @@ include générique :
 	<input type="button" accesskey="q" id="addbbcode10" name="addbbcode10" onclick="bbstyle(10,'{message}')" value="QUOTE" />
 	<input type="button" accesskey="c" id="addbbcode14" name="addbbcode14" onclick="bbstyle(14,'{message}')" value="CENTER" />
 &nbsp;
-	<foreach cond="{smileys_base} as {img} => {str}">
+	<foreach cond="Parser::getSmileysBase() as {img} => {str}">
 		<a href="javascript:emoticon('{str}','{message}');"><img src="img/smile/{img}" alt="{str}" title="{str}" /></a>
 	</foreach>
 	<img id="smileys" src="img/plus.png" alt="Tous les smileys" class="toggle" />
 	<div id="smileys_toggle" style="display: none;">
-		<foreach cond="{smileys_more} as {img} => {str}">
+		<foreach cond="Parser::getSmileysMore() as {img} => {str}">
 			<a href="javascript:emoticon('{str}','{message}');"><img src="img/smile/{img}" alt="{str}" title="{str}" /></a>
 		</foreach>
 		<a href="smileys.html" title="smileys" class="zrdPopUp"><img src="img/star.png"></a>

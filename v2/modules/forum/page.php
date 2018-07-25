@@ -6,7 +6,6 @@ if(!can_d(DROIT_PLAY)) {
 } else {
 */
 include('lib/forum.lib.php');
-include('lib/parser.lib.php');
 
 if($_act == 'search' and $_display == 'ajax')
 	$_tpl->set("module_tpl","modules/forum/search.tpl");
@@ -14,11 +13,6 @@ else
 	$_tpl->set("module_tpl","modules/forum/forum.tpl");
 
 $_tpl->set('frm_act',$_act);
-
-$smileys_base = getSmileysBase();
-$smileys_more = getSmileysMore($smileys_base);
-$_tpl->set("smileys_base", $smileys_base);
-$_tpl->set("smileys_more", $smileys_more);
 
 $tid = request('tid','uint','get');
 $pid = request('pid','uint','get');
@@ -58,7 +52,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 				$post['poster_id'] = $_user['mid'];
 				$post['username'] = $_user['pseudo'];
 				$post['tid'] = $tid;
-				$post['message'] = parse($pst_msg);
+				$post['message'] = Parser::parse($pst_msg);
 				$post['subject'] = $pst_titre;
 				$post['mbr_gid'] = $_user['groupe'];
 				$post['posted'] = date('j-n-Y');

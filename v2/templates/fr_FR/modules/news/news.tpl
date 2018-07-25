@@ -25,7 +25,7 @@
 			<img class="blason" title="{post[username]}" src="img/mbr_logo/{post[poster_id]}.png" />
 			<a class="titre" href="forum-<math oper="str2url({post[subject]})"/>.html?pid={post[pid]}#{post[pid]}">{post[subject]}</a>
 
-			<p class="post"><math oper="parse({post[message]})" /></p>
+			<p class="post"><math oper="Parser::parse({post[message]})" /></p>
 			<if cond='{post[edited]}'>
 				<p><em>édité par {post[edited_by]} le {post[edited]}</em></p>
 			</if>

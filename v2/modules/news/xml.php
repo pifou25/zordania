@@ -5,11 +5,6 @@ define('ZORD_NEWS_FID',30); // id du forum correspsondant aux news
 
 //include de la classe
 require_once('lib/forum.lib.php');
-require_once("lib/parser.lib.php");
-$smileys_base = getSmileysBase();
-$smileys_more = getSmileysMore($smileys_base);
-$_tpl->set("smileys_base", $smileys_base);
-$_tpl->set("smileys_more", $smileys_more);
 
 $_module_tpl = "modules/news/news_xml.tpl";
 

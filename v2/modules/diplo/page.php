@@ -6,7 +6,6 @@ if(!can_d(DROIT_PLAY)) {
 
 require_once ('lib/alliances.lib.php');
 require_once ('lib/member.lib.php');
-require_once ('lib/parser.lib.php');
 
 $_tpl->set("module_tpl","modules/diplo/diplo.tpl");
 $_tpl->set("act",$_act);
@@ -82,7 +81,7 @@ case 'add': // al1 propose l'alliance à al2
 							// envoyer un mail au chef de l'ally
 							$text = $_tpl->get('modules/diplo/msg/propose.tpl',1);
 							$titre = $_tpl->get('modules/diplo/msg/titre.tpl',1);
-							MsgRec::add($_user['mid'], $ally->al_mid, $titre, parse($text));
+							MsgRec::add($_user['mid'], $ally->al_mid, $titre, Parser::parse($text));
 						} else
 							$_tpl->set('err',$al2_pactes->err);
 					}
@@ -122,7 +121,7 @@ case 'del': // rompre un pacte / annuler une demande
 				}
 				$mid = $pacte->result[$did]['al_mid'];
 				$titre = $_tpl->get('modules/diplo/msg/titre.tpl',1);
-				MsgRec::add($_user['mid'], $pacte->result[$did]['al_mid'], $titre, parse($text));
+				MsgRec::add($_user['mid'], $pacte->result[$did]['al_mid'], $titre, Parser::parse($text));
 			} else
 				$_tpl->set('err',$pacte->err);
 		} else
@@ -161,10 +160,6 @@ case 'shoot':
 		$mespactes = new diplo(array('aid'=>$al1, 'full' => true));
 		$_tpl->set("mespactes",$mespactes->result);
 		$_tpl->set('al1',$al1);
-		$smileys_base = getSmileysBase();
-		$smileys_more = getSmileysMore($smileys_base);
-		$_tpl->set("smileys_base", $smileys_base);
-		$_tpl->set("smileys_more", $smileys_more);
 		$_tpl->set('chef',$ally->getMembers($ally->al_mid));
 		$chef = ($ally->al_mid == $_user['mid']);
 		$name = request("al_name", "string", "post");
@@ -173,7 +168,7 @@ case 'shoot':
 		if($_sub == 'post') {
 			$msg = request('pst_msg', 'string', 'post');
 			if($msg)
-				$_tpl->set('dpl_msg_post',DplShoot::add($did,parse($msg),$_user['mid']));
+				$_tpl->set('dpl_msg_post',DplShoot::add($did,Parser::parse($msg),$_user['mid']));
 		} else if($_sub == "del") {
 			$msgid = request('msgid', 'uint', 'get');
 			if($msgid)

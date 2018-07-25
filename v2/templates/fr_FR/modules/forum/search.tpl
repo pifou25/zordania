@@ -85,7 +85,7 @@
 		<div class="block_forum" id="{post[pid]}">
 		<img class="blason" title="{post[pposter]}" src="img/mbr_logo/{post[poster_id]}.png" />
 		<h4><a href="forum-post.html?tid={post[tid]}&pid={post[pid]}#{post[pid]}" title="post {post[pid]}">{post[subject]}</a></h4>
-		<p class="post"><math oper="parse({post[message]})" /></p>
+		<p class="post"><math oper="Parser::parse({post[message]})" /></p>
 		<p class="stat">Le {post[pposted]} par <a href="member-<math oper="str2url({post[pposter]})"/>.html?mid={post[poster_id]}" title="Infos sur {post[pposter]}">{post[pposter]}</a></p>
 		</div>
 	</foreach>

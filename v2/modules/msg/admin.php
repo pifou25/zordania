@@ -2,8 +2,6 @@
 //Verif
 if(defined("_INDEX_") and can_d(DROIT_ADM_MBR)){
 
-require_once("lib/parser.lib.php");
-
 $_tpl->set("module_tpl","modules/msg/admin.tpl");
 $_tpl->set('act',$_act);
 
@@ -12,7 +10,7 @@ switch($_act) {
 case 'com': /* ajouter commentaire admin */
 	$sid = request("sid", "uint", "get");
 	if($sid) {
-		$com = '<em>'.$_user['pseudo'] .' le '.date("d/m/Y H:i:s")."</em><br/>\n".parse(request("com", "string", "post"));
+		$com = '<em>'.$_user['pseudo'] .' le '.date("d/m/Y H:i:s")."</em><br/>\n".Parser::parse(request("com", "string", "post"));
 		if($com)
 			$_tpl->set("com_ajoute",Sign::comm($sid, $com));
 

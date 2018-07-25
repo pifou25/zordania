@@ -1,12 +1,6 @@
 <?php
 if(!defined("_INDEX_") or !can_d(DROIT_SDG)){ exit; }
 
-require_once('lib/parser.lib.php');
-$smileys_base = getSmileysBase();
-$smileys_more = getSmileysMore($smileys_base);
-$_tpl->set("smileys_base", $smileys_base);
-$_tpl->set("smileys_more", $smileys_more);
-
 $_tpl->set("module_tpl","modules/sdg/admin.tpl");
 
 switch($_act) {
@@ -19,7 +13,7 @@ case 'new':
 		$_tpl->set('sdg_nb',$nb);
 		
 		$sdg_id = request("sdg_id", "uint", "post");
-		$texte = parse(request("sdg_texte", "string", "post"));
+		$texte = Parser::parse(request("sdg_texte", "string", "post"));
 		$sdg_request = request("sdg_rep", array('string'), "post");
 		
 		$rep = array(); $err=0;
@@ -48,13 +42,13 @@ case 'new':
 			if(!$sdg_id){// ajout du sondage
 				$sid = Sdg::add($texte, count($rep));
 				foreach($rep as $value)
-					$rep2[]=parse($value['srep_texte']);
+					$rep2[]=Parser::parse($value['srep_texte']);
 				SdgRep::add($sid, $rep2);
 				$_tpl->set("sdg_ok",true);
 			}else{// modification du sondage
 				Sdg::edit($sdg_id, $texte);
 				foreach($rep as $value)
-					SdgRep::edit($value['srep_id'], parse($value['srep_texte']));
+					SdgRep::edit($value['srep_id'], Parser::parse($value['srep_texte']));
 				$_tpl->set("mod_sdg_ok",true);
 			}
 		}
@@ -65,10 +59,10 @@ case 'mod':
 	$sdg_array = Sdg::getSdg($sdg_id, $_user['mid']);
 	if($sdg_array) {
 		$_tpl->set('sdg_id', $sdg_id);
-		$_tpl->set("sdg_texte",unparse($sdg_array[0]['sdg_texte']));
+		$_tpl->set("sdg_texte",Parser::unparse($sdg_array[0]['sdg_texte']));
 		$sdg_rep = SdgRep::get($sdg_id);
 		foreach($sdg_rep as $key => $rep)
-			$sdg_rep[$key]['srep_texte']=unparse($rep['srep_texte']);
+			$sdg_rep[$key]['srep_texte']=Parser::unparse($rep['srep_texte']);
 		$_tpl->set("sdg_rep",$sdg_rep);
 		$_tpl->set('sdg_nb', count($sdg_rep));
 	} else

@@ -13,7 +13,6 @@ require_once("../conf/conf.inc.php");
 
 require_once(SITE_DIR . "lib/mysql.class.php");
 require_once(SITE_DIR . 'lib/divers.lib.php');
-require_once(SITE_DIR . 'lib/parser.lib.php');
 
 function inserer_posts($sql) {
 	global $_sql;
@@ -70,7 +69,7 @@ foreach($nid_array as $tmp)
 		$nb_ins = 0;
 		foreach($post_array as $post){
 			$sql .= ",\n('".addslashes($post['mbr_pseudo'])."', {$post['nws_mid']}, '{$post['mbr_lip']}', '".
-				html_entity_decode(addslashes(unparse(str_replace("http://v2.zordania.com/","",$post['nws_texte']), true)))
+				html_entity_decode(addslashes(Parser::unparse(str_replace("http://v2.zordania.com/","",$post['nws_texte']), true)))
 				."', {$post['cmt_date']}, $tid)";
 			$nb_ins++;
 			$nb_pst++;

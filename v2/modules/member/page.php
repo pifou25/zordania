@@ -3,12 +3,6 @@ if(!defined("_INDEX_")){ exit; }
 
 $_tpl->set("module_tpl","modules/member/member.tpl");
 
-require_once("lib/parser.lib.php");
-$smileys_base = getSmileysBase();
-$smileys_more = getSmileysMore($smileys_base);
-$_tpl->set("smileys_base", $smileys_base);
-$_tpl->set("smileys_more", $smileys_more);
-
 require_once("lib/member.lib.php");
 $mid = request("mid", "uint", "get");
 
@@ -215,8 +209,8 @@ elseif($_act == "edit")
 		$_tpl->set("mbr_mail",$array['mbr_mail']);
 		$_tpl->set("mbr_lang",$array['mbr_lang']);
 		$_tpl->set("mbr_decal",$array['mbr_decal']);
-		$_tpl->set("mbr_sign",unparse($array['mbr_sign']));
-		$_tpl->set("mbr_descr",unparse($array['mbr_descr']));
+		$_tpl->set("mbr_sign",Parser::unparse($array['mbr_sign']));
+		$_tpl->set("mbr_descr",Parser::unparse($array['mbr_descr']));
 		$_tpl->set("mbr_date",date("H:i:s"));
 		$_tpl->set("mbr_sexe",$array['mbr_sexe']);
 	} elseif($_sub == "pass") {
@@ -288,8 +282,8 @@ elseif($_act == "edit")
 		if($sexe == 1 or $sexe == 2)
 			$edit['sexe'] = $sexe;
 
-		$edit['sign'] = parse($sign, true);
-		$edit['descr'] = parse($descr);
+		$edit['sign'] = Parser::parse($sign, true);
+		$edit['descr'] = Parser::parse($descr);
 		$edit['ldate'] = true; /* Dans le cas ou rien n'a changé, pour ne pas afficher d'erreur */
 
 		$_tpl->set("mbr_edit", Mbr::edit($_user['mid'], $edit));

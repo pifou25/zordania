@@ -8,12 +8,6 @@ else {
 
 require_once('lib/member.lib.php');
 
-require_once('lib/parser.lib.php');
-$smileys_base = getSmileysBase();
-$smileys_more = getSmileysMore($smileys_base);
-$_tpl->set("smileys_base", $smileys_base);
-$_tpl->set("smileys_more", $smileys_more);
-
 $_tpl->set('module_tpl','modules/msg/msg.tpl');
 $_tpl->set('msg_act',$_act);
 
@@ -92,7 +86,7 @@ case "new":
 			$texte = "\n\n\n\n";
 			$texte .= "[b]".$msg_infos['mbr_pseudo']." @ ".$msg_infos['mrec_date_formated']."[/b]\n";
 			$texte .="| ";
-			$texte .= str_replace("\n","\n| ",unparse($msg_infos['mrec_texte']));
+			$texte .= str_replace("\n","\n| ",Parser::unparse($msg_infos['mrec_texte']));
 			$titre = str_replace("Re: Re: ","Re: ","Re: ".$msg_infos['mrec_titre']);	
 		
 			$_tpl->set('msg_texte',$texte);
@@ -123,7 +117,7 @@ case "send":
 			$post['mbr_pseudo'] = $_user['pseudo'];
 			$post['mbr_gid'] = $_user['groupe'];
 			$post['mrec_date_formated'] = date('j-n-Y');
-			$post['mrec_texte'] = parse($texte);
+			$post['mrec_texte'] = Parser::parse($texte);
 			$post['mbr_sign'] = $_user['sign'];
 			$_tpl->set('msg_infos', $post);
 		}
@@ -160,7 +154,7 @@ case "send":
 				else {
 					$mid2 = $mbr_infos[0]['mbr_mid'];
 					
-					MsgRec::add($_user['mid'], $mid2, $titre, parse($texte), true);
+					MsgRec::add($_user['mid'], $mid2, $titre, Parser::parse($texte), true);
 					$result[$pseudo] = $mbr_infos[0];
 					
 					$_histo->add($mid2, $_user['mid'], HISTO_MSG_NEW);
@@ -174,7 +168,7 @@ case "send":
 // signalement des messages
 case "sign";
 	$msgid = request("msgid", "uint", "get");
-	$com = '<em>'.$_user['pseudo'] .' le '.date("d/m/Y H:i:s")."</em><br/>\n".parse(request("com", "string", "post"));
+	$com = '<em>'.$_user['pseudo'] .' le '.date("d/m/Y H:i:s")."</em><br/>\n".Parser::parse(request("com", "string", "post"));
 	if(isset($msgid) && !Surv::isSurv($msgid) && isset($com)){
 		Sign::add($msgid,$com);
 		/*  infos admin en cache */
@@ -210,7 +204,7 @@ case "send_massif"; // spam = message à un groupe de joueurs
 		$_tpl->set('msg_pas_tout',true);
 		$_tpl->set('forbidden',$forbidden);
 	}else
-		MsgRec::addAll($_user['mid'], $titre, parse($texte), $grp);
+		MsgRec::addAll($_user['mid'], $titre, Parser::parse($texte), $grp);
 	break;
 
 default:

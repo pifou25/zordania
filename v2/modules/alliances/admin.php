@@ -3,7 +3,6 @@ if(!defined("_INDEX_") or !can_d(DROIT_ADM_AL)){ exit; }
 
 require_once("lib/member.lib.php");
 require_once("lib/alliances.lib.php");
-require_once("lib/parser.lib.php");
 
 $_tpl->set("module_tpl","modules/alliances/admin.tpl");
 
@@ -65,7 +64,7 @@ elseif($_act == 'view')
 			AlRes::mod($al_aid, $_user['mid'], $nb);
 			break;
 		case "shoot": // ajouter un msg
-			$text = parse(request("text", "string", "post"));
+			$text = Parser::parse(request("text", "string", "post"));
 			AlShoot::add($al_aid, $text, $_user['mid']);
 			break;
 		case 'chef': 

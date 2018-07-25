@@ -156,51 +156,6 @@ define('GRP_PNJ',16);
 define('GRP_EVENT',17);
 define('GRP_KING',18);
 
-/* Smileys */
-// Tous les Smileys
-$_smileys = array(
-	's01.png'		=>	array(':)', ':-)'),
-	's02.png'		=>	':p',
-	's03.png'		=>	':??:',
-	's04.png'		=>	':!!:',
-	's05.png'		=>	':garde:',
-	's06.png'		=>	array('^^', '^_^'),
-	's07.png'		=>	':&gt;&lt;:',
-	's08.png'		=>	':chevalier:',
-	's09.png'		=>	array(';)', ';o)'),
-	's10.png'		=>	array(':/', ':|'),
-	's11.png'		=>	array(':-°', ':-*'),
-	's12.png'		=>	array(':(', ':\'('),
-	's13.png'		=>	array('&lt;_&lt;', '-_-'),
-	's14.png'		=>	':D',
-	's15.png'		=>	':lol:',
-	's16.png'		=>	':humain:',
-	's17.png'		=>	':nain:',
-	's18.png'		=>	':orc:',
-	's19.png'		=>	':elfe:',
-	's20.png'		=>	':drow:',
-	's26.png'		=>	':gob:',
-	's21.png'		=>	':love:',
-	's22.png'		=>	':songeur:',
-	's23.png'		=>	':gné:',
-	's24.png'		=>	'Oo',
-	's25.png'		=>	':o:',
-	's27.png'		=>	':zord:',
-
-);
-
-// Les images des Smileys de base
-$_smileys_img_base = array(
-	's01.png',
-	's02.png',
-	's03.png',
-	's06.png',
-	's08.png',
-	's09.png',
-	's12.png',
-);
-
-
 /*  Compétences  */	
 define('CP_BOOST_OFF', 1);
 define('CP_BOOST_DEF', 2);

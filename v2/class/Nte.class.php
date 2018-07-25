@@ -16,7 +16,7 @@ class Nte extends Illuminate\Database\Eloquent\Model {
     // override table name
     protected $table = 'ntes';
 
-    static function add(int $mid, string $titre, string $texte, int $import) {
+    static function add(int $mid, string $titre, string $texte, string $import) {
 
         $request = ['nte_mid' => $mid,
             'nte_titre' => $titre,
