@@ -6,7 +6,7 @@ if(!defined("_INDEX_")){ exit; }
 require_once('lib/forum.lib.php');
 		
 $_tpl->set("module_tpl","modules/news/news.tpl");
-$_tpl->set('is_modo',can_d(DROIT_PUNBB_MOD));
+$_tpl->set('is_modo',$_ses->canDo(DROIT_PUNBB_MOD));
 
 // news vue, check
 $_ses->set('news', 0);

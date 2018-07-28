@@ -8,11 +8,11 @@ function can_res($mid, $type, $nb, &$cache = [])
 	$cache = protect($cache, 'array');
 	$bad_src = $bad_res = $bad_btc = [];
 
-	if(!get_conf('res', $type))
+	if(!Session::$SES->getConf('res', $type))
 		return ['do_not_exist' => true];
 
 	/* Bâtiments */
-	$need_btc = get_conf('res', $type, 'need_btc');
+	$need_btc = Session::$SES->getConf('res', $type, 'need_btc');
 	$cond_btc = [$need_btc];
 
 	if(!isset($cache['btc'])) {
@@ -22,7 +22,7 @@ function can_res($mid, $type, $nb, &$cache = [])
 
 	/* Recherches */
 	$cond_src = [$type];
-	$need_src = get_conf('res', $type, 'need_src');
+	$need_src = Session::$SES->getConf('res', $type, 'need_src');
 	$cond_src = $need_src;
 
 	if(!isset($cache['src'])) {
@@ -32,7 +32,7 @@ function can_res($mid, $type, $nb, &$cache = [])
 		$have_src = $cache['src'];
 	
 	/* Ressources */
-	$prix_res = get_conf('res', $type, 'prix_res');
+	$prix_res = Session::$SES->getConf('res', $type, 'prix_res');
 	$cond_res = array_keys($prix_res);
 
 	if(!isset($cache['res'])) {

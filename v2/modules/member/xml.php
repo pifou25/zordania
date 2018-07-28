@@ -26,8 +26,8 @@ if(!$mbr_array || !in_array($race, $_races))
 {
 	$_tpl->set('bad_mid',true);
 } else {
-	load_conf($race);
-	$cond_res = get_conf_gen($race, "race_cfg", "primary_res");
+	Config::load($race);
+	$cond_res = Config::get($race, "race_cfg", "primary_res");
 	$prim_res = Res::get($mid, $cond_res);
 
 	$_tpl->set("res_array",$prim_res);

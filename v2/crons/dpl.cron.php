@@ -3,6 +3,17 @@
 $dep_src = array("btc");
 $log_dpl = "Diplomatie";
 
+/* comparer $arr2 à $arr1 par clé et donner le "manque" dans un 3eme */
+function array_compare($arr1, $arr2) {
+	$return = array();
+	foreach($arr2 as $key => $val)
+		if(!isset($arr1[$key])) // manque tout ça
+			$return[$key] = $val;
+		elseif($arr1[$key] < $val) // manque un peu quand meme!
+			$return[$key] = $val - $arr1[$key];
+	return $return;
+}
+
 function glob_dpl() {
 	global $_tpl, $_ally;
 

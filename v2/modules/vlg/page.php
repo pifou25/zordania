@@ -1,6 +1,6 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
-if(!can_d(DROIT_PLAY)){
+if(!$_ses->canDo(DROIT_PLAY)){
 	$_tpl->set("need_to_be_loged",true); 
 }else{
 
@@ -8,7 +8,7 @@ require_once("lib/src.lib.php");
 
 if($_user['race'] == 2 || $_user['race'] == 3 || $_user['race'] == 5){
 	// la forteresse est une img de fond specifique
-	$forteresse = get_conf('race_cfg', 'btc_nb');
+	$forteresse = $_ses->getConf('race_cfg', 'btc_nb');
 }else{
 	// la forteresse est un batiment normal
 	$forteresse = false;
@@ -27,9 +27,9 @@ if($forteresse !== false){
 	
 $_tpl->set("module_tpl","modules/vlg/vlg.tpl");
 
-$_tpl->set("btc_max", get_conf("race_cfg", "btc_nb"));
-$_tpl->set("btc_conf", get_conf("btc"));
-$_tpl->set("src_conf", get_conf("src"));
+$_tpl->set("btc_max", $_ses->getConf("race_cfg", "btc_nb"));
+$_tpl->set("btc_conf", $_ses->getConf("btc"));
+$_tpl->set("src_conf", $_ses->getConf("src"));
 $_tpl->set("src_array", Src::get($_user['mid']));
 $_tpl->set("btc_array", $btc_array);
 $_tpl->set("forteresse", $forteresse);

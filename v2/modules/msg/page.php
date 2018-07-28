@@ -1,8 +1,8 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
-if(!can_d(DROIT_SITE))
+if(!$_ses->canDo(DROIT_SITE))
 	$_tpl->set("need_to_be_loged",true);
-else if(!can_d(DROIT_MSG))
+else if(!$_ses->canDo(DROIT_MSG))
 	$_tpl->set("cant_view_this",true);
 else {
 
@@ -136,7 +136,7 @@ case "send":
 	} else {
 		$pseudos = explode( ";",$pseudo);
 
-		if(count($pseudos) > 1 && !can_d(DROIT_MMSG))
+		if(count($pseudos) > 1 && !$_ses->canDo(DROIT_MMSG))
 			$_tpl->set('msg_max_mmsg',1);
 		else if(count($pseudos) > MSG_MAX_MMSG)
 			$_tpl->set('msg_max_mmsg',MSG_MAX_MMSG);
@@ -195,7 +195,7 @@ case "send_massif"; // spam = message à un groupe de joueurs
 	$grp = array();
 	foreach($groupes as $key => $value) $grp[] = $key;
 	/* filtre : seul les admin & co peuvent envoyer Ã  tout le monde */
-	$forbidden = !can_d(DROIT_MMSG);
+	$forbidden = !$_ses->canDo(DROIT_MMSG);
 
 	if(!$texte || !$titre || $forbidden) {
 		$_tpl->set('msg_act','global');

@@ -30,10 +30,10 @@ if(!$_sub) {
 		$btc_bouf_utils = array();
 		$btc_bouf_total = 0;
 
-		$conf_all_btc = get_conf("btc");
+		$conf_all_btc = $_ses->getConf("btc");
 
 		foreach($conf_all_btc as $type => $value) {
-			$prod = get_conf("btc", $type, "prod_res_auto");
+			$prod = $_ses->getConf("btc", $type, "prod_res_auto");
 			if(isset($btc_array[$type]) && isset($prod[GAME_RES_BOUF])) {
 				$btc_bouf_utils[$type] = array('btc_nb' => $btc_array[$type]['btc_nb'], 'btc_res' => $prod[GAME_RES_BOUF]);
 				$btc_bouf_total += $btc_array[$type]['btc_nb']* $prod[GAME_RES_BOUF];
@@ -97,7 +97,7 @@ if(!$_sub) {
 		
 		foreach($res_prod_array as $type => $value) {
 			if($type != GAME_RES_BOUF) {
-				$needres = get_conf("res", $type, "prix_res");
+				$needres = $_ses->getConf("res", $type, "prix_res");
 				foreach($needres as $type2 => $value2) {
 					$res_utils_array[$type][$type2] = array('prix' => $value2, 'nb' => $res_array[$type2]);
 				}

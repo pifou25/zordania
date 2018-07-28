@@ -37,11 +37,11 @@ foreach($unt_array as $unt)
 		echo "ZERO : {$unt['mbr_race']} {$unt['mbr_pseudo']} {$unt['mbr_mid']} {$unt['unt_lid']} {$unt['unt_type']} {$unt['unt_rang']} {$unt['unt_nb']}\n";
 	}
 
-	if(get_conf_gen($unt['mbr_race'], 'unt', $unt['unt_type'], 'role') != TYPE_UNT_CIVIL)
-		$rang = get_conf_gen($unt['mbr_race'], 'unt', $unt['unt_type'], 'rang');
+	if(Config::get($unt['mbr_race'], 'unt', $unt['unt_type'], 'role') != TYPE_UNT_CIVIL)
+		$rang = Config::get($unt['mbr_race'], 'unt', $unt['unt_type'], 'rang');
 	else
 		$rang = 0;
-	if($unt['unt_rang'] != $rang) { //$_conf[$unt['mbr_race']][$unt['unt_type']]['rang']){
+	if($unt['unt_rang'] != $rang) {
 		$i++;
 		echo "RANG ($rang) : {$unt['mbr_race']} {$unt['mbr_pseudo']} {$unt['mbr_mid']} {$unt['unt_lid']} {$unt['unt_type']} {$unt['unt_rang']} {$unt['unt_nb']}\n";
 	}

@@ -77,14 +77,14 @@ $(document).ready(  function()
 	<dt>
 	<a href="war-histo.html?aid={value[atq_aid]}&amp;sub={war_sub}">Le {value[atq_date_formated]}</a>
 	<if cond="{value[atq_mid1]} == {_user[mid]}">
-		Vous attaquez <a href="member-<math oper="str2url({value[mbr_pseudo2]})"/>.html?mid={value[atq_mid2]}">{value[mbr_pseudo2]}</a>
+		Vous attaquez <a href="member-<math oper="Template::str2url({value[mbr_pseudo2]})"/>.html?mid={value[atq_mid2]}">{value[mbr_pseudo2]}</a>
 	</if>
 	<elseif cond="{value[atq_mid2]} == {_user[mid]}">
-		Vous êtes attaqué par <a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
+		Vous êtes attaqué par <a href="member-<math oper="Template::str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
 	</elseif>
 	<else>
-		<a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
-		attaque votre allié <a href="member-<math oper="str2url({result[mbr_pseudo]})"/>.html?mid={value[atq_mid2]}">{value[atq_bilan][def][{value[atq_lid2]}][mbr_pseudo]}</a>, vous prenez sa défense
+		<a href="member-<math oper="Template::str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
+		attaque votre allié <a href="member-<math oper="Template::str2url({result[mbr_pseudo]})"/>.html?mid={value[atq_mid2]}">{value[atq_bilan][def][{value[atq_lid2]}][mbr_pseudo]}</a>, vous prenez sa défense
 	</else>
 	</dt>
 

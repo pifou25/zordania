@@ -52,7 +52,7 @@ class Src extends Illuminate\Database\Eloquent\Model {
     
 /* Quand on crée un membre */
 static function init(int $mid) {
-	$debut = get_conf("race_cfg", "debut", "src");
+	$debut = Session::$SES->getConf("race_cfg", "debut", "src");
 	foreach($debut as $type) {
 		Src::add($mid, $type);
 	}

@@ -213,7 +213,7 @@ static function calcButin($pertes, int $race, array $butin = []){
     
 	if(empty($pertes)) return $butin;
 	foreach ($pertes as $type => $nb_pertes) {
-		$prix = get_conf_gen($race,"unt",$type,"prix_res");
+		$prix = Config::get($race,"unt",$type,"prix_res");
 		if ($prix && $type) {
 			foreach($prix as $res => $prix_uni) {
 				$nb = round($prix_uni * $nb_pertes / 3);// 33%

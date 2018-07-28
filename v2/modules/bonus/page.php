@@ -1,7 +1,7 @@
 <?php
 //Verifications
 if(!defined("_INDEX_")){ exit; }
-if(can_d(DROIT_PLAY)!=true)
+if($_ses->canDo(DROIT_PLAY)!=true)
 	$_tpl->set("need_to_be_loged",true); 
 else
 {
@@ -14,16 +14,16 @@ $_tpl->set('module_tpl', 'modules/bonus/bonus.tpl');
 
 $type_res = request("type_res", "uint", "post", request("type_res", "uint", "get"));
 $id = request("id", "uint", "get");
-//$votes=get_conf("votes");
+//$votes=$_ses->getConf("votes");
 
-if(!get_conf("res", $type_res))
+if(!$_ses->getConf("res", $type_res))
 	$type_res = 0;
 
 if($id == 66656) {
 	$_tpl->set('bon_act','donner');
 
 	$res_cfg = array();
-	$coef = get_conf("race_cfg", "bonus_res", GAME_RES_PRINC);
+	$coef = $_ses->getConf("race_cfg", "bonus_res", GAME_RES_PRINC);
 	$or = ((MIN_BONUS_NB) + $coef * $_user['points']);
 	$res_cfg[1] = round(($or > GAME_MAX_BONUS) ? GAME_MAX_BONUS : $or);
 
@@ -60,7 +60,7 @@ if($id == 66656) {
 	$_tpl->set('bon_act','liste');
 
 	$res_cfg = array();
-	$coef = get_conf("race_cfg", "bonus_res", GAME_RES_PRINC);
+	$coef = $_ses->getConf("race_cfg", "bonus_res", GAME_RES_PRINC);
 	$or = ((MIN_BONUS_NB) + $coef * $_user['points']);
 	$res_cfg[1] = round(($or > GAME_MAX_BONUS) ? GAME_MAX_BONUS : $or);
 

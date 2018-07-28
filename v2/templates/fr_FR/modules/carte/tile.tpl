@@ -30,7 +30,7 @@
 		</td><td style="width: 50%">
 		<h3>Membre</h3>
 		Village de <img src="img/groupes/{result[mbr_gid]}.png" alt="{groupes[{result[mbr_gid]}]}" title="{groupes[{result[mbr_gid]}]}"/>
-		<a href="member-<math oper="str2url({result[mbr_pseudo]})"/>.html?mid={result[mbr_mid]}" title="Infos sur {result[mbr_pseudo]}">{result[mbr_pseudo]}</a><br/>
+		<a href="member-<math oper="Template::str2url({result[mbr_pseudo]})"/>.html?mid={result[mbr_mid]}" title="Infos sur {result[mbr_pseudo]}">{result[mbr_pseudo]}</a><br/>
 		Points: {result[mbr_points]} <br/>
 		Race: <img src="img/{result[mbr_race]}/{result[mbr_race]}.png" title="{race[{result[mbr_race]}]}" alt="{race[{result[mbr_race]}]}"/>
 		<if cond='isset({result[can_atq]}) && {result[can_atq]}'>
@@ -57,7 +57,7 @@
 			<tr>
 			<td>
 				<img src="img/groupes/{value[mbr_gid]}.png" alt="{groupes[{value[mbr_gid]}]}" title="{groupes[{value[mbr_gid]}]}"/>
-				<a href="member-<math oper="str2url({value[mbr_pseudo]})"/>.html?mid={value[mbr_mid]}" title="Infos sur {value[mbr_pseudo]}">{value[mbr_pseudo]}</a>
+				<a href="member-<math oper="Template::str2url({value[mbr_pseudo]})"/>.html?mid={value[mbr_mid]}" title="Infos sur {value[mbr_pseudo]}">{value[mbr_pseudo]}</a>
 				<img src="img/{value[mbr_race]}/{value[mbr_race]}.png" title="{race[{value[mbr_race]}]}" alt="{race[{value[mbr_race]}]}"/>
 			</td>
 			<td>

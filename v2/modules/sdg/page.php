@@ -1,8 +1,8 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
-if(!can_d(DROIT_PLAY))
+if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true);
-else if(!can_d(DROIT_PLAY))
+else if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("cant_view_this", true);
 else {
 	$_tpl->set('module_tpl','modules/sdg/sdg.tpl');
@@ -32,7 +32,7 @@ else {
 			$_tpl->set("sdg_array",$sdg_array);
 			$_tpl->set("sdg_result",SdgRep::get($sdg_id));
 			$_tpl->set("can_vote", $can_vote);
-			$_tpl->set('adm_sdg', can_d(DROIT_SDG));
+			$_tpl->set('adm_sdg', $_ses->canDo(DROIT_SDG));
 		} else
 			$_tpl->set("sdg_bad_sid",true);
 		

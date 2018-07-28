@@ -14,15 +14,6 @@ $_sql = new mysql(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 $_sql->set_debug(SITE_DEBUG);
 
-for($race = 1; $race <= 5; $race++)
-{// charger les 5 fichiers de config de race
-	include "../conf/$race.php";
-	$confname = "config$race";
-	$_conf[$race] = new $confname;
-	/* definition des constantes terrains toutes races */
-	$_trn[$race] = get_const($race);
-}
-
 if (isset($_GET['clean'])) { // supprimer toutes les légions bat avant de les refaire propre...
 	$sql = " DELETE FROM zrd_unt WHERE unt_lid IN (
 		SELECT leg_id FROM zrd_leg WHERE leg_etat =2)";
@@ -50,18 +41,18 @@ foreach($mid_array as $_user)
 	if(!$exec and $debug) echo $_user['mbr_pseudo']." (mid=$mid)(race=$race)\n";
 	$place_totale = 0;
 	$leg_bat = array();
-	$trn_debut = get_conf_gen($race, 'race_cfg', 'debut', 'trn');
+	$trn_debut = Config::get($race, 'race_cfg', 'debut', 'trn');
 
 	$btc_array = Btc::getNb($mid);
 	foreach ($btc_array as $type => $btc) {
 
 		/* compter la place totale */
-		$prod_pop = get_conf_gen($race, 'btc', $type, 'prod_pop');
+		$prod_pop = Config::get($race, 'btc', $type, 'prod_pop');
 		if ($prod_pop)
 			$place_totale += $prod_pop * $btc['btc_nb'];
 
 		/* compter la legion batiments */
-		$prix_unt = get_conf_gen($race, 'btc', $type, 'prix_unt');
+		$prix_unt = Config::get($race, 'btc', $type, 'prix_unt');
 		if ($prix_unt)
 			array_ksum( $leg_bat, $prix_unt, $btc['btc_nb']);
 		

@@ -6,6 +6,18 @@ $_tpl->set("module_tpl","modules/inscr/inscr.tpl");
 require_once("lib/member.lib.php");
 require_once("lib/ini.lib.php");
 
+/* retourne true si le mail est valide */
+function mailverif($mail) 
+{
+	$deb = explode("@",$mail);
+	if(count($deb) > 1) {
+		$deb2 = explode(".",$deb[1]);
+		if(count($deb2) > 1)
+			return true;
+	}
+	return false;
+}
+
 if(!$_act || $_act == "new") {
 	/* Nouveau Membre */
 	$_tpl->set("mbr_act","new");
@@ -42,7 +54,7 @@ if(!$_act || $_act == "new") {
 
 	if($max_inscrits <= $inscrits) {
 		$_tpl->set("mbr_max_inscrit",true);
-	} else if(can_d(DROIT_PLAY)) {
+	} else if($_ses->canDo(DROIT_PLAY)) {
 		$_tpl->set("mbr_is_loged",true);
 	} else if(!$login && !$pass && !$pass2 && !mailverif($mail) 
 		&& !$lang && !$decal) {
@@ -66,7 +78,7 @@ if(!$_act || $_act == "new") {
 			$count = Mbr::where('mbr_login', $login)->orWhere('mbr_mail', $mail)->count();
 			if($count > 0)
 				$_tpl->set("mbr_error",true);
-			else if($mid = Mbr::add($login, $_ses->crypt($login,$pass), $mail, $lang, MBR_ETAT_INI, GRP_JOUEUR, $decal, get_ip(), $_css[0], $parrain)) {// membre ajout�, envoyer le mail
+			else if($mid = Mbr::add($login, $_ses->crypt($login,$pass), $mail, $lang, MBR_ETAT_INI, GRP_JOUEUR, $decal, $_ses->getIp(), $_css[0], $parrain)) {// membre ajout�, envoyer le mail
 				$_tpl->set("mbr_show_form",false);
 				$_tpl->set("mbr_ok", mail_init($mid, $login, $pass, $mail));
 				$_ses->login($login, $pass);// se connecter (!)
@@ -148,7 +160,7 @@ if(!$_act || $_act == "new") {
 			require_once("lib/src.lib.php");
 			require_once("lib/alliances.lib.php");
 
-			if($mbr_user = init_get_mbr(array('mid'=>$mid))){
+			if($mbr_user = Mbr::getInit(array('mid'=>$mid))){
 				Mbr::cls($mid, $mbr_user['mbr_mapcid'], $mbr_user['mbr_race']);
 				$_tpl->set("mbr_cls", true);
 			}else

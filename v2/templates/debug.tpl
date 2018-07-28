@@ -1,7 +1,7 @@
 <div class="debug block">
 	<h1>Debug</h1>
 	<dl>
-		<math oper="print_debug({debugvars})" />
+		<math oper="Template::printDebug({debugvars})" />
 		{debugvars}
 		<dt>User</dt>
 		<dd>

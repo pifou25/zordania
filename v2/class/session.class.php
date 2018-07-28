@@ -3,13 +3,15 @@ class session
 {
 	var $sql;
 	var $vars;
-	
+	static public $SES;
+        
 	function __construct(&$db)
 	{
 		$this->sql = &$db; //objet de la classe mysql
 		if(!CRON){
 			$this->vars = & $_SESSION['user'];
 		}
+                session::$SES = $this;
 	}
 
 	function __destruct()
@@ -68,7 +70,7 @@ class session
 		//$this->set("pass", $mbr_infos['mbr_pass']);
 		$this->set("lang", $mbr_infos['mbr_lang']);
 		$this->set("race", $mbr_infos['mbr_race']);
-		$this->set("droits", get_droits($mbr_infos['mbr_gid']));
+		$this->set("droits", Config::getDroits($mbr_infos['mbr_gid']));
 		$this->set("groupe", $mbr_infos['mbr_gid']);
 		$this->set("decal", $mbr_infos['mbr_decal']);
 		$this->set("place", $mbr_infos['mbr_place']);
@@ -84,7 +86,7 @@ class session
 		$this->set("regen", true);
 		$this->set("atqnb", $mbr_infos['mbr_atq_nb']);
 		if(CRON) $this->set("ip", $mbr_infos['mbr_lip']);
-		else     $this->set("ip", get_ip());
+		else     $this->set("ip", $this->getIp());
 		$this->set("design", $mbr_infos['mbr_design']);
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
@@ -97,7 +99,7 @@ class session
 		/* Visiteur */
 		if($this->get("login") == "guest") {
 			$this->set("loged", false);
-			$this->set("lang", get_lang());
+			$this->set("lang", $this->getLang());
 		} else
 			$this->set("loged", true);
 	}
@@ -112,7 +114,7 @@ class session
 
 	function update_grp() {
 		$gid = $this->get("groupe");
-		$this->set("droits", get_droits($gid));
+		$this->set("droits", Config::getDroits($gid));
 	}
 
 	function update_msg() {
@@ -120,22 +122,19 @@ class session
 		
 		if($this->get("login") != "guest") {
                     /* Nouveaux messages */
-			$sql="SELECT COUNT(*) AS nb FROM ".$this->sql->prebdd."msg_rec JOIN "
-                                .$this->sql->prebdd."mbr ON mrec_from = mbr_mid WHERE mrec_mid = $mid "
-                                . "AND mrec_readed = 0";
-			$result = $this->sql->make_array_result($sql);
-			$this->set("msg", $result['nb']);
-		
+			$this->set("msg", MsgRec::count($mid));
 		
 			/* Nouvelle news? mbr_ldate = dernière connexion heure locale */
-			$sql="SELECT count(*) AS nb FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd.
+			$sql="SELECT count(*) AS nb FROM ".$this->sql->prebdd."frm_topics ".
 			  " WHERE forum_id =".ZORD_NEWS_FID." AND posted > (SELECT mbr_ldate FROM "
                                 .$this->sql->prebdd."mbr WHERE mbr_mid = $mid)";
 			$result = $this->sql->make_array_result($sql);
 			$this->set("news", $result['nb']);
 			
 			/*Select la dernière news*/
-			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
+			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics "
+                                . "WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM "
+                                .$this->sql->prebdd."frm_topics)";
 			$result = $this->sql->make_array_result($sql);
                         if(count($result) > 0){
                             $this->set("tid", $result['id']);
@@ -170,7 +169,7 @@ class session
 				foreach($result as $key => $value)
 					$this->set($key, $value);
 				$this->set('hro_vie_conf',
-                                        get_conf_gen($this->get('race'), 'unt', $result['hro_type'], 'vie'));
+                                        Config::get($this->get('race'), 'unt', $result['hro_type'], 'vie'));
 			}
 		}
 	}
@@ -241,7 +240,7 @@ class session
 				}
 			}else{					
 				$sesid = $this->id();
-				$ip = get_ip();
+				$ip = $this->getIp();
 			}
 
 			/* On vire les anciennes sessions qu'il pouvait avoir */
@@ -373,4 +372,77 @@ class session
 			return true;
 		}
 	}
+        
+    /* Regarde si on a un droit */
+    function canDo($droit) {
+        if ($this->get('droits'))
+            return in_array($droit, $this->get('droits'));
+        else
+            return false;
+    }
+
+    /**
+     *  Pour jouer avec la conf 
+     * @param string $type = unt btc src res ...
+     * @param type $key0 =  index de l'item $type
+     * @param type $key1 = clé de $key0
+     * @return type ( array ou int ou ...)
+     */
+    function getConf($type = "", $key0 = "", $key1 = "") {
+            return Config::get($this->get('race'), $type, $key0, $key1);
+    }
+
+    function getLang() {
+            global $_langues;
+
+            $pays = $this->getPays();
+            if(isset($_langues[$pays]))
+                    return $_langues[$pays];
+            else
+                    return $_langues["unknown"];
+    }
+
+    /* Trouve le pays du type */
+    function getPays() {
+            $lang = request("lang", "string", "get");
+
+            if($lang) {
+                    setcookie('lang',$lang);
+            } else {
+                    $lang = request("lang", "string", "cookie");
+                    if(!$lang) {
+                            $host= @gethostbyaddr($this->getIp());
+                            $code = substr(strrchr($host,'.'),1);
+                    }
+            }
+
+            if(!$code)
+                    $code = "unknown";
+
+            return $code;
+    }
+
+    function getIp() {
+            $realip = "127.0.0.1"; /* Quand on trouve pas, c'est que c'est en cli */
+
+            if (isset($_SERVER)) {
+                if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+                    $realip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+                } elseif (isset($_SERVER["HTTP_CLIENT_IP"])) {
+                    $realip = $_SERVER["HTTP_CLIENT_IP"];
+                } elseif (isset($_SERVER["REMOTE_ADDR"])) {
+                    $realip = $_SERVER["REMOTE_ADDR"];
+                }
+            } else {
+                if (getenv('HTTP_X_FORWARDED_FOR')) {
+                    $realip = getenv('HTTP_X_FORWARDED_FOR');
+                } elseif (getenv('HTTP_CLIENT_IP')) {
+                    $realip = getenv('HTTP_CLIENT_IP');
+                } else {
+                    $realip = getenv('REMOTE_ADDR');
+                }
+            }
+            return $realip;
+        }
+
 }

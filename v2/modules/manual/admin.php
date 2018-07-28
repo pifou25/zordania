@@ -2,7 +2,7 @@
 
 if(!defined("_INDEX_")) exit;
 
-if (can_d(DROIT_ADM_TRAV)) {
+if ($_ses->canDo(DROIT_ADM_TRAV)) {
 
 /******************************************/
 /*	fonctions spécifiques aux constantes  */
@@ -210,6 +210,23 @@ function recursive_clean_array($arr){
 	return $arr;
 }
 
+
+/* recuperer les constantes qui commencent par $prefix */
+function get_const($prefix,$const = false) {
+	if (!$const) {
+		$const = get_defined_constants(true);
+		$const = $const['user'];
+	}
+	$return = array();
+	foreach($const as $key => $value) {
+		$str = str_replace($prefix, '', $key);
+		if($str != $key) {
+			$return[$str] = $value;
+		}
+	}
+	return $return;
+}
+
 /************************/
 /*	fin des fonctions   */
 /************************/
@@ -223,8 +240,7 @@ else
 if(!in_array($race,$_races))
 	$race = $_user['race'];
 
-load_conf($race);
-$race_config = $_conf[$race];
+$race_config = Config::get($race);
 
 $_tpl->set('man_race',$race);
 $_tpl->set('races',$_races);

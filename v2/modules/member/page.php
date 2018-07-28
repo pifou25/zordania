@@ -7,7 +7,7 @@ require_once("lib/member.lib.php");
 $mid = request("mid", "uint", "get");
 
 
-if(!can_d(DROIT_PLAY) && ($_act != "view" && $_act != "liste"))
+if(!$_ses->canDo(DROIT_PLAY) && ($_act != "view" && $_act != "liste"))
 	$_tpl->set("mbr_not_loged",true);
 else if(!$_act) {
 	/* Afficher les détails sur mon compte */
@@ -76,7 +76,7 @@ else if(!$_act) {
 	$diffpts_arm = request("diffpts_arm","uint", "post", request("diffpts_arm","uint", "get"));
 	
         $cond = ['etat' => [MBR_ETAT_OK], 'op' => 'AND'];
-	if(can_d(DROIT_PLAY))
+	if($_ses->canDo(DROIT_PLAY))
 		$cond['dst'] = array($_user['map_x'], $_user['map_y']);
 	else
 		$cond['dst'] = array(0, 0);
@@ -134,7 +134,7 @@ else if(!$_act) {
 
 	if($mbr_page > 0 || $order_by != array('DESC','points'))
 		$limite_mysql = LIMIT_MBR_PAGE * $mbr_page;
-	elseif(can_d(DROIT_PLAY) && $mbr_page < 0)
+	elseif($_ses->canDo(DROIT_PLAY) && $mbr_page < 0)
 	{
 		$tmp_cond = $cond;
 		$tmp_cond['ltpoint'] = $_user['points'];

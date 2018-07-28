@@ -1,5 +1,5 @@
 <?php
-if(!defined("_INDEX_") or !can_d(DROIT_SDG)){ exit; }
+if(!defined("_INDEX_") or !$_ses->canDo(DROIT_SDG)){ exit; }
 
 $_tpl->set("module_tpl","modules/sdg/admin.tpl");
 

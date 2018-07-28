@@ -1,6 +1,6 @@
 <?php
-if(!defined("_INDEX_") || !can_d(DROIT_PLAY)){ exit; }
-if(!can_d(DROIT_PLAY)) 
+if(!defined("_INDEX_") || !$_ses->canDo(DROIT_PLAY)){ exit; }
+if(!$_ses->canDo(DROIT_PLAY)) 
 	$_tpl->set("need_to_be_loged",true); 
 else {
 

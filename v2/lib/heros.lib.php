@@ -13,16 +13,16 @@
 function add_hero(int $mid, string $name, int $type) {
 	
 	// si l'id qu'on a récupéré c'est pas celui d'un héros ... Ben on lui dit que c'est pas bien de faire ça ! 
-	if(get_conf('unt', $type, 'role') != TYPE_UNT_HEROS) 
+	if(Session::$SES->getConf('unt', $type, 'role') != TYPE_UNT_HEROS) 
 		return false;
 	// récpérer l'id de la légion au village
 	$lid = Leg::get($mid, LEG_ETAT_VLG)[0]['leg_id'];
-	$vie = get_conf('unt',$type, 'vie');
+	$vie = Session::$SES->getConf('unt',$type, 'vie');
 
 	// prix en unités de la légion
-	$edit_unt = get_conf('unt', $type, 'prix_unt');
+	$edit_unt = Session::$SES->getConf('unt', $type, 'prix_unt');
 	// prix en ressources
-	$prix_res = get_conf('unt', $type, 'prix_res');
+	$prix_res = Session::$SES->getConf('unt', $type, 'prix_res');
 	// ajouter le héros, l'unité et payer le prix
         Hro::add($mid, $name, $type, $lid, $vie);
 	$edit_unt[$type] = -1; // ajouter le héros comme unité
@@ -45,7 +45,7 @@ function del_hero(int $lid, int $type) {
     if(!$lid || !$type) return false;
 
 	// supprimer l'unité dans la légion
-        $rang = get_conf('unt', $type, 'rang');
+        $rang = Session::$SES->getConf('unt', $type, 'rang');
         Unt::edit($lid, [$rang => [$type => -1]]);
 	// supprimer le héros
         Hro::del($lid);
@@ -65,13 +65,13 @@ function del_hero(int $lid, int $type) {
 function edit_bonus(int $mid, int $bonus_id){ // 
 	global $_sql;
 	
-	$prix_xp = get_conf("comp", $bonus_id, "prix_xp");
+	$prix_xp = Session::$SES->getConf("comp", $bonus_id, "prix_xp");
 	$array_hero = Hro::get($mid);
 	
         // savoir si y'a assez d'xp pour payer le cout du bonus ou non.
 	if($prix_xp <= $array_hero[0]['hro_xp'] or $bonus_id == 0){ 
             
-            $tours = get_conf("comp", $bonus_id, "tours");//délais du bonus.
+            $tours = Session::$SES->getConf("comp", $bonus_id, "tours");//délais du bonus.
             /* ZORD_SPEED = durée d'un tour en minutes */
             $tours *= ZORD_SPEED;
             Xro::edit($mid, $bonus_id, $tours, $array_hero[0]['hro_xp'] - $prix_xp);
@@ -86,7 +86,7 @@ function edit_bonus(int $mid, int $bonus_id){ //
 function get_comp(int $cp_id, int $race, $res = false) {
 // récupérer toutes les infos d'un bonus, format array
 // tableau générique array( heros=> array, bonus=> %, tours=>tours, prix_xp=>prix, race=>$race, res=>$resultat)
-	$cp = get_conf_gen($race, 'comp', $cp_id);
+	$cp = Config::get($race, 'comp', $cp_id);
 	$cp['cpid'] = $cp_id;
 	$cp['race'] = $race;
 	if ($res !== false)

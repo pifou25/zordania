@@ -1,7 +1,7 @@
 <?php
 //Verifications
 if(!defined("_INDEX_")){ exit; }
-if(!can_d(DROIT_PLAY))
+if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else {
 require_once("lib/res.lib.php");
@@ -15,25 +15,27 @@ $_tpl->set('module_tpl','modules/gen/gen.tpl');
 
 /* Ressources */
 // Init
-$btc_conf = get_conf("btc");
-$res_conf = get_conf("res");
+$btc_conf = $_ses->getConf("btc");
+$res_conf = $_ses->getConf("res");
 $prod_res = array();
 for($j = 1; $j <= 9; $j++) { $prod_res[$j] = 0; }
 // On récupère les index correspondants entre les batiments et ressources, selon race
-$indexBat = get_btc_prod_auto();
-// On veut l'index inverse, pour obtenir le sens batiment -> ressource
-$indexBatRev = array();
-foreach ($indexBat AS $typeRes => $bats) {
-	foreach ($bats AS $typeBat) {
-		if (!isset($indexBatRev[$typeBat])) { $indexBatRev[$typeBat] = array(); }
-		array_push($indexBatRev[$typeBat], $typeRes);
-	}
+$indexBat = [];
+foreach(Config::get($_user['race'], 'btc') as $key => $btc) {
+        if(isset($btc['prod_res_auto'])) {
+            $typeBat = 0;
+                foreach($btc['prod_res_auto'] as $res => $nb) {
+                        if (!isset($indexBat[$typeBat]))
+                            $indexBat[$typeBat] = [];
+                        array_push($indexBat[$typeBat], $res);
+                        $typeBat++;
+                }
+        }
 }
-$indexBat = $indexBatRev;
 
 // On recup les batiments du joueur
 $batiments = Btc::getNb($_user['mid'], [], [BTC_ETAT_OK]);
-$nbBatiments = get_conf_gen($_user["race"], "race_cfg", "btc_nb");
+$nbBatiments = Config::get($_user["race"], "race_cfg", "btc_nb");
 for($j = 1; $j <= $nbBatiments; ++$j) {
 	$batiments[$j] = isset($batiments[$j]) ? $batiments[$j]["btc_nb"] : 0;
 }
@@ -57,7 +59,7 @@ foreach ($batiments AS $typeBat => $nbBat) {
 // On ajuste le taux de production de nourriture, en fonction de la population
 $prod_res[GAME_RES_BOUF] -= $_user['population'];
 
-$cond_res = get_conf("race_cfg", "second_res");
+$cond_res = $_ses->getConf("race_cfg", "second_res");
 $prim_res = Res::get($_user['mid'], $cond_res);
 $_tpl->set("res_array", $prim_res);
 $_tpl->set("prod_res", $prod_res);
@@ -90,8 +92,8 @@ $_tpl->set("btc_todo", $btc_todo);
 $_tpl->set("btc_rep", $btc_rep);
 $_tpl->set("btc_bru", $btc_bru);
 
-$_tpl->set("btc_conf",get_conf("btc"));
-$_tpl->set("src_conf",get_conf("src"));
+$_tpl->set("btc_conf",$_ses->getConf("btc"));
+$_tpl->set("src_conf",$_ses->getConf("src"));
 
 $btc_array = Btc::getNb($_user['mid']);
 $nb_btc = 0;
@@ -106,7 +108,7 @@ $_tpl->set('unt_todo',$unt_todo);
 /* Recherches  en cours */
 $src_todo = SrcTodo::get($_user['mid']);
 foreach($src_todo as $key => $src) { // calculer RAF
-	$conf = get_conf('src', $src['stdo_type'], 'tours');
+	$conf = $_ses->getConf('src', $src['stdo_type'], 'tours');
 	if ($conf) $src_todo[$key]['raf'] = (int) $conf - $src['stdo_tours'];
 }
 $_tpl->set('src_todo',$src_todo);

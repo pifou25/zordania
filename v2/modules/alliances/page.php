@@ -1,6 +1,6 @@
 <?php
 if(!defined("_INDEX_")) exit;
-if(!can_d(DROIT_PLAY)) {
+if(!$_ses->canDo(DROIT_PLAY)) {
 	$_tpl->set("need_to_be_loged",true);
 } else {
 
@@ -316,7 +316,7 @@ case 'admin':
 
 case 'res': /* grenier */ 
 	$_tpl->set('_limite_grenier', $_limite_grenier);
-	$_tpl->set('liste_res', array_fill(1, get_conf('race_cfg', 'res_nb'), 0));
+	$_tpl->set('liste_res', array_fill(1, $_ses->getConf('race_cfg', 'res_nb'), 0));
 
 	$res_nb = protect(request('res_nb', 'array', 'post'), ['int']);
 	if(request('get', 'string', 'post') != '')
@@ -338,7 +338,7 @@ case 'res': /* grenier */
 		foreach($res_nb as $type => $nb){
 			$nb = protect($nb, 'uint') * $coef;
 
-			if(!get_conf("res", $type) or 
+			if(!$_ses->getConf("res", $type) or 
 					($nb >= 0 and $nb < ALL_MIN_DEP)) /*dépot mini au grenier */
 				continue;
 
@@ -386,7 +386,7 @@ case 'res': /* grenier */
 
 		/* maj des ressources */
 		Res::mod($_user['mid'], $res_ok, -1);
-		AlRes::mod($_user['alaid'], $_user['mid'], $res_taxed);
+		AlRes::edit($_user['alaid'], $_user['mid'], $res_taxed);
 	} // fin if ( droits grenier )
 
 	$_tpl->set('res_limit', $res_limite);
@@ -440,7 +440,7 @@ case 'res': /* grenier */
 
 case 'resally': /* donner des ressources à un allié */
 	$_tpl->set('_limite_grenier', $_limite_grenier);
-	$_tpl->set('liste_res', array_fill(1, get_conf('race_cfg', 'res_nb'), 0));
+	$_tpl->set('liste_res', array_fill(1, $_ses->getConf('race_cfg', 'res_nb'), 0));
 
 	/* prendre / déposer plusieurs */
 	$res_nb = request('res_nb', 'array', 'post');
@@ -474,7 +474,7 @@ case 'resally': /* donner des ressources à un allié */
 
 	foreach($res_nb as $type => $nb){
 		$nb *= -1; /* on retire du grenier */
-		if(!get_conf("res", $type)) // une ressource valide
+		if(!$_ses->getConf("res", $type)) // une ressource valide
 			$type = 0;
 
 		if($nb && $type) {
@@ -550,7 +550,7 @@ case 'reslog': // historique du grenier
 case 'ressyn': // synthèse détaillée format tableau
 	$res_log = AlResLog::get($_user['alaid'],0,0, true);
 
-	$nb_res = get_conf('race_cfg', 'res_nb');
+	$nb_res = $_ses->getConf('race_cfg', 'res_nb');
 	$row_res = [];
 	$tcd = [];
 	for($id = 1; $id <= $nb_res; $id++) $row_res[$id] = 0;

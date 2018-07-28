@@ -1,6 +1,6 @@
 <?php
 //Verif
-if(!defined("_INDEX_") or !can_d(DROIT_ADM)){ exit; }
+if(!defined("_INDEX_") or !$_ses->canDo(DROIT_ADM)){ exit; }
 
 // liste des rép de log
 $arr_rep = array_diff(scandir(SITE_DIR.'logs/'), array('..', '.'));

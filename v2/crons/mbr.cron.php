@@ -87,14 +87,14 @@ function mbr_mbr( &$user) {
 	global $_sql;
 	// soigner le heros s'il est au village
 	if (isset($user['hro']) && $user['hro']['leg_cid'] == $user['mbr_mapcid']) {
-		$vie_max = get_conf_gen($user['mbr_race'], 'unt', $user['hro']['hro_type'], 'vie');
+		$vie_max = Config::get($user['mbr_race'], 'unt', $user['hro']['hro_type'], 'vie');
 		// s'il n'est pas mort et qu'il n'est pas au max
 		if ($user['hro']['hro_vie'] < $vie_max && $user['hro']['hro_vie'] > 0) {
 			$addvie = 5; // soigner le heros de +5PDV
 
 			if ($user['hro']['hro_bonus'] == CP_REGENERATION || $user['hro']['hro_bonus'] == CP_REGENERATION_ORC )
 			{ // compétence régénération
-				$bonus = get_conf_gen($user['mbr_race'], 'comp', $user['hro']['hro_bonus'], 'bonus');
+				$bonus = Config::get($user['mbr_race'], 'comp', $user['hro']['hro_bonus'], 'bonus');
 				$addvie = $addvie * (1 + $bonus / 100);
 			}
 

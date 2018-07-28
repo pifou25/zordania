@@ -5,7 +5,7 @@ $_tpl->set("module_tpl","modules/session/session.tpl");
 if($_act == "login")
 {
 	$_tpl->set("ses_act","login");
-	if(can_d(DROIT_PLAY))
+	if($_ses->canDo(DROIT_PLAY))
 		$_tpl->set("ses_is_loged",true);	
 	else {
 		$login = request("login", "string", "post");
@@ -30,7 +30,7 @@ if($_act == "login")
 if($_act == "logout")
 {
 	$_tpl->set("ses_act","logout");
-	if(!can_d(DROIT_PLAY))
+	if(!$_ses->canDo(DROIT_PLAY))
 	{
 		$_tpl->set("ses_is_not_loged",true);
 	}else{

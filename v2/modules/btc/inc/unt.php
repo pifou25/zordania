@@ -35,8 +35,8 @@ if($_sub == "cancel_unt")
 			$type = $infos[0]['utdo_type'];
 			UntTodo::del($_user['mid'], $uid, $nb);
 			/* on récupère les unités mais que 50% des ressources: */
-			Unt::editVlg($_user['mid'], get_conf("unt", $type, "prix_unt"), 1 * $nb);
-			Res::mod($_user['mid'], get_conf("unt", $type, "prix_res"), 0.5 * $nb);
+			Unt::editVlg($_user['mid'], $_ses->getConf("unt", $type, "prix_unt"), 1 * $nb);
+			Res::mod($_user['mid'], $_ses->getConf("unt", $type, "prix_res"), 0.5 * $nb);
 			Mbr::edit($_user['mid'], array('population' => Leg::countUnt($_user['mid'])));
 		} else
 			$_tpl->set("btc_ok",false);
@@ -48,7 +48,7 @@ if($_sub == "cancel_unt")
 	$unt_todo = $mbr->unt_todo();// toutes les unités 'todo'
 	
 	foreach($unt_todo as $id => $value) {// filtrer les unités du batiment concerné
-		if(!in_array($btc_type,$mbr->get_conf("unt",$value['utdo_type'],"in_btc")))
+		if(!in_array($btc_type,$mbr->getConf("unt",$value['utdo_type'],"in_btc")))
 			unset($unt_todo[$id]);
 	}
 
@@ -56,7 +56,7 @@ if($_sub == "cancel_unt")
 	
 	$unt_tmp = array();
     // conf de toutes les unités
-	$conf_unt = $mbr->get_conf('unt');
+	$conf_unt = $mbr->getConf('unt');
     // si l'unité n'est pas dispo dans ce bat on filtre
     $conf_unt = array_filter( $conf_unt, function($val) use ($btc_type){
         return in_array($btc_type, $val['in_btc']);
@@ -99,7 +99,7 @@ if($_sub == "cancel_unt")
 elseif($_sub == "add_unt")
 {
 	$type = request("type", "uint", "post");
-	$role = get_conf("unt", $type, "role");
+	$role = $_ses->getConf("unt", $type, "role");
 	$nb = request("nb", "uint", "post");
 
 	if($type) { /* calcul pop y compris formation en cours */
@@ -109,7 +109,7 @@ elseif($_sub == "add_unt")
 			$unt_todo_nb += $value['utdo_nb'];
 
 		$prix_nb = 0;
-		$prix_unt = (array) get_conf("unt", $type, "prix_unt");
+		$prix_unt = (array) $_ses->getConf("unt", $type, "prix_unt");
 		foreach($prix_unt as $key => $value)
 			$prix_nb += $value * $nb;
 
@@ -139,8 +139,8 @@ elseif($_sub == "add_unt")
 				$_tpl->set("unt_infos", $array);
 				$_tpl->set("btc_ok", $ok);
 				if($ok) {
-					Unt::editVlg($_user['mid'], get_conf("unt", $type, "prix_unt"), -1 * $nb);
-					Res::mod($_user['mid'], get_conf("unt", $type, "prix_res"), -1 * $nb);
+					Unt::editVlg($_user['mid'], $_ses->getConf("unt", $type, "prix_unt"), -1 * $nb);
+					Res::mod($_user['mid'], $_ses->getConf("unt", $type, "prix_res"), -1 * $nb);
 					UntTodo::add($_user['mid'], array($type =>$nb));
 					Mbr::edit($_user['mid'], array('population' => Leg::countUnt($_user['mid'])));
 				}

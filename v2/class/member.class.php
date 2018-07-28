@@ -83,8 +83,9 @@ class member{
 		$this->mid = $mid;
 	}
 	
-	function get_conf($type = "", $key0 = "", $key1 = "") {
-		return get_conf_gen($this->mbr()['mbr_race'], $type, $key0, $key1);
+	function getConf($type = "", $key0 = "", $key1 = "") {
+		return Config::get($this->mbr()['mbr_race'], $type, $key0, $key1);
+            // getConf_gen($this->mbr()['mbr_race'], $type, $key0, $key1);
 	}
 
 	function mbr(){
@@ -195,29 +196,29 @@ class member{
         $bad_unt = array();
         $limit_unt = 0;
 
-        if(!$this->get_conf("unt", $type))
+        if(!$this->getConf("unt", $type))
             return array("do_not_exist" => true);
         
         /* Bâtiments */
-        $need_btc = $this->get_conf("unt", $type, "need_btc");
+        $need_btc = $this->getConf("unt", $type, "need_btc");
         $cond_btc = $need_btc;
         $have_btc = $this->nb_btc_done( $cond_btc);
         
         /* Recherches */
-        $need_src = $this->get_conf("unt", $type, "need_src");
+        $need_src = $this->getConf("unt", $type, "need_src");
         $cond_src = $need_src;
         $have_src = $this->src($cond_src);
         
         /* Ressources */
-        $prix_res = $this->get_conf("unt", $type, "prix_res");
+        $prix_res = $this->getConf("unt", $type, "prix_res");
         $cond_res = array_keys($prix_res);
         $have_res = $this->res( $cond_res);
             
         /* Unités */
-        $prix_unt = $this->get_conf("unt", $type, "prix_unt");
+        $prix_unt = $this->getConf("unt", $type, "prix_unt");
         $cond_unt = array_keys($prix_unt);
         
-        $limite = $this->get_conf("unt", $type, "limite");
+        $limite = $this->getConf("unt", $type, "limite");
         if($limite)
             $cond_unt += array($type);
         
@@ -384,37 +385,37 @@ class member{
         $bad_trn = array();
         $limit_btc = 0;
 
-        if(!$this->get_conf("btc", $type))
+        if(!$this->getConf("btc", $type))
             return array("do_not_exist" => true);
         
         /* Bâtiments */
-        $need_btc = $this->get_conf("btc", $type, "need_btc");
+        $need_btc = $this->getConf("btc", $type, "need_btc");
         $cond_btc = $need_btc;
         
-        $limite = (int) $this->get_conf("btc", $type, "limite");
+        $limite = (int) $this->getConf("btc", $type, "limite");
         if($limite)
             $cond_btc[] = $type;
 
         $have_btc = $this->nb_btc_done( $cond_btc);
         
         /* Recherches */
-        $need_src = $this->get_conf("btc", $type, "need_src");
+        $need_src = $this->getConf("btc", $type, "need_src");
         $cond_src = $need_src;
         $have_src = $this->src($cond_src);
        
         /* Ressources */
-        $prix_res = $this->get_conf("btc", $type, "prix_res");
+        $prix_res = $this->getConf("btc", $type, "prix_res");
         $cond_res = array_keys($prix_res);
         $have_res = $this->res( $cond_res);
             
         /* Terrains */
-        $prix_trn = $this->get_conf("btc", $type, "prix_trn");
+        $prix_trn = $this->getConf("btc", $type, "prix_trn");
         $cond_trn = array_keys($prix_trn);
         $have_trn = $this->trn();
             
         /* Unités */
         $have_unt = $this->nb_unt_done();
-        $prix_unt = $this->get_conf("btc", $type, "prix_unt");
+        $prix_unt = $this->getConf("btc", $type, "prix_unt");
     
         /* Les recherches qu'il faut avoir */
         foreach($need_src as $src_type) {

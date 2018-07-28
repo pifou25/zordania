@@ -40,6 +40,10 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
         return $req->get()->toArray();
     }
 
+    static function count(int $mid){
+        return MsgRec::where('mrec_mid', $mid)->where('mrec_readed', 0)->count();
+    }
+
     static function add(int $mid, int $mid2, string $titre, string $text, bool $copy = true) {
 
         $request = ['mrec_mid' => $mid2,

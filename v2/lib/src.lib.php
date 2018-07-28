@@ -15,11 +15,11 @@ function can_src($mid, $type, & $cache = array()) {
 	$bad_res = array();
 	$done = false;
 	
-	if(!get_conf("src", $type))
+	if(!Session::$SES->getConf("src", $type))
 		return array("do_not_exist" => true);
 
 	/* Bâtiments */
-	$need_btc = get_conf("src", $type, "need_btc");
+	$need_btc = Session::$SES->getConf("src", $type, "need_btc");
 	$cond_btc = $need_btc;
 
 	if(!isset($cache['btc_done'])) {
@@ -30,8 +30,8 @@ function can_src($mid, $type, & $cache = array()) {
 	/* Recherches */
 	$cond_src = array($type);
 
-	$need_src = get_conf("src", $type, "need_src");
-	$need_no_src = get_conf("src", $type, "need_no_src");
+	$need_src = Session::$SES->getConf("src", $type, "need_src");
+	$need_no_src = Session::$SES->getConf("src", $type, "need_no_src");
 	$cond_src = array_merge($need_src,$need_no_src);
 
 	if(!isset($cache['src'])) {
@@ -63,7 +63,7 @@ function can_src($mid, $type, & $cache = array()) {
 	$done = (isset($todo_src[$type]) || isset($have_src[$type]));
 
 	/* Ressources */
-	$prix_res = get_conf("src", $type, "prix_res");
+	$prix_res = Session::$SES->getConf("src", $type, "prix_res");
 	$cond_res = array_keys($prix_res);
 
 	if(!isset($cache['res'])) {

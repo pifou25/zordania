@@ -15,7 +15,7 @@
 		<img src="img/right.png" /> <a href="forum-cat.html?cid={frm[cid]}">{frm[cat_name]}</a>
 		<img src="img/right.png" /> <a href="forum-topic.html?fid={frm[fid]}".html>{frm[forum_name]}</a>
 		<if cond='{new} != "topic"'>
-			<img src="img/right.png" /> <a href="forum-<math oper="str2url({pst[subject]})"/>.html?tid={pst[tid]}">{pst[subject]}</a>
+			<img src="img/right.png" /> <a href="forum-<math oper="Template::str2url({pst[subject]})"/>.html?tid={pst[tid]}">{pst[subject]}</a>
 		</if>
 	</h3>
 
@@ -85,7 +85,7 @@
 		<foreach cond='{messages} as {post}'>
 			<div class="block_forum">
 			<img class="blason" title="{post[username]}" src="img/mbr_logo/{post[poster_id]}.png" />
-			<a href="forum-<math oper="str2url({post[subject]})"/>.html?pid={post[pid]}#{post[pid]}">{post[subject]}</a>
+			<a href="forum-<math oper="Template::str2url({post[subject]})"/>.html?pid={post[pid]}#{post[pid]}">{post[subject]}</a>
 
 			<p><math oper='Parser::parse({post[message]})' /></p>
 			<if cond='{post[edited]}'>
@@ -172,7 +172,7 @@
 	</elseif>
 
 	<if cond='isset({messages})'>
-		<h3 class="head_forum"><a href="forum.html">Forums</a> <img src="img/right.png" /> <a href="forum.html?cid={tpc[cid]}">{tpc[cat_name]}</a> <img src="img/right.png" /> <a href="forum-topic.html?fid={tpc[forum_id]}">{tpc[forum_name]}</a>  <img src="img/right.png" /> <a href="forum-<math oper="str2url({tpc[subject]})"/>.html?tid={tpc[tid]}">{tpc[subject]}</a></h3>
+		<h3 class="head_forum"><a href="forum.html">Forums</a> <img src="img/right.png" /> <a href="forum.html?cid={tpc[cid]}">{tpc[cat_name]}</a> <img src="img/right.png" /> <a href="forum-topic.html?fid={tpc[forum_id]}">{tpc[forum_name]}</a>  <img src="img/right.png" /> <a href="forum-<math oper="Template::str2url({tpc[subject]})"/>.html?tid={tpc[tid]}">{tpc[subject]}</a></h3>
 
 		<if cond="{tpc[cid]} == 1">
 			<!-- AddThis Button BEGIN -->
@@ -212,7 +212,7 @@
 		<foreach cond='{messages} as {post}'>
    			<div class="block_forum" id="{post[pid]}">
    				<img class="blason" title="{post[username]}" src="img/mbr_logo/{post[poster_id]}.png" />
-				<a class="titre" href="forum-<math oper="str2url({tpc[subject]})"/>.html?pid={post[pid]}#{post[pid]}">{tpc[subject]}</a>
+				<a class="titre" href="forum-<math oper="Template::str2url({tpc[subject]})"/>.html?pid={post[pid]}#{post[pid]}">{tpc[subject]}</a>
 
 				<p class="post"><math oper="Parser::parse({post[message]})" /></p>
 				<if cond='{post[edited]}'>
@@ -315,7 +315,7 @@
 		</if>
 
 
-		<h3 class="head_forum"><a href="forum.html">Forums</a> <img src="img/right.png" /> <a href="forum.html?cid={tpc[cid]}">{tpc[cat_name]}</a> <img src="img/right.png" /> <a href="forum-topic.html?fid={tpc[forum_id]}".html>{tpc[forum_name]}</a>  <img src="img/right.png" /> <a href="forum-<math oper="str2url({tpc[subject]})"/>.html?tid={tpc[tid]}">{tpc[subject]}</a></h3> 
+		<h3 class="head_forum"><a href="forum.html">Forums</a> <img src="img/right.png" /> <a href="forum.html?cid={tpc[cid]}">{tpc[cat_name]}</a> <img src="img/right.png" /> <a href="forum-topic.html?fid={tpc[forum_id]}".html>{tpc[forum_name]}</a>  <img src="img/right.png" /> <a href="forum-<math oper="Template::str2url({tpc[subject]})"/>.html?tid={tpc[tid]}">{tpc[subject]}</a></h3> 
 	</if>
 </elseif>
 
@@ -383,12 +383,12 @@
 				</td>
 
 		        	<td><if cond="({lu_forum_ldate} < {topic[posted_unformat]}) && !isset({forum_lus[{topic[tid]}]})"><img src='img/reply.png' title='Nouveau' alt='Nouveau' /> </if>
-				<a href="forum-<math oper="str2url({topic[subject]})"/>.html?tid={topic[tid]}" title="Début du message">{topic[subject]}</a>
+				<a href="forum-<math oper="Template::str2url({topic[subject]})"/>.html?tid={topic[tid]}" title="Début du message">{topic[subject]}</a>
 				<if cond="isset({topic[arr_pgs]})">
 					<br />[Page: 
 					<foreach cond="{topic[arr_pgs]} as {i}">
 						<if cond='{i} == "..."'> ... </if>
-						<else><a href="forum-<math oper="str2url({topic[subject]})"/>.html?tid={topic[tid]}&p={i}" title="page {i}"> {i} </a></else>
+						<else><a href="forum-<math oper="Template::str2url({topic[subject]})"/>.html?tid={topic[tid]}&p={i}" title="page {i}"> {i} </a></else>
 					</foreach>]
 				</if>
 				</td>
@@ -404,7 +404,7 @@
 					<zurlmbr gid="{topic[last_poster_gid]}" mid="{topic[last_poster_mid]}" pseudo="{topic[last_poster]}"/>
 				</if>
 				<else>{topic[last_poster]}</else>
-				[<a href="forum-<math oper="str2url({topic[subject]})"/>.html?tid={topic[tid]}&pid={topic[last_post_id]}#{topic[last_post_id]}" title="Dernier message"><img src="img/right.png" /></a>]</td>
+				[<a href="forum-<math oper="Template::str2url({topic[subject]})"/>.html?tid={topic[tid]}&pid={topic[last_post_id]}#{topic[last_post_id]}" title="Dernier message"><img src="img/right.png" /></a>]</td>
 		        </tr>
 			</foreach>
 		</table>
@@ -447,7 +447,7 @@
                 <p class="stat">{forum[num_topics]} sujets - {forum[num_posts]} messages<br/>
                 <if cond='{lu_forum_ldate} <= {forum[last_post_unformat]}'><img src='img/forum/non_lu.png' title='Nouveau' alt='Nouveau' /></if>
                 <else><img src='img/forum/lu.png' title='Nouveau' alt='Nouveau' /></else>
-                Dernier message : <a href="forum-<math oper="str2url({forum[last_subject]})"/>.html?pid={forum[last_post_id]}#{forum[last_post_id]}" title="Dernier message">{forum[last_subject]}</a> le {forum[last_post]} par 
+                Dernier message : <a href="forum-<math oper="Template::str2url({forum[last_subject]})"/>.html?pid={forum[last_post_id]}#{forum[last_post_id]}" title="Dernier message">{forum[last_subject]}</a> le {forum[last_post]} par 
                 <if cond="isset({forum[mbr_mid]})">
                     <zurlmbr gid="{forum[mbr_gid]}" mid="{forum[mbr_mid]}" pseudo="{forum[last_poster]}"/>
                 </if>

@@ -1,7 +1,7 @@
 <?php
 //Verifications
 if(!defined("_INDEX_")){ exit; }
-if(!can_d(DROIT_PLAY))
+if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else
 {
@@ -17,7 +17,7 @@ $_tpl->set("leg_race", $_user['race']);
 $sub = request('sub', 'string','get');
 
 function list_comp($hro_type) { // liste des comp du héros
-	$comp_array = get_conf('comp');
+	$comp_array = $_ses->getConf('comp');
 	$result = array();
 	foreach($comp_array as $id => $cp)
 		if(in_array($hro_type, $cp['heros']))
@@ -239,7 +239,7 @@ case "hero":
 	if($_user['hro_id']){
 		if($sub == "form")
 			$_tpl->set("already_hro", true);
-		$hero_conf = get_conf('unt',$_user['hro_type']);
+		$hero_conf = $_ses->getConf('unt',$_user['hro_type']);
 		$_tpl->set("hero_conf", $hero_conf);
 		if($_user['bonus'] != 0) // une compétence est active
 			$_tpl->set("bonus_already", true);
@@ -334,7 +334,7 @@ case "hero":
 			$res_add = add_hero($_user['mid'], $name, $id_hro);
 			if($res_add){
 				$_tpl->set("ok_form_hro", true);
-				$_tpl->set("comp_array",get_conf('comp'));// tout les bonus pour la race.
+				$_tpl->set("comp_array",$_ses->getConf('comp'));// tout les bonus pour la race.
 				$_ses->update_heros();
 			} else
 				$_tpl->set("error_form", true);
@@ -387,7 +387,7 @@ if($_display == "ajax") print_r($_POST);
 			$factor = ($factor < 0) ? -1 : 1;
 			$res_type = request("res_type", "uint", "post");
 			$res_nb = request("res_nb", "uint", "post");
-			if($factor && $res_type && $res_nb && get_conf("res", $res_type)) {
+			if($factor && $res_type && $res_nb && $_ses->getConf("res", $res_type)) {
 				$have_res = Res::get($_user['mid']);// resources joueur
 
 				$res_ok = false;
@@ -448,7 +448,7 @@ if($_display == "ajax") print_r($_POST);
 			$_tpl->set("leg", $legions->legs[$lid]->infos);
 			$_tpl->set("unt_leg", array($lid => $legions->legs[$lid]->get_unt()));
 			$_tpl->set("res_array", $legions->legs[$lid]->get_res());
-			$_tpl->set("unt_conf", get_conf("unt"));
+			$_tpl->set("unt_conf", $_ses->getConf("unt"));
 
 		}
 	} else if ($lid)
@@ -466,7 +466,7 @@ if(!$_act or $_act == 'move' or $_act == 'recup') {
 	$_tpl->set("res_leg", $legions->get_all_res());
 	$_tpl->set("unt_leg", $legions->get_all_unts());
 	$_tpl->set("leg_array", $legions->get_all_legs_infos());
-	$_tpl->set("unt_conf", get_conf("unt"));
+	$_tpl->set("unt_conf", $_ses->getConf("unt"));
 	$_tpl->set("lid_vlg", $legions->vlg_lid);
 }
 } // else

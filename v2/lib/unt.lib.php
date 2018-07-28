@@ -42,12 +42,6 @@ function get_leg_dest($mid, $dest) {
 	
 	return $_sql->make_array($sql);
 }
-/* Toutes les légions au village sauf batiments (du moins sur la case cid)
-function get_legions_vlg_all($mid, $cid) {
-	$leg = get_leg_gen(['mid' => $mid, 'sum' => true, 'cid' => $cid]);
-	foreach($leg as $key => $unt) $leg[$key]['unt_nb'] = $unt['unt_sum'];
-	return $leg;
-} */
 
 /* Toutes les légions alliés en déplacement (état par défaut) */
 function get_leg_dpl($mid, $etat = [LEG_ETAT_RET, LEG_ETAT_ALL, LEG_ETAT_DPL]){
@@ -85,6 +79,13 @@ function get_leg_pos($mid){
 	return $_sql->make_array($sql);
 }
 
+/* virer les tab et multi espaces */
+function trimUltime($chaine){
+	$chaine = trim($chaine);
+	$chaine = str_replace("\t", " ", $chaine);
+	$chaine = preg_replace("( +)", " ", $chaine);
+return $chaine;
+}
 
 
 /* vérifications pour renommer une légion */
@@ -109,62 +110,6 @@ function can_ren_leg($mid, $lid, $leg_name){
 
 }
 
-
-/* Peut on rajouter ces unités dans cette légion a ce rang là ? */
-function can_add_unt_leg($mid, $lid, $rang, $type, $nb) {
-	global $_sql;
-
-	$mid = protect($mid, "uint");
-	$lid = protect($lid, "uint");
-	$rang = protect($rang, "uint");
-	$type = protect($type, "uint");
-	$nb = protect($nb, "uint");
-
-	if($rang > LEG_MAX_RANG)
-		return false;
-
-	$sql = "SELECT leg_etat, unt_rang, unt_type, unt_nb ";
-	$sql.= "FROM ".$_sql->prebdd."leg ";
-	$sql.= "LEFT JOIN ".$_sql->prebdd."unt ON unt_lid = leg_id ";
-	$sql.= "WHERE leg_mid = $mid AND leg_id = $lid ";
-
-	$have_leg = $_sql->make_array($sql);
-
-	if(!$have_leg || !in_array($have_leg[0]['leg_etat'], [ LEG_ETAT_GRN]))
-		return false; /* Légion qui n'existe pas ou pas en formation */
-
-	if($nb > LEG_MAX_RANG_UNT)
-		return false;
-
-	$rang_same = 1;
-	foreach($have_leg as $values) { /* Rang avec la même unité */
-		if($values['unt_type'] == $type)
-			$rang_same++;
-	}
-
-	foreach($have_leg as $values) {
-		if($values['unt_rang'] == $rang) {
-			if($values['unt_type'] == $type && $values['unt_nb'] + $nb <= LEG_MAX_RANG_UNT) {
-				$rang_same--; /* on utilise un rang déjà fait */
-				break; /* faut pas partir de suite, on a des trucs a verifier après */
-			} else
-				return false;
-		}
-	}
-
-	if($rang_same > LEG_MAX_RANG_SAME_UNT)
-		return false;
-
-	return true; /* Le rang demandé n'est pas pris, et est autorisé */
-}
-
-// retrouver à quel rang sont les unités du type.
-function find_rang($leg_array, $type) {
-	foreach($leg_array as $key => $unit)
-		if($unit['unt_type']==$type)
-			return $key;
-	return count($leg_array)+1;
-}
 
 /* les légions dans $leg_array peuvent être attaquées par un joueur ($mid) qui a $points, ($groupe) et ally=$alaid */
 function leg_can_atq_lite($leg_array, $points, $mid, $groupe, $alaid, $dpl_array = [])
@@ -205,7 +150,7 @@ function leg_can_atq_lite($leg_array, $points, $mid, $groupe, $alaid, $dpl_array
 			&& ($pts > ATQ_PTS_MIN)  /* Pas assez de points pour attaquer */
 			|| ($pts >= ATQ_LIM_DIFF && $points >= ATQ_LIM_DIFF) /* Arène */
 		)
-		&& can_d(DROIT_PLAY)/* Faut pas être un visiteur */
+		&& $_ses->canDo(DROIT_PLAY)/* Faut pas être un visiteur */
 		&& $etat == MBR_ETAT_OK /* Validé et pas en Veille */
 		&& isset($arr_cid[$value['leg_cid']])/* légion sur la même case */
 		&& in_array($leg_etat,[LEG_ETAT_VLG,LEG_ETAT_GRN,LEG_ETAT_DPL])/* légion en attende d'ordre*/
@@ -217,4 +162,3 @@ function leg_can_atq_lite($leg_array, $points, $mid, $groupe, $alaid, $dpl_array
 
 	return $leg_array;
 }
-

@@ -1,6 +1,6 @@
 <?php
 //Verif
-if(defined("_INDEX_") and can_d(DROIT_ADM_MBR)){
+if(defined("_INDEX_") and $_ses->canDo(DROIT_ADM_MBR)){
 
 $_tpl->set("module_tpl","modules/msg/admin.tpl");
 $_tpl->set('act',$_act);

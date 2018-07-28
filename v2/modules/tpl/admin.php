@@ -1,5 +1,5 @@
 <?php
-if(defined("_INDEX_") and can_d(DROIT_ADM_TRAV)){
+if(defined("_INDEX_") and $_ses->canDo(DROIT_ADM_TRAV)){
 
 $tplm  = new TemplatesGest();
 $tplm->set_dir(SITE_DIR.'templates');

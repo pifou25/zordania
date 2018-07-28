@@ -58,7 +58,7 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 	/* vérifier la race et si on y a droit */
 	if(!isset($_races[$race])) // n'existe pas encore
 		$race = 0;
-	else if(!can_d(DROIT_ANTI_FLOOD) and !$_races[$race]) // accès limité
+	else if(!$_ses->canDo(DROIT_ANTI_FLOOD) and !$_races[$race]) // accès limité
 		$race = 0;
 
 	$infos_races = Mbr::countRaces();
@@ -66,7 +66,7 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 
 	/* virer les races inutiles = inaccessible au joueur lambda
 	 DROIT_ANTI_FLOOD à partir de sage */
-	if(!can_d(DROIT_ANTI_FLOOD))
+	if(!$_ses->canDo(DROIT_ANTI_FLOOD))
 		foreach($_races as $cle => $value)
 			if(!$value)
 				unset($_races[$cle]);

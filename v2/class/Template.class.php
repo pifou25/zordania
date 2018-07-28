@@ -204,7 +204,7 @@ class Template
 			return '\'.('.strtr($var[3], array("''." => '', ".''" => '', ".''." => '.', "'." => '', '.\'' => '')).').\'';
 		elseif ($var[1] == 'debug') // afficher variable
 			if (!SITE_DEBUG) return '';
-			else return '\'.print_debug('.strtr($var[3], array("''." => '', ".''" => '', ".''." => '.', "'." => '', '.\'' => '')).').\'';
+			else return '\'.Template::printDebug('.strtr($var[3], array("''." => '', ".''" => '', ".''." => '.', "'." => '', '.\'' => '')).').\'';
 		elseif($var[1] == 'eval')
 			return '\'; '.strtr($var[3], array("''." => '', ".''" => '', ".''." => '.', "'." => '', '.\'' => '')).'; $data .= \'';
 		elseif ($var[1] == 'set')
@@ -246,7 +246,7 @@ class Template
 					$return .= '<img src="img/'.$var[10].'/'.$var[10].'.png" alt="\'.$this->var->{\'race\'}[\''.$var[10].'\'].\'" />&nbsp;
 ';
 				// lien membre simple
-				return $return . '<a href="member-\'.str2url(\''.$var[6].'\').\'.html?mid='.$var[4].'" title="Infos sur '.$var[6].'">'.$var[6].'</a>';
+				return $return . '<a href="member-\'.Template::str2url(\''.$var[6].'\').\'.html?mid='.$var[4].'" title="Infos sur '.$var[6].'">'.$var[6].'</a>';
 			}
 			elseif($var[2] == 'gid') // pour TEST
 				return (isset($var[4]) ? 'var4='.$var[4] : "").'|'.(isset($var[6]) ? 'var6='.$var[6] : "").'|'.(isset($var[8]) ? 'var8='.$var[8] : "").'|'.(isset($var[10]) ? 'var10='.$var[10] : "");
@@ -258,7 +258,58 @@ class Template
 			return $var[0];
 	}
 
-	function file_get($file) //retourne le contenu d'un fichier dans une variable
+        /* Permet de transformer une chaîne de sorte qu'elle soit compatible avec les regexp de la réécriture d'url */
+        static public function str2url($str) {
+                // UTILITE
+                $str = strtr($str, array(
+                    'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
+                    'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
+                    'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
+                    'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a',
+                    'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
+                    'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u',
+                    'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f', "'"=>'_', ' '=>'_', '-'=>'_'
+                ));
+                        //'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜàâãäåçèéêëìíîï©òóôõöùúûüÿ',
+                        //'AAAAAACEEEEIIIIOOOOOUUUUaaaaaceeeeiiiicooooouuuuy');
+                $str = str_replace('&', '_et_', $str);
+                $str = str_replace('__', '_', $str);
+
+                // SECURITE : opposé de la regexp [a-zA-Z0-9_]+
+                // remove all illegal chars
+                $str = preg_replace('/[^a-zA-Z0-9_]/', '', $str);
+                return (($str == "") ? "_" : $str);
+        }
+
+
+        static public function printDebug($arr = false, $title = '') {
+                if ($arr === false) {
+                    global $_tpl;
+                    return self::printDebug($_tpl->var);
+                }
+                if ($title != '')
+                    $rep = "<dt><strong>$title</strong></dt>\n";
+                else
+                    $rep = '';
+                $rep1 = '<table><tr>';
+                $rep2 = '';
+                $i = 0;
+                foreach ($arr as $key => $val)
+                    if (!is_array($val) && !is_object($val)) { // les variables simples
+                        //echo "$title\[$key] = $val<br/>\n";
+                        $rep1 .= "<td>[$key] =&gt; $val</td>\n";
+                        $i++;
+                        if ($i == 5) { // nouvelle ligne du tableau
+                            $i = 0;
+                            $rep1 .= "</tr><tr>\n";
+                        }
+                    } else if ($key != 'GLOBALS' && $key != 'tpl' && substr($key, 1, 5) != 'MYSQL' && $key != '_globals' && $key != '_server' && $key != '_session' && $key != 'sv_queries') { // récursivité infinie /!\
+                        $rep2 .= self::printDebug($val, "$title [$key]") . "\n";
+                    }
+                return $rep . $rep1 . "</tr></table>\n" . $rep2;
+            }
+
+            function file_get($file) //retourne le contenu d'un fichier dans une variable
 	{
 		$data = "";
 
@@ -372,4 +423,3 @@ class Template
 			return $var[0];
 	}
 }
-?>

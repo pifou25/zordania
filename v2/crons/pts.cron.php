@@ -35,7 +35,7 @@ function glob_pts() {
 
 		/* points des recherches */
 		if(isset($src_array[$mid])){
-			$nbmax = get_conf_gen($race, "race_cfg", "src_nb") + 1;
+			$nbmax = Config::get($race, "race_cfg", "src_nb") + 1;
 			$pts_btc[$mid] += $src_array[$mid]['src_nb'] / $nbmax * 10000;
 		}
 
@@ -53,10 +53,10 @@ function glob_pts() {
 			continue;
 
 		$race = $mbr_array[$mid]["mbr_race"];
-		$role = get_conf_gen($race, "unt", $value['unt_type'], "role");
+		$role = Config::get($race, "unt", $value['unt_type'], "role");
 
 		if ($role != TYPE_UNT_CIVIL) {
-			$unt_cfg = get_conf_gen($race, "unt", $value['unt_type']);
+			$unt_cfg = Config::get($race, "unt", $value['unt_type']);
 
 			$pts = (isset($unt_cfg['def']) ? $unt_cfg['def'] : 0)
 				 + (isset($unt_cfg['atq_unt']) ? $unt_cfg['atq_unt'] : 0)

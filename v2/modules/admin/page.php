@@ -2,9 +2,9 @@
 //Verif
 if(!defined("_INDEX_")){ exit; }
 
-if(!can_d(DROIT_SITE))
+if(!$_ses->canDo(DROIT_SITE))
 	$_tpl->set("need_to_be_loged",true);
-else if(!can_d(DROIT_ADM))
+else if(!$_ses->canDo(DROIT_ADM))
 	$_tpl->set("cant_view_this",true);
 else {
 

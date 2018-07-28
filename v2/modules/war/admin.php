@@ -1,8 +1,8 @@
 <?php
 
 //Verifications
-if(!defined("_INDEX_") or !can_d(DROIT_ADM_MBR)){ exit; }
-if(!can_d(DROIT_PLAY))
+if(!defined("_INDEX_") or !$_ses->canDo(DROIT_ADM_MBR)){ exit; }
+if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else {
 

@@ -1,7 +1,7 @@
 <div class="debug block">
 	<h1>Debug</h1>
 	<dl>
-		<if cond="false"><math oper="print_debug()" /></if>
+		<if cond="false"><math oper="Template::printDebug()" /></if>
 
 		<dt>_user</dt>
 		<dd>
@@ -44,7 +44,7 @@
                                 <foreach cond='{eloQueries} as {values}'>
 			<li>
 				<math oper="htmlspecialchars({values[query]})" /><br/>
-				Bindings: <math oper="print_debug({values[bindings]})" />
+				Bindings: <math oper="Template::printDebug({values[bindings]})" />
 				Temps: <math oper="round({values[time]},2)" /> ms
 				<if cond="is_array({values[callstack]})"><pre>Callstack:
 				<foreach cond="{values[callstack]} as {line}">

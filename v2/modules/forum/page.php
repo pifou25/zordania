@@ -21,8 +21,8 @@ $fid = request('fid', 'uint','get');
 $pseudo = $_user['pseudo'];
 $mid = $_user['mid'];	
 $group = $_user['groupe'];
-$is_modo = can_d(DROIT_PUNBB_MOD);
-$is_admin = can_d(DROIT_PUNBB_ADMIN);
+$is_modo = $_ses->canDo(DROIT_PUNBB_MOD);
+$is_admin = $_ses->canDo(DROIT_PUNBB_ADMIN);
 $_tpl->set('is_modo',$is_modo);
 $_tpl->set('is_admin',$is_admin);
 $_tpl->set('mid',$mid);
@@ -35,7 +35,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 
 	// prévisualisation ajax
 	if($_display == "ajax"){
-		if(can_d(DROIT_PUNBB_GUEST))
+		if($_ses->canDo(DROIT_PUNBB_GUEST))
 			$post = array('poster_id' => 1, 'username' => 'guest', 'tid' => 0, 'message' => 'ACCES INTERDIT',
 				'subject' => 'ACCES INTERDIT', 'mbr_gid' => 1, 'posted' => date('j-n-Y'));
 		else{
@@ -65,7 +65,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 		break;
 	}
 
-	if(can_d(DROIT_PUNBB_GUEST)){
+	if($_ses->canDo(DROIT_PUNBB_GUEST)){
 		$_tpl->set('cant_create', true);
 		break;
 	}
@@ -539,7 +539,7 @@ case 'rep' : // formulaire de création & réponse
 	}
 	// récupérer les infos du forum
 	$frm = get_cat(0, $fid);
-	if(empty($frm) or can_d(DROIT_PUNBB_GUEST))// permission refusée ou catégorie introuvable
+	if(empty($frm) or $_ses->canDo(DROIT_PUNBB_GUEST))// permission refusée ou catégorie introuvable
 		$_tpl->set('no_perm', true);
 	elseif((!$frm[0]['post_replies'] and $action=='post') or (!$frm[0]['post_topics'] and $action=='topic'))// permission refusée
 		$_tpl->set('no_perm', true);

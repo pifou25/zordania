@@ -23,7 +23,7 @@
 
 		<div class="block_forum" id="{post[pid]}">
 			<img class="blason" title="{post[username]}" src="img/mbr_logo/{post[poster_id]}.png" />
-			<a class="titre" href="forum-<math oper="str2url({post[subject]})"/>.html?pid={post[pid]}#{post[pid]}">{post[subject]}</a>
+			<a class="titre" href="forum-<math oper="Template::str2url({post[subject]})"/>.html?pid={post[pid]}#{post[pid]}">{post[subject]}</a>
 
 			<p class="post"><math oper="Parser::parse({post[message]})" /></p>
 			<if cond='{post[edited]}'>

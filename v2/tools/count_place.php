@@ -27,7 +27,7 @@ function del_btc_type($mid, $race, $type, $nb, &$arr_unt = array(), &$arr_res = 
 	foreach($arr_btc as $btc) {
 		$arr_bid[] = $btc['btc_id'];
 		if ($arr_res !== false) { /* rembourser le prix ressources */
-			$prix = get_conf_gen($race, 'btc', $type, 'prix_res');
+			$prix = Config::get($race, 'btc', $type, 'prix_res');
 			foreach ($prix as $res => $nb_res)
 				if (isset($arr_res[$res]))
 					$arr_res[$res] += $nb_res;
@@ -35,7 +35,7 @@ function del_btc_type($mid, $race, $type, $nb, &$arr_unt = array(), &$arr_res = 
 					$arr_res[$res] = $nb_res;
 		}
 		/* supprimer les unités du bat */
-		$prix = get_conf_gen($race, 'btc', $type, 'prix_unt');
+		$prix = Config::get($race, 'btc', $type, 'prix_unt');
 		if (!empty($prix))
 			foreach ($prix as $unt => $nb_unt)
 				if (isset($arr_unt[$unt]))
@@ -48,13 +48,6 @@ function del_btc_type($mid, $race, $type, $nb, &$arr_unt = array(), &$arr_res = 
 			break;
 	}
 	return $arr_bid;	
-}
-
-for($race = 1; $race <= 5; $race++)
-{// charger les 5 fichiers de config de race
-	include "../conf/$race.php";
-	$confname = "config$race";
-	$_conf[$race] = new $confname;
 }
 
 // tous les membres, sauf non initialisé (2)
@@ -77,7 +70,7 @@ foreach($mid_array as $_user)
 	$arr_res = array(); /* resources à rembourser */
 	$arr_bid = array(); /* liste des btc à détruire */
 	foreach ($btc_array as $btc) {
-		$maxi = get_conf_gen($race, 'btc', $btc['btc_type'], 'limite');
+		$maxi = Config::get($race, 'btc', $btc['btc_type'], 'limite');
 		if ($maxi && $btc['btc_nb'] > $maxi) {
 			/* compter les bat à supprimer */
 			echo $_user['mbr_pseudo']." ($mid)($race) : ".($btc['btc_nb']-$maxi). 'bat ' . $btc['btc_type'].' en trop.'."\n";
@@ -88,7 +81,7 @@ foreach($mid_array as $_user)
 		}
 
 		/* compter la place totale */
-		$prod_pop = get_conf_gen($race, 'btc', $btc['btc_type'], 'prod_pop');
+		$prod_pop = Config::get($race, 'btc', $btc['btc_type'], 'prod_pop');
 		if ($prod_pop)
 			$place_totale += $prod_pop * $btc['btc_nb'];
 	}

@@ -2,7 +2,7 @@
 include_once("divers.lib.php");
 
 function bonus_test() {
-	$ip = get_ip();
+	$ip = Session::$SES->getIp();
 	$query = request("QUERY_STRING", "string", "server");
 
 	$requete = "http://secure.rentabiliweb.com/Micropaiement.php?act=ss&";

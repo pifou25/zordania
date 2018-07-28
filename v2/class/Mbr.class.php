@@ -247,6 +247,22 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
         return $req->get()->toArray();
     }
 
+    
+static function getInit(array $cond) {// retrouver les infos d'un membre non initialisé
+
+    $req = Mbr::select('mbr_mid', 'mbr_login', 'mbr_mail', 'mbr_etat', 'mbr_mapcid', 'mbr_race');
+    if (isset($cond['mid'])) {
+        $mbr_array = $req->where('mbr_mid', $cond['mid'])->get()->toArray();
+    } else if (isset($cond['login'])) {
+        $mbr_array = $req->where('mbr_login', $cond['login'])->get()->toArray();
+    }
+
+    if (!$mbr_array)
+        return false;
+    else
+        return $mbr_array[0];
+}
+
     static function countRaces(array $races = []) {
     $req = Mbr::selectRaw('mbr_race,COUNT(*) as race_nb');
     if(!empty($races)){
@@ -316,8 +332,8 @@ static function getIps(string $ip = '', int $gid = 0)
 
     static function init(int $mid, string $pseudo, string $vlg, int $race, int $cid, int $gid, int $sexe = 1) {
 
-        $unt = get_conf_gen($race, "race_cfg", "debut", "unt");
-        $btc = get_conf_gen($race, "race_cfg", "debut", "btc");
+        $unt = Config::get($race, "race_cfg", "debut", "unt");
+        $btc = Config::get($race, "race_cfg", "debut", "btc");
 
         $pop = 0;
         $pla = 0;
@@ -325,7 +341,7 @@ static function getIps(string $ip = '', int $gid = 0)
             $pop += $nb;
         }
         foreach ($btc as $id => $info) {
-            $pla += get_conf("btc", $id, "prod_pop");
+            $pla += Session::$SES->getConf("btc", $id, "prod_pop");
         }
 
         $edit = ['gid' => $gid,

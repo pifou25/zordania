@@ -1,7 +1,7 @@
 <?php
 //Verifications
 if(!defined("_INDEX_")) exit;
-if(!can_d(DROIT_PLAY))
+if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else {
     
@@ -44,11 +44,11 @@ if($_act == 'btc')
 				$_tpl->set("btc_infos", $array);
 				$_tpl->set("const_btc_ok", $ok);
 				if($ok) {
-					Unt::editVlg($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
-					unt::editBtc($_user['mid'], get_conf("btc", $type, "prix_unt"));
+					Unt::editVlg($_user['mid'], $_ses->getConf("btc", $type, "prix_unt"), -1);
+					unt::editBtc($_user['mid'], $_ses->getConf("btc", $type, "prix_unt"));
 					
-					Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), -1);
-					Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), -1);
+					Trn::mod($_user['mid'], $_ses->getConf("btc", $type, "prix_trn"), -1);
+					Res::mod($_user['mid'], $_ses->getConf("btc", $type, "prix_res"), -1);
 					
 					Btc::add($_user['mid'], $type);
 					// MAJ du $cache - on refait le select DB
@@ -70,11 +70,11 @@ if($_act == 'btc')
 				$type = $infos[$bid]['btc_type'];
 				Btc::del($_user['mid'], $bid);
 				
-				Unt::editVlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
-				unt::editBtc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
+				Unt::editVlg($_user['mid'], $_ses->getConf("btc", $type, "prix_unt"), 1);
+				unt::editBtc($_user['mid'], $_ses->getConf("btc", $type, "prix_unt"), -1);
 					
-				Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
-				Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
+				Trn::mod($_user['mid'], $_ses->getConf("btc", $type, "prix_trn"), 1);
+				Res::mod($_user['mid'], $_ses->getConf("btc", $type, "prix_res"), 0.5);
 				// MAJ du $cache
 				//$cache['btc_todo'] = Btc::getNb($_user['mid'], array(), array(BTC_ETAT_TODO));
 				$mbr = new member($_user['mid']);
@@ -85,16 +85,16 @@ if($_act == 'btc')
 	/* Y'en a en construction ? */
 	$btc_todo = $mbr->btc(array(), array(BTC_ETAT_TODO));
 	if($btc_todo) {
-		$_tpl->set("btc_conf",get_conf("btc"));
+		$_tpl->set("btc_conf",$_ses->getConf("btc"));
 		$_tpl->set("btc_todo",$btc_todo);
 	}
 	$nb_todo = count($btc_todo);
 	$btc_todo = $mbr->nb_btc(array(), array(BTC_ETAT_TODO));
 
 	$btc_tmp = array();
-	for($i = 1; $i <= get_conf("race_cfg", "btc_nb"); ++$i) {
+	for($i = 1; $i <= $_ses->getConf("race_cfg", "btc_nb"); ++$i) {
 		$btc_tmp[$i]['bad'] = $mbr->can_btc($i); // can_btc($_user['mid'], $i, $cache);
-		$btc_tmp[$i]['conf'] = get_conf("btc", $i);
+		$btc_tmp[$i]['conf'] = $_ses->getConf("btc", $i);
 		/*
 		if(isset($cache['btc_done'][$i]['btc_nb']))
 			$btc_tmp[$i]['btc_nb'] = $cache['btc_done'][$i]['btc_nb'];
@@ -141,7 +141,7 @@ if($_act == 'btc')
 	$_tpl->set("module_tpl","modules/btc/use.tpl");
 	$btc_type = request("btc_type", "uint", "get");
 	
-	if($btc_type && !get_conf("btc", $btc_type))
+	if($btc_type && !$_ses->getConf("btc", $btc_type))
 		$btc_type = 0;
 		
 	//On liste les batiments d'un type - ou tous
@@ -149,14 +149,14 @@ if($_act == 'btc')
 	{
 		$_tpl->set("btc_act","list2");
 		
-		if(!$btc_type || !get_conf("btc", $btc_type)){
+		if(!$btc_type || !$_ses->getConf("btc", $btc_type)){
 			$btc = array();
-			$btc_conf = get_conf("btc");
+			$btc_conf = $_ses->getConf("btc");
 		}
 		else{
 			$btc = array($btc_type);
 			$_tpl->set("btc_id",$btc_type);
-			$btc_conf = get_conf("btc", $btc_type);
+			$btc_conf = $_ses->getConf("btc", $btc_type);
 		}
 			
 		$btc_array = Btc::get($_user['mid'], $btc, [BTC_ETAT_OK, BTC_ETAT_REP, BTC_ETAT_BRU,BTC_ETAT_DES]);
@@ -193,13 +193,13 @@ if($_act == 'btc')
 				if($infos) {
 					$type = $infos[$btc_bid]['btc_type'];
 					Btc::del($_user['mid'], $btc_bid);
-					Unt::editVlg($_user['mid'], get_conf("btc", $type, "prix_unt"), 1);
-					unt::editBtc($_user['mid'], get_conf("btc", $type, "prix_unt"), -1);
+					Unt::editVlg($_user['mid'], $_ses->getConf("btc", $type, "prix_unt"), 1);
+					unt::editBtc($_user['mid'], $_ses->getConf("btc", $type, "prix_unt"), -1);
 
-					Trn::mod($_user['mid'], get_conf("btc", $type, "prix_trn"), 1);
-					Res::mod($_user['mid'], get_conf("btc", $type, "prix_res"), 0.5);
+					Trn::mod($_user['mid'], $_ses->getConf("btc", $type, "prix_trn"), 1);
+					Res::mod($_user['mid'], $_ses->getConf("btc", $type, "prix_res"), 0.5);
 
-					$place = get_conf("btc", $type, "prod_pop");
+					$place = $_ses->getConf("btc", $type, "prod_pop");
 					if($place) {
 						Mbr::edit($_user['mid'], array("place" => $_user['place'] - $place));
 						$_user['place'] -= $place;
@@ -230,7 +230,7 @@ if($_act == 'btc')
 					$_tpl->set('btc_no_bid',true);
 				else {
 					$etat = $infos[$btc_bid]['btc_etat'];
-					$bonus = get_conf("btc", $infos[$btc_bid]['btc_type'], "bonus");
+					$bonus = $_ses->getConf("btc", $infos[$btc_bid]['btc_type'], "bonus");
 					switch($_sub) {
 					case 'des':
 						if ($bonus)
@@ -273,7 +273,7 @@ if($_act == 'btc')
 		} else {
 			define("INDEX_BTC",true);
 		
-			$btc_conf = get_conf("btc", $btc_type);
+			$btc_conf = $_ses->getConf("btc", $btc_type);
 			
 			$_tpl->set('man_array',array($btc_type => $btc_conf));
 			$_tpl->set('man_race',$_user['race']);

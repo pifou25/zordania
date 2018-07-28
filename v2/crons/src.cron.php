@@ -17,8 +17,8 @@ function mbr_src(&$_user) {
 		return;
 
 	$need_btc = array();
-	for($i = 1; $i <= get_conf_gen($race, "race_cfg", "btc_nb"); ++$i)
-		if(get_conf_gen($race, "btc", $i, "prod_src"))
+	for($i = 1; $i <= Config::get($race, "race_cfg", "btc_nb"); ++$i)
+		if(Config::get($race, "btc", $i, "prod_src"))
 			$need_btc[] = $i;
 
 	$sql = "SELECT COUNT(btc_type) AS nb FROM ".$_sql->prebdd."btc WHERE btc_mid = $mid AND btc_type IN (".implode(',', $need_btc).")";

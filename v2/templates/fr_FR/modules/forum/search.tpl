@@ -59,14 +59,14 @@
 			</td>
 		        <td><a href="forum-topic.html?fid={topic[forum_id]}" title="{topic[forum_name]}">{topic[forum_name]}</a></td>
 			<td>
-			<if cond="isset({topic[auth_mid]})"><img src="img/groupes/{topic[auth_gid]}.png" alt="{groupes[{topic[auth_gid]}]}" title="{groupes[{topic[auth_gid]}]}"/> <a href="member-<math oper="str2url({topic[poster]})"/>.html?mid={topic[auth_mid]}" title="Infos sur {topic[poster]}">{topic[poster]}</a></if>
+			<if cond="isset({topic[auth_mid]})"><img src="img/groupes/{topic[auth_gid]}.png" alt="{groupes[{topic[auth_gid]}]}" title="{groupes[{topic[auth_gid]}]}"/> <a href="member-<math oper="Template::str2url({topic[poster]})"/>.html?mid={topic[auth_mid]}" title="Infos sur {topic[poster]}">{topic[poster]}</a></if>
 			<else>{topic[poster]}</else>
 			</td>
 		        <td>{topic[num_replies]}</td>
 		        <td>{topic[last_post]}<br />par 
 			<if cond="isset({topic[last_poster_mid]})">
 			<img src="img/groupes/{topic[last_poster_gid]}.png" alt="{groupes[{topic[last_poster_gid]}]}" title="{groupes[{topic[last_poster_gid]}]}"/>
-			<a href="member-<math oper="str2url({topic[last_poster]})"/>.html?mid={topic[last_poster_mid]}" title="Infos sur {topic[last_poster]}">{topic[last_poster]}</a>
+			<a href="member-<math oper="Template::str2url({topic[last_poster]})"/>.html?mid={topic[last_poster_mid]}" title="Infos sur {topic[last_poster]}">{topic[last_poster]}</a>
 			</if>
 			<else>{topic[last_poster]}</else>
 			[<a href="forum-post.html?tid={topic[tid]}&pid={topic[last_post_id]}#{topic[last_post_id]}"><img src="img/right.png" /></a>]</td>
@@ -86,7 +86,7 @@
 		<img class="blason" title="{post[pposter]}" src="img/mbr_logo/{post[poster_id]}.png" />
 		<h4><a href="forum-post.html?tid={post[tid]}&pid={post[pid]}#{post[pid]}" title="post {post[pid]}">{post[subject]}</a></h4>
 		<p class="post"><math oper="Parser::parse({post[message]})" /></p>
-		<p class="stat">Le {post[pposted]} par <a href="member-<math oper="str2url({post[pposter]})"/>.html?mid={post[poster_id]}" title="Infos sur {post[pposter]}">{post[pposter]}</a></p>
+		<p class="stat">Le {post[pposted]} par <a href="member-<math oper="Template::str2url({post[pposter]})"/>.html?mid={post[poster_id]}" title="Infos sur {post[pposter]}">{post[pposter]}</a></p>
 		</div>
 	</foreach>
 	</else>

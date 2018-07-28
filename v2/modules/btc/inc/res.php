@@ -26,7 +26,7 @@ if ($_sub == "cancel_res") {
 
             $type = $infos[0]['rtdo_type'];
             ResTodo::cancel($_user['mid'], $researchId, $number);
-            Res::mod($_user['mid'], get_conf("res", $type, "prix_res"), $number * 0.5);
+            Res::mod($_user['mid'], $_ses->getConf("res", $type, "prix_res"), $number * 0.5);
         } else
             $_tpl->set("btc_ok", false);
     }
@@ -36,13 +36,13 @@ if ($_sub == "cancel_res") {
     $res_todo = ResTodo::get($_user['mid']);
 
     foreach ($res_todo as $id => $value) {
-        if ($btc_type != get_conf("res", $value['rtdo_type'], "need_btc"))
+        if ($btc_type != $_ses->getConf("res", $value['rtdo_type'], "need_btc"))
             unset($res_todo[$id]);
     }
 
     $_tpl->set("res_todo", $res_todo);
 
-    $conf_res = get_conf("res");
+    $conf_res = $_ses->getConf("res");
     $need_btc = array();
     $need_src = array();
     $need_res = array();
@@ -112,7 +112,7 @@ elseif ($_sub == "add_res") {
         $res_todo_nb += $value['rtdo_nb'];
 
     $_tpl->set("btc_act", "add_res");
-    if (!$type || get_conf("res", $type, "need_btc") != $btc_type)
+    if (!$type || $_ses->getConf("res", $type, "need_btc") != $btc_type)
         $_tpl->set("btc_no_type", true);
     else if (!$nb)
         $_tpl->set("btc_no_nb", true);
@@ -130,7 +130,7 @@ elseif ($_sub == "add_res") {
             $_tpl->set("res_infos", $array);
             $_tpl->set("btc_ok", $ok);
             if ($ok) {
-                Res::mod($_user['mid'], get_conf("res", $type, "prix_res"), -1 * $nb);
+                Res::mod($_user['mid'], $_ses->getConf("res", $type, "prix_res"), -1 * $nb);
                 ResTodo::add($_user['mid'], [$type => $nb]);
             }
         }

@@ -82,7 +82,7 @@ class Trn extends Illuminate\Database\Eloquent\Model {
     /* Quand on crée un membre */
     static function init(int $mid)
     {
-        $trn = self::factor(get_conf('race_cfg', 'debut', 'trn'));
+        $trn = self::factor(Session::$SES->getConf('race_cfg', 'debut', 'trn'));
         return Trn::insertGetId(array_merge(['trn_mid' => $mid], $trn));
     }
     

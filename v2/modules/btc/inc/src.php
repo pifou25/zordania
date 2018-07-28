@@ -15,7 +15,7 @@ require_once("lib/src.lib.php");
 		$_tpl->set("btc_no_sid",true);
 	else {
 		if(SrcTodo::del($_user['mid'], $sid)) {
-			Res::mod($_user['mid'], get_conf("src", $sid, "prix_res"), 0.5);
+			Res::mod($_user['mid'], $_ses->getConf("src", $sid, "prix_res"), 0.5);
 			$_tpl->set("btc_ok",true);
 		} else
 		$_tpl->set("btc_ok",false);
@@ -31,7 +31,7 @@ elseif($_sub == "src")
 	
 	$_tpl->set("src_todo",index_array($src_todo, 'stdo_type'));
 	
-	$conf_src = get_conf("src");
+	$conf_src = $_ses->getConf("src");
 	$need_src = array();
 	$need_res = array();
 	$need_btc = array();
@@ -103,7 +103,7 @@ elseif($_sub == "add_src")
 			$_tpl->set("btc_ok", $ok);
 			if($ok) {
 				SrcTodo::add($_user['mid'], $type);
-				Res::mod($_user['mid'], get_conf("src", $type, "prix_res"), -1);
+				Res::mod($_user['mid'], $_ses->getConf("src", $type, "prix_res"), -1);
 			}
 		}
 	}

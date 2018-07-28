@@ -9,7 +9,19 @@ $type = request("type", "string", "get");
 if(!isset($_races[$race]) or !$_races[$race])
 	$race = 1;
 
-load_conf($race);
+/* trier un array d'arrays par rapport à une valeur */
+function sksort(&$array, $subkey="id", $sort_ascending=false) {
+	$temp_arr = array();
+	foreach($array as $key => $val){
+		$val['nid'] = $key; // conserver l'id
+		$temp_array[$val[$subkey]] = $val;
+	}
+	if ($sort_ascending) ksort($temp_array);
+	else krsort($temp_array);
+	$array = $temp_array;
+}
+
+Config::load($race);
 /* virer les races invisibles ici */
 foreach($_races as $key => $value)
 	if(!$value)
@@ -31,17 +43,17 @@ $_tpl->set('mnl_tree', $page === 0);
 
 if($page == 0) /* page des arbres, toutes les infos necessaires */
 {
-	$_tpl->set('man_unt',$_conf[$race]->unt);
-	$_tpl->set('man_btc',$_conf[$race]->btc);
-	$_tpl->set('man_src',$_conf[$race]->src);
-	$_tpl->set('man_res',$_conf[$race]->res);
+	$_tpl->set('man_unt',Config::get($race)->unt);
+	$_tpl->set('man_btc',Config::get($race)->btc);
+	$_tpl->set('man_src',Config::get($race)->src);
+	$_tpl->set('man_res',Config::get($race)->res);
 	$_tpl->set('man_url',"manual.html?page=$page");
 } 
 
 if(!$type && is_numeric($page) && $page >= 0 && $page <= 26)
 {
 	$_tpl->set('mnl_tpl','modules/manual/pages/'.$page.'.tpl');
-	$_tpl->set_ref('conf', $_conf[$race]);
+	$_tpl->set('conf', Config::get($race));
 	$_tpl->set('man_url',"manual.html?page=$page");
 	// diplomatie
 	if ($page == 10) {
@@ -55,7 +67,7 @@ if(!$type && is_numeric($page) && $page >= 0 && $page <= 26)
 	/* decroiser le tableau : $res_array[res type][race] = conf */
 	foreach ($_races as $i => $value)
 		if($i != 0 and $value) {
-			$tmp = get_conf_gen($i, 'res');
+			$tmp = Config::get($i, 'res');
 			foreach($tmp as $res => $val)
 				 $res_array[$res][$i] = $val;
 		}
@@ -77,7 +89,7 @@ if(!$type && is_numeric($page) && $page >= 0 && $page <= 26)
         else
             $_tpl->set('mnl_tpl','modules/manual/race.tpl');
 
-        $cfg = $_conf[$race]->$type;
+        $cfg = Config::get($race)->$type;
         // filtre pour avoir 1 seul élément
         $value = request('value', 'uint', 'get');
         if($value){

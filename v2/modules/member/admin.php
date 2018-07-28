@@ -1,5 +1,5 @@
 <?php
-if(!defined("_INDEX_") || !can_d(DROIT_ADM_MBR)){ exit; }
+if(!defined("_INDEX_") || !$_ses->canDo(DROIT_ADM_MBR)){ exit; }
 
 require_once("lib/member.lib.php");
 require_once("lib/unt.lib.php");
@@ -7,7 +7,7 @@ require_once("lib/alliances.lib.php");
 
 $_tpl->set("module_tpl","modules/member/admin.tpl");
 if($_act == "del" || $_act == "edit") {
-	if(!can_d(DROIT_ADM_EDIT)) {
+	if(!$_ses->canDo(DROIT_ADM_EDIT)) {
 		$_act = ""; // de rien faire
 		$_tpl->set('act_interdit', true);
 	}
@@ -289,7 +289,7 @@ if($_act == "del") {
 			// vider les ressources d'une légion
 			$lid = request('leg_res_init','uint','get');
 			if($lid) {
-				if(!can_d(DROIT_ADM_EDIT)) { // admin seulement
+				if(!$_ses->canDo(DROIT_ADM_EDIT)) { // admin seulement
 					$_tpl->set('act_interdit', true);
 				} else if(isset($legions->legs[$lid])) {
 					$res_array = $legions->legs[$lid]->get_res();
@@ -317,7 +317,7 @@ if($_act == "del") {
                             $leg_bat_th = array();
                             foreach ($btc_array as $btc) {
                                     /* compter la legion theorique des batiments */
-                                    $prix_unt = get_conf_gen($mbr_array['mbr_race'], 'btc', $btc['btc_type'], 'prix_unt');
+                                    $prix_unt = Config::get($mbr_array['mbr_race'], 'btc', $btc['btc_type'], 'prix_unt');
                                     if ($prix_unt) {
                                             array_ksum($leg_bat_diff, $prix_unt, $btc['btc_nb']);/* difference = - existant + requis */
                                             array_ksum($leg_bat_th, $prix_unt, $btc['btc_nb']);/* requis dans les batiments */
@@ -331,7 +331,7 @@ if($_act == "del") {
                         $_tpl->set("leg_race", $mbr_array['mbr_race']);
 			$_tpl->set('btc_done', $btc_array);
 			$_tpl->set('btc_todo', Btc::get($mid, [], [BTC_ETAT_TODO]));
-			$conf_btc = get_conf_gen($mbr_array['mbr_race'], 'btc');
+			$conf_btc = Config::get($mbr_array['mbr_race'], 'btc');
 			$_tpl->set('conf_btc', $conf_btc);
 
 
@@ -339,7 +339,7 @@ if($_act == "del") {
 			// edit ressources du joueur
 			$add_res = request('add_res', 'array', 'post');
 			if(!empty($add_res)) {
-				if(!can_d(DROIT_ADM_EDIT)) { // admin seulement
+				if(!$_ses->canDo(DROIT_ADM_EDIT)) { // admin seulement
 					$_tpl->set('act_interdit', true);
 				} else {
 					foreach($add_res as $key=>$value)
@@ -368,9 +368,9 @@ if($_act == "del") {
 			/* comptage des points */
 			$src_array = Src::get($mid);
 			$mbr_array['pts']['src']['nb'] = count($src_array);
-			$mbr_array['pts']['src']['coef'] = get_conf_gen($mbr_array['mbr_race'], "race_cfg", "src_nb");
+			$mbr_array['pts']['src']['coef'] = Config::get($mbr_array['mbr_race'], "race_cfg", "src_nb");
 			$mbr_array['pts']['src']['pts'] = count($src_array) 
-				* 10000 / (get_conf_gen($mbr_array['mbr_race'], "race_cfg", "src_nb") + 1);
+				* 10000 / (Config::get($mbr_array['mbr_race'], "race_cfg", "src_nb") + 1);
 
 			$btc_arr = Btc::get($mid);
 			$btc_vie = 0;
@@ -382,7 +382,7 @@ if($_act == "del") {
 			$unt_array = Leg::get(['mid' => $mid, 'sum' => true]);
 			$pts_armee = 0;
 			foreach($unt_array as $key => $value){
-				$unt_cfg = get_conf_gen($mbr_array['mbr_race'], "unt", $value['unt_type']);
+				$unt_cfg = Config::get($mbr_array['mbr_race'], "unt", $value['unt_type']);
 
                                 if ($unt_cfg['role'] == TYPE_UNT_CIVIL){
                                     $unt_array[$key]['pts'] = 0;

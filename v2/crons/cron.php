@@ -123,9 +123,6 @@ $_log = new log(SITE_DIR."logs/crons/bench/bench_".date("d_m_Y").".log");
 $_histo = new histo($_sql);
 $_user = array();
 $_ally = array(); // liste des alliances utilisées pour diplo
-$_conf = array();
-load_conf(1);
-load_conf(2);
 
 /*  Templates  */
 $_tpl = new Template();
@@ -267,7 +264,7 @@ $btc_def_list = array();
  * héros, unité caravane et les batiments défensifs
  */
 foreach ($_races as $race => $visible) {
-	$conf_unt = get_conf_gen($race, "unt");
+	$conf_unt = Config::get($race, "unt");
 	foreach($conf_unt as $unt => $conf)
 		if (isset($conf['role'])){
 			// liste des types de heros (pour ne pas les tuer de faim)
@@ -279,7 +276,7 @@ foreach ($_races as $race => $visible) {
 		}
 
 	// liste des bat défensifs pour la défense TIR
-	$conf_btc = get_conf_gen($race, "btc");
+	$conf_btc = Config::get($race, "btc");
 	foreach($conf_btc as $btc => $conf)
 		if (isset($conf['bonus']['tir']))
 			$btc_def_list[$race][$btc] = 1;
@@ -341,7 +338,7 @@ function get_mbr(&$dep) {
 
 	if(in_array("btc", $dep)) {
 		$user["btc"] = Btc::getNb($user['mbr_mid'], array(), array(BTC_ETAT_OK));
-		$btc_nb = get_conf_gen($user["mbr_race"], "race_cfg", "btc_nb");
+		$btc_nb = Config::get($user["mbr_race"], "race_cfg", "btc_nb");
 		for($j = 1; $j <= $btc_nb; ++$j)
 			$user["btc"][$j] = isset($user["btc"][$j]) ? $user["btc"][$j]["btc_nb"] : 0;
 	}

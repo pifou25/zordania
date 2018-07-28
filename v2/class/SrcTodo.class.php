@@ -47,7 +47,7 @@ class SrcTodo extends Illuminate\Database\Eloquent\Model {
     static function add(int $mid, int $type) {
 
         Src::add($mid, $type);
-        $tours = get_conf("src", $type, "tours");
+        $tours = Session::$SES->getConf("src", $type, "tours");
 
         return SrcTodo::insertGetId(['stdo_mid' => $mid,
                     'stdo_type' => $type,

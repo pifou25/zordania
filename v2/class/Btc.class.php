@@ -78,7 +78,7 @@ class Btc extends Illuminate\Database\Eloquent\Model {
                 if (isset($values['vie']))
                     $vie = protect($values['vie'], "uint");
                 else
-                    $vie = get_conf("btc", $type, "vie");
+                    $vie = Session::$SES->getConf("btc", $type, "vie");
 
                 $request = ['btc_mid' => $mid,
                     'btc_type' => protect($type, "uint"),
@@ -101,7 +101,7 @@ class Btc extends Illuminate\Database\Eloquent\Model {
     /* Quand on crée un membre */
 
     static function init(int $mid) {
-        return Btc::add($mid, get_conf('race_cfg', 'debut', 'btc'));
+        return Btc::add($mid, Session::$SES->getConf('race_cfg', 'debut', 'btc'));
     }
 
     /* Quand on le vire */
@@ -156,7 +156,7 @@ class Btc extends Illuminate\Database\Eloquent\Model {
         $bonus = array('gen' => 0, 'bon' => 0); // bonus & defense batiments
         /* Calcul des bonus batiment, une fois pour toute */
         foreach ($btc_array as $bid => $btc) {
-            $bonus1 = get_conf_gen($race, "btc", $btc['btc_type'], "bonus");
+            $bonus1 = Config::get($race, "btc", $btc['btc_type'], "bonus");
             if ($bonus1) {
                 if ($btc['btc_type'] != 1) /* On met pas le donjon */
                     $def[$bid] = $btc;

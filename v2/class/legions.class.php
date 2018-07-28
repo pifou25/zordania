@@ -12,7 +12,7 @@ class leg_gen extends legion { /* surcharge du constructeur pour 1 légion ... *
 		$this->etat = $this->infos['leg_etat'];
 		if($this->infos['hro_id']) { // récupérer la vie du héros
 			$this->hid = $this->infos['hro_id'];
-			$this->infos['hro_vie_conf'] = get_conf_gen($this->race, 'unt', $this->hro('type'), 'vie');
+			$this->infos['hro_vie_conf'] = Config::get($this->race, 'unt', $this->hro('type'), 'vie');
 			$this->comp = $this->infos['bonus'];
 		}
 

@@ -13,7 +13,7 @@ if(!$_sub)
 	$unt_todo = UntTodo::get($_user['mid']);
 	
 	foreach($unt_todo as $id => $value) {
-		if(!in_array($btc_type,get_conf("unt",$value['utdo_type'],"need_btc")))
+		if(!in_array($btc_type,$_ses->getConf("unt",$value['utdo_type'],"need_btc")))
 			unset($unt_todo[$id]);
 	}
 	
@@ -23,7 +23,7 @@ if(!$_sub)
 
 	$_tpl->set("unt_todo",$unt_todo);
 	$_tpl->set("src_todo",$src_todo);
-	$_tpl->set("src_conf",get_conf("src"));
+	$_tpl->set("src_conf",$_ses->getConf("src"));
 
 }
 ?>

@@ -28,14 +28,14 @@ if(!is_float(ZORD_SPEED)) {
  
 $_tpl->set("stats_next_turn",$next_turn);
 
-if(!$log_in_out && can_d(DROIT_PLAY) && $_user['etat'] != MBR_ETAT_INI)
+if(!$log_in_out && $_ses->canDo(DROIT_PLAY) && $_user['etat'] != MBR_ETAT_INI)
 {
-	$vil_btc = get_conf("race_cfg", "primary_btc", "vil");
-	$ext_btc = get_conf("race_cfg", "primary_btc", "ext");
+	$vil_btc = $_ses->getConf("race_cfg", "primary_btc", "vil");
+	$ext_btc = $_ses->getConf("race_cfg", "primary_btc", "ext");
 	$array_btc = $vil_btc + $ext_btc;
 	$cond_btc = array_keys($array_btc);
 
-	$cond_res = get_conf("race_cfg", "primary_res");
+	$cond_res = $_ses->getConf("race_cfg", "primary_res");
 	$prim_res = Res::get($_user['mid'], $cond_res);
 
 	foreach($prim_res as $key => $value)

@@ -1,5 +1,5 @@
 <?php
-if(!defined("_INDEX_") or !can_d(DROIT_ADM_AL)){ exit; }
+if(!defined("_INDEX_") or !$_ses->canDo(DROIT_ADM_AL)){ exit; }
 
 require_once("lib/member.lib.php");
 require_once("lib/alliances.lib.php");
@@ -7,7 +7,7 @@ require_once("lib/alliances.lib.php");
 $_tpl->set("module_tpl","modules/alliances/admin.tpl");
 
 if(in_array($_sub, array('add_res', 'shoot', 'chef', 'edit_mbr'))) {
-	if(!can_d(DROIT_ADM_EDIT)) {
+	if(!$_ses->canDo(DROIT_ADM_EDIT)) {
 		$_sub = "";
 	}
 }

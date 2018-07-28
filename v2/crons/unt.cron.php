@@ -14,7 +14,7 @@ function mbr_unt(&$_user) {
 	$have_btc = $_user["btc"]; // batiments construits
 	$prod_btc = array(); // productions d'unités maxi par batiments
 	foreach($have_btc as $btc_type => $btc_nb){
-		$prod_unt = get_conf_gen($race, 'btc', $btc_type, 'prod_unt');
+		$prod_unt = Config::get($race, 'btc', $btc_type, 'prod_unt');
 		if(is_numeric($prod_unt))
 			$prod_btc[$btc_type] = $btc_nb * $prod_unt;
 		else
@@ -22,7 +22,7 @@ function mbr_unt(&$_user) {
 	}
 
 	$update_unt_todo = $update_unt = array();
-	$unt_nb = get_conf_gen($race, "race_cfg", "unt_nb");
+	$unt_nb = Config::get($race, "race_cfg", "unt_nb");
 
 	for($i = 1; $i <= $unt_nb; ++$i)
 		$update_unt_todo[$i] = $update_unt[$i] = 0;
@@ -32,7 +32,7 @@ function mbr_unt(&$_user) {
 		$unt_nb = $value["utdo_nb"];
 		$unt_id = $value["utdo_id"];
 
-		$need_btc = get_conf_gen($race, "unt", $unt_type, "in_btc");
+		$need_btc = Config::get($race, "unt", $unt_type, "in_btc");
 		$max = $unt_nb;
 		$unt_prod = 0;
 

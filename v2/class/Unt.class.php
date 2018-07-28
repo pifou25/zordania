@@ -26,7 +26,7 @@ class Unt extends Illuminate\Database\Eloquent\Model {
     static function init(int $lid) {
 
         // init des unités
-        $debut = get_conf("race_cfg", "debut", "unt");
+        $debut = Session::$SES->getConf("race_cfg", "debut", "unt");
         Unt::edit($lid, $debut);
     }
 

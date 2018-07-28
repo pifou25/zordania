@@ -44,7 +44,7 @@ class legion {
 			$this->etat = $this->infos['leg_etat'];
 			if($this->infos['hro_id']) { // récupérer la vie du héros
 				$this->hid = $this->infos['hro_id'];
-				$this->infos['hro_vie_conf'] = get_conf_gen($this->race, 'unt', $this->hro('type'), 'vie');
+				$this->infos['hro_vie_conf'] = Config::get($this->race, 'unt', $this->hro('type'), 'vie');
 				$this->comp = $this->infos['bonus'];
 			}
 			return true;
@@ -77,7 +77,7 @@ class legion {
 
 	function cp_bonus($type) { // donne le bonus de la compétence $type si elle est activée
 		if ($this->comp == $type) {
-			$return = get_conf_gen($this->race, 'comp', $type, 'bonus');
+			$return = Config::get($this->race, 'comp', $type, 'bonus');
 			if (is_numeric($return))
 				return $return;
 			else
@@ -110,7 +110,7 @@ class legion {
 			$this->loadUnt();
 
 		foreach($this->unt as $type => $nb){
-			$untRole = get_conf_gen($this->race, 'unt', $type, 'role');
+			$untRole = Config::get($this->race, 'unt', $type, 'role');
 			if($untRole == $role)
 				$result[$type] = $nb;
 		}
@@ -155,7 +155,7 @@ class legion {
 			return $return;
 		} else {
 			$nb = round($nb * $factor);
-			$rang = (int) get_conf_gen($this->race, 'unt', $unt, 'rang');
+			$rang = (int) Config::get($this->race, 'unt', $unt, 'rang');
 			// modifier les unités si déjà chargé
 			if ($this->w_load_unt) {
 				if (!isset($this->unt[$unt])) $this->unt[$unt] =0;
@@ -184,7 +184,7 @@ class legion {
 
 	function get_edit_unt($type = 0) { // recup nb d'unites a modifier
 		if ($type) {
-			$rang = (int) get_conf_gen($this->race, 'unt', $type, 'rang');
+			$rang = (int) Config::get($this->race, 'unt', $type, 'rang');
 			if(isset($this->edit_unt[$rang][$type]))
 				return $this->edit_unt[$rang][$type];
 			else
@@ -254,17 +254,17 @@ class legion {
 			if(!$this->vide()) {
 				foreach($this->unt as $unt => $nb) {
 					/* on ne prend pas en compte les unités civiles */
-					$role = get_conf_gen($this->race, 'unt', $unt, 'role');
+					$role = Config::get($this->race, 'unt', $unt, 'role');
 					if ($role != TYPE_UNT_CIVIL) {
 						$this->stats['unt_nb']  += $nb;
-						$this->stats['atq_unt'] += (int) get_conf_gen($this->race, 'unt', $unt, 'atq_unt') * $nb;
-						$this->stats['atq_btc'] += (int) get_conf_gen($this->race, 'unt', $unt, 'atq_btc') * $nb;
-						$this->stats['def']     += (int) get_conf_gen($this->race, 'unt', $unt, 'def') * $nb;
+						$this->stats['atq_unt'] += (int) Config::get($this->race, 'unt', $unt, 'atq_unt') * $nb;
+						$this->stats['atq_btc'] += (int) Config::get($this->race, 'unt', $unt, 'atq_btc') * $nb;
+						$this->stats['def']     += (int) Config::get($this->race, 'unt', $unt, 'def') * $nb;
 						if ($role == TYPE_UNT_HEROS) // vie restante du héros
 							$this->stats['vie'] += $this->hro('vie');
 						else
-							$this->stats['vie'] += (int) get_conf_gen($this->race, 'unt', $unt, 'vie') * $nb;
-						$bon_unt = get_conf_gen($this->race, "unt", $unt, "bonus");
+							$this->stats['vie'] += (int) Config::get($this->race, 'unt', $unt, 'vie') * $nb;
+						$bon_unt = Config::get($this->race, "unt", $unt, "bonus");
 						foreach ($bon_unt as $key => $value)
 							$this->bonus[$key] += $value * $nb;
 					}
@@ -277,7 +277,7 @@ class legion {
 				//$this->bonus['hro'] = round($this->hro('xp') / 100,1); // plus de bonus XP
 
 				if ($this->comp) {
-					$bonus = get_conf_gen($this->race, 'comp', $this->comp, 'bonus');
+					$bonus = Config::get($this->race, 'comp', $this->comp, 'bonus');
 					if ($this->comp == CP_BOOST_OFF || $this->comp == CP_BOOST_OFF_DEF)
 						$this->bonus['cpt']['atq'] = $bonus;
 					if ($this->comp == CP_BOOST_DEF || $this->comp == CP_BOOST_OFF_DEF)
@@ -315,7 +315,7 @@ class legion {
 
 	function set_bonus_btc($bonus) {
 		if ($this->comp == CP_DEFENSE_EPIQUE)
-			$bonus_cp = get_conf_gen($this->race, 'comp', $this->comp, 'bonus');
+			$bonus_cp = Config::get($this->race, 'comp', $this->comp, 'bonus');
 		else
 			$bonus_cp = 0;
 		$this->bonus['btc'] = $bonus['bon'] + $bonus_cp;
@@ -353,7 +353,7 @@ class legion {
 		else if(empty($this->unt[$type]))
 			return 0;
 		else // nb unités * vie * bonus compétence
-			return round( $this->get_unt[$type] * (int) get_conf_gen($this->race, 'unt', $unt, 'vie')
+			return round( $this->get_unt[$type] * (int) Config::get($this->race, 'unt', $unt, 'vie')
 				* ( 1 + (isset($this->bonus['cpt']['vie'])?$this->bonus['cpt']['vie']:0) / 100));
 	}
 
@@ -380,8 +380,8 @@ class legion {
 
 		$speed_array = $carry_array = array();
 		foreach($have_unt as $type => $nb) {
-			$vit = protect(get_conf_gen($this->race, "unt", $type, "vit"), "uint");
-			$carry = protect(get_conf_gen($this->race, "unt", $type, "carry"), "uint");
+			$vit = protect(Config::get($this->race, "unt", $type, "vit"), "uint");
+			$carry = protect(Config::get($this->race, "unt", $type, "carry"), "uint");
 		
 			if($carry) {
 				if(!isset($carry_array[$vit]))
@@ -442,9 +442,9 @@ class legion {
 
 		foreach($unt as $type => $nb) {
 			/* supprimer les unites civiles ?? pas les heros */
-			$role = get_conf_gen($this->race, "unt", $type, "role");
+			$role = Config::get($this->race, "unt", $type, "role");
 			if (($civils || $role != TYPE_UNT_CIVIL) && $role != TYPE_UNT_HEROS) {
-				$vie_unt = get_conf_gen($this->race, "unt", $type, "vie");
+				$vie_unt = Config::get($this->race, "unt", $type, "vie");
 				$nb_max = round($deg_calc / $vie_unt);
 				$pertes[$type] = $this->del_unt($type, $nb_max);
 				$deg_calc -= $nb * $vie_unt;

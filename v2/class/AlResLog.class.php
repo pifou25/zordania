@@ -68,7 +68,7 @@ class AlResLog extends Illuminate\Database\Eloquent\Model {
             'arlog_type' => $type,
             'arlog_nb' => $nb,
             'arlog_date' => DB::raw('NOW()'),
-            'arlog_ip' => get_ip()];
+            'arlog_ip' => Session::$SES->getIp()];
         return AlResLog::insertGetId($request);
     }
 

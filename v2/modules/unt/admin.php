@@ -2,15 +2,15 @@
 
 if(!defined("_INDEX_")) exit;
 
-if (can_d(DROIT_ADM)) {
+if ($_ses->canDo(DROIT_ADM)) {
 
 $_tpl->set("module_tpl","modules/unt/admin.tpl");
 
 $race = request("race", "uint", "get", $_user['race']);
 if(!in_array($race,$_races))
 	$race = 1;
-load_conf($race);
-$race_config = $_conf[$race];
+
+$race_config = Config::get($race);
 
 $_tpl->set('man_race',$race);
 if($race != $_user['race'])

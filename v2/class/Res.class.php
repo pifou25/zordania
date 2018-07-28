@@ -92,7 +92,7 @@ class Res extends Model {
     /* Quand on crée un membre */
     static function init(int $mid)
     {
-        $res = self::factor(get_conf('race_cfg', 'debut', 'res'));
+        $res = self::factor(Session::$SES->getConf('race_cfg', 'debut', 'res'));
         return Res::insertGetId(array_merge(['res_mid' => $mid], $res));
     }
     

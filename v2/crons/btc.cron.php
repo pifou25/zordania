@@ -29,9 +29,9 @@ function mbr_btc(&$_user) {
 	
 	foreach($btc_array as $key => $value) {
 		$type = $value["btc_type"];
-		$vie = protect(get_conf_gen($race, "btc", $type, "vie"), "uint");
-		$place = protect(get_conf_gen($race, "btc", $type, "prod_pop"), "uint");
-		$tours = protect(get_conf_gen($race, "btc", $type, "tours"), "uint");
+		$vie = protect(Config::get($race, "btc", $type, "vie"), "uint");
+		$place = protect(Config::get($race, "btc", $type, "prod_pop"), "uint");
+		$tours = protect(Config::get($race, "btc", $type, "tours"), "uint");
 
 		switch($value["btc_etat"]) {
 /*

@@ -1,6 +1,6 @@
 <?php
 //Verif
-if(defined("_INDEX_") and can_d(DROIT_ADM_MBR)){
+if(defined("_INDEX_") and $_ses->canDo(DROIT_ADM_MBR)){
 
 require_once("lib/member.lib.php");
 require_once("lib/alliances.lib.php");

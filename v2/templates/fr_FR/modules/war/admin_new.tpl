@@ -72,8 +72,8 @@ function CopyJournalToBBCode(aid) {
 
 	<dt>
 	<a href="admin-histo.html?mid={mbr_array[mbr_mid]}&amp;module=war&amp;aid={value[atq_aid]}&amp;sub={war_sub}">Le {value[atq_date_formated]}</a>
-	<a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a> a attaqué 
-	<a href="member-<math oper="str2url({value[mbr_pseudo2]})"/>.html?mid={value[atq_mid2]}">{value[mbr_pseudo2]}</a>
+	<a href="member-<math oper="Template::str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a> a attaqué 
+	<a href="member-<math oper="Template::str2url({value[mbr_pseudo2]})"/>.html?mid={value[atq_mid2]}">{value[mbr_pseudo2]}</a>
 	</dt>
 
 

@@ -1,6 +1,6 @@
 <?php
 //Verif
-if(!defined("_INDEX_") || !can_d(DROIT_ADM)){ exit; }
+if(!defined("_INDEX_") || !$_ses->canDo(DROIT_ADM)){ exit; }
 
 $_tpl->set("admin_tpl","modules/irc/admin.tpl");
 $_tpl->set("admin_name","Barnabe");

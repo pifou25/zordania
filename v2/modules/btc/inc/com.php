@@ -6,7 +6,7 @@ require_once("lib/src.lib.php");
 
 $max_nb = 0;
 $max_ventes = 0;
-$com_conf = get_conf("btc", $btc_type, "com");
+$com_conf = $_ses->getConf("btc", $btc_type, "com");
 
 $need_src = array_keys($com_conf);
 $have_src = Src::get($_user['mid'], $need_src);
@@ -121,7 +121,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 			$com_mod = 1;
 		}
 		if ($_user['bonus'] == CP_GENIE_COMMERCIAL) {
-			$bonus = get_conf('comp', CP_GENIE_COMMERCIAL, 'bonus');
+			$bonus = $_ses->getConf('comp', CP_GENIE_COMMERCIAL, 'bonus');
 			$com_mod_max = $com_mod_max*(1-$bonus/100);
 			$com_mod = $com_mod*(1-$bonus/100);
 		}
@@ -169,7 +169,7 @@ elseif($_sub == "ven") /* faire une vente */
 		$com_prix = request("com_prix", "uint", "post");
 		$com_vente = request("com_vente", "uint", "post"); // nb de ventes identiques
 		
-		if($com_type <= 1 || !get_conf("res", $com_type)) {
+		if($com_type <= 1 || !$_ses->getConf("res", $com_type)) {
 			//choix du type de la ressource
 			$_tpl->set('btc_sub','choix_type');
 			$list_res = Res::get($_user['mid']);

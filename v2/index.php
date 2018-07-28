@@ -149,7 +149,7 @@ mark('ses');
 /* Historique */
 $_histo = new histo($_sql);
 
-if(SITE_TRAVAUX && !can_d(DROIT_ADM_TRAV))
+if(SITE_TRAVAUX && !$_ses->canDo(DROIT_ADM_TRAV))
 {
 	//die( "DROIT $_file $_act $cron_lock");
 	$_ses->logout();
@@ -168,11 +168,6 @@ $_sql->set_dbdecal($_user['decal']);
 $_tpl->set_lang($_user['lang']);
 $_tpl->set_ref('_user',$_user);
 $_tpl->set('_file',$_file);
-
-/*
-* Conf
-*/
-$_conf = array(); /* Inutile de la charger, get_conf s'en charge ! */
 
 /*
 * Affichage
@@ -198,10 +193,10 @@ $_tpl->set("adsense_code",$_adsense_css[$_user['design']]);
 
 /* Droits */
 $_tpl->set("ses_loged", ($_user['login'] != "guest"));
-$_tpl->set("ses_admin", can_d(DROIT_ADM));
-$_tpl->set("ses_can_play", can_d(DROIT_PLAY));
+$_tpl->set("ses_admin", $_ses->canDo(DROIT_ADM));
+$_tpl->set("ses_can_play", $_ses->canDo(DROIT_PLAY));
 $_tpl->set("ses_mbr_etat_ok", ($_user['etat'] == MBR_ETAT_OK));
-$_tpl->set("ses_adm_msg", can_d(DROIT_ADM_MBR) && $admin_cache->msg_report > 0);
+$_tpl->set("ses_adm_msg", $_ses->canDo(DROIT_ADM_MBR) && $admin_cache->msg_report > 0);
 
 
 $lock_array = array('msg','forum','news','admin','404','manual','faq','irc','a_propos','notes','bonus','session');
@@ -260,7 +255,7 @@ if($_display == "xml") { /* Sortie en XML */
 	}
 
 	$_tpl->set('module',$_file);
-	$_tpl->set("cant_view_this",!can_d(DROIT_SITE));
+	$_tpl->set("cant_view_this",!$_ses->canDo(DROIT_SITE));
 	echo $_tpl->get("ajax.tpl",1);
 	mark('tpl');
 } else {
@@ -296,7 +291,7 @@ if($_display == "xml") { /* Sortie en XML */
 	require_once("include/stats.php");
 	mark('stats');
 
-	$_tpl->set("cant_view_this",!can_d(DROIT_SITE));
+	$_tpl->set("cant_view_this",!$_ses->canDo(DROIT_SITE));
 
 	$_tpl->set("sv_nbreq",$_sql->nbreq);
 	$_tpl->set("sv_diff",$t1);

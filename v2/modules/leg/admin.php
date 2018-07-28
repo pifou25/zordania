@@ -1,6 +1,6 @@
 <?php
 //Verif
-if(!defined("_INDEX_") || !can_d(DROIT_ADM_COM)){ exit; }
+if(!defined("_INDEX_") || !$_ses->canDo(DROIT_ADM_COM)){ exit; }
 
 require_once("lib/unt.lib.php");
 
@@ -9,7 +9,7 @@ $_tpl->set("admin_name","Compétences");
 
 $cpt = array();
 foreach ($_races as $i => $value) {
-	$tmp = get_conf_gen($i, 'comp');
+	$tmp = Config::get($i, 'comp');
 	foreach($tmp as $key => $val)
 		$cpt[$val['type']][$key][$i] = $val;
 }

@@ -2,7 +2,7 @@
 
 //Verifications
 if(!defined("_INDEX_")){ exit; }
-if(!can_d(DROIT_PLAY))
+if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else
 {
@@ -371,15 +371,15 @@ case 'make_atq':
 					$btc['btc_vie'] = 0;
 
 					/* Bâtiment détruit, faut virer les unités */
-					$prix_unt = get_conf_gen($race2, "btc", $btc["btc_type"], "prix_unt");
+					$prix_unt = Config::get($race2, "btc", $btc["btc_type"], "prix_unt");
 					foreach($prix_unt as $type => $nb)
 						if ($bat_lid) $legions->legs[$bat_lid]->del_unt($type, $nb);
 
 					/* Et les terrains ! */
-					Trn::mod($mid_def, get_conf_gen($race2, "btc", $btc["btc_type"], 'prix_trn'));
+					Trn::mod($mid_def, Config::get($race2, "btc", $btc["btc_type"], 'prix_trn'));
 
 					/* Et la pop */
-					$update_place += (int) get_conf_gen($race2, "btc", $btc["btc_type"], 'prod_pop');
+					$update_place += (int) Config::get($race2, "btc", $btc["btc_type"], 'prod_pop');
 				}
 			} else {/* le batiment est seulement endommagé */
 				$btc['btc_vie'] -= $att_bat;
@@ -394,7 +394,7 @@ case 'make_atq':
 	foreach ($btc_edit as $bid => $btc)
 		$bilan['btc_edit'][] = array('type' => $btc['btc_type'],
 					'vie' => $btc['btc_vie'],
-					'vie_max' => get_conf_gen($race2,"btc",$btc['btc_type'],"vie"));
+					'vie_max' => Config::get($race2,"btc",$btc['btc_type'],"vie"));
 
 
 	/* defense : cumuler les légions en défense */
@@ -444,9 +444,9 @@ case 'make_atq':
 	// 1 ressource de chaque batiment détruit
 	foreach ($btc_edit as $bid => $value){
 		if (!$value['btc_vie']) { // bâtiment complètement détruit
-			$prix =	get_conf_gen($race2,"btc",$value["btc_type"],"prix_res");
+			$prix =	Config::get($race2,"btc",$value["btc_type"],"prix_res");
 			$res = array_rand($prix);
-			$vie = get_conf_gen($race2,"btc",$value["btc_type"],"vie");
+			$vie = Config::get($race2,"btc",$value["btc_type"],"vie");
 			$nb = $prix[$res] * round(($vie - $value['btc_vie']) / $vie);
 			if($nb) {
 				if(!isset($bilan['butin']['att'][$res]))

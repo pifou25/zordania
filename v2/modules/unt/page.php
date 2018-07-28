@@ -1,6 +1,6 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
-if(!can_d(DROIT_PLAY)){
+if(!$_ses->canDo(DROIT_PLAY)){
 	$_tpl->set("need_to_be_loged",true); 
 }else{
 
@@ -17,10 +17,10 @@ $unt_type = request("unt_type", "uint", "get");
 if($_act == "pend") {
 	$unt_nb = request("unt_nb", "uint", "post");
 
-	if(!$unt_type || !$unt_nb || !$mbr->get_conf("unt", $unt_type)) {
+	if(!$unt_type || !$unt_nb || !$mbr->getConf("unt", $unt_type)) {
 		$_act = false;
 		$_tpl->set('unt_sub','error');
-	} else if ($mbr->get_conf('unt', $unt_type, 'role') == TYPE_UNT_HEROS) {
+	} else if ($mbr->getConf('unt', $unt_type, 'role') == TYPE_UNT_HEROS) {
 		$_act = false;
 		$_tpl->set('no_heros',false);
 	} else {
@@ -31,7 +31,7 @@ if($_act == "pend") {
 			Unt::editVlg($_user['mid'], array($unt_type => $unt_nb), -1);
 			Mbr::edit($_user['mid'], array('population' => Leg::countUnt($_user['mid'])));
 			// on rembourse 50% du prix de ressources
-			Res::mod($_user['mid'], $mbr->get_conf("unt", $unt_type, "prix_res"), 0.5 * $unt_nb);
+			Res::mod($_user['mid'], $mbr->getConf("unt", $unt_type, "prix_res"), 0.5 * $unt_nb);
 			$_tpl->set('unt_sub','ok');
 
 		}
@@ -39,7 +39,7 @@ if($_act == "pend") {
 }
 
 if(!$_act) {
-	$nb = $mbr->get_conf("race_cfg", "unt_nb");
+	$nb = $mbr->getConf("race_cfg", "unt_nb");
 	for($i = 1; $i <= $nb; ++$i)
 		$unt_done['tot'][$i] = $unt_done['vlg'][$i] = $unt_done['btc'][$i] = 0;
 
@@ -59,7 +59,7 @@ if(!$_act) {
 	
 	// config des unités: vie/group/role/prix_res/in_btc/need_btc ...
 	// calculer tout ce qu'on peut former ... ou pas
-	foreach($mbr->get_conf("unt") as $type => $value) {
+	foreach($mbr->getConf("unt") as $type => $value) {
             // requete pour 1 seul type d'unité
             if(!empty($unt_type) && $unt_type != $type)
                 continue;
@@ -82,10 +82,10 @@ if(!$_act) {
 		$_tpl->set("unt_dispo",$unt_array);
 
 	} else {
-		if ($mbr->get_conf('unt', $unt_type, 'role') == TYPE_UNT_HEROS)
+		if ($mbr->getConf('unt', $unt_type, 'role') == TYPE_UNT_HEROS)
 			$_tpl->set('no_heros',false);
 		else {
-			$btc = $mbr->get_conf("unt", $unt_type, "in_btc");
+			$btc = $mbr->getConf("unt", $unt_type, "in_btc");
 			if($btc) {
 				$_tpl->set('unt_type',$unt_type);
 				$_tpl->set('btc_type',$btc[0]);

@@ -7,25 +7,10 @@
   lib/session.class.php et la variable $_ses
  */
 
-function init_get_mbr(array $cond) {// retrouver les infos d'un membre non initialisé
-
-    $req = Mbr::select('mbr_mid', 'mbr_login', 'mbr_mail', 'mbr_etat', 'mbr_mapcid', 'mbr_race');
-    if (isset($cond['mid'])) {
-        $mbr_array = $req->where('mbr_mid', $cond['mid'])->get()->toArray();
-    } else if (isset($cond['login'])) {
-        $mbr_array = $req->where('mbr_login', $cond['login'])->get()->toArray();
-    }
-
-    if (!$mbr_array)
-        return false;
-    else
-        return $mbr_array[0];
-}
-
 function mail_chg_pass($cond) { // envoyer un mail de changement de pass
     global $_tpl, $_ses;
 
-    $mbr_array = init_get_mbr($cond);
+    $mbr_array = Mbr::getInit($cond);
     if (!$mbr_array)
         return false;
 
@@ -63,7 +48,7 @@ function mail_init($mid, $login = '', $pass = false, $mail = '') {// envoyer un 
     if (!$mid || !$pass)
         return false;
     if (!$login || !$mail) { // récupérer les infos manquantes
-        $mbr_array = init_get_mbr(array('mid' => $mid));
+        $mbr_array = Mbr::getInit(array('mid' => $mid));
         if (!$mbr_array)
             return false;
         $login = $mbr_array['mbr_login'];
@@ -91,7 +76,7 @@ function mail_del($mid, $mail = '') {// envoyer un mail pour suppression du comp
     if (!$mid)
         return false;
     if (!$mail) { // récupérer les infos manquantes
-        $mbr_array = init_get_mbr(array('mid' => $mid));
+        $mbr_array = Mbr::getInit(array('mid' => $mid));
         if (!$mbr_array)
             return false;
         $mail = $mbr_array['mbr_mail'];
