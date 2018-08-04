@@ -20,6 +20,7 @@
 			<li>Bâtiments : {gen_nb_btc}</li>
 			<li>Population : {_user[population]}</li>
 			<li>Points : {_user[points]}</li>
+          	<li>Points armées : {_user[pts_arm]}</li>
            <li>Expérience : {_user[xp]}</li>
             <if cond='{ses_loged} && {_user[login]} != "guest"'>
 
