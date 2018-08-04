@@ -73,13 +73,13 @@ case 'post' : // valider le formulaire & créer le topic / message
 	if ($sub == 'new' && $fid)
 	{
 		//on vérifie qu'on a le droit
-		if (!can_create_topic($fid,$group))
+		if (!FrmPerm::can($fid, $group, 'create'))
 			$_tpl->set('cant_create', true);
 		else
 		{
 			$pst_titre = request('pst_titre','string','post');
 			$pst_msg = request('pst_msg','string','post');
-			$last_usr_post = get_last_post($mid);
+			$last_usr_post = FrmPost::getLast($mid);
 			if($pst_titre == 'topic') $pst_titre == ''; // sinon bug URL!
 			//on vérifie que le message n'est pas vide				
 			if (!$pst_msg || !$pst_titre)
@@ -92,8 +92,8 @@ case 'post' : // valider le formulaire & créer le topic / message
 				$closed = $is_modo && isset($_POST['closed']) ? 1 : 0;
 				$sticky = $is_modo && isset($_POST['sticky']) ? 1 : 0;
 				//c'est bon, on peut ajouter le topic, ajouter le message
-				$tid = add_tpc($pseudo,$pst_titre,$fid, $closed, $sticky);
-				$pid = add_post($mid,$pseudo,$_user["ip"],$pst_msg,$tid);
+				$tid = FrmTopic::add($pseudo,$pst_titre,$fid, $closed, $sticky);
+				$pid = FrmPost::add($mid,$pseudo,$_user["ip"],$pst_msg,$tid);
 				maj_all($pid,$pseudo,$tid,$fid,true,$mid,$pst_titre,$pst_msg);	
 
 				header("Location: forum-post.html?pid=$pid#$pid");
@@ -105,16 +105,18 @@ case 'post' : // valider le formulaire & créer le topic / message
 	{
 		//on obtient le tid si on a que le pid
 		if (!$tid){
-			$pst = get_post( $pid);
+			$pst = FrmPost::getById( $pid);
 			if($pst)
 				$tid = $pst['tid'];
 		}
 		if(!$tid){$_tpl->set('empty', true);break;}
 
-		$info = get_info_topic($tid,$group);
-		if(empty($info)){$_tpl->set('empty', true);break;}
+		$info = FrmTopic::getInfo($tid,$group);
+		if(empty($info)){
+                    $_tpl->set('empty', true);
+                    break;
+                }
 
-		$num_posts = $info['num_replies'];
 		$edit = array();
 		// marquer ce topic comme lu
 		$_user['forum_lus'][$tid] = true;
@@ -129,7 +131,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 			{
 				//sinon, on a le droit de poster le message
 				$pst_msg = request('pst_msg','string','post');
-				$last_usr_post = get_last_post($mid);
+				$last_usr_post = FrmPost::getLast($mid);
 
 				//on vérifie qu'il n'est pas vide
 				if (!$pst_msg)
@@ -144,10 +146,10 @@ case 'post' : // valider le formulaire & créer le topic / message
 						$edit['closed'] = isset($_POST['closed']) ? 1:0;
 						$edit['sticky'] = isset($_POST['sticky']) ? 1:0;
 						if($edit['closed']!=$info['closed'] || $edit['sticky']!=$info['sticky'])
-							edit_post_gen($edit);
+							FrmPost::edit($edit);
 					}
 					//on ajoute le message, et on met à jour la bdd
-					$pid = add_post($mid,$pseudo,$_user["ip"],$pst_msg,$tid);
+					$pid = FrmPost::add($mid,$pseudo,$_user["ip"],$pst_msg,$tid);
 					maj_all($pid,$pseudo,$tid,$info['forum_id'],false,$mid,$info['subject'],$pst_msg);
 					header("Location: forum-post.html?pid=$pid#$pid");
 				}
@@ -186,7 +188,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 				if(isset($edit['title']) || isset($edit['fid']) || isset($edit['closed']) || isset($edit['sticky']))
 					$edit['tid'] = $tid;// modifier aussi le topic concerné
 				//on édite le message, et on met à jour la bdd
-				edit_post_gen($edit);
+				FrmPost::edit($edit);
 				header("Location: forum-post.html?pid=$pid#$pid");
 			}
 		}
@@ -226,14 +228,14 @@ case 'post' : // valider le formulaire & créer le topic / message
 					
 					if(isset($edit['closed']) or isset($edit['sticky']) or isset($edit['fid']) or isset($edit['statut']))
 					{ //on édite le message, et on met à jour la bdd
-						edit_post_gen($edit);
+						FrmPost::edit($edit);
 						$_tpl->set('edit_tpc',true);
 					}
 				}
 				else if ($sub == 'stick' || $sub == 'unstick')
-					$_tpl->set('stick', stick($tid, ($sub == 'stick'? 1:0)));
+					$_tpl->set('stick', FrmPost::stick($tid, ($sub == 'stick'? 1:0)));
 				else if ($sub == 'close' || $sub == 'open')
-					$_tpl->set('close', close($tid, ($sub == 'close'? 1:0)));
+					$_tpl->set('close', FrmPost::close($tid, ($sub == 'close'? 1:0)));
 			}
 		}
 
@@ -250,9 +252,8 @@ case 'post' : // valider le formulaire & créer le topic / message
 			else
 			{
 				//si oui, on supprime le message
-				$topic_del = del_post($pst, $info); //$pid,$tid,$num_posts,$info['forum_id'],$mid);
-				$_tpl->set('del',true);
-				$num_posts = $num_posts - 1;	
+				$topic_del = FrmPost::del($pst, $info);
+                                $_tpl->set('del',true);
 				//et c'est tout si on a supprimé le topic (sinon affichage à la fin)
 				if ($topic_del)
 					break;
@@ -267,12 +268,12 @@ case 'post' : // valider le formulaire & créer le topic / message
 		
 	if (isset($info) && $info['read_forum'] == 1)
 	{
-		ajout_view($tid);
+		FrmTopic::view($tid);
 		//dans ce cas, on envoie toutes les informations nécessaires au template
 		$nbr_pages = ceil( ($info['num_replies']+1) / LIMIT_PAGE);
 		if($nbr_pages > 1){
 			if ($pid)
-				$page = search_page($pid,$tid,0,LIMIT_PAGE);
+				$page = FrmPost::searchOffset($pid,$tid,0,LIMIT_PAGE);
 			else
 				$page = request('p','uint','get');	
 
@@ -282,11 +283,11 @@ case 'post' : // valider le formulaire & créer le topic / message
 			$deb = LIMIT_PAGE * ($page - 1);
 		}else
 			$deb = 0;
-		$_tpl->set('messages',recup_msg($tid,$deb,LIMIT_PAGE));
+		$_tpl->set('messages',FrmPost::getMsg($tid,$deb,LIMIT_PAGE));
 		$_tpl->set('tpc', $info);
 		$_tpl->set('spec_title', $info['subject']);
 		if ($is_modo)
-			$_tpl->set('cat_array', get_cat_frm());
+			$_tpl->set('cat_array', Frm::getCat());
 	}
 	else
 		$_tpl->set('cant_read',true);
@@ -300,7 +301,7 @@ case 'search': // recherche
 	$sort_dir = request('sort_dir', 'string', 'get');
 	$sort_dir = ($sort_dir == 'DESC') ? 'DESC' : 'ASC';
 	// liste des catégories & forums pour la liste de recherche
-	$_tpl->set('cat_array',get_cat_frm());
+	$_tpl->set('cat_array',Frm::getCat());
 
 	if ($search_id)// une recherche était fournie
 	{
@@ -404,7 +405,7 @@ case 'search': // recherche
 			break;
 		}
 
-		$result = get_posts($cond); // récupérer la liste des ids recherchés
+		$result = FrmPost::get($cond)->get()->toArray(); // récupérer la liste des ids recherchés
 		$search_ids = array();
 		if(!empty($result)){// récupérer la 1ère valeur de $key
 			foreach ($result[0] as $key => $row)
@@ -469,22 +470,21 @@ case 'search': // recherche
 		$cond['limit'] = LIMIT_PAGE;
 		$cond['sort_dir'] = $sort_dir;
 
-		$frm_array = get_cat();
+		$frm_array = Frm::get();
 		$_tpl->set('frm_array', index_array($frm_array, 'fid'));
 		if ($show_as == 'posts')
 		{
 			$cond['select'] = 'substr';
 			$cond['pid_list'] = $search_ids;
-			$_tpl->set('posts_array', get_posts($cond));
+			$_tpl->set('posts_array', FrmPost::get($cond));
 		}
 		else
 		{
 			$cond['tid_list'] = $search_ids;
 			$cond['select'] = 'mbr';
-			$_tpl->set('topic_array', get_topic($cond));
+			$_tpl->set('topic_array', FrmTopic::get($cond));
 			$_tpl->set('frm_act',$_act);
 		}
-		$_tpl->set('lu_forum_ldate',$_user['forum_ldate']);
 		$_tpl->set('action',empty($action) ? 'search': $action);
 		$_tpl->set('search_id',$search_id);
 		
@@ -503,7 +503,7 @@ case 'rep' : // formulaire de création & réponse
 	$quote = request('qt','uint','get');
 	$action = '';
 	if($quote) // citation
-		$_tpl->set('quote', get_post($quote));
+		$_tpl->set('quote', FrmPost::getById($quote));
 
 	if ($fid) // on créé un topic
 	{
@@ -515,19 +515,19 @@ case 'rep' : // formulaire de création & réponse
 	{
 		$_tpl->set('form_url', "forum-post.html?sub=new&tid=$tid#lst_pst");
 		$_tpl->set('new','post');
-		$info = get_info_topic($tid,$group);
+		$info = FrmTopic::getInfo($tid,$group);
 		$_tpl->set('pst',$info);
 		$fid = $info['forum_id'];
 		$action = 'post'; // nouvelle réponse
 		if (!isset($info['read_forum']) || $info['read_forum'])
-			$_tpl->set('messages',get_last_msg($tid));
+			$_tpl->set('messages',FrmPost::getLastFromTopic($tid));
 	}
 
 	elseif ($pid) // on édite un message
 	{
 		$_tpl->set('form_url', "forum-post.html?sub=edit&pid=$pid#$pid");
 		$_tpl->set('new','edit');
-		$info = get_posts(array('pid'=>$pid, 'select'=>'first_pid'));
+		$info = FrmPost::get(array('pid'=>$pid, 'select'=>'first_pid'))->get()->toArray();
 		$action = 'edit';
 		if($info){
 			$fid = $info[0]['forum_id'];
@@ -535,10 +535,10 @@ case 'rep' : // formulaire de création & réponse
 			$_tpl->set('pst',$info[0]);
 		}
 		if($is_modo) // liste des forums pour déplacement
-			$_tpl->set('cat_array', get_cat_frm());
+			$_tpl->set('cat_array', Frm::getCat());
 	}
 	// récupérer les infos du forum
-	$frm = get_cat(0, $fid);
+	$frm = Frm::get(0, $fid);
 	if(empty($frm) or $_ses->canDo(DROIT_PUNBB_GUEST))// permission refusée ou catégorie introuvable
 		$_tpl->set('no_perm', true);
 	elseif((!$frm[0]['post_replies'] and $action=='post') or (!$frm[0]['post_topics'] and $action=='topic'))// permission refusée
@@ -549,30 +549,13 @@ case 'rep' : // formulaire de création & réponse
 	
 /*******************************/
 case 'topic' :	
-	$frm = get_cat(0, $fid);
-	if ($fid && !empty($frm))
+	$frm = Frm::get(0, $fid);
+	if ($fid)
 	{
-		$nbr_pages = ceil( $frm[0]['num_topics'] / LIMIT_PAGE);
-		if($nbr_pages > 1){// pagination dans le forum
-			$page = request('p','uint','get');	
-			$page = ( $page < 1 || $page > $nbr_pages) ? 1 : $page;
-			$_tpl->set('arr_pge', get_list_page( $page, $nbr_pages));
-			$_tpl->set('pge',$page);
-			$start = LIMIT_PAGE * ($page - 1);
-		}else
-			$start = 0;
-
 		$_tpl->set('frm', $frm[0]);
-		$topic_array=get_topic(array('fid'=>$fid, 'start'=>$start, 'limit'=>LIMIT_PAGE, 'select'=>'mbr', 'order'=>$frm[0]['sort_by']));
-		if(empty($topic_array)) break;
+		$topics = FrmTopic::get(['fid'=>$fid, 'select'=>'mbr', 'order'=>$frm[0]['sort_by']]);
+                $_tpl->set('pg', new Paginator($topics));
 
-		foreach($topic_array as $key => $topic)
-			if($topic['pgs']>1)// ajouter la pagination des sujets
-				$topic_array[$key]['arr_pgs'] = get_list_page(1, $topic['pgs']);
-
-		$_tpl->set('topic_array',$topic_array);
-		$_tpl->set('lu_forum_ldate',$_user['forum_ldate']);
-		$_tpl->set('forum_lus', $_user['forum_lus']);
 	}
 	else
 		$_tpl->set('bad_fid', true);
@@ -586,16 +569,15 @@ default :
 	{
 		//on obtient le tid si on a que le pid
 		if (!$tid){
-			$pst = get_post( $pid);
+			$pst = FrmPost::getById( $pid);
 			if($pst)
 				$tid = $pst['tid'];
 		}
 		if($tid){
-			$info = get_info_topic($tid,$group);
+			$info = FrmTopic::getInfo($tid,$group);
 			if(!empty($info)){
 
 				$_tpl->set('frm_act','post');
-				$num_posts = $info['num_replies'];
 				$edit = array();
 				// marquer ce topic comme lu
 				$_user['forum_lus'][$tid] = true;
@@ -604,26 +586,18 @@ default :
 				//on vérifie qu'on a le droit
 				if (isset($info) && $info['read_forum'] == 1)
 				{
-					ajout_view($tid);
+					FrmTopic::view($tid);
 					//dans ce cas, on envoie toutes les informations nécessaires au template
-					$nbr_pages = ceil( ($info['num_replies']+1) / LIMIT_PAGE);
-					if($nbr_pages > 1){
-						if ($pid)
-							$page = search_page($pid,$tid,0,LIMIT_PAGE);
-						else
-							$page = request('p','uint','get');	
-
-						$page = ( $page <= 1 || $page > $nbr_pages) ? 1 : $page;
-						$_tpl->set('arr_pge', get_list_page( $page, $nbr_pages));
-						$_tpl->set('pge',$page);
-						$deb = LIMIT_PAGE * ($page - 1);
-					}else
-						$deb = 0;
-					$_tpl->set('messages',recup_msg($tid,$deb,LIMIT_PAGE));
+                                        if ($pid){
+                                            $page = FrmPost::searchOffset($pid,$tid,0,LIMIT_PAGE);
+                                        }else{
+                                            $page = 0;
+                                        }
+					$_tpl->set('messages',new Paginator(FrmPost::getMsg($tid), $page));
 					$_tpl->set('tpc', $info);
 					$_tpl->set('spec_title', $info['subject']);
 					if ($is_modo)
-						$_tpl->set('cat_array', get_cat_frm());
+						$_tpl->set('cat_array', Frm::getCat());
 				}
 				else
 					$_tpl->set('cant_read',true);
@@ -633,13 +607,9 @@ default :
 	}
 
 	$cid = request('cid', 'uint', 'get');
-	$_tpl->set('cat_array', get_cat_frm($cid, null, true));
-	$_tpl->set('lu_forum_ldate',$_user['forum_ldate']);
+	$_tpl->set('cat_array', Frm::getCat($cid, 0, true));
 	break;
 }
 
 
 //} // endif(!can_d(DROIT_PLAY)) 
-
-
-?>

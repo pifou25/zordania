@@ -171,7 +171,7 @@
 		<p class="error">Erreur ! discussion inexistante...</p>
 	</elseif>
 
-	<if cond='isset({messages})'>
+	<if cond='!empty({messages->get})'>
 		<h3 class="head_forum"><a href="forum.html">Forums</a> <img src="img/right.png" /> <a href="forum.html?cid={tpc[cid]}">{tpc[cat_name]}</a> <img src="img/right.png" /> <a href="forum-topic.html?fid={tpc[forum_id]}">{tpc[forum_name]}</a>  <img src="img/right.png" /> <a href="forum-<math oper="Template::str2url({tpc[subject]})"/>.html?tid={tpc[tid]}">{tpc[subject]}</a></h3>
 
 		<if cond="{tpc[cid]} == 1">
@@ -200,16 +200,16 @@
 			</if>
 		</p>
 
-		<if cond="isset({arr_pge})">
-			<p class="pages">
-			<foreach cond="{arr_pge} as {i}">
-				<if cond='{i} == {pge} || {i} == "..."'> {i} </if>
-				<else> <a href="forum-post.html?tid={tpc[tid]}&p={i}" title="page {i}">{i}</a> </else>
-			</foreach>
-			</p>
-		</if>
+                <p class="pages">
+                <foreach cond="{messages->links} as {page}">
+                    <if cond='is_numeric({page})'>
+                        <a href="forum-post.html?tid={tpc[tid]}&page={page}" title="page {page}">{page}</a>
+                    </if>
+                    <else>{page}</else>
+                </foreach>
+                </p>
 
-		<foreach cond='{messages} as {post}'>
+		<foreach cond='{messages->get} as {post}'>
    			<div class="block_forum" id="{post[pid]}">
    				<img class="blason" title="{post[username]}" src="img/mbr_logo/{post[poster_id]}.png" />
 				<a class="titre" href="forum-<math oper="Template::str2url({tpc[subject]})"/>.html?pid={post[pid]}#{post[pid]}">{tpc[subject]}</a>
@@ -269,14 +269,14 @@
 		</if>
 		</p>
 
-		<if cond="isset({arr_pge})">
-			<p>
-			<foreach cond="{arr_pge} as {i}">
-				<if cond='{i} == {pge} || {i} == "..."'> {i} </if>
-				<else> <a href="forum-post.html?tid={tpc[tid]}&p={i}" title="page {i}">{i}</a> </else>
-			</foreach>
-			</p>
-		</if>
+                <p class="pages">
+                <foreach cond="{messages->links} as {page}">
+                    <if cond='is_numeric({page})'>
+                        <a href="forum-post.html?tid={tpc[tid]}&p={page}" title="page {page}">{page}</a>
+                    </if>
+                    <else>{page}</else>
+                </foreach>
+                </p>
 
 
 
@@ -341,17 +341,17 @@
 			<img src="img/forum/topic.png" alt="Nouveau topic" title="Nouveau Sujet"/> <a href="forum-rep.html?fid={frm[fid]}">Nouveau Sujet</a>
 		</p>
 
-		<if cond="empty({topic_array})"><p class="infos">Forum vide ... Soyez le premier à poster !</p></if>
+		<if cond="empty({pg->get})"><p class="infos">Forum vide ... Soyez le premier à poster !</p></if>
 		<else>
 
-		<if cond="isset({arr_pge})">
-			<p>
-			<foreach cond="{arr_pge} as {i}">
-				<if cond='{i} == {pge} || {i} == "..."'> {i} </if>
-				<else> <a href="forum-topic.html?fid={frm[fid]}&p={i}" title="page {i}">{i}</a> </else>
-			</foreach>
-			</p>
-		</if>
+    <p class="pages">
+       <foreach cond="{pg->links} as {page}">
+            <if cond='is_numeric({page})'>
+            <a href="forum-topic.html?fid={frm[fid]}&page={page}" title="page {page}">{page}</a>
+            </if>
+            <else>{page}</else>
+       </foreach>
+    </p>
 
 			<table class="liste">
 			<tr>
@@ -363,11 +363,11 @@
 				<th>Dernière action</th>
 			</tr>
 
-			<foreach cond="{topic_array} as {topic}">
+			<foreach cond="{pg->get} as {topic}">
 			<tr>
 				<td><!-- Image pour l'état du topic -->				
 				
-				<if cond="({lu_forum_ldate} > {topic[posted_unformat]}) || isset({forum_lus[{topic[tid]}]})"><set name="etat" value="lu" /></if>
+				<if cond="({_user[forum_ldate]} > {topic[posted_unformat]}) || isset({_user[forum_lus][{topic[tid]}]})"><set name="etat" value="lu" /></if>
 				<else><set name="etat" value="non_lu" /></else>
 				<if cond="{topic[sticky]} == 1 AND {topic[closed]} == 1"><img src="img/forum/sticky-closed-{etat}.png" title="Post-it Fermé - {etat}" /></if>
 				<elseif cond="{topic[closed]} == 1"><img src="img/forum/closed-{etat}.png" title="Fermé - {etat}" /></elseif>
@@ -382,13 +382,13 @@
 
 				</td>
 
-		        	<td><if cond="({lu_forum_ldate} < {topic[posted_unformat]}) && !isset({forum_lus[{topic[tid]}]})"><img src='img/reply.png' title='Nouveau' alt='Nouveau' /> </if>
+		        	<td><if cond="({_user[forum_ldate]} < {topic[posted_unformat]}) && !isset({_user[forum_lus][{topic[tid]}]})"><img src='img/reply.png' title='Nouveau' alt='Nouveau' /> </if>
 				<a href="forum-<math oper="Template::str2url({topic[subject]})"/>.html?tid={topic[tid]}" title="Début du message">{topic[subject]}</a>
-				<if cond="isset({topic[arr_pgs]})">
+				<if cond="{topic[num_replies]} >= LIMIT_PAGE">
 					<br />[Page: 
-					<foreach cond="{topic[arr_pgs]} as {i}">
+					<foreach cond="Paginator::listPages(1, {topic[num_replies]}/LIMIT_PAGE) as {i}">
 						<if cond='{i} == "..."'> ... </if>
-						<else><a href="forum-<math oper="Template::str2url({topic[subject]})"/>.html?tid={topic[tid]}&p={i}" title="page {i}"> {i} </a></else>
+						<else><a href="forum-<math oper="Template::str2url({topic[subject]})"/>.html?tid={topic[tid]}&page={i}" title="page {i}"> {i} </a></else>
 					</foreach>]
 				</if>
 				</td>
@@ -409,14 +409,14 @@
 			</foreach>
 		</table>
 
-		<if cond="isset({arr_pge})">
-			<p>
-			<foreach cond="{arr_pge} as {i}">
-				<if cond='{i} == {pge} || {i} == "..."'> {i} </if>
-				<else> <a href="forum-topic.html?fid={frm[fid]}&p={i}" title="page {i}">{i}</a> </else>
-			</foreach>
-			</p>
-		</if>
+    <p class="pages">
+       <foreach cond="{pg->links} as {page}">
+            <if cond='is_numeric({page})'>
+            <a href="forum-topic.html?fid={frm[fid]}&p={page}" title="page {page}">{page}</a>
+            </if>
+            <else>{page}</else>
+       </foreach>
+    </p>
 
 		</else>
 
@@ -445,7 +445,7 @@
 			<p class="desc">{forum[forum_desc]}</p>
             <if cond="{forum[num_topics]}>0">
                 <p class="stat">{forum[num_topics]} sujets - {forum[num_posts]} messages<br/>
-                <if cond='{lu_forum_ldate} <= {forum[last_post_unformat]}'><img src='img/forum/non_lu.png' title='Nouveau' alt='Nouveau' /></if>
+                <if cond='{_user[forum_ldate]} <= {forum[last_post_unformat]}'><img src='img/forum/non_lu.png' title='Nouveau' alt='Nouveau' /></if>
                 <else><img src='img/forum/lu.png' title='Nouveau' alt='Nouveau' /></else>
                 Dernier message : <a href="forum-<math oper="Template::str2url({forum[last_subject]})"/>.html?pid={forum[last_post_id]}#{forum[last_post_id]}" title="Dernier message">{forum[last_subject]}</a> le {forum[last_post]} par 
                 <if cond="isset({forum[mbr_mid]})">

@@ -321,12 +321,16 @@ function fatal_handler() {
     $error = error_get_last();
     if( $error !== NULL) {
 
-        echo "<pre>DEBUG STACKTRACE\n";
-        var_dump($error);
-        var_dump(callstack());
+        $type = array_search($error['type'], get_defined_constants());
+        echo "<pre>DEBUG STACKTRACE\n$type : {$error['message']}\nIN  {$error['file']}:L{$error['line']}";
+        echo "\n\nLIST OF QUERIES\n";
         if(!empty(DB::connection()->getQueryLog())){
+            $i = 0;
             foreach(DB::connection()->getQueryLog() as $query){
-                var_dump($query);
+                $i++;
+                echo "$i: {$query['query']}\nBinding:\n";
+                var_dump($query['bindings']);
+                echo "\n\tCallstack:\n" . implode("\n\t\t", $query['callstack']);
             }
         }
         echo "</pre>";

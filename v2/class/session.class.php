@@ -3,6 +3,8 @@ class session
 {
 	var $sql;
 	var $vars;
+	var $dateformat = '%d-%m-%y à %H:%i:%s'; /* Mettre ça dans les tpl */
+	var $decal = '00:00:00';
 	static public $SES;
         
 	function __construct(&$db)
@@ -123,22 +125,16 @@ class session
 		if($this->get("login") != "guest") {
                     /* Nouveaux messages */
 			$this->set("msg", MsgRec::count($mid));
-		
-			/* Nouvelle news? mbr_ldate = dernière connexion heure locale */
-			$sql="SELECT count(*) AS nb FROM ".$this->sql->prebdd."frm_topics ".
-			  " WHERE forum_id =".ZORD_NEWS_FID." AND posted > (SELECT mbr_ldate FROM "
-                                .$this->sql->prebdd."mbr WHERE mbr_mid = $mid)";
-			$result = $this->sql->make_array_result($sql);
-			$this->set("news", $result['nb']);
 			
-			/*Select la dernière news*/
-			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics "
-                                . "WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM "
-                                .$this->sql->prebdd."frm_topics)";
-			$result = $this->sql->make_array_result($sql);
+			/* Select la dernière news si plus récente que la dernière connexion */
+                        $result = FrmTopic::where('forum_id', ZORD_NEWS_FID)
+                                ->where('posted', '>', function($query) use ($mid){
+                                    $query->from('mbr')->selectRaw('UNIX_TIMESTAMP(mbr_ldate)')->where('mbr_mid', $mid);
+                                })
+                                ->orderBy('posted', 'desc')->get()->toArray();
                         if(count($result) > 0){
-                            $this->set("tid", $result['id']);
-                            $this->set("sub", $result['subject']);
+                            $this->set("tid", $result[0]['id']);
+                            $this->set("sub", $result[0]['subject']);
                         }else{
                             $this->set("tid", 0);
                             $this->set("sub", 0);
@@ -444,5 +440,19 @@ class session
             }
             return $realip;
         }
+
+
+        /* remplace (U)DATE_FORMAT gère le décalage horaire */
+	function parseQuery($req) 
+	{
+		if($this->get('decal') != '00:00:00'){
+			$req = preg_replace("/_UDATE_FORMAT\((.*?)\)/i","DATE_FORMAT(FROM_UNIXTIME($1) + INTERVAL '".$this->get('decal')."' HOUR_SECOND,'".$this->dateformat."')",$req);
+			$req = preg_replace("/_DATE_FORMAT\((.*?)\)/i","DATE_FORMAT($1 + INTERVAL '".$this->get('decal')."' HOUR_SECOND,'".$this->dateformat."')",$req);
+		}else{
+			$req = preg_replace("/_UDATE_FORMAT\((.*?)\)/i","FROM_UNIXTIME($1,'".$this->dateformat."')",$req);
+			$req = preg_replace("/_DATE_FORMAT\((.*?)\)/i","DATE_FORMAT($1,'".$this->dateformat."')",$req);
+		}
+		return $req;
+	}
 
 }

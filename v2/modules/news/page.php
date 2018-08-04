@@ -13,32 +13,17 @@ $_ses->set('news', 0);
 
 // Regarde toutes les news + pagination
 // tout autre lien renvoie sur le forum
-$frm = get_cat(0, ZORD_NEWS_FID);
+$frm = Frm::get(0, ZORD_NEWS_FID);
 if (!empty($frm))
 {
-	$frm = $frm[0];
-	$_tpl->set('frm',$frm);
-	$nbr_pages = ceil( $frm['num_topics'] / NWS_LIMIT_PAGE);
-	if($nbr_pages > 1){// pagination dans le forum
-		$page = request('p','uint','get');	
-		$page = ( $page < 1 || $page > $nbr_pages) ? 1 : $page;
-		$_tpl->set('arr_pge', get_list_page( $page, $nbr_pages));
-		$_tpl->set('pge',$page);
-		$start = NWS_LIMIT_PAGE * ($page - 1);
-	}else
-		$start = 0;
+	$_tpl->set('frm',$frm[0]);
+        $topics = new Paginator( FrmTopic::get(
+                ['fid' => ZORD_NEWS_FID, 'select' => 'first_pid', 'order' => $frm[0]['sort_by']]));
+        $_tpl->set('nwss', $topics); // only list of first posts ID
 
-	$_tpl->set('frm', $frm);
-	$topic_array=get_topic(array('fid'=>ZORD_NEWS_FID, 'start'=>$start, 'limit'=>NWS_LIMIT_PAGE, 'select'=>'first_pid', 'order'=>$frm['sort_by']));
-	$_tpl->set('nws_array',$topic_array);
-	//if(empty($topic_array)) break;
+	foreach($topics->get as $topic)
+		$pids[] = $topic['first_pid'];
 
-	$first_pid = array();
-	foreach($topic_array as $key => $topic)
-		$first_pid[] = $topic['first_pid'];
-
-	$posts_array = get_posts(array('select'=>'mbr', 'pid_list'=>$first_pid), 'pid');
-	$_tpl->set('posts_array',$posts_array);
+	$posts = FrmPost::get(['select'=>'mbr', 'pid_list'=>$pids], 'pid')->get()->keyBy('pid');
+	$_tpl->set('posts_array',$posts); // all posts selecteds
 }
-
-?>

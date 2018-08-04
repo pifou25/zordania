@@ -42,7 +42,7 @@ function normaliser($string)
 function cite_forum($word){
 	$kw_results = search_keywords_results($word, 0);
 	if(count($kw_results) >0){
-		$post = get_post($kw_results[array_rand($kw_results)]); // 1 résultat au hasard
+		$post = FrmPost::getById($kw_results[array_rand($kw_results)]); // 1 résultat au hasard
 		$arr_word = split_words($word);
 		$res = explode('<br />', nl2br(str_replace('.', "\n",$post['message'])));
 		foreach($res as $msg){

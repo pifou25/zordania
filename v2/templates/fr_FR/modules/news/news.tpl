@@ -7,18 +7,18 @@
 	<if cond="isset({frm})">
 		<img src="img/right.png" /> <a href="forum.html?cid={frm[cid]}">{frm[cat_name]}</a>
 		<img src="img/right.png" /> <a href="forum-topic.html?fid={frm[fid]}">{frm[forum_name]}</a>
-<if cond="isset({arr_pge})">
-			<img src="img/right.png" />
-	<foreach cond="{arr_pge} as {i}">
-		<if cond='{i} == {pge} || {i} == "..."'> {i} </if>
-		<else> <a href="news.html?p={i}" title="page {i}">{i}</a> </else>
-	</foreach>
-</if>
+
+        <foreach cond="{nwss->links} as {page}">
+            <if cond='is_numeric({page})'>
+                <a href="news.html?page={page}" title="page {page}">{page}</a>
+            </if>
+            <else>{page}</else>
+        </foreach>
 	</if>
 </h3>
 
-<if cond='isset({nws_array}) AND is_array({nws_array})'>
-	<foreach cond='{nws_array} as {nws}'>
+<if cond='!empty({nwss->get})'>
+	<foreach cond='{nwss->get} as {nws}'>
 		<set name="post" value="{posts_array[{nws[first_pid]}]}"/>
 
 		<div class="block_forum" id="{post[pid]}">
@@ -55,15 +55,12 @@
 		</div>
 	</foreach>
 
-	<if cond="isset({arr_pge})">
-		<p>
-		<foreach cond="{arr_pge} as {i}">
-			<if cond='{i} == {pge} || {i} == "..."'> {i} </if>
-			<else> <a href="news.html?p={i}" title="page {i}">{i}</a> </else>
-		</foreach>
-		</p>
-	</if>
-
+        <foreach cond="{nwss->links} as {page}">
+            <if cond='is_numeric({page})'>
+                <a href="news.html?page={page}" title="page {page}">{page}</a>
+            </if>
+            <else>{page}</else>
+        </foreach>
 </if>
 
 <else>
