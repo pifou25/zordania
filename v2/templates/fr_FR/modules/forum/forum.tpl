@@ -57,26 +57,26 @@
 				<label for="statut">Statut : </label>				
 					<select id="statut" name="statut">
 						<option value="-1" >Laisser</option>
-						<option value="{FORUM_REPORT_TALK}">En discussion</option>
-						<option value="{FORUM_REPORT_OK}">Valider</option>
-						<option value="{FORUM_REPORT_NOK}">Refuser</option>
-						<option value="{FORUM_REPORT_DUBL}">Doublon</option>
-						<option value="{FORUM_REPORT_DEV}">Ok en DEV</option>
-						<option value="{FORUM_REPORT_ON}">Codé/corrigé</option>							
+						<option value="{REPORT_STATUT_TALK}">En discussion</option>
+						<option value="{REPORT_STATUT_OK}">Valider</option>
+						<option value="{REPORT_STATUT_NOK}">Refuser</option>
+						<option value="{REPORT_STATUT_DUBL}">Doublon</option>
+						<option value="{REPORT_STATUT_DEV}">Ok en DEV</option>
+						<option value="{REPORT_STATUT_ON}">Codé/corrigé</option>							
 					</select>
 				<label for="statut">Type : </label>				
 					<select id="type" name="type">
 						<option value="-1" >Laisser</option>
-						<option value="{TYPE_REPORT_WAR}">Leg/War</option>
-						<option value="{TYPE_REPORT_HERO}">Héros/Comp</option>
-						<option value="{TYPE_REPORT_UNT}">Unités</option>
-						<option value="{TYPE_REPORT_ALLI}">All/Diplo</option>
-						<option value="{TYPE_REPORT_GEN}">Donjon</option>
-						<option value="{TYPE_REPORT_VLG}">Village</option>
-						<option value="{TYPE_REPORT_GAME}">Inter/GameP</option>
-						<option value="{TYPE_REPORT_COM}">Marché</option>
-						<option value="{TYPE_REPORT_MSG}">Message</option>
-						<option value="{TYPE_REPORT_ELSE}">Autres</option>						
+						<option value="{REPORT_TYPE_WAR}">Leg/War</option>
+						<option value="{REPORT_TYPE_HERO}">Héros/Comp</option>
+						<option value="{REPORT_TYPE_UNT}">Unités</option>
+						<option value="{REPORT_TYPE_ALLI}">All/Diplo</option>
+						<option value="{REPORT_TYPE_GEN}">Donjon</option>
+						<option value="{REPORT_TYPE_VLG}">Village</option>
+						<option value="{REPORT_TYPE_GAME}">Inter/GameP</option>
+						<option value="{REPORT_TYPE_COM}">Marché</option>
+						<option value="{REPORT_TYPE_MSG}">Message</option>
+						<option value="{REPORT_TYPE_ELSE}">Autres</option>						
 					</select>
 				</if><br />
 		</if>
@@ -318,26 +318,26 @@
 				<label for="statut">Statut : </label>				
 					<select id="statut" name="statut">
 						<option value="-1" >Laisser</option>
-						<option value="{FORUM_REPORT_TALK}">En discussion</option>
-						<option value="{FORUM_REPORT_OK}">Valider</option>
-						<option value="{FORUM_REPORT_NOK}">Refuser</option>
-						<option value="{FORUM_REPORT_DUBL}">Doublon</option>
-						<option value="{FORUM_REPORT_DEV}">Ok en DEV</option>
-						<option value="{FORUM_REPORT_ON}">Codé/corrigé</option>						
+						<option value="{REPORT_STATUT_TALK}">En discussion</option>
+						<option value="{REPORT_STATUT_OK}">Valider</option>
+						<option value="{REPORT_STATUT_NOK}">Refuser</option>
+						<option value="{REPORT_STATUT_DUBL}">Doublon</option>
+						<option value="{REPORT_STATUT_DEV}">Ok en DEV</option>
+						<option value="{REPORT_STATUT_ON}">Codé/corrigé</option>						
 					</select>
 				<label for="statut">Type : </label>				
 					<select id="type" name="type">
 						<option value="-1" >Laisser</option>
-						<option value="{TYPE_REPORT_WAR}">Leg/War</option>
-						<option value="{TYPE_REPORT_HERO}">Héros/Comp</option>
-						<option value="{TYPE_REPORT_UNT}">Unités</option>
-						<option value="{TYPE_REPORT_ALLI}">All/Diplo</option>
-						<option value="{TYPE_REPORT_GEN}">Donjon</option>
-						<option value="{TYPE_REPORT_VLG}">Village</option>
-						<option value="{TYPE_REPORT_GAME}">Inter/GameP</option>
-						<option value="{TYPE_REPORT_COM}">Marché</option>
-						<option value="{TYPE_REPORT_MSG}">Message</option>
-						<option value="{TYPE_REPORT_ELSE}">Autres</option>						
+						<option value="{REPORT_TYPE_WAR}">Leg/War</option>
+						<option value="{REPORT_TYPE_HERO}">Héros/Comp</option>
+						<option value="{REPORT_TYPE_UNT}">Unités</option>
+						<option value="{REPORT_TYPE_ALLI}">All/Diplo</option>
+						<option value="{REPORT_TYPE_GEN}">Donjon</option>
+						<option value="{REPORT_TYPE_VLG}">Village</option>
+						<option value="{REPORT_TYPE_GAME}">Inter/GameP</option>
+						<option value="{REPORT_TYPE_COM}">Marché</option>
+						<option value="{REPORT_TYPE_MSG}">Message</option>
+						<option value="{REPORT_TYPE_ELSE}">Autres</option>						
 					</select>
 				</if>
 
@@ -375,7 +375,12 @@
 
 		<if cond="empty({topic_array})"><p class="infos">Forum vide ... Soyez le premier à poster !</p></if>
 		<else>
-
+				<if cond="{frm[fid]} == FORUM_BUG_FID ">				
+					<a href="recap.html?fid={FORUM_BUG_FID}&type=0" title="Récap bugs"> Récapitulatif des bugs </a>			
+				</if>
+				<elseif cond="{frm[fid]} == FORUM_SUGGEST_FID  ">				
+					<a href="recap.html?fid={FORUM_SUGGEST_FID}&type=0" title="Récap Suggestions">Récapitulatif des Suggestions </a>			
+				</elseif>
 		<if cond="isset({arr_pge})">
 			<p>
 			<foreach cond="{arr_pge} as {i}">
@@ -406,7 +411,7 @@
 				<elseif cond="{topic[sticky]} == 1"><img src="img/forum/sticky-{etat}.png" title="Post-it - {etat}" /></elseif>
 				<else><img src="img/forum/{etat}.png" title="{etat}" /></else>
 				<if cond="{topic[forum_id]} == FORUM_BUG_FID || {topic[forum_id]} == FORUM_SUGGEST_FID  ">				
-					<img src="img/forum/{topic[statut]}.png" title="{forum_statut[{topic[statut]}]}" />				
+					<img src="img/forum/{topic[statut]}.png" title="{report_statut[{topic[statut]}]}" />				
 				</if>
 
 				</td>

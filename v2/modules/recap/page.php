@@ -22,15 +22,15 @@ $type =  request('type', 'uint', 'get');
 	if ($count == 0)
 	{
 		$_tpl->set('empty',true);
-		$_tpl->set('fid_get','0');
+		$_tpl->set('fid_get',$fid);
 	}
 	else 
 	{
 		$_tpl->set('recap_array',$recap_array);
-		$_tpl->set('fid_get', '8');
+		$_tpl->set('fid_get', $fid);
 		$_tpl->set('empty',false);
 	}
 	
-	
+	$_tpl->set('tp',$type);
 }
 ?>

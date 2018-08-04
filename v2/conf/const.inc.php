@@ -247,24 +247,24 @@ define('FORUM_SUGGEST_FID',6); //fid suggestion
 define('FORUM_BUG_FID',8); //fid bug
 
 /*Etat bug/suggestion*/
-define('FORUM_REPORT_NEW',0); //nouvellement reporté
-define('FORUM_REPORT_OK',1); //avéré(bug) ou accepté (suggestion)
-define('FORUM_REPORT_NOK',2); //pas bug ou refusé
-define('FORUM_REPORT_ON',3); //codé
-define('FORUM_REPORT_DEV',4); //codé en dev
-define('FORUM_REPORT_TALK',5); //en discution
-define('FORUM_REPORT_DUBL',6); //double
+define('REPORT_STATUT_NEW',0); //nouvellement reporté
+define('REPORT_STATUT_OK',1); //avéré(bug) ou accepté (suggestion)
+define('REPORT_STATUT_NOK',2); //pas bug ou refusé
+define('REPORT_STATUT_ON',3); //codé
+define('REPORT_STATUT_DEV',4); //codé en dev
+define('REPORT_STATUT_TALK',5); //en discution
+define('REPORT_STATUT_DUBL',6); //double
 
 /*type de bug/sugg*/
-define('TYPE_REPORT_NEW',0); //Bah nouveau
-define('TYPE_REPORT_WAR',1); //legion et guerre
-define('TYPE_REPORT_HERO',2); //heros + comp
-define('TYPE_REPORT_UNT',3); //unités
-define('TYPE_REPORT_ALLI',4); //alliance
-define('TYPE_REPORT_GEN',5); //Donjon
-define('TYPE_REPORT_VLG',6); //Village
-define('TYPE_REPORT_GAME',7); //Interface et gameplay
-define('TYPE_REPORT_COM',8); //Marché
-define('TYPE_REPORT_MSG',9); //Messagerie
-define('TYPE_REPORT_ELSE',10); //Autres
+define('REPORT_TYPE_NEW',0); //Bah nouveau
+define('REPORT_TYPE_WAR',1); //legion et guerre
+define('REPORT_TYPE_HERO',2); //heros + comp
+define('REPORT_TYPE_UNT',3); //unités
+define('REPORT_TYPE_ALLI',4); //alliance
+define('REPORT_TYPE_GEN',5); //Donjon
+define('REPORT_TYPE_VLG',6); //Village
+define('REPORT_TYPE_GAME',7); //Interface et gameplay
+define('REPORT_TYPE_COM',8); //Marché
+define('REPORT_TYPE_MSG',9); //Messagerie
+define('REPORT_TYPE_ELSE',10); //Autres
 ?>
