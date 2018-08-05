@@ -630,9 +630,9 @@ class legions { /* classe pour plusieurs légions ... */
 		$cond['mbr'] = true;
 		if(isset($cond['etat']))
 			$cond['etat'] = protect($cond['etat'], array('uint'));
-		else
-			$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
-				LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
+		//else
+		//	$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
+		//		LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
 
 		$leg_array = get_leg_gen($cond); // récupérer les légions
 

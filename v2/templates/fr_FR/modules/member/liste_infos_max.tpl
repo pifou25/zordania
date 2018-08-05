@@ -24,20 +24,20 @@
 </if>
 
 <div class="content" id="infos_leg" style="display: none;">
-	<a name="leg"></a><hr />
+    <a name="leg"><h3>Légions</h3></a>
 	<if cond="isset({lres_ok})"><p class="ok">Ressources de la légion vidées.</p></if>
 	<include file="modules/member/leg_list.tpl" cache="1" />
 </div>
 
 
 <div class="content" id="infos_res" style="display: none;">
-	<a name="res" /><h3>Ressources :</h3>
+    <a name="res" ><h3>Ressources :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>
 			<h4>Finies</h4>
 			<if cond='{res_done}'>
-				<form action="admin-view.html?module=member&amp;mid={mbr_array[mbr_mid]}" method="post" />
+				<form action="admin-view.html?module=member&amp;mid={mbr_array[mbr_mid]}" method="post">
 					<table class="liste">
 					<tr>
 						<th>Type</th>
@@ -85,7 +85,7 @@
 
 
 <div class="content" id="infos_trn" style="display: none;">
-	<a name="trn" /><h3>Terrains :</h3>
+    <a name="trn"><h3>Terrains :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>
@@ -114,8 +114,7 @@
 
 
 <div class="content" id="infos_src" style="display: none;">
-	<debug print="{src_done}" />
-	<a name="src" /><h3>Recherches :</h3>
+	<a name="src"><h3>Recherches :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>
@@ -165,8 +164,7 @@
 
 
 <div class="content" id="infos_btc" style="display: none;">
-	<debug print="{btc_done}" />
-	<a name="bat" /><h3>Bâtiments :</h3>
+	<a name="bat"><h3>Bâtiments :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>
@@ -225,8 +223,7 @@
 
 
 <div class="content" id="infos_unt" style="display: none;">
-
-	<a name="unt" /><h3>Unités :</h3>
+	<a name="unt"><h3>Unités :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>

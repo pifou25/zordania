@@ -129,7 +129,7 @@ function edit_mbr_gen($cond, $new) {
 		}
 		if(isset($new['xp'])) {
 			$xp = protect($new['xp'], "uint");
-			$sql .= "mbr_xp= mbr_xp + $xp,";
+			$sql .= "mbr_xp= $xp,";
 		}
 				
 		$sql = substr($sql, 0, strlen($sql)-1);
