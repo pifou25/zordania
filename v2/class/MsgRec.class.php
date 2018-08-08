@@ -73,8 +73,7 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
         if ($msgid)
             return $return + Sign::whereIn('sign_msgid', $msgid)->delete();
         else
-            $sql .= " WHERE sign_msgid IN (SELECT mrec_id FROM zrd_msg_rec WHERE mrec_mid = $mid)";
-        return $return + $_sql->affected_rows();
+            return $return + Sign::del($mid);
     }
 
     static function mark(int $mid, int $msgid = 0) {
@@ -157,16 +156,10 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
         }
         $req->orderBy('sign_debut', 'desc');
 
+        // TODO : pagination ?
         //$req->skip($limit1)->take(LIMIT_PAGE)->toSql();
         return $req->get()->toArray();
 
-// TODO : pagination ?        
-//        $sql .= " ORDER BY " . $_sql->prebdd . "sign.sign_debut DESC";
-//        if ($limit1)
-//            $sql .= " LIMIT $limit1 " . LIMIT_PAGE;
-//        else
-//            $sql .= " LIMIT " . LIMIT_PAGE;
-//
     }
 
 }

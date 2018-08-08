@@ -1,8 +1,6 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
 
-include('lib/forum.lib.php');
-
 $_tpl->set("module_tpl","modules/forum/forum.tpl");
 $pid = request('pid','uint','get');
 if(!$pid)

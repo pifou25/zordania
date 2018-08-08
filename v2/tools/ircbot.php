@@ -1,7 +1,6 @@
 <?php
 require_once('../conf/conf.inc.php');
 require_once(SITE_DIR . "lib/divers.lib.php");
-require_once(SITE_DIR . "lib/forum.lib.php");
 // liste des mots du forum - voir tools/words.php :
 require_once(SITE_DIR . "cache/words.cache.php");
 
@@ -43,7 +42,7 @@ function cite_forum($word){
 	$kw_results = search_keywords_results($word, 0);
 	if(count($kw_results) >0){
 		$post = FrmPost::getById($kw_results[array_rand($kw_results)]); // 1 résultat au hasard
-		$arr_word = split_words($word);
+		$arr_word = FrmWord::split($word);
 		$res = explode('<br />', nl2br(str_replace('.', "\n",$post['message'])));
 		foreach($res as $msg){
 			$pos = strpos($msg, $arr_word[0]);

@@ -116,4 +116,43 @@ class FrmTopic extends Illuminate\Database\Eloquent\Model {
         return FrmTopic::insertGetId($request);
     }
 
+    /**
+     * MAJ du topic et du forum suite à ajout d'un message
+     * @param int $pid
+     * @param string $pseudo
+     * @param int $tid
+     * @param int $fid
+     * @param bool $topic
+     * @param int $mid
+     * @param string $subject
+     * @param string $msg
+     */
+    static function maj(int $pid, string $pseudo, int $tid, int $fid, bool $topic, string $subject, string $msg) {// MAJ suite à ajout d'un topic ou post (pas suite à edit ni delete)
+        //maj topics
+        $rqt1 = ['last_post' => DB::raw('UNIX_TIMESTAMP()'),
+            'last_post_id' => $pid,
+            'last_poster' => $pseudo];
+        if (!$topic) {
+            $rqt1['num_replies'] = DB::raw('num_replies + 1');
+        }
+        FrmTopic::where('id', $tid)->update($rqt1);
+
+        //maj forums
+        $rqt2 = ['last_post' => DB::raw('UNIX_TIMESTAMP()'),
+            'last_post_id' => $pid,
+            'last_poster' => $pseudo,
+            'num_posts' => DB::raw('num_posts + 1'),
+            'last_subject' => $subject];
+        if (!$topic) {
+            $rqt2['num_topics'] = DB::raw('num_topics + 1');
+        }
+        Frm::where('id', $fid)->update($rqt2);
+
+        //maj indexation recherche
+        if ($topic)
+            FrmWord::index('edit', $pid, $msg, $subject);
+        else
+            FrmWord::index('edit', $pid, $msg);
+    }
+
 }

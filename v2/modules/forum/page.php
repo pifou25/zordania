@@ -5,7 +5,6 @@ if(!can_d(DROIT_PLAY)) {
 	$_tpl->set("need_to_be_loged",true);
 } else {
 */
-include('lib/forum.lib.php');
 
 if($_act == 'search' and $_display == 'ajax')
 	$_tpl->set("module_tpl","modules/forum/search.tpl");
@@ -94,9 +93,9 @@ case 'post' : // valider le formulaire & créer le topic / message
 				//c'est bon, on peut ajouter le topic, ajouter le message
 				$tid = FrmTopic::add($pseudo,$pst_titre,$fid, $closed, $sticky);
 				$pid = FrmPost::add($mid,$pseudo,$_user["ip"],$pst_msg,$tid);
-				maj_all($pid,$pseudo,$tid,$fid,true,$mid,$pst_titre,$pst_msg);	
+				FrmTopic::maj($pid,$pseudo,$tid,$fid,true,$pst_titre,$pst_msg);	
 
-				header("Location: forum-post.html?pid=$pid#$pid");
+				header("Location: forum.html?pid=$pid#$pid");
 			}			
 		}
 	}
@@ -150,8 +149,8 @@ case 'post' : // valider le formulaire & créer le topic / message
 					}
 					//on ajoute le message, et on met à jour la bdd
 					$pid = FrmPost::add($mid,$pseudo,$_user["ip"],$pst_msg,$tid);
-					maj_all($pid,$pseudo,$tid,$info['forum_id'],false,$mid,$info['subject'],$pst_msg);
-					header("Location: forum-post.html?pid=$pid#$pid");
+					FrmTopic::maj($pid,$pseudo,$tid,$info['forum_id'],false,$info['subject'],$pst_msg);
+					header("Location: forum.html?pid=$pid#$pid");
 				}
 			}
 		}
@@ -189,7 +188,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 					$edit['tid'] = $tid;// modifier aussi le topic concerné
 				//on édite le message, et on met à jour la bdd
 				FrmPost::edit($edit);
-				header("Location: forum-post.html?pid=$pid#$pid");
+				header("Location: forum.html?pid=$pid#$pid");
 			}
 		}
 		//panel de modération topic (fermer/postit/déplacer)
@@ -358,8 +357,8 @@ case 'search': // recherche
 				$keyword_results = search_keywords_results($keywords, $search_in);
 
 			// recherche par auteur
-			if ($author && strcasecmp($author, 'Guest'))
-				$author_results = search_author_results($author);
+			if ($author) // && strcasecmp($author, 'Guest'))
+				$author_results = FrmPost::searchFrom($author);
 
 			if ($author && $keywords)// intersection entre les résultats auteur & mots-clé
 			{
@@ -425,7 +424,7 @@ case 'search': // recherche
 		$temp['sort_by'] = $sort_by;
 		$temp['sort_dir'] = $sort_dir;
 		$temp['show_as'] = $show_as;
-		$search_id = add_search_user( $temp, $_user['pseudo']);
+		$search_id = FrmCache::add( $temp);
 
 		//if ($action != 'show_new' && $action != 'show_24h')// pkoi on ne redirige pas dans ces 2 cas la?
 		//{
@@ -437,7 +436,7 @@ case 'search': // recherche
 	}
 
 	if($search_id){
-		$temp = search_user_id( $search_id);
+		$temp = FrmCache::get( $search_id);
 		if(!$temp){
 			$_tpl->set('no_hits', true);
 			break;

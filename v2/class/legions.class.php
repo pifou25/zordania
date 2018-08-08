@@ -121,13 +121,8 @@ class legions { /* classe pour plusieurs légions ... */
 			foreach($this->legs as $leg)
 				$res_leg[$leg->lid] = $leg->get_res();
 		} elseif ($this->lids) {
-			global $_sql;
-			$sql = "SELECT lres_type, lres_nb, lres_lid ";
-			$sql.= "FROM ".$_sql->prebdd."leg_res ";
-			$sql.= "WHERE lres_lid IN(".implode(',',$this->lids).') AND lres_nb <> 0 ';
-			$res_array = $_sql->make_array($sql);
-			foreach($res_array as $values) // rassembler les ressources par $lid
-				$res_leg[$values['lres_lid']][$values['lres_type']] = $values['lres_nb'];
+			foreach($this->lids as $lid) // rassembler les ressources par $lid
+				$res_leg[$lid] = LegRes::where('lres_lid', $lid)->get()->toArray();
 			$this->load_res = true;
 		}
 		return $res_leg;
@@ -168,28 +163,10 @@ class legions { /* classe pour plusieurs légions ... */
 		return $legs;
 	}
 
-	function flush_all_units($unt = array()) { 
-		global $_sql;
-		// MAJ edit unités : $unt = autre légion à MAJ aussi (leg bât par exemple)
-		foreach($this->legs as $lid => $leg) // récup toutes modifs des légions
-			$unt[$lid] = $leg->flush_edit_unt(true);
-
-		$sql_list = array();
-		foreach($unt as $lid => $leg)
-			foreach($leg as $rang => $value)
-				foreach($value as $type => $nb) {
-					$rang = protect($rang, "uint");
-					$type = protect($type, "uint");
-					$nb = protect($nb, "int") ;
-					$sql_list[] =  "($lid, $type, $rang, $nb)";
-				}
-		if (!empty($sql_list)) {
-			$sql = "INSERT INTO ".$_sql->prebdd."unt (unt_lid, unt_type, unt_rang, unt_nb) ";
-			$sql.= "VALUES ".implode(',',$sql_list);
-			$sql.= " ON DUPLICATE KEY ";
-			$sql.= "UPDATE unt_nb = unt_nb + VALUES(unt_nb) ";
-			return $_sql->query($sql);
-		}
+	function flush_all_units() { 
+		// MAJ edit unités
+		foreach($this->legs as $leg)
+			$leg->flush_edit_unt();
 	}
 
 } /* fin classe legions */

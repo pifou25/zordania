@@ -17,7 +17,7 @@ $_tpl->set("leg_race", $_user['race']);
 $sub = request('sub', 'string','get');
 
 function list_comp($hro_type) { // liste des comp du héros
-	$comp_array = $_ses->getConf('comp');
+	$comp_array = session::$SES->getConf('comp');
 	$result = array();
 	foreach($comp_array as $id => $cp)
 		if(in_array($hro_type, $cp['heros']))
@@ -352,7 +352,7 @@ default: // mode 'view' = detail legion, ou page de toutes les légions
 		$_act = "";
 
 	$lid = request("lid", "uint", "get");
-if($_display == "ajax") echo 'ajax';
+
 	if(isset($legions->legs[$lid])) {
 		$res_array = $legions->legs[$lid]->get_res();
 		$unt_array = $legions->legs[$lid]->get_unt();

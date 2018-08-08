@@ -193,17 +193,12 @@ class legion {
 			return $this->edit_unt;
 	}
 
-	function flush_edit_unt($get = false) { // exécuter la MAJ unités ou récupérer
-		$tmp = $this->edit_unt;
-		$this->edit_unt = array();
-		if ($get)
-                    return $tmp;
-		else
-                    Leg::edit($this->lid, $tmp);
+	function flush_edit_unt() { // exécuter la MAJ unités 
+            Unt::edit($this->lid, $this->edit_unt);
+            $this->edit_unt = [];
 	}
 
-	function get_res($type = 0){ // renvoyer les ressources de la légion, toutes ou celles de $type
-		$type = protect($type, "uint");
+	function get_res(int $type = 0){ // renvoyer les ressources de la légion, toutes ou celles de $type
 
 		if(!$this->w_load_res){ // rechercher toutes les ressources
 			$res = LegRes::get($this->mid, $this->lid);
@@ -230,24 +225,20 @@ class legion {
 				$this->res[$type] += $nb;
 	}
 
-	function back_unt($type){ // rentrer les unités $type au village
-		global $_user, $_sql;
+	function back_unt($type) { // rentrer les unités $type au village
+        if (!$this->vide())
+            if (isset($this->unt[$type]) && $this->unt[$type])
+                if (session::$SES->get('mapcid') == $this->cid && $this->infos['leg_etat'] == LEG_ETAT_GRN) {
+                    $nb = $this->unt[$type];
+                    // supprimer les unités de la légion en cours
+                    Unt::where('unt_lid', $this->lid)->where('unt_type', $type)->delete();
+                    // ajouter au village
+                    Unt::editVlg($this->mid, array($type => $nb));
+                    unset($this->unt[$type]); // suppr en mémoire
+                }
+        }
 
-		if(!$this->vide())
-			if(isset($this->unt[$type]) && $this->unt[$type])
-				if($_user['mapcid'] == $this->cid && $this->infos['leg_etat'] == LEG_ETAT_GRN) {
-					$nb = $this->unt[$type];
-					// supprimer les unités de la légion en cours
-					$sql = "DELETE FROM ".$_sql->prebdd."unt WHERE unt_lid = {$this->lid} AND unt_type = $type ";
-					$_sql->query($sql);
-					// ajouter au village
-					Unt::editVlg($_user['mid'], array($type => $nb));
-					unset($this->unt[$type]); // suppr en mémoire
-				}
-
-	}
-
-	function stats($type = ''){ // stats de la légion
+        function stats($type = ''){ // stats de la légion
 		if(empty($this->stats)){ // calculer les stats
 			$this->stats = array('unt_nb' => 0, 'atq_unt' => 0, 'atq_btc' => 0, 'def' => 0, 'vit' => 0,
 				'vie' => 0); // zero par défaut
@@ -475,13 +466,9 @@ class legion {
 	} /* fin calcul des pertes unités & héros */
 
 	function edit($new) {
-		global $_sql;
-		$etat = 0; $vit = 0; $cid = 0;
-		$dest = -1; $xp = 0; $fat = 0; $leg_name = '';
-
 		// editer aussi le heros si existe
 		if ($this->hid) {
-			$edit_hro = array();
+			$edit_hro = [];
 			if(isset($new['hro_name']))
 				$edit_hro['name'] = $new['hro_name'];
 			if(isset($new['hro_type']))
@@ -505,48 +492,27 @@ class legion {
 				Hro::edit($this->mid, $edit_hro);
 		}
 
-		if(isset($new['etat'])) {
-			$etat = protect($new['etat'], "uint");
-			$this->etat = $etat;
-			$this->infos['leg_etat'] = $etat;
-		}
-		if(isset($new['vit'])) {
-			$vit = protect($new['vit'], "uint");
-			$this->infos['leg_vit'] = $vit;
-		}
-		if(isset($new['dest'])) {
-			$dest = protect($new['dest'], "uint");
-			$this->infos['leg_dest'] = $dest;
-		}
-		if(isset($new['cid'])) {
-			$cid = protect($new['cid'], "uint");
-			$this->cid = $cid;
-			$this->infos['leg_cid'] = $cid;
-		}
-		if(isset($new['name'])) {
-			$leg_name = trim(protect($new['name'], "string"));
-			$this->infos['leg_name'] = $leg_name;
-		}
-
-		if(!$etat && !$vit && !$dest && !$leg_name)
+                $editLeg = [];
+                foreach($new as $key => $value){
+                    if(in_array($key, ['etat', 'vit', 'dest', 'cid', 'name'])){
+                        if($key == 'etat')
+                            $this->etat = $value;
+                        else if($key == 'cid'){
+                            $this->cid = $value;
+                            $editLeg['leg_stop'] = DB::raw('NOW()');
+                        }else if($key == 'name')
+                            $value = trim($value);
+                        $editLeg["leg_$key"] = $value;
+                        $this->infos["leg_$key"] = $value;
+                    }
+                }
+		if(empty($editLeg))
 			return 0;
-
-		$sql = "UPDATE ".$_sql->prebdd."leg SET ";
-		if($etat) $sql.= "leg_etat = $etat,";
-		if($vit) $sql.= "leg_vit = $vit,";
-		if($dest>=0) $sql.= "leg_dest = $dest,";
-		if($cid) $sql.= "leg_cid = $cid,leg_stop=NOW(),"; // position ET heure d'arrivée!
-		if($leg_name) $sql.= "leg_name = '$leg_name',";
-		$sql = substr($sql, 0, strlen($sql) - 1);
-		$sql .= " WHERE leg_mid = {$this->mid} AND leg_id = {$this->lid} ";
-
-		$_sql->query($sql);
-		return $_sql->affected_rows();
+                return Leg::where('leg_id', $this->lid)->update($editLeg);
 	}
 
 	function move($dest) {
 		// donne la destination et la vitesse, et fait le départ sans attendre le tour
-		global $_sql;
 		$new = array('vit' => $this->vitesse(), 'dest' => $dest, 'etat' => LEG_ETAT_DPL);
 		$this->edit($new);
 	}

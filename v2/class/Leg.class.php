@@ -151,11 +151,9 @@ class Leg extends Illuminate\Database\Eloquent\Model {
                 $req->leftJoin('hero', 'leg.leg_id', 'hero.hro_lid');
             }
  	} else {
-            $req->join('unt', 'leg.leg_id', 'unt.unt_lid');
+            $req->leftJoin('unt', 'leg.leg_id', 'unt.unt_lid');
 	}
 
-	if($unt)
-            $req->where('unt_nb', '>', 0);
 	if($mid)
             $req->where('leg_mid', '=', $mid);	
 	if($leg)
@@ -190,7 +188,6 @@ class Leg extends Illuminate\Database\Eloquent\Model {
 
     /* ajouter une légion */
     static function add(int $mid, int $cid, int $etat, string $name) {
-
         $request = ['leg_mid' => $mid,
             'leg_cid' => $cid,
             'leg_etat' => $etat,
@@ -200,7 +197,6 @@ class Leg extends Illuminate\Database\Eloquent\Model {
     }
 
     static function edit(int $mid, int $lid, array $new = []){
-
         $request = [];
         foreach ($new as $key => $val) {
             if (in_array($key, ['etat', 'vit', 'dest', 'cid', 'xp', 'fat', 'name'])){
@@ -217,7 +213,7 @@ class Leg extends Illuminate\Database\Eloquent\Model {
     
     /* supprimer une légion + unités + butin */
     static function del(int $mid, int $lid = 0) {
-
+        
         if(!$lid){
             return Leg::delAll($mid);
         }
@@ -237,5 +233,4 @@ class Leg extends Illuminate\Database\Eloquent\Model {
         return true;
 
     }
-
 }

@@ -158,20 +158,19 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
 
     static function edit(array $cond) { // fonction générale full options
         $pid = isset($cond['pid']) ? protect($cond['pid'], 'uint') : 0;
-        $msg = isset($cond['msg']) ? protect($cond['msg'], 'bbcode') : '';
-        $silent = isset($cond['silent']) ? protect($cond['silent'], 'bool') : false;
-        $title = isset($cond['title']) ? protect($cond['title'], 'string') : '';
+        $title = isset($cond['title']) ? $cond['title'] : '';
         $closed = isset($cond['closed']) ? protect($cond['closed'], 'uint') : -1;
         $sticky = isset($cond['sticky']) ? protect($cond['sticky'], 'uint') : -1;
         $fid = isset($cond['fid']) ? protect($cond['fid'], 'uint') : 0;
         $tid = isset($cond['tid']) ? protect($cond['tid'], 'uint') : 0;
         $statut = isset($cond['statut']) ? protect($cond['statut'], 'uint') : 0;
 
-        if ($msg) { // éditer le post
+        if (isset($cond['msg']) ) { // éditer le post
             if (!$pid)
                 return false;
-            $request = ['message' => $msg];
-            if (!$silent) {
+            $request = ['message' => $cond['msg']];
+
+            if (!isset($cond['silent'])) {
                 $request['edited'] = DB::raw('UNIX_TIMESTAMP()');
                 $request['edited_by'] = Session::$SES->get('pseudo');
             }
@@ -229,9 +228,9 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
 
         if ($pid) {//indexation pour la recherche!
             if ($tid && $title)
-                update_search_index('edit', $pid, $msg, $title);
+                FrmWord::index('edit', $pid, $cond['msg'], $title);
             else
-                update_search_index('edit', $pid, $msg);
+                FrmWord::index('edit', $pid, $cond['msg']);
         }
 
         return true;
@@ -265,10 +264,10 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
      * @param array $tpc
      * @return bool
      */
-    static function del(array $pst, array $tpc) : bool {
+    static function del(array $pst, array $tpc): bool {
 
         // MAJ indexation recherche
-        strip_search_index($pst['pid']);
+        FrmMatch::index($pst['pid']);
 
         //puis on supprime le post lui-même
         FrmPost::where('id', $pst['pid'])->delete();
@@ -282,13 +281,13 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
             if ($tpc['frm_last_post_id'] == $pst['pid']) {
                 $request = ['f.last_post_id' => DB::raw('f.num_topics - 1'),
                     'f.num_posts' => DB::raw('f.num_posts - 1'),
-                    'f.last_post' => DB::raw('t.last_post'), 
+                    'f.last_post' => DB::raw('t.last_post'),
                     'f.last_post_id' => DB::raw('t.last_post_id'),
                     'f.last_poster' => DB::raw('t.last_poster'),
                     'f.last_subject' => DB::raw('t.subject')];
                 DB::table('frm_forums AS f')->leftJoin('frm_topics AS t', 'f.id', 't.forum_id')
                         ->where('f.id', $tpc['forum_id'])->whereRaw('(t.id = ('
-                        . 'SELECT id FROM ' . DB::getTablePrefix() . 'topics '
+                                . 'SELECT id FROM ' . DB::getTablePrefix() . 'topics '
                                 . 'WHERE forum_id = ? ORDER BY t.last_post ASC LIMIT 0,1)'
                                 . ' OR t.id IS NULL)', $tpc['forum_id'])
                         ->update($request);
@@ -310,7 +309,7 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
                     't.num_replies' => DB::raw('t.num_replies - 1')];
                 DB::table('frm_posts AS p')->join('frm_topics AS t', 't.id', 'p.topic_id')
                         ->where('t.id', $tpc['tid'])->whereRaw('(p.id = ('
-                        . 'SELECT max(id) FROM ' . DB::getTablePrefix() . 'frm_posts '
+                                . 'SELECT max(id) FROM ' . DB::getTablePrefix() . 'frm_posts '
                                 . 'WHERE topic_id = ?', $tpc['tid'])
                         ->update($request);
             } else {
@@ -332,22 +331,28 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
             if ($tpc['frm_last_post_id'] == $pst['pid']) {
                 $request = ['f.last_post_id' => DB::raw('f.num_topics - 1'),
                     'f.num_posts' => DB::raw('f.num_posts - 1'),
-                    'f.last_post' => DB::raw('t.last_post'), 
+                    'f.last_post' => DB::raw('t.last_post'),
                     'f.last_post_id' => DB::raw('t.last_post_id'),
                     'f.last_poster' => DB::raw('t.last_poster'),
                     'f.last_subject' => DB::raw('t.subject')];
                 DB::table('frm_forums AS f')->leftJoin('frm_topics AS t', 'f.id', 't.forum_id')
                         ->where('f.id', $tpc['forum_id'])->whereRaw('(t.id = ('
-                        . 'SELECT max(id) FROM ' . DB::getTablePrefix() . 'topics '
+                                . 'SELECT max(id) FROM ' . DB::getTablePrefix() . 'topics '
                                 . 'WHERE forum_id = ?) OR t.id IS NULL)', $tpc['forum_id'])
                         ->update($request);
-
             } else {
                 Frm::where('id', $tpc['forum_id'])->decrement('num_posts');
             }
 
             return false;
         }
+    }
+
+    // construire la liste des résultats pour l'auteur recherché
+    static function searchFrom(string $author) {
+        return FrmPost::select('id')->whereIn('poster_id', function($query) use($author) {
+                    $query->select('mbr_mid')->from('mbr')->where('mbr_pseudo', 'LIKE', $author);
+                })->get()->toArray();
     }
 
 }

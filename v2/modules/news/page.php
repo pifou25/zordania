@@ -1,9 +1,6 @@
 <?php
 //Verif
 if(!defined("_INDEX_")){ exit; }
-
-//include de la classe
-require_once('lib/forum.lib.php');
 		
 $_tpl->set("module_tpl","modules/news/news.tpl");
 $_tpl->set('is_modo',$_ses->canDo(DROIT_PUNBB_MOD));

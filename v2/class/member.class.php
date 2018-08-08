@@ -273,24 +273,8 @@ class member{
     /*** ressources ***/
 	function res(){
 		if(!$this->res_load){
-			global $_sql;
-
-			$sql = "SELECT * FROM ".$_sql->prebdd."res ";
-			$sql.= "WHERE res_mid = ".$this->mid;
-
-			$array = $_sql->make_array($sql);
-			if($array){
-				// mise en forme du tableau avec la 1ere ligne uniquement
-				$return = array();
-				foreach($array[0] as $key => $val) {
-					$key = str_replace("res_type","",$key);
-					$return[$key] = $val;
-            }
-            unset($return['res_mid']);
-				$this->res = $return;
-			}
-
-			$this->res_load = true;
+                    $this->res = Res::get($this->mid);
+                    $this->res_load = true;
 		}
 		return $this->res;
     }
