@@ -125,17 +125,10 @@ class session
 		if($this->get("login") != "guest") {
 			$sql="SELECT COUNT(*) AS nb FROM ".$this->sql->prebdd."msg_rec JOIN ".$this->sql->prebdd."mbr ON mrec_from = mbr_mid WHERE mrec_mid = $mid AND mrec_readed = 0";
 			$result = $this->sql->make_array_result($sql);
-			$this->set("msg", $result['nb']);
+			$this->set("msg", $result['nb']);		
 		
-		
-			/* Nouvelle news? mbr_ldate = dernière connexion heure locale */
-			$sql="SELECT count(*) AS nb FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd.
-			  " WHERE forum_id =".ZORD_NEWS_FID." AND posted > " . $this->get("ldate") ;
-			$result = $this->sql->make_array_result($sql);
-			$this->set("news", $result['nb']);
-			
 			/*Select la dernière news*/
-			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
+			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted > " . $this->get("ldate");
 			$result = $this->sql->make_array_result($sql);
                         if(count($result) > 0){
                             $this->set("tid", $result['id']);
@@ -145,12 +138,21 @@ class session
                             $this->set("sub", 0);
                         }
 			
+			/*Select le dernier com*/
+			$sql="SELECT * FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE last_post > " . $this->get("ldate");
+			$result = $this->sql->make_array_result($sql);
+                        if(count($result) > 0){
+                            $this->set("new_post", $result['last_post']);
+                        }else{
+                            $this->set("new_post", 0);
+                        }
+			
 		}	
 		
 		
 			
 	}
-
+	
 	function update_heros() {
 		$mid = $this->get("mid");
 		

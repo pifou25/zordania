@@ -12,7 +12,7 @@
 		<else><a href="gen.html" title="Informations générales du village."><img src="img/acts/gen.png" /></a></else>
 	</li>
     <li>
-        <a href="forum.html" title="Forum."><img src="img/acts/codu.png" /></a>
+        <a href="forum.html" title="Forum."><if cond="{_user[new_post]} > 1"><img src="img/acts/codu.gif"/></if><else><img src="img/acts/codu.png" /></else></a>
     </li>
 	<if cond='{_user[alaid]} != 0'>
 		<li>
