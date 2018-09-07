@@ -117,7 +117,7 @@ class diplo {
 
 	function proposer($al, $type) { // $al propose un new pacte a $this
 		if (!$this->al_aid) return false;
-		if ($this->count($type) >= self::$max[$type]) {
+		if ($this->count($type) >= self::MAX[$type]) {
 			$this->err = 'nb_pactes';
 			return false;
 		}
@@ -189,7 +189,7 @@ class diplo {
 */
 	function count($type = 0) { // nb de pactes d'un type donné
 		if (empty($this->w_count)) { // compter les pactes actifs & en attente
-			foreach(self::$max as $key => $nb) // init
+			foreach(self::MAX as $key => $nb) // init
 				$this->w_count[$key] = 0;
 			foreach($this->result as $pacte) // compter
 				if ($pacte['dpl_etat'] != DPL_ETAT_NO && $pacte['dpl_etat'] != DPL_ETAT_FIN)

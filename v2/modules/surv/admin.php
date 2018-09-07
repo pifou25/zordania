@@ -2,9 +2,6 @@
 //Verif
 if(defined("_INDEX_") and $_ses->canDo(DROIT_ADM_MBR)){
 
-require_once("lib/member.lib.php");
-require_once("lib/alliances.lib.php");
-
 $_tpl->set("module_tpl","modules/surv/admin.tpl");
 $_tpl->set("admin_name","Membres surveill�s");
 $_tpl->set("array_type", array(SURV_TYPE_ALY => "Alliance", SURV_TYPE_IP => "Adresse IP", SURV_TYPE_MP => "Messagerie", SURV_TYPE_FRM => "Forum", SURV_TYPE_ALL => "Totale"));

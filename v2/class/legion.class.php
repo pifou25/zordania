@@ -16,8 +16,7 @@ class legion {
 	protected $res = array(); // ressources de la légion: get_res
 	protected $stats = array();
 	/* bonus attaque, defense, heros(XP), batiment, competence */
-	protected $bonus = array('atq' => 0, 'def' => 0, 'btc' => 0, 'cpt' => array(), 'vie' => 0);
-	private   $cache = array(); // pour la fonction can_unt
+	protected $bonus = ['atq' => 0, 'def' => 0, 'btc' => 0, 'cpt' => array(), 'vie' => 0];
 	private   $edit_unt = array(); // pour maj unités
 	public    $sqr = false; // la case (map)
 
@@ -87,6 +86,24 @@ class legion {
 			return 0;		
 	}
 
+
+        /**
+         * récupérer toutes les infos d'un bonus, format array
+         * tableau générique array( heros=> array, bonus=> %, tours=>tours, prix_xp=>prix, race=>$race, res=>$resultat)
+         * @param int $cp_id
+         * @param int $race
+         * @param type $res
+         * @return array
+         */
+        function getComp($res = false) {
+                $cp = Config::get($this->race, 'comp', $this->comp);
+                $cp['cpid'] = $this->comp;
+                $cp['race'] = $this->race;
+                if ($res !== false)
+                        $cp['res'] = $res;
+                return $cp;
+        }
+
 	function get_unt($type = 0){ // renvoyer les unités de la légion, toutes ou celles de $type
 		$type = protect($type, "uint");
 
@@ -133,13 +150,6 @@ class legion {
 	function vide(){ // la légion est-elle vide ?? ni unités ni héros
 		if(!$this->w_load_unt) $this->get_unt(); // rechercher les unités si pas fait
 		return empty($this->unt);
-	}
-
-	function can_unt($unt, $nb) { // vérifier qu'on peut former $nb unités $unt
-		// vérifie prix ressources & unités, et qu'on a les bât et recherches
-		$bad = can_unt($this->mid, $unt, $nb, $this->cache);
-		if (!empty($bad)) return $bad; // manque qqchose pour former cette unitée
-		else return true;
 	}
 
 	function add_unt($unt, $nb = 1, $factor = 1){

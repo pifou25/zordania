@@ -3,9 +3,6 @@ if(!defined("_INDEX_")) exit;
 $mid = request("mid", "uint", "get");
 $key = request("key", "string", "get");
 
-require_once("lib/member.lib.php");
-require_once("lib/alliances.lib.php");
-
 if(!$mid OR !$key)
 	exit;
 

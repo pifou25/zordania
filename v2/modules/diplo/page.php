@@ -4,9 +4,6 @@ if(!$_ses->canDo(DROIT_PLAY)) {
 	$_tpl->set("need_to_be_loged",true);
 } else {
 
-require_once ('lib/alliances.lib.php');
-require_once ('lib/member.lib.php');
-
 $_tpl->set("module_tpl","modules/diplo/diplo.tpl");
 $_tpl->set("act",$_act);
 $_tpl->set("sub",$_sub);

@@ -1,9 +1,6 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
 
-/* Nécessaire */
-require_once("lib/res.lib.php");
-
 $decal = $_user['decal'];
 
 if(strpos($decal, "-")!==false) {

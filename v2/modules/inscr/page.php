@@ -3,9 +3,6 @@ if(!defined("_INDEX_")){ exit; }
 
 $_tpl->set("module_tpl","modules/inscr/inscr.tpl");
 
-require_once("lib/member.lib.php");
-require_once("lib/ini.lib.php");
-
 /* retourne true si le mail est valide */
 function mailverif($mail) 
 {
@@ -80,7 +77,7 @@ if(!$_act || $_act == "new") {
 				$_tpl->set("mbr_error",true);
 			else if($mid = Mbr::add($login, $_ses->crypt($login,$pass), $mail, $lang, MBR_ETAT_INI, GRP_JOUEUR, $decal, $_ses->getIp(), $_css[0], $parrain)) {// membre ajout�, envoyer le mail
 				$_tpl->set("mbr_show_form",false);
-				$_tpl->set("mbr_ok", mail_init($mid, $login, $pass, $mail));
+				$_tpl->set("mbr_ok", compte::mailInit($mid, $login, $pass, $mail));
 				$_ses->login($login, $pass);// se connecter (!)
 			} else { // cas d'erreur non pr�vu
 				$_tpl->set("mbr_error",true);
@@ -107,7 +104,7 @@ if(!$_act || $_act == "new") {
 			$_tpl->set("mbr_edit", true);
 			if($mbr_array['mbr_etat']==MBR_ETAT_INI){// compte non encore valid�: relancer mail
 				Vld::del($mid);// on annule tout ancien changement
-				$_tpl->set("mbr_newkey", mail_init($mid));
+				$_tpl->set("mbr_newkey", compte::mailInit($mid));
 			}
 			break;
 		}
@@ -135,7 +132,7 @@ if(!$_act || $_act == "new") {
 		}else{
 			$mid = $mbr_array[0]['mbr_mid'];
 			Vld::del($mid);// on annule tout ancien changement
-			$_tpl->set("mbr_edit",mail_chg_pass(array('mid' => $mid)));
+			$_tpl->set("mbr_edit",compte::mailChgPwd(array('mid' => $mid)));
 		}
 	}
 } else if($_act == "del") { /* supprimer inscription */
@@ -154,11 +151,6 @@ if(!$_act || $_act == "new") {
 		} else if($vld_array[0]['vld_rand'] != $key) { /* On a pas, ou pas la bonne clef */
 			$_tpl->set("mbr_no_key", true);
 		} else {// suppression ok!
-			/* Includes */
-			require_once("lib/unt.lib.php");
-			require_once("lib/res.lib.php");
-			require_once("lib/src.lib.php");
-			require_once("lib/alliances.lib.php");
 
 			if($mbr_user = Mbr::getInit(array('mid'=>$mid))){
 				Mbr::cls($mid, $mbr_user['mbr_mapcid'], $mbr_user['mbr_race']);
@@ -169,7 +161,7 @@ if(!$_act || $_act == "new") {
 
 	}else if($mid && $mail){//envoyer un mail de confirmation
 		Vld::del($mid);// on annule tout ancien changement
-		$_tpl->set('send_mail',mail_del($mid, $mail));
+		$_tpl->set('send_mail',compte::mailDel($mid, $mail));
 	}
 } else if($_act == 'rest') { /* relance mail : quitter ou r�activer */
 	$_tpl->set("mbr_act","rest");

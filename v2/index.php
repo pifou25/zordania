@@ -147,7 +147,7 @@ if($_file == "connec" && $_user["loged"]) {
 mark('ses');
 
 /* Historique */
-$_histo = new histo($_sql);
+$_histo = new Hst();
 
 if(SITE_TRAVAUX && !$_ses->canDo(DROIT_ADM_TRAV))
 {
@@ -298,7 +298,7 @@ if($_display == "xml") { /* Sortie en XML */
 
 	if(SITE_DEBUG)
 	{
-		//$_histo->flush();
+		unset($_histo);
 		$_tpl->set_globals();
 		$_tpl->set('sv_site_debug',true);
 		$_tpl->set('sv_total_sql_time',$_sql->total_time);
@@ -348,5 +348,3 @@ if(!empty($_error)) { // log des erreurs PHP
 	}
 	//$err_log->close();
 }
-
-?>

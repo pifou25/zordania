@@ -3,10 +3,6 @@
 if (!defined("INDEX_BTC"))
     exit;
 
-require_once("lib/res.lib.php");
-require_once("lib/res.lib.php");
-require_once("lib/src.lib.php");
-
 if ($_sub == "cancel_res") {
     $researchId = request('rid', 'uint', 'get');
     $number = request('nb', 'uint', 'post');
@@ -43,47 +39,18 @@ if ($_sub == "cancel_res") {
     $_tpl->set("res_todo", $res_todo);
 
     $conf_res = $_ses->getConf("res");
-    $need_btc = array();
-    $need_src = array();
-    $need_res = array();
 
     foreach ($conf_res as $type => $value) {
         if (!isset($value['need_btc']) || $btc_type != $value['need_btc'])
             unset($conf_res[$type]);
         else if (isset($value['cron'])) /* virer les ressources en prod auto */
             unset($conf_res[$type]);
-        else { /* un peu de ménage */
-            if (isset($value['prix_res']))
-                $need_res = array_merge(array_keys($value['prix_res']), $need_res);
-            if (isset($value['need_src']))
-                $need_src = array_merge($value['need_src'], $need_src);
-            array_push($need_res, $type);
-        }
     }
 
-    $need_btc = $btc_type;
-    $need_res = array_unique($need_res);
-    $need_src = array_unique($need_src);
-    asort($need_res);
-    asort($need_src);
-
-    $cache = array();
-    $cache['btc'] = Btc::getNbActive($_user['mid'], [$need_btc]);
-    $cache['src'] = Src::get($_user['mid'], $need_src);
-    $cache['src'] = index_array($cache['src'], "src_type");
-    $cache['res'] = Res::get($_user['mid'], $need_res);
-
-    foreach ($res_todo as $value) {
-        if (!isset($cache['res_todo'][$value['rtdo_type']]['rtdo_nb']))
-            $cache['res_todo'][$value['rtdo_type']]['rtdo_nb'] = 0;
-
-        $cache['res_todo'][$value['rtdo_type']]['rtdo_nb'] += $value['rtdo_nb'];
-    }
 
     $res_tmp = array();
-
     foreach ($conf_res as $type => $value) {
-        $res_tmp[$type]['bad'] = can_res($_user['mid'], $type, 1, $cache);
+        $res_tmp[$type]['bad'] = $mbr->can_res( $type, 1);
         $res_tmp[$type]['conf'] = $value;
     }
 
@@ -97,8 +64,8 @@ if ($_sub == "cancel_res") {
     unset($res_tmp);
 
     $_tpl->set("res_dispo", $res_array);
-    $_tpl->set("res_utils", $cache['res']);
-    $_tpl->set("res_done", $cache['res']);
+    $_tpl->set("res_utils", $mbr->res());
+    $_tpl->set("res_done", $mbr->res());
     $_tpl->set("res_conf", $conf_res);
 }
 //Nouvelle res
@@ -119,7 +86,7 @@ elseif ($_sub == "add_res") {
     else if ($res_todo_nb + $nb > TODO_MAX_RES)
         $_tpl->set("btc_res_todo_max", TODO_MAX_RES);
     else {
-        $array = can_res($_user['mid'], $type, $nb);
+        $array = $mbr->can_res( $type, $nb);
 
         if (isset($array['do_not_exist']))
             $_tpl->set("btc_no_type", true);
@@ -136,4 +103,3 @@ elseif ($_sub == "add_res") {
         }
     }
 }
-?>

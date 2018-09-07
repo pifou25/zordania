@@ -90,7 +90,7 @@
 			<h4>Légion en approche :</h4>
 			<ul>
 				<foreach cond='{atq_array} as {result}'>
-					<if cond="(max(abs({result[map_x]} - {_user[map_x]}),abs({result[map_y]} - {_user[map_y]}))) < {dst_view_max} AND {result[hro_bonus]} != {CP_INVISIBILITE}">
+					<if cond="(max(abs({result[map_x]} - {_user[map_x]}),abs({result[map_y]} - {_user[map_y]}))) < {dst_view_max} AND {result[bonus]} != {CP_INVISIBILITE}">
 						<li> 
 							<img src="img/info.png" alt="Légion de {result[mbr_pseudo]}" id="leg{result[leg_id]}" class="toggle" />
 							- légion <img src="img/{result[mbr_race]}/{result[mbr_race]}.png" alt="{result[mbr_pseudo]}" /> de

@@ -44,7 +44,7 @@ foreach($mid_array as $_user)
 	echo $_user['mbr_pseudo']." ($mid)($race)\n";
 
 	if ($exec) { /* init mbr */
-		cls_aly($mid);
+		AlMbr::delMbr($mid);
 		UntTodo::clear($mid);
 		Btc::clear($mid);
                 Res::clear($mid);
@@ -53,7 +53,7 @@ foreach($mid_array as $_user)
 		Trn::clear($mid);
 		Mch::del($mid);
 		Atq::del($mid);
-		cls_histo($mid);
+		Hst::clear($mid);
 		Vld::init($mid);
 		Map::reset($cid);
 		//cls_frm($mid);

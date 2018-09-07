@@ -2,8 +2,6 @@
 if(!defined("_INDEX_")){ exit; }
 //if(!can_d(DROIT_PLAY)){ exit; }
 
-require_once("lib/member.lib.php");
-
 switch($_act){
 case 'search' :
 	$term = str_replace('*', '%', request('term', 'string', 'get'));

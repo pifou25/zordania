@@ -35,11 +35,6 @@ $_cache = new cache('global', true);
 $_error = array();
 set_error_handler("error_handler");
 
-require_once(SITE_DIR . "lib/member.lib.php");
-require_once(SITE_DIR . "lib/alliances.lib.php");
-require_once(SITE_DIR . "lib/res.lib.php");
-require_once(SITE_DIR . "lib/unt.lib.php");
-require_once(SITE_DIR . "lib/src.lib.php");
 mark('lib');
 
 $_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
@@ -120,7 +115,7 @@ case ZORD_SPEED_SLOW:
 
 $_lock = new log($lockfile, "H:i:s d/m/Y", true, true);
 $_log = new log(SITE_DIR."logs/crons/bench/bench_".date("d_m_Y").".log");
-$_histo = new histo($_sql);
+$_histo = new Hst();
 $_user = array();
 $_ally = array(); // liste des alliances utilisées pour diplo
 
@@ -408,11 +403,6 @@ mark('clean');
 
 if (SITE_DEBUG) sleep(1);
 
-//$_histo->flush();
-//$_lock->close();
-//$_log->close();
-//$_sql->close();
-
 mark('close');
 
 if(SITE_DEBUG) {
@@ -428,4 +418,3 @@ if(SITE_DEBUG) {
 	echo "Time: ". $_sql->total_time . "\n";
 	echo "Req: ". $_sql->nbreq . "\n";
 }
-?>

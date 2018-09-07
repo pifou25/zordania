@@ -6,11 +6,6 @@ if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else
 {
-require_once("lib/unt.lib.php");
-require_once("lib/res.lib.php");
-require_once("lib/member.lib.php");
-require_once("lib/alliances.lib.php");
-require_once("lib/heros.lib.php");
 
 $_tpl->set('module_tpl', 'modules/war/war.tpl');
 
@@ -58,7 +53,7 @@ case 'make_atq':
 	$pactes_atq = new diplo(array('aid' => $_user['alaid']));
 	$pactes_atq_array = $pactes_atq->actuels(); // les pactes actifs en tableau
 	/* gestion de qui qu'on peut attaquer ou pas, atq vs def principal */
-	$mbr_def_array = can_atq_lite($mbr_def_array, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $pactes_atq_array); 
+	$mbr_def_array = Mbr::canAtq($mbr_def_array, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $pactes_atq_array); 
 	$mbr_def_array = $mbr_def_array[0];
 	$mid_def = $mbr_def_array['mbr_mid'];
 
@@ -153,7 +148,7 @@ case 'make_atq':
 					$ratio_def[$lid] = 0; // A partir du N défenseur, les légions ne participent pas
 				/* compétence défense groupée : bonus supplémentaire défense groupée sur l'allié */
 				if ($leg->comp == CP_COLLABORATION) {
-					$cp = get_comp( $leg->comp, $leg->race);
+					$cp = $leg->getComp();
 					$ratio_def[$lid] += $cp['bonus'] / 100;
 				}
 				if ($ratio_def[$lid] > 0) {
@@ -249,7 +244,7 @@ case 'make_atq':
 			$bilan['def'][$lid]['ratio_def'] = $ratio_def[$lid]; // ratio défensif
 			/* compétence murs fortifiés : double la solidité des bâtiments */
 			if ($leg->mid == $mid_def && $leg->comp == CP_MURAILLES_LEGENDAIRES) {
-				$cp = get_comp( $leg->comp, $leg->race);
+				$cp = $leg->getComp();
 				$bonus_btc = $cp['bonus'] / 100;
 				$bilan['def'][$lid]['comp'] = $cp;
 			}
@@ -286,7 +281,7 @@ case 'make_atq':
 	foreach ($legs['combat'] as $lid) {
 		$leg = $legions->legs[$lid];
 		if ($leg->comp == CP_VOLEE_DE_FLECHES or $leg->comp == CP_FLECHES_SALVATRICES) {
-			$cp = get_comp( $leg->comp, $leg->race);
+			$cp = $leg->getComp();
 			if ($lid == $lid1) { // volée de flèches de l'attaquant, sur tous les défenseurs
 				foreach ($legs['def'] as $liddef) {
 					$degat = $bilan['def'][$liddef]['ratio'] * $cp['bonus']/100 * $bilan['def'][$liddef]['vie_leg'];
@@ -312,7 +307,7 @@ case 'make_atq':
 		$bilan['def'][$lid]['pertes'] = $leg->pertes(round($bilan['def'][$lid]['ratio'] * $att['fin']));
 		/* compétence guérison: récupérer une partie des pertes */
 		if ($leg->comp == CP_GUERISON) {
-			$cp = get_comp( $leg->comp, $leg->race);
+			$cp = $leg->getComp();
 			$cp['res'] = $leg->add_unt($bilan['def'][$lid]['pertes']['unt'], $cp['bonus'] / 100);
 			$bilan['def'][$lid]['comp'] = $cp;
 		}
@@ -417,7 +412,7 @@ case 'make_atq':
 
 	/* compétence guérison: récupérer une partie des pertes */
 	if ($legions->legs[$lid1]->comp == CP_GUERISON) {
-		$cp = get_comp( $legions->legs[$lid1]->comp, $_user['race']);
+		$cp = $legions->legs[$lid1]->getComp();
 		$cp['res'] = $legions->legs[$lid1]->add_unt($bilan['att']['pertes']['unt'], $cp['bonus'] / 100);
 		$bilan['att']['comp'] = $cp;
 	}
@@ -426,9 +421,9 @@ case 'make_atq':
 	foreach ($legs['combat'] as $lid) { // vérifier compétence active pas encore définie
 		if ($legions->legs[$lid]->comp != 0)
 			if ($lid == $lid1 &&  empty($bilan['att']['comp']))
-				$bilan['att']['comp'] = get_comp( $legions->legs[$lid]->comp, $legions->legs[$lid]->race);
+				$bilan['att']['comp'] = $legions->legs[$lid]->getComp();
 			else if ($lid != $lid1 && empty($bilan['def'][$lid]['comp']))
-				$bilan['def'][$lid]['comp'] = get_comp( $legions->legs[$lid]->comp, $legions->legs[$lid]->race);
+				$bilan['def'][$lid]['comp'] = $legions->legs[$lid]->getComp();
 	}
 
 	// butin
@@ -586,5 +581,3 @@ case 'make_atq':
 }// switch($_act)
 
 }// else can_d(DROIT_PLAY)
-
-?>

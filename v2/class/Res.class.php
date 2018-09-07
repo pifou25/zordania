@@ -17,16 +17,17 @@ class Res extends Model {
     /* Récupère les ressources du joueur */
 
     static function get(int $mid, array $filter = null) {
-        $row = Res::where('res_mid', '=', $mid)->get();
+        $row = Res::where('res_mid', '=', $mid)->get()->toArray();
         if (count($row) == 0) {
             return [];
         }
         if ($row) {
             // mise en forme du tableau avec la 1ere ligne uniquement
             $result = [];
-            foreach ($row[0] as $key => $val)
-                if (strpos($key, 'res_tpe') > 0)
+            foreach ($row[0] as $key => $val){
+                if (strpos($key, "res_type") === 0)
                     $result[str_replace("res_type", "", $key)] = $val;
+            }
         }
         if ($filter) {
             return array_intersect_key($result, array_flip($filter));

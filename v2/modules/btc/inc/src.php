@@ -1,10 +1,5 @@
 <?php
 if(!defined("INDEX_BTC")){ exit; }
-
-
-require_once("lib/res.lib.php");
-require_once("lib/unt.lib.php");
-require_once("lib/src.lib.php");
  
  if($_sub == "cancel_src")
 {
@@ -29,43 +24,15 @@ elseif($_sub == "src")
 	
 	$src_todo = SrcTodo::get($_user['mid']);
 	
-	$_tpl->set("src_todo",index_array($src_todo, 'stdo_type'));
+	$_tpl->set("src_todo",$src_todo);
 	
 	$conf_src = $_ses->getConf("src");
-	$need_src = array();
-	$need_res = array();
-	$need_btc = array();
-
 	foreach($conf_src as $type => $value) { 
-		if(isset($value['prix_res']))
-			$need_res = array_merge(array_keys($value['prix_res']), $need_res);
-		if(isset($value['need_src']))
-			$need_src = array_merge($value['need_src'], $need_src);
-		if(isset($value['need_btc']))
-			$need_btc = array_merge($value['need_btc'], $need_btc);
-		array_push($need_src, $type);
-	}
-	$need_btc = array_unique($need_btc);
-	$need_res = array_unique($need_res);
-	$need_src = array_unique($need_src);
-	asort($need_res);
-	asort($need_src);
-	asort($need_btc);
-
-	$cache = array();
-	$cache['src'] = Src::get($_user['mid'], $need_src);
-	$cache['src'] = index_array($cache['src'], "src_type");
-	$cache['res'] = Res::get($_user['mid'], $need_res);
-	$cache['src_todo'] = index_array($src_todo, "stdo_type");
-	$cache['btc_done'] = Btc::getNbDone($_user['mid'], $need_btc);
-	$src_tmp = array();
-
-	foreach($conf_src as $type => $value) { 
-		$src_tmp[$type]['bad'] = can_src($_user['mid'],  $type, $cache);
+		$src_tmp[$type]['bad'] = $mbr->can_src($type);
 		$src_tmp[$type]['conf'] = $value;
 	}
 
-	$src_array = array();
+	$src_array = [];
 	foreach($src_tmp as $sid => $array) {
 		if($array['bad']['need_src'] || $array['bad']['need_no_src'] || $array['bad']['need_btc']) continue;
 		$src_array[$sid] = $array;
@@ -74,7 +41,7 @@ elseif($_sub == "src")
 	unset($src_tmp);
 
 	$_tpl->set("src_dispo", $src_array);
-	$_tpl->set("res_utils", $cache['res']);
+	$_tpl->set("res_utils", $mbr->res());
 	$_tpl->set("src_conf", $conf_src);
 }
 //Nouvelle src
@@ -83,7 +50,6 @@ elseif($_sub == "add_src")
 	$type = request("type", "uint", "post");
 	
 	$src_todo = SrcTodo::get($_user['mid']);
-	$src_todo = index_array($src_todo, 'stdo_type');
 	$_tpl->set("btc_act","add_src");
 	$_tpl->set("src_type", $type);
 	if(!$type)
@@ -94,7 +60,7 @@ elseif($_sub == "add_src")
 		$_tpl->set("src_pending", true);
 	else
 	{
-		$array = can_src($_user['mid'], $type);
+		$array = $mbr->can_src($type);
 		if(isset($array['do_not_exist']))
 			$_tpl->set("btc_no_type",true);
 		else {

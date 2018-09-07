@@ -44,7 +44,6 @@ else
 	$_tpl->set("a_propos_act","equipe");
 	$_tpl->set('module_tpl','modules/a_propos/a_propos.tpl');
 		
-	require_once("lib/member.lib.php");
 	$cond = array();
 	$cond['gid'] = array(GRP_DIEU,GRP_DEMI_DIEU,GRP_ADM_DEV,GRP_PRETRE,GRP_DEV,GRP_GARDE,GRP_SAGE,GRP_NOBLE);
 	//$cond['orderby'] = array('ASC','gid');

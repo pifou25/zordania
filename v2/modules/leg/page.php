@@ -5,10 +5,6 @@ if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else
 {
-require_once("lib/unt.lib.php");
-require_once("lib/res.lib.php");
-require_once("lib/member.lib.php");
-require_once("lib/heros.lib.php");
 
 $_tpl->set("module_tpl", "modules/leg/leg.tpl");
 $_tpl->set("leg_act", $_act);
@@ -68,7 +64,7 @@ case "move":
 		else
 			$pactes_array = array();
 
-		$mbr_cible = can_atq_lite($mbr_cible,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $pactes_array); 
+		$mbr_cible = Mbr::canAtq($mbr_cible,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $pactes_array); 
 		$mbr_cible = $mbr_cible[0];
 		if ($mbr_cible['pna'])
 			$sub = 'pna';
@@ -162,7 +158,7 @@ case "new": // nouvelle légion
 	$name = request("name", "string", "post");
 	$_tpl->set('ren_leg_name', $name);
 
-	if(!can_ren_leg($_user['mid'],0,$name))
+	if(!Leg::canRename($_user['mid'],0,$name))
 		$_tpl->set('err', 'ren_leg_name_exists');
 	elseif(Leg::count($_user['mid'], [LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_ALL, LEG_ETAT_DPL,
 		LEG_ETAT_RET, LEG_ETAT_ATQ]) < LEG_MAX_NB && $name)
@@ -241,7 +237,7 @@ case "hero":
 			$_tpl->set("already_hro", true);
 		$hero_conf = $_ses->getConf('unt',$_user['hro_type']);
 		$_tpl->set("hero_conf", $hero_conf);
-		if($_user['bonus'] != 0) // une compétence est active
+		if($_user['hro_bonus'] != 0) // une compétence est active
 			$_tpl->set("bonus_already", true);
 
 		 // On récupère tout les bonus du héros pour la race :
@@ -253,17 +249,17 @@ case "hero":
 
 		if($sub == "bns" && $_user['hro_vie'] > 0){ // activer une comp ?
 			$bid = request('bid', 'uint','post');
-			if(!$bid && $_user['bonus'] == 0)
+			if(!$bid && $_user['hro_bonus'] == 0)
 				$_tpl->set("no_bid",true);
 			else
 			{
-				if(isset($_GET['bid']) and $_GET['bid'] == 0 and $_user['bonus'] != 0) // annuler une comp
+				if(isset($_GET['bid']) and $_GET['bid'] == 0 and $_user['hro_bonus'] != 0) // annuler une comp
 					$cp = 0;
 				else
-					$cp = get_comp( $bid, $_user['race']);
+					$cp = $legions->legs[$_user['hro_lid']]->getComp();
 				if ($cp == 0 or in_array($_user['hro_type'], $cp['heros']))
 				{
-					$res = edit_bonus($_user['mid'], $bid);
+					$res = Hro::bonus($_user['mid'], $bid);
 					if($res) {
 						// ajouter un évenement
 						$_histo->add($_user['mid'], $_user['mid'], HISTO_HRO_CP, $cp);
@@ -277,10 +273,10 @@ case "hero":
 		else if($sub == "del_hero"){ // supprimer le héros ?
 			$rep = request("Oui", "string", "post");
 			if(isset($rep) && $rep == "Oui"){
-				$nb = del_hero($_user['hro_lid'], $_user['hro_type']);
-				if ($nb > 0) { // recompter la population
+				$nb = Hro::del($_user['hro_lid'], $_user['hro_type']);
+				if ($nb) { // recompter la population & maj mbr
 					$pop = Leg::countUnt($_user['mid']);
-					Mbr::edit($_user['mid'], array('population' => $pop));
+					Mbr::edit($_user['mid'], array('population' => $pop, 'lmodif_date' => true));
 				}
 				$_tpl->set("ok_del_hro", $_user['hro_nom']);
 				$_ses->update_heros();
@@ -290,7 +286,7 @@ case "hero":
 		}
 		else if($sub == "move_hero" && $_user['hro_vie'] > 0){// changer le héros de légion
 			// interdire le changement de légion selon comp active
-			if ($_user['bonus'] == CP_INVULNERABILITE) {
+			if ($_user['hro_bonus'] == CP_INVULNERABILITE) {
 				$_tpl->set("err",'imm_cause_comp');
 			} else {
 				$to = request("to", "string", "get", request("to", "string", "post"));
@@ -315,7 +311,6 @@ case "hero":
 		}
 	} else if($sub == "form"){ // formation héros étape 1: demander son nom
 		// pour la formation, visu des bâtiments & recherches
-		require_once("lib/src.lib.php");
 		$id_hro = request("id_hro", "uint", "get");
 		$name = request("hro_name", "string", "post");
 
@@ -331,7 +326,7 @@ case "hero":
 
 		$_tpl->set("id_hro", $id_hro);
 		if ($id_hro && $name && empty($bad)) {
-			$res_add = add_hero($_user['mid'], $name, $id_hro);
+			$res_add = Hro::add($_user['mid'], $name, $id_hro);
 			if($res_add){
 				$_tpl->set("ok_form_hro", true);
 				$_tpl->set("comp_array",$_ses->getConf('comp'));// tout les bonus pour la race.
@@ -470,4 +465,3 @@ if(!$_act or $_act == 'move' or $_act == 'recup') {
 	$_tpl->set("lid_vlg", $legions->vlg_lid);
 }
 } // else
-?>

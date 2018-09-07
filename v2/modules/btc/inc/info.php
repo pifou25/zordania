@@ -1,6 +1,5 @@
 <?php
 if(!defined("INDEX_BTC")){ exit; }
-require_once("lib/res.lib.php");
 
 if(!$_sub) { 
 	$_tpl->set("btc_act", "infos");

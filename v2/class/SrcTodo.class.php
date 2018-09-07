@@ -39,7 +39,7 @@ class SrcTodo extends Illuminate\Database\Eloquent\Model {
         if (!empty($src)) {
             $req->whereIn('stdo_type', $src);
         }
-        return $req->orderBy('stdo_time', 'asc')->get()->toArray();
+        return $req->orderBy('stdo_time', 'asc')->get()->keyBy('stdo_type');
     }
 
     /* Rajouter la recherche dont la conf est $conf en prévision */

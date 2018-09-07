@@ -375,10 +375,10 @@ static function getIps(string $ip = '', int $gid = 0)
 
     static function reinit($mid, $pseudo, $vlg, $race, $cid, $oldcid, $gid, $sexe = 1) {
         Map::reset($oldcid);
-        cls_aly($mid);
+        AlMbr::delMbr($mid);
         UntTodo::clear($mid);
         Leg::del($mid);
-        Hro::del($mid);
+        Hro::where('hro_mid', $mid)->delete();
         Btc::clear($mid);
         Res::clear($mid);
         ResTodo::where('rtdo_mid', '=', $mid)->delete();
@@ -386,7 +386,7 @@ static function getIps(string $ip = '', int $gid = 0)
         Trn::clear($mid);
         Mch::del($mid);
         Atq::del($mid);
-        cls_histo($mid);
+        Hst::clear($mid);
         Vld::init($mid);
 
         Mbr::init($mid, $pseudo, $vlg, $race, $cid, $gid, $sexe);
@@ -404,7 +404,7 @@ static function getIps(string $ip = '', int $gid = 0)
         foreach ($new as $key => $val) {
             if ($key == 'atqnb'){
                 $request["mbr_atq_nb"] = $val;
-            } else if ($key == 'ldate') {
+            } else if ($key == 'ldate' || $key == 'lmodif_date') {
                 $request["mbr_$key"] = DB::raw('NOW()');
             } else {
                 $request["mbr_$key"] = $val;
@@ -440,7 +440,7 @@ static function getIps(string $ip = '', int $gid = 0)
 
     static function cls($mid, $cid) {
         MbrOld::add($mid);
-        cls_aly($mid);
+        AlMbr::delMbr($mid);
         UntTodo::clear($mid);
         Btc::clear($mid);
         Res::clear($mid);
@@ -449,14 +449,74 @@ static function getIps(string $ip = '', int $gid = 0)
         Trn::clear($mid);
         Mch::del($mid);
         Atq::del($mid);
-        cls_histo($mid);
+        Hst::clear($mid);
         // cls_msg($mid); // on garde les messages
         Vld::init($mid);
-        Map::reset($cid);
+        Map::reset($mid, $cid);
         Nte::del($mid);
         //cls_frm($mid);
 
         Mbr::del($mid);
     }
+
+/**
+ * vérifier sur chaque membre de $mbr_array s'il peut attaquer / défendre qq1
+ * @param type $mbr_array = liste des membres à enrichir
+ * @param type $points
+ * @param type $mid
+ * @param type $groupe
+ * @param type $alaid
+ * @param type $dpl_array
+ * @return array $mbr_array
+ */
+static function canAtq(array $mbr_array, int $points, int $mid, int $groupe, int $alaid, array $dpl_array = [])
+{
+	foreach($mbr_array as $key => $mbr) {
+		$pts = $mbr['mbr_pts_armee'];	
+		$alid = $mbr['ambr_aid'];
+
+		/* si c'est un allié qu'on peut défendre */
+		$mbr_array[$key]['can_def'] = false;
+		$mbr_array[$key]['pna'] = false;
+
+		/* staff intouchable  - sauf par lui même 
+		$staff = array(GRP_GARDE, GRP_PRETRE, GRP_DEMI_DIEU, GRP_DIEU, GRP_DEV, GRP_ADM_DEV);
+		if (in_array($mbr['mbr_gid'], $staff) and !in_array($groupe, $staff)) {
+			$mbr_array[$key]['can_atq'] = false;
+			continue;
+		} */
+
+		/* grade event = protégé */
+		if ($mbr['mbr_gid'] == GRP_EVENT and $groupe != GRP_EVENT) {
+			$mbr_array[$key]['can_atq'] = false;
+			continue;
+		}
+
+		if($alid && $alaid){
+			if ($alid == $alaid) // même alliance
+				$mbr_array[$key]['can_def'] = true;
+			elseif (isset($dpl_array[$alid])) { // a un pacte
+				if($dpl_array[$alid] == DPL_TYPE_MIL or $dpl_array[$alid] == DPL_TYPE_MC)
+					$mbr_array[$key]['can_def'] = true;
+				if($dpl_array[$alid] == DPL_TYPE_PNA)
+					$mbr_array[$key]['pna'] = true;
+			}
+		}
+
+		$mbr_array[$key]['can_atq'] = false;
+		if((!$mbr_array[$key]['can_def'] // pas allié
+			&& !$mbr_array[$key]['pna'] // pas de PNA
+		) && (
+			(abs($pts - $points) < ATQ_PTS_DIFF)  /* Trop de points de différences */
+			&& ($pts > ATQ_PTS_MIN)  /* Pas assez de points pour etre attaqué */
+			&& ($points > ATQ_PTS_MIN)  /* Pas assez de points pour attaquer */
+			|| ($pts >= ATQ_LIM_DIFF && $points >= ATQ_LIM_DIFF) /* Arène */
+		) && $mbr['mbr_mid'] != $mid /* Soit même */
+		&& $groupe != GRP_VISITEUR /* Faut pas être un visiteur */
+		&& $mbr['mbr_etat'] == MBR_ETAT_OK) /* Validé et pas en Veille */
+			$mbr_array[$key]['can_atq'] = true;
+	}
+	return $mbr_array;	
+}
 
 }

@@ -1,8 +1,6 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
 
-require_once("lib/member.lib.php");
-
 $_tpl->set("module_tpl","modules/class/class.tpl");
 
 $type = protect($_act, "uint");
@@ -184,6 +182,6 @@ else
 	$dpl_atq_arr = array();
 
 if($type != 5 && $type != 6)
-	$tab_class = can_atq_lite($tab_class, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+	$tab_class = Mbr::canAtq($tab_class, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr);
 	
 $_tpl->set("class_array", $tab_class);

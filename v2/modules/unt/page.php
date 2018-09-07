@@ -4,11 +4,6 @@ if(!$_ses->canDo(DROIT_PLAY)){
 	$_tpl->set("need_to_be_loged",true); 
 }else{
 
-require_once("lib/res.lib.php");
-require_once("lib/unt.lib.php");
-require_once("lib/src.lib.php"); 
-require_once("lib/member.lib.php");
-
 $_tpl->set("module_tpl","modules/unt/unt.tpl");
 
 $mbr = new member($_user['mid']);

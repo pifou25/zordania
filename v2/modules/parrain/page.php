@@ -1,6 +1,4 @@
 <?php
-//Verifications
-require_once("lib/member.lib.php");
 
 if(!defined("_INDEX_")){ exit; }
 if(!$_ses->canDo(DROIT_PLAY))
@@ -13,7 +11,7 @@ else
 	$cond['parrain'] = $_user['mid'];
 	$cond['list'] = true;
 	$filleuls = Mbr::get($cond);
-	$filleuls = can_atq_lite($filleuls, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid']);
+	$filleuls = Mbr::canAtq($filleuls, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid']);
 	$_tpl->set("filleuls", $filleuls);
 }
-?>
+

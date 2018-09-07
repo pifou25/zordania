@@ -18,7 +18,7 @@ class LegRes extends Illuminate\Database\Eloquent\Model {
 
     /* del ressources d'une légion */
     static function del(int $lid){
-        return LegRes::where(['unt_lid' => $lid])->delete();
+        return LegRes::where('lres_lid', $lid)->delete();
     }
 
     static function get(int $mid, int $lid = 0){
@@ -35,13 +35,12 @@ class LegRes extends Illuminate\Database\Eloquent\Model {
     
     static function edit(int $lid, array $res, int $factor = 1){
 
-        $legRes = LegRes::get(0, $lid);
-        $legRes = index_array( $legRes, 'lres_type');
-        var_dump($legRes);
+        //$legRes = LegRes::get(0, $lid);
+        //$legRes = index_array( $legRes, 'lres_type');
+        $legRes = LegRes::where('lres_lid', $lid)->get()->keyBy('lres_type');
 	foreach($res as $type => $nb) {
-            echo "update $type = $nb";
             if(isset($legRes[$type])){ // incrementer nb ressources
-                LegRes::where([['lres_lid', $lid], ['lres_type', $type]])->increment($nb * $factor);
+                LegRes::where('lres_lid', $lid)->where('lres_type', $type)->increment('lres_nb', $nb * $factor);
             } else { // insert
                 $request = ['lres_lid' => $lid,
                     'lres_type' => $type,

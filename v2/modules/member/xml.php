@@ -1,9 +1,6 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
 
-require_once("lib/res.lib.php");
-require_once("lib/member.lib.php");
-
 $mid = request("mid", "string", "get", $_user['mid']);
 
 if(!$mid)

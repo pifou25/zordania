@@ -6,8 +6,6 @@ else if(!$_ses->canDo(DROIT_MSG))
 	$_tpl->set("cant_view_this",true);
 else {
 
-require_once('lib/member.lib.php');
-
 $_tpl->set('module_tpl','modules/msg/msg.tpl');
 $_tpl->set('msg_act',$_act);
 

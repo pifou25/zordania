@@ -3,13 +3,10 @@ if(!defined("_INDEX_")) exit;
 $mid = request("mid", "string", "get");
 $key = request("key", "string", "get");
 
-require_once("lib/member.lib.php");
-
 if(!$mid OR !$key)
 	exit;
 
 $limite1 = LIMIT_PAGE;
-$limite2 = 0;
 
 $mbr_array = Mbr::getFull($mid);
 if(!$mbr_array)
@@ -46,7 +43,5 @@ $_module_tpl = 'modules/histo/histo_xml.tpl';
 
 $mbr_array = $mbr_array[0];
 
-$_tpl->set("histo_array", get_histo($mbr_array['mbr_mid'],$limite1,$limite2));
+$_tpl->set("histo_array", Hst::get($mbr_array['mbr_mid'],$limite1));
 $_tpl->set("_user",array('pseudo' => $mbr_array['mbr_pseudo'],'mid' => $mbr_array['mbr_mid'], 'race' => $mbr_array['mbr_race']));
-
-?>

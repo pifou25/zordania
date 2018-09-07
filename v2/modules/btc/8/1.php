@@ -1,9 +1,6 @@
 <?php
 if(INDEX_BTC != true){ exit; }
 
-require_once("lib/src.lib.php");
-require_once("lib/unt.lib.php");
-
 //Rien (liste unt + src)
 if(!$_sub)
 {
@@ -19,11 +16,9 @@ if(!$_sub)
 	
 
 	$src_todo = SrcTodo::get($_user['mid']);
-	$src_todo = index_array($src_todo, "stdo_type");
 
 	$_tpl->set("unt_todo",$unt_todo);
 	$_tpl->set("src_todo",$src_todo);
 	$_tpl->set("src_conf",$_ses->getConf("src"));
 
 }
-?>

@@ -1,9 +1,6 @@
 <?php
 if(!defined("INDEX_BTC") ){ exit; }
 
-require_once("lib/res.lib.php");
-require_once("lib/src.lib.php");
-
 $max_nb = 0;
 $max_ventes = 0;
 $com_conf = $_ses->getConf("btc", $btc_type, "com");

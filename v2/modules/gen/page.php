@@ -4,11 +4,6 @@ if(!defined("_INDEX_")){ exit; }
 if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else {
-require_once("lib/res.lib.php");
-require_once("lib/unt.lib.php");
-require_once("lib/src.lib.php");
-require_once("lib/member.lib.php");
-
 
 $_tpl->set('COM_ETAT_OK',COM_ETAT_OK);
 $_tpl->set('module_tpl','modules/gen/gen.tpl');
@@ -108,7 +103,7 @@ $_tpl->set('unt_todo',$unt_todo);
 /* Recherches  en cours */
 $src_todo = SrcTodo::get($_user['mid']);
 foreach($src_todo as $key => $src) { // calculer RAF
-	$conf = $_ses->getConf('src', $src['stdo_type'], 'tours');
+	$conf = $_ses->getConf('src', $key, 'tours');
 	if ($conf) $src_todo[$key]['raf'] = (int) $conf - $src['stdo_tours'];
 }
 $_tpl->set('src_todo',$src_todo);
@@ -189,14 +184,24 @@ if($demn_ok){
 //Attaques (- de 10 cases)
 //$atq_array = get_leg_dst_vlg($_user['map_x'], $_user['map_y'], 5);
 // toutes les légions ennemies venant vers le village
-$atq_array = get_leg_dest($_user['mid'], $_user['mapcid']);
+$atq_array = Leg::get(['dest' => $_user['mapcid']]);
 $_tpl->set('atq_array', $atq_array);
-$_tpl->set('leg_array', get_leg_dpl($_user['mid']));
-$_tpl->set('pos_array', get_leg_pos($_user['mid']));
+
+$_tpl->set('leg_array', Leg::get(['mid' => $_user['mid'], 'etat' => [LEG_ETAT_RET, LEG_ETAT_ALL, LEG_ETAT_DPL]]));
+
+$pos_array = Leg::select('leg_name', 'leg_mid', 'leg_cid', 'leg_etat', 'leg_id', 'leg_vit', 'mbr_pseudo AS dest_pseudo',
+                 'mbr_race AS race_dest', 'mbr_mid AS mid_dest', 'lres_type', 'lres_nb' )
+            ->join('mbr','leg_cid', 'mbr_mid')
+            ->join('leg_res', 'leg_id', 'lres_lid')
+            ->where('leg_mid', $_user['mid'])->where('lres_type', GAME_RES_BOUF)
+            ->where('leg_etat', LEG_ETAT_POS)
+            ->get()->toArray();
+$_tpl->set('pos_array', $pos_array);
+
 $_tpl->set('dst_view_max', DST_VIEW_MAX);
 
 //ventes
 $vente_array = Mch::getByMid($_user['mid']);
 $_tpl->set('vente_array',$vente_array);
 }
-?>
+

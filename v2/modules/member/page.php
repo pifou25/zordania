@@ -3,7 +3,6 @@ if(!defined("_INDEX_")){ exit; }
 
 $_tpl->set("module_tpl","modules/member/member.tpl");
 
-require_once("lib/member.lib.php");
 $mid = request("mid", "uint", "get");
 
 
@@ -55,11 +54,6 @@ else if(!$_act) {
 		} else if($vld_array[0]['vld_rand'] != $key) { /* On a pas, ou pas la bonne clef */
 			$_tpl->set("mbr_no_key", true);
 		} else {
-			/* Includes */
-			require_once("lib/unt.lib.php");
-			require_once("lib/res.lib.php");
-			require_once("lib/src.lib.php");
-			require_once("lib/alliances.lib.php");
 
 			Mbr::cls($_user['mid'], $_user['mapcid'], $_user['race']);
 			$_tpl->set("mbr_cls", true);	
@@ -153,7 +147,7 @@ else if(!$_act) {
 
 	$mbr_array = Mbr::get(array_merge($cond, 
                 ['limite1'=>$limite_mysql, 'limite2'=>LIMIT_MBR_PAGE, 'orderby'=>$order_by,'list'=>true]));
-	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+	$mbr_array = Mbr::canAtq($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
 
 	$_tpl->set("mbr_array",$mbr_array);	
 	$_tpl->set('mbr_page',$mbr_page);
@@ -170,7 +164,7 @@ elseif($_act == "liste_online")
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 
         $pg = new Paginator(Ses::getOnline());
-        $pg->get = can_atq_lite($pg->get, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+        $pg->get = Mbr::canAtq($pg->get, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
 	$_tpl->set('pager',$pg);
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
 }
@@ -293,7 +287,7 @@ elseif($_act == "edit")
 		$_tpl->set('mbr_sub','logo');
 		$mbr_logo = request("mbr_logo", "array", "files");
 		if($mbr_logo && $mbr_logo['name'])
-			$_tpl->set('mbr_edit',  upload_logo_mbr($_user['mid'],$mbr_logo));
+			$_tpl->set('mbr_edit',  compte::uploadLogo($_user['mid'],$mbr_logo));
 		else
 			$_tpl->set('mbr_edit', false);
 	}
@@ -336,7 +330,7 @@ elseif($mid) //elseif($_act == "view" && $mid)
 	//Infos sur un type
 	$mbr_array = Mbr::getFull($mid);
 
-	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+	$mbr_array = Mbr::canAtq($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
 
 	if(!empty($mbr_array)) {
 		$mbr_array = $mbr_array[0];
@@ -368,7 +362,7 @@ elseif($mid) //elseif($_act == "view" && $mid)
 		$cond['parrain'] = $mid;
 		$cond['list'] = true;
 		$filleuls = Mbr::get($cond);
-		$filleuls = can_atq_lite($filleuls, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid']);
+		$filleuls = Mbr::canAtq($filleuls, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid']);
 		$_tpl->set("filleuls", $filleuls);
 
 	}
@@ -376,4 +370,4 @@ elseif($mid) //elseif($_act == "view" && $mid)
 		$_tpl->set("mbr_mid", $mid);
 
 }
-?>
+

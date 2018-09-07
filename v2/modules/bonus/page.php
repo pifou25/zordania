@@ -5,11 +5,7 @@ if($_ses->canDo(DROIT_PLAY)!=true)
 	$_tpl->set("need_to_be_loged",true); 
 else
 {
-//require_once("lib/votes.lib.php");
-require_once("lib/bonus.lib.php");
-require_once("lib/member.lib.php");
-require_once("lib/res.lib.php");
-
+    
 $_tpl->set('module_tpl', 'modules/bonus/bonus.tpl');
 
 $type_res = request("type_res", "uint", "post", request("type_res", "uint", "get"));

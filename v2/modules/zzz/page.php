@@ -4,10 +4,7 @@ if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else {
 
-require_once("lib/member.lib.php");
-
 $_tpl->set("module_tpl","modules/zzz/zzz.tpl");
-
 $_tpl->set("ZZZ_MIN",ZZZ_MIN);
 
 $passmd5 = $_ses->crypt($_user['login'],request("mbr_pass", "string", "post"));

@@ -65,6 +65,17 @@ class Leg extends Illuminate\Database\Eloquent\Model {
         return count(Leg::get(['mid' => $mid, 'etat' => $etat, 'mbr' => true]));
     }
     
+    static function canRename(int $mid, int $lid, string $name){
+        // trim vire tab et espaces multiples
+	$name = trim( str_replace("\t", " ", preg_replace("( +)", " ", $name)));
+
+	if(!$mid || !$name)
+		return false;
+
+        return Leg::where('leg_mid', $mid)->where('leg_lid', '<>', $lid)->where('leg_name', 'LIKE', $name)
+                ->count() == 0;
+    }
+    
     static function get(array $cond){
         
 	$mid = 0;
@@ -124,8 +135,10 @@ class Leg extends Illuminate\Database\Eloquent\Model {
 				$sql.=", SUM(unt_nb) as unt_nb ";
 			else if ($map)
 				$sql.=', zrd_p.map_x map_x, zrd_p.map_y map_y, zrd_d.map_x dest_x, zrd_d.map_y dest_y ';
-			else if ($dest || $mbr)
+			else if ($mbr)
 				$sql .= ', mbr_pseudo, mbr_gid, mbr_mid, mbr_race, mbr_etat ';
+			else if ($dest)
+				$sql .= ', map_x, map_y, mbr_pseudo, mbr_gid, mbr_mid, mbr_race, mbr_etat ';
 			if(!$get_unt && !$count_unt)
 				$sql .= ', hro_id, hro_nom, hro_type, hro_xp, hro_vie, hro_bonus AS bonus, hro_bonus_from, hro_bonus_to AS bonus_to ';
 		}
@@ -144,7 +157,10 @@ class Leg extends Illuminate\Database\Eloquent\Model {
             } else if ($map) {
                 $req->join('map AS p', 'leg.leg_cid', 'p.map_cid');
                 $req->leftJoin('map AS d', 'leg.leg_dest', 'd.map_cid');
-            } else if ($dest || $mbr) {
+            } else if ($mbr) {
+                $req->join('mbr', 'leg.leg_mid', 'mbr.mbr_mid');
+            } else if ($dest) {
+                $req->join('map', 'leg.leg_cid', 'map_cid');
                 $req->join('mbr', 'leg.leg_mid', 'mbr.mbr_mid');
             }
             if ($get_leg && !$count_unt && !$sum) {
@@ -217,20 +233,62 @@ class Leg extends Illuminate\Database\Eloquent\Model {
         if(!$lid){
             return Leg::delAll($mid);
         }
-        Leg::where(['leg_mid' => $mid, 'leg_cid' => $lid])->delete();
         Unt::del($lid);
-        LegRes::delAll($mid, $lid);
-        return true;
+        LegRes::del($lid);
+        return Leg::where('leg_id', $lid)->delete();
 
     }
 
     /* supprimer toutes les légions d'un joueur */
     static function delAll(int $mid) {
 
-        Leg::where(['leg_mid' => $mid])->delete();
         Unt::delAll($mid);
         LegRes::delAll($mid);
-        return true;
+        return Leg::where('leg_mid', $mid)->delete();
 
     }
+    
+    /* les légions dans $leg_array peuvent être attaquées par un joueur ($mid) qui a $points, ($groupe) et ally=$alaid */
+    static function canAtq(array $leg_array, int $points, int $mid, int $groupe, int $alaid, array $dpl_array = [])
+    {
+	$arr_cid = [];
+	foreach($leg_array as $key => $value)
+		if($value['mbr_mid'] == $mid)
+			$arr_cid[$value['leg_cid']] = true;
+
+	foreach($leg_array as $key => $value) {
+		$pts = $value['mbr_pts_armee'];
+		$alid = $value['ambr_aid'];
+		$etat = $value['mbr_etat'];
+
+		/* si c'est un allié qu'on peut défendre */
+		$leg_array[$key]['can_def'] = false;
+		if($alid && $alaid){
+			if ($alid == $alaid) // même alliance
+				$leg_array[$key]['can_def'] = true;
+			elseif (isset($dpl_array[$alid]) and 
+				($dpl_array[$alid] == DPL_TYPE_MIL or $dpl_array[$alid] == DPL_TYPE_MC)) // a un pacte
+				$leg_array[$key]['can_def'] = true;
+		}
+
+		if((!$leg_array[$key]['can_def'] // pas allié
+			&& (!$alid or !isset($dpl_array[$alid]) or $dpl_array[$alid] != DPL_TYPE_PNA) // pas de PNA
+		) && (
+			(abs($pts - $points) < ATQ_PTS_DIFF)  /* Trop de points de différences */
+			&& ($pts > ATQ_PTS_MIN)  /* Pas assez de points pour attaquer */
+			|| ($pts >= ATQ_LIM_DIFF && $points >= ATQ_LIM_DIFF) /* Arène */
+		)
+		&& session::$SES->canDo(DROIT_PLAY)/* Faut pas être un visiteur */
+		&& $etat == MBR_ETAT_OK /* Validé et pas en Veille */
+		&& isset($arr_cid[$value['leg_cid']])/* légion sur la même case */
+		&& in_array($value['leg_etat'],[LEG_ETAT_VLG,LEG_ETAT_GRN,LEG_ETAT_DPL])/* légion en attende d'ordre*/
+		)
+			$leg_array[$key]['can_atq'] = true;
+		else
+			$leg_array[$key]['can_atq'] = false;
+	}
+
+	return $leg_array;
+    }
+
 }

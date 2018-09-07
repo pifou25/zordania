@@ -2,11 +2,6 @@
 
 if(!defined("INDEX_BTC")){ exit; }
 
-require_once("lib/res.lib.php");
-require_once("lib/unt.lib.php");
-require_once("lib/src.lib.php");
-require_once("lib/member.lib.php");
-
 //définir la limite de population
 if ($_user['race'] == 7) $TOTAL_MAX_UNT= TOTAL_MAX_UNT_2; //si gobelin
 else $TOTAL_MAX_UNT= TOTAL_MAX_UNT_1; // les autres
@@ -147,4 +142,4 @@ elseif($_sub == "add_unt")
 			}
 	}
 }
-?>
+

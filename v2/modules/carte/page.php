@@ -7,9 +7,6 @@ else {
 
 $_tpl->set("module_tpl","modules/carte/carte.tpl");
 
-require_once('lib/member.lib.php');
-require_once('lib/unt.lib.php');
-
 $type = request("map_type", "string", "cookie", "lite");
 if(!$_act)
 	$_act = $type;
@@ -87,14 +84,14 @@ if($_act == "view") {
 			$map_cid = Map::getCid($map_x,$map_y);
 	}
 
-	$leg_array = leg_can_atq_lite(Map::getLegGen([$map_cid]), $_user['pts_arm'], $_user['mid'], $_user["groupe"], $_user['alaid'], $dpl_atq_arr);
+	$leg_array = Leg::canAtq(Map::getLegGen([$map_cid]), $_user['pts_arm'], $_user['mid'], $_user["groupe"], $_user['alaid'], $dpl_atq_arr);
 	$_tpl->set("leg_array", $leg_array);
 
 	$map_array = Map::getGen($map_cid, ['x'=>$_user['map_x'], 'y'=>$_user['map_y']]);
 
 	if (isset($map_array['mbr_mid']) && $map_array['mbr_mid']) {
 		$mbr = Mbr::getFull($map_array['mbr_mid']);
-		$mbr = can_atq_lite($mbr,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr); 
+		$mbr = Mbr::canAtq($mbr,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr); 
 		$mbr = $mbr[0];
 		$map_array['can_atq'] = $mbr['can_atq'];
 		$map_array['can_pro'] = $mbr['can_def'];
@@ -128,4 +125,3 @@ if($_act == "view") {
 	$_tpl->set('map_array',$map_array);
 }
 }
-?>

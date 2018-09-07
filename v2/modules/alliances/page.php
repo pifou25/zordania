@@ -4,10 +4,6 @@ if(!$_ses->canDo(DROIT_PLAY)) {
 	$_tpl->set("need_to_be_loged",true);
 } else {
 
-require_once("lib/alliances.lib.php");
-require_once("lib/res.lib.php");
-require_once("lib/member.lib.php");
-
 $al_aid = request("al_aid", "uint", "get");
 $order = ['DESC','points'];
 
@@ -62,7 +58,7 @@ case 'view': // vue d'une alliance
 	foreach($al_mbr as $key => $value) {
 		$al_mbr[$key]['mbr_dst'] = Map::distance($_user['map_x'], $_user['map_y'], $value['map_x'], $value['map_y']);
 	}
-	$al_mbr = can_atq_lite($al_mbr, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+	$al_mbr = Mbr::canAtq($al_mbr, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
 
 	$_tpl->set('al_mbr',$al_mbr);
 	break;
@@ -162,7 +158,7 @@ case 'admin':
 			switch($_sub) {
 				case  'logo':
 					$logo = request("al_logo", "array", "files");
-					$_tpl->set('al_logo',upload_aly_logo($_user['alaid'],$logo));
+					$_tpl->set('al_logo',Al::upload($_user['alaid'],$logo));
 					break;
 
 				case 'param': //Param -> (description + ouvert)
@@ -401,7 +397,7 @@ case 'res': /* grenier */
 	
 	//temps avant accès grenier
 		//recup ambr_date
-		$get_time = get_time_access($_user['mid']);
+		$get_time = AlMbr::getAccess($_user['mid']);
 		$date_acces= $get_time[0]['end_date'];
 		
 		//gestion date
@@ -697,4 +693,4 @@ default: // liste des alliances créées
 	break;
 }
 }
-?>
+

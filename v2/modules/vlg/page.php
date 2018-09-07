@@ -4,8 +4,6 @@ if(!$_ses->canDo(DROIT_PLAY)){
 	$_tpl->set("need_to_be_loged",true); 
 }else{
 
-require_once("lib/src.lib.php");
-
 if($_user['race'] == 2 || $_user['race'] == 3 || $_user['race'] == 5){
 	// la forteresse est une img de fond specifique
 	$forteresse = $_ses->getConf('race_cfg', 'btc_nb');

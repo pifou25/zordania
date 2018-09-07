@@ -6,10 +6,7 @@ if(!$_ses->canDo(DROIT_PLAY))
 	$_tpl->set("need_to_be_loged",true); 
 else {
 
-require_once("lib/member.lib.php");
-
 $_tpl->set('module_tpl', 'modules/war/admin.tpl');
-
 $_tpl->set("war_act", $_act);
 $_tpl->set("war_sub", $_sub);
 

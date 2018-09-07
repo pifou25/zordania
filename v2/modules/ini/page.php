@@ -1,8 +1,6 @@
 <?php
 if(!defined("_INDEX_")){ exit; }
 
-require_once("lib/member.lib.php");
-
 $_tpl->set("module_tpl","modules/ini/ini.tpl");
 
 $reini = false;
@@ -120,12 +118,6 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 				} else if($sexe != 1 and $sexe != 2) {
 					$_tpl->set("mbr_error", "sexe_undefined");
 				} else {
-					/* Inclure les lib dont on va avoir besoin */
-					require_once("lib/unt.lib.php");
-					require_once("lib/res.lib.php");
-					require_once("lib/src.lib.php");
-					require_once("lib/alliances.lib.php");
-					require_once("lib/heros.lib.php");
 
 					$_ses->set("race", $race); /* Il faut absolument changer la race ! */
 					$_ses->set("mapcid", $cid);

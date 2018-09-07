@@ -8,7 +8,7 @@
 	<elseif cond='!{msg_act}'>
 	- <a href="msg-del_rec.html" title="Tout effacer"><img src="img/drop.png" alt="Effacer" /> Vider</a>
 	</elseif>
-	<if cond='can_d({DROIT_MMSG})'>
+	<if cond='session::$SES->canDo({DROIT_MMSG})'>
 	- <a href="msg-global.html" title="Ecrire un message à tout Zordania">Msg massif</a>
 	</if>
 
@@ -131,7 +131,7 @@ $(document).ready(function(){
 	
 </elseif>
 
-<elseif cond='{msg_act} == "global" && can_d({DROIT_MMSG})'>
+<elseif cond='{msg_act} == "global" && session::$SES->canDo({DROIT_MMSG})'>
 <include file='modules/msg/global.tpl' cache='1' />
 </elseif>
 

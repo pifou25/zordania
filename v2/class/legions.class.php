@@ -43,7 +43,6 @@ class legions { /* classe pour plusieurs légions ... */
 	public  $cid = 0; // si toutes les légions sont à la même place
 	public  $cids = array(); // emplacements de chaque légion
 	public  $lids = array(); // liste des id des légions
-	private $load_res = false;
 	private $load_unt = false;
 
 	function __construct($cond, $unt = false, $res = false){ /* plusieurs légions objet */
@@ -117,14 +116,8 @@ class legions { /* classe pour plusieurs légions ... */
 
 	function get_all_res(){ // toutes les ressources des légions sélectionnées
 		$res_leg = array();
-		if ($this->load_res){// déjà chargé
-			foreach($this->legs as $leg)
-				$res_leg[$leg->lid] = $leg->get_res();
-		} elseif ($this->lids) {
-			foreach($this->lids as $lid) // rassembler les ressources par $lid
-				$res_leg[$lid] = LegRes::where('lres_lid', $lid)->get()->toArray();
-			$this->load_res = true;
-		}
+                foreach($this->legs as $leg)
+                        $res_leg[$leg->lid] = $leg->get_res();
 		return $res_leg;
 	}
 

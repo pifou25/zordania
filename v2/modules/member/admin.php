@@ -1,10 +1,6 @@
 <?php
 if(!defined("_INDEX_") || !$_ses->canDo(DROIT_ADM_MBR)){ exit; }
 
-require_once("lib/member.lib.php");
-require_once("lib/unt.lib.php");
-require_once("lib/alliances.lib.php");
-
 $_tpl->set("module_tpl","modules/member/admin.tpl");
 if($_act == "del" || $_act == "edit") {
 	if(!$_ses->canDo(DROIT_ADM_EDIT)) {
@@ -27,10 +23,6 @@ if($_act == "del") {
 			$array = $array[0];
 			$race = $array['mbr_race'];
 			$cid = $array['mbr_mapcid'];
-
-			require_once("lib/res.lib.php");
-			require_once("lib/unt.lib.php");
-			require_once("lib/src.lib.php");
 
 			if(Mbr::cls($mid, $cid, $race))
 				$_tpl->set("mbr_ok",true);
@@ -93,7 +85,7 @@ if($_act == "del") {
 			$_tpl->set("ren_leg_name", $leg_name);
 			if(!$lid)
 				$_tpl->set("ren_leg_not_exists", true);
-			elseif(!can_ren_leg($mid,$lid,$leg_name))
+			elseif(!Leg::canRename($mid,$lid,$leg_name))
 				$_tpl->set("ren_leg_name_exists", true);
 			else
 				$_tpl->set("ren_leg_ok", Leg::edit($mid,$lid,array('name'=>$leg_name)));
@@ -237,7 +229,7 @@ if($_act == "del") {
 	$_tpl->set("mbr_act","liste_online");
 	
         $pg = new Paginator(Ses::getOnline());
-        $pg->get = can_atq_lite($pg->get, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid']);
+        $pg->get = Mbr::canAtq($pg->get, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid']);
 	$_tpl->set('pager',$pg);
 
 } else if($_act == "view") {
@@ -263,17 +255,7 @@ if($_act == "del") {
 		$_tpl->set('log_ip', MbrLog::get($mid));
 		
 		if($mbr_array['mbr_etat'] == MBR_ETAT_OK || $mbr_array['mbr_etat'] == MBR_ETAT_ZZZ) {
-			/* if($mbr_array['ambr_aid']) {
-				require_once('lib/alliances.lib.php');
-				$al  = new alliances($_sql);
-				$al_array = $al->get_infos($mbr_array[0]['mbr_alaid']);
-				$_tpl->set("al_array",$al_array[0]);
-			}*/
-
-			require_once("lib/res.lib.php");
-			require_once("lib/unt.lib.php");
-			require_once("lib/src.lib.php");
-
+                    
 			$legions = new legions(array('mid'=>$mid, 
 				'etat' => array(LEG_ETAT_VLG, LEG_ETAT_BTC, LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_ATQ)), true, true);
 			//$cond = array('mid'=>$mid);
@@ -420,4 +402,3 @@ if($_act == "del") {
 	$_tpl->set("sql",htmlspecialchars(zrd_dump($mid)));	
 	$_tpl->set("mbr_act","exp");
 }
-?>
