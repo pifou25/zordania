@@ -17,7 +17,7 @@ $_sql->set_prebdd(MYSQL_PREBDD);
 $_sql->set_debug(SITE_DEBUG);
 
 
-$sql = "SELECT id, word FROM ".$_sql->prebdd."frm_search_words";
+$sql = "SELECT id, word FROM ".DB::getTablePrefix()."frm_search_words";
 $arr_words = $_sql->make_array($sql);
 $_words = array();
 foreach($arr_words as $wrd)

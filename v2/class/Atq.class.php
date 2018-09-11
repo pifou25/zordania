@@ -178,7 +178,7 @@ class Atq extends Illuminate\Database\Eloquent\Model {
         if (count($type) == 1) {
             $sql .= ", mbr_race, mbr_pseudo, mbr_gid ";
         }
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
         $req = Atq::selectRaw($sql);
 
         if ($mid && count($type) == 1 && $type[0] == ATQ_TYPE_DEF) {

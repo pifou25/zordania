@@ -127,7 +127,7 @@ case 'admin':
 			$al_array['al_diplo'] = Parser::unparse($al_array['al_diplo']);
 
 			$droits = [];
-			foreach(allyFactory::$_drts_all as $key => $value)
+			foreach(allyFactory::DROITS_ALLY as $key => $value)
 				if ($ally->isAccesOk($_user['mid'], $key))
 					$droits[$key] = true;
 
@@ -278,7 +278,7 @@ case 'admin':
 						if($result['ambr_etat'] != $aletat[$mid])
 							$cond[$mid] = $aletat[$mid];
 					}
-					$_tpl->set('max_perm',allyFactory::$_drts_max);
+					$_tpl->set('max_perm',allyFactory::MAX_DRTS_ALLY);
 					$_tpl->set('change_perm',$cond);
 					$_tpl->set('al_in_mbr',$al_in_mbr);
 					$_tpl->set('change_ok',$ally->mod_mbr($cond));

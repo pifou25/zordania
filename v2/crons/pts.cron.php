@@ -3,24 +3,24 @@
 $log_pts = "Points";
 
 function glob_pts() {
-	global $_sql, $mid_array, $hro_array;
+	global $mid_array, $hro_array;
 	/* debug pour les points */
 	$_logpts = new log(SITE_DIR."logs/crons/pts_".date("d_m_Y").".csv", false, false);
 
 	$mbr_array = index_array($mid_array, "mbr_mid");
 
 	$sql = "SELECT COUNT(*) as src_nb,src_mid";
-	$sql.= " FROM ".$_sql->prebdd."src GROUP BY src_mid";
-	$src_array = $_sql->index_array($sql, 'src_mid');
+	$sql.= " FROM ".DB::getTablePrefix()."src GROUP BY src_mid";
+	$src_array = DB::sel($sql, 'src_mid');
 
-	$sql = "SELECT SUM(unt_nb) as unt_nb, unt_type,leg_mid FROM ".$_sql->prebdd."leg";
-	$sql.= " JOIN ".$_sql->prebdd."unt ON unt_lid = leg_id ";
+	$sql = "SELECT SUM(unt_nb) as unt_nb, unt_type,leg_mid FROM ".DB::getTablePrefix()."leg";
+	$sql.= " JOIN ".DB::getTablePrefix()."unt ON unt_lid = leg_id ";
 	$sql.= " GROUP BY leg_mid,unt_type";
-	$unt_array = $_sql->make_array($sql);
+	$unt_array = DB::sel($sql);
 
 	$sql = "SELECT SUM(btc_vie) as btc_vie_tot, btc_mid ";
-	$sql.= "FROM ".$_sql->prebdd."btc GROUP BY btc_mid ";
-	$btc_array = $_sql->index_array($sql, 'btc_mid');
+	$sql.= "FROM ".DB::getTablePrefix()."btc GROUP BY btc_mid ";
+	$btc_array = DB::sel($sql, 'btc_mid');
 
 	$pts_btc = array();
 	$pts_armee = array();
@@ -90,10 +90,9 @@ function glob_pts() {
 	}
 
 	if($sql_total) {
-		$sql="UPDATE ".$_sql->prebdd."mbr SET mbr_points = CASE " . $sql_total;
+		$sql="UPDATE ".DB::getTablePrefix()."mbr SET mbr_points = CASE " . $sql_total;
 		$sql.=" ELSE mbr_points END, ";
 		$sql.=" mbr_pts_armee = CASE " . $sql_armee . " ELSE mbr_pts_armee END";
-		$_sql->query($sql);
+		DB::update($sql);
 	}
 }
-?>

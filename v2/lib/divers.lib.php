@@ -83,7 +83,6 @@ function genstring($longueur) //genere une chaine a x caracteres aleatoirement
 /* protège une chaine avant de la mettre dans mysql */
 function protect($var, $type = "unknown")
 {
-	global $_sql;
 	
 	if(is_array($type)){
 		if(is_array($var))
@@ -121,9 +120,9 @@ function protect($var, $type = "unknown")
 	}
 
 	/* Protection si ce n'est pas un entier */
-	if (is_string($var)) {
-		$var = $_sql->escape($var);
-	}
+//	if (is_string($var)) {
+//		$var = $_sql->escape($var);
+//	}
 	return $var;
 }
 
@@ -250,7 +249,7 @@ function get_list_page($page, $nb_page, $nb = 3)
 	}
 	return $list_page;
 }
- 
+
 /* Gestion des erreurs */
 function error_handler($errno, $errstr, $errfile, $errline, $errcontext)
 {
@@ -317,24 +316,38 @@ function callstack() { /* pile d'appel */
 }
 
 function fatal_handler() {
-
+    global $_tpl, $_display;
     $error = error_get_last();
+
     if( $error !== NULL) {
 
         $type = array_search($error['type'], get_defined_constants());
-        echo "<pre>DEBUG STACKTRACE\n$type : {$error['message']}\nIN  {$error['file']}:L{$error['line']}";
-        echo "\n\nLIST OF QUERIES\n";
+        $msg = "<pre>DEBUG STACKTRACE\n$type : {$error['message']}\nIN  {$error['file']}:L{$error['line']}";
         if(!empty(DB::connection()->getQueryLog())){
+            $msg .= "\n\nLIST OF QUERIES\n";
             $i = 0;
             foreach(DB::connection()->getQueryLog() as $query){
                 $i++;
-                echo "$i: {$query['query']}\nBinding:\n";
-                var_dump($query['bindings']);
-                echo "\n\tCallstack:\n" . implode("\n\t\t", $query['callstack']);
+                $msg .= "$i: {$query['query']}\nBinding:\n";
+                $msg .= print_r($query['bindings'], TRUE);
+                $msg .= "\n\tCallstack:\n" . implode("\n\t\t", $query['callstack']);
             }
         }
-        echo "</pre>";
-        die("End of script");
+        $msg .= "</pre>";
+        // hide password
+        if(!empty(MYSQL_PASS))
+            $msg = str_replace(MYSQL_PASS, '***', $msg);
+        
+        if ($_tpl != null) {
+            $_tpl->set_lang('all');
+            $_tpl->set('sv_site_debug', false);
+            $_tpl->set('page', 'mysql_error.tpl');
+            $_tpl->set('error', $msg);
+            if (!$_display != "xml")
+                die($_tpl->get('index.tpl', 1));
+        }
+        die("$msg\nEnd of script");
+        
     }
 
 }

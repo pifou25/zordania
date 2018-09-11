@@ -26,7 +26,7 @@ class MbrLog extends Illuminate\Database\Eloquent\Model {
 
         $sql = 'mlog_mid, mlog_ip, _DATE_FORMAT(mlog_date) AS mlog_date';
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
         $req = MbrLog::select(DB::raw($sql));
 
         $req->where('mlog_mid', $mid);
@@ -46,7 +46,7 @@ class MbrLog extends Illuminate\Database\Eloquent\Model {
             $sql = 'mlog_mid, mlog_ip, _DATE_FORMAT(mlog_date) AS mlog_date';
 
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
         $req = MbrLog::select(DB::raw($sql));
 
         if ($full) {

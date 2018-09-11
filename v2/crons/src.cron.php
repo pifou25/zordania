@@ -4,7 +4,7 @@ $dep_src = array("btc");
 $log_src = "Recherches";
 
 function mbr_src(&$_user) {
-	global $_sql, $_histo;
+	global $_histo;
 	$mid = $_user['mbr_mid'];
 	$race = $_user['mbr_race'];
 
@@ -21,10 +21,9 @@ function mbr_src(&$_user) {
 		if(Config::get($race, "btc", $i, "prod_src"))
 			$need_btc[] = $i;
 
-	$sql = "SELECT COUNT(btc_type) AS nb FROM ".$_sql->prebdd."btc WHERE btc_mid = $mid AND btc_type IN (".implode(',', $need_btc).")";
-	$speed = $_sql->make_array_result($sql)['nb'];
+	$speed = Btc::where('btc_mid', $mid)->whereIn('btc_type', $need_btc)->count();
 
-	$sql="UPDATE ".$_sql->prebdd."src_todo SET stdo_tours = CASE ";
+	$sql="UPDATE ".DB::getTablePrefix()."src_todo SET stdo_tours = CASE ";
 	foreach($src_todo as $src_info)  /* Toutes les recherches de ce type là */
 	{
 		$tours = $src_info['stdo_tours'];
@@ -42,12 +41,9 @@ function mbr_src(&$_user) {
 			break;
 	}
 	$sql .=" ELSE stdo_tours END WHERE stdo_mid = $mid";
-	$_sql->query($sql);
+	DB::update($sql);
 }
 
 function glob_src() {
-	global $_sql;
-	$sql = "DELETE FROM ".$_sql->prebdd."src_todo WHERE stdo_tours = 0";
-	$_sql->query($sql);
+    SrcTodo::where('stdo_tours', 0)->delete();
 }
-?>

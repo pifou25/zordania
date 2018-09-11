@@ -87,7 +87,7 @@ foreach($mid_array as $_user)
 	}
 
 	if (!empty($arr_bid)) { /* supprimer les bat */
-		$sql = "DELETE FROM ".$_sql->prebdd."btc WHERE btc_mid = $mid ";
+		$sql = "DELETE FROM ".DB::getTablePrefix()."btc WHERE btc_mid = $mid ";
 		$sql.= "AND btc_id IN (".implode(',',$arr_bid).");";
 		if ($exec)
 			$_sql->query($sql);

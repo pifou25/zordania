@@ -4,7 +4,7 @@ $dep_unt = array("btc", "res");
 $log_unt = "Unités";
 
 function mbr_unt(&$_user) {
-	global $_sql, $_histo, $hro_list;
+	global $_histo, $hro_list;
 
 	$mid = $_user['mbr_mid'];
 	$race = $_user['mbr_race'];
@@ -65,19 +65,16 @@ function mbr_unt(&$_user) {
 
 	/* Nourriture */
 	$bouf = $_user["res"][GAME_RES_BOUF];
-	$sql = "SELECT SUM(unt_nb) AS nb ";
-	$sql.= "FROM ".$_sql->prebdd."unt ";
-	$sql.= "JOIN ".$_sql->prebdd."leg ON leg_id = unt_lid ";
-	$sql.= "WHERE leg_etat IN (".LEG_ETAT_VLG.",".LEG_ETAT_BTC.") AND leg_mid = $mid";
-	$nb = $_sql->make_array_result($sql)['nb'];
+        $nb = Unt::join('leg', 'unt_lid', 'leg_id')->where('leg_mid', $mid)
+                ->whereIn('leg_etat', [LEG_ETAT_VLG, LEG_ETAT_BTC])->count();
 
 	if($bouf < $nb) { /* On tue des gens */
-		$sql = "SELECT unt_type, unt_nb, leg_name FROM ".$_sql->prebdd."unt ";
-		$sql.= "JOIN ".$_sql->prebdd."leg ON leg_id = unt_lid ";
+		$sql = "SELECT unt_type, unt_nb, leg_name FROM ".DB::getTablePrefix()."unt ";
+		$sql.= "JOIN ".DB::getTablePrefix()."leg ON leg_id = unt_lid ";
 		$sql.= "WHERE leg_mid = $mid AND leg_etat = ".LEG_ETAT_VLG." AND unt_nb > 0 ";
 		$sql .= ' AND unt_type NOT IN ('. implode(',', $hro_list[$race]). ') ';
 		$sql.= "ORDER BY RAND() LIMIT 1";
-		$unt_array = $_sql->make_array($sql);
+		$unt_array = DB::sel($sql);
 
 		if($unt_array) {
 			$unt_array = $unt_array[0];
@@ -107,24 +104,21 @@ function mbr_unt(&$_user) {
 	}
 
 	if($sql) {
-		$sql = "UPDATE ".$_sql->prebdd."unt_todo SET utdo_nb = CASE ". $sql;
+		$sql = "UPDATE ".DB::getTablePrefix()."unt_todo SET utdo_nb = CASE ". $sql;
 		$sql.= " ELSE utdo_nb END WHERE utdo_mid = $mid ";
-		$_sql->query($sql);
+		DB::update($sql);
 	}
 }
 
 function glob_unt() {
-	global $_sql;
-	$sql = "DELETE FROM ".$_sql->prebdd."unt_todo WHERE utdo_nb <= 0";
-	$_sql->query($sql);
+    UntTodo::where('utdo_nb', '<=', 0)->delete();
 
-	$sql = "DELETE FROM ".$_sql->prebdd."unt WHERE unt_nb <= 0";
-	$_sql->query($sql);
+    Unt::where('unt_nb', '<=', 0)->delete();
 
-	$sql="UPDATE ".$_sql->prebdd."mbr SET mbr_population = IFNULL((SELECT SUM(unt_nb) FROM ".$_sql->prebdd."leg JOIN ".$_sql->prebdd."unt ON leg_id = unt_lid WHERE leg_mid = mbr_mid),0)";
-	$_sql->query($sql);
+	$sql="UPDATE ".DB::getTablePrefix()."mbr SET mbr_population = IFNULL((SELECT SUM(unt_nb) FROM "
+                .DB::getTablePrefix()."leg JOIN "
+                .DB::getTablePrefix()."unt ON leg_id = unt_lid WHERE leg_mid = mbr_mid),0)";
+	DB::update($sql);
 
-	$sql="UPDATE ".$_sql->prebdd."hero SET hro_bonus = 0 WHERE hro_bonus_to < NOW()";
-	$_sql->query($sql);
+        Hro::where('hro_bonus_to', '<', DB::raw('NOW()'))->update('hro_bonus', 0);
 }
-?>

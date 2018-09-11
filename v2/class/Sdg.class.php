@@ -43,7 +43,7 @@ class Sdg extends Illuminate\Database\Eloquent\Model {
 
         if ($mid)
             $sql .= ", svte_rid as sdg_my_vte";
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
         $req = Sdg::selectRaw($sql);
 
         if ($mid) { /* Selectionner les sondages ou on a voté */

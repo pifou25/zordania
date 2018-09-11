@@ -4,7 +4,6 @@ $dep_res = array("btc", "res");
 $log_res = "Ressources";
 
 function mbr_res(&$_user) {
-	global $_sql;
 	
 	$mid = $_user['mbr_mid'];
 	$race = $_user['mbr_race'];
@@ -85,17 +84,12 @@ function mbr_res(&$_user) {
 			$sql.= "WHEN rtdo_id = $id THEN rtdo_nb - $nb ";
 	}
 	if($sql) {
-		$sql = "UPDATE ".$_sql->prebdd."res_todo SET rtdo_nb = CASE ". $sql;
+		$sql = "UPDATE ".DB::getTablePrefix()."res_todo SET rtdo_nb = CASE ". $sql;
 		$sql.= " ELSE rtdo_nb END WHERE rtdo_mid = $mid ";
-		$_sql->query($sql);
+		DB::update($sql);
 	}
 }
 
 function glob_res() {
-	global $_sql;
-	
-	$sql = "DELETE FROM ".$_sql->prebdd."res_todo WHERE rtdo_nb = 0";
-	$_sql->query($sql);
+    ResTodo::where('rtdo_nb', 0)->delete();
 }
-
-?>

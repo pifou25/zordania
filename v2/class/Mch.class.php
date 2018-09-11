@@ -22,7 +22,7 @@ class Mch extends Illuminate\Database\Eloquent\Model {
      */
     static function getByMid(int $mid) {
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query('*, _DATE_FORMAT(mch_time) as mch_time_formated');
+        $sql = session::$SES->parseQuery('*, _DATE_FORMAT(mch_time) as mch_time_formated');
         return Mch::select(DB::raw($sql))
                         ->where('mch_mid', $mid)
                         ->where('mch_etat', '!=', COM_ETAT_ACH)

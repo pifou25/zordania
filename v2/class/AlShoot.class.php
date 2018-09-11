@@ -34,7 +34,7 @@ class AlShoot extends Illuminate\Database\Eloquent\Model {
         $sql = "mbr_mid, shoot_msgid, shoot_mid, shoot_texte,mbr_pseudo,mbr_sign,_DATE_FORMAT(shoot_date) as shoot_date_formated,
 		DATE_FORMAT(shoot_date,'%a, %d %b %Y %T') as shoot_date_rss";
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
 
         $req = AlShoot::selectRaw($sql);
         $req->leftJoin('mbr', 'shoot_mid', 'mbr_mid');
@@ -48,7 +48,7 @@ class AlShoot extends Illuminate\Database\Eloquent\Model {
         $sql = "mbr_mid, shoot_msgid, shoot_mid, shoot_texte,mbr_pseudo,mbr_sign,_DATE_FORMAT(shoot_date) as shoot_date_formated,
 		DATE_FORMAT(shoot_date,'%a, %d %b %Y %T') as shoot_date_rss";
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
 
         $req = AlShoot::selectRaw($sql);
         $req->leftJoin('mbr', 'shoot_mid', 'mbr_mid');

@@ -45,6 +45,19 @@ $_sql->env = 'cron';
 
 mark('mysql');
 
+// New database Connection (Eloquent)
+$_sql2 = new Illuminate\Database\Capsule\Manager();
+$_sql2->addConnection($settings['database']);
+// Make this Capsule instance available globally via static methods
+$_sql2->setAsGlobal();
+// Setup the Eloquent ORM
+$_sql2->bootEloquent();
+if(SITE_DEBUG){
+    $_sql2->connection()->enableQueryLog();
+}
+
+mark('eloquent');
+
 $_h = (int) date('H');
 $_m = (int) date('i');
 $_s = (int) date('s');
@@ -228,32 +241,27 @@ clean_scl();
 
 /* ajouter XP en mode débug */
 if(SITE_DEBUG && !($_m % 30))
-	$_sql->query("UPDATE ".$_sql->prebdd."hero SET hro_xp = hro_xp + 100 WHERE hro_xp < 100");
+    Hro::where('hro_xp', '<', 100)->increment('hro_xp', 100);
 
 /* Ici quelques fonctions pour éviter de faire trop de trucs inutiles */
 /* liste des recherches à faire: src_todo */
-$sql = "SELECT DISTINCT stdo_mid FROM ".$_sql->prebdd."src_todo ";
-$src_todo_mid = $_sql->index_array($sql, "stdo_mid");
+$src_todo_mid = SrcTodo::distinct('stdo_mid')->get()->keyBy('stdo_mid');
 
 /* liste des batiments a faire */
-$sql = "SELECT DISTINCT btc_mid FROM ".$_sql->prebdd."btc ";
-$sql.= "WHERE btc_etat IN (".BTC_ETAT_TODO.", ".BTC_ETAT_BRU.", ".BTC_ETAT_REP.")";
-$btc_todo_mid = $_sql->index_array($sql, 'btc_mid');
+$btc_todo_mid = Btc::distinct('btc_mid')->whereIn('btc_etat', [BTC_ETAT_TODO, BTC_ETAT_BRU, BTC_ETAT_REP])
+        ->get()->keyBy('btc_mid');
 
 /* liste des membres actifs */
-$sql = "SELECT mbr_mid,mbr_race, mbr_mapcid FROM ".$_sql->prebdd."mbr ";
-$sql.= "WHERE mbr_etat = ". MBR_ETAT_OK ." AND mbr_mid != 1 ORDER BY RAND() ";
-$mid_array = $_sql->make_array($sql);
+$mid_array = Mbr::select('mbr_mid','mbr_race', 'mbr_mapcid')->where('mbr_etat', MBR_ETAT_OK)->where('mbr_mid', '!=', 1)
+        ->orderBy(DB::raw('RAND()'))->get()->toArray();
 
 /* liste des héros */
-$sql = "SELECT hro_id, hro_lid, hro_mid, hro_type, hro_vie, leg_cid, hro_xp, hro_bonus ";
-$sql.= "FROM ".$_sql->prebdd."hero LEFT JOIN ".$_sql->prebdd."leg ON hro_lid = leg_id ";
-$hro_array = $_sql->index_array($sql, 'hro_mid');
+$hro_array = Hro::leftJoin('leg', 'hro_lid', 'leg_id')->get()->keyBy('hro_mid');
 
 
-$hro_list = array();
-$leg_move_list = array(); // légions contenant une unités déménagement
-$btc_def_list = array();
+$hro_list = [];
+$leg_move_list = []; // légions contenant une unités déménagement
+$btc_def_list = [];
 
 /* ici on analyse les configs des races pour avoir les unités & batiments particuliers
  * héros, unité caravane et les batiments défensifs
@@ -283,16 +291,12 @@ foreach ($_races as $race => $visible) {
  * LEFT JOIN zrd_mbr ON leg_mid = mbr_mid 
  * WHERE CASE mbr_race  WHEN 1 THEN 27 WHEN 2 THEN 33 WHEN 3 THEN 28 WHEN 4 THEN 28 WHEN 5 THEN 27 WHEN 7 THEN 27 ELSE 0 END = unt_type
  *  */
-$sql = "SELECT unt_nb, unt_type, leg_id, mbr_mid, mbr_race ";
-$sql.= "FROM ".$_sql->prebdd."unt LEFT JOIN ".$_sql->prebdd."leg ON unt_lid = leg_id ";
-$sql.= "LEFT JOIN ".$_sql->prebdd."mbr ON leg_mid = mbr_mid ";
-$sql .= "WHERE CASE mbr_race ";
-
+$where = 'CASE mbr_race ';
 foreach($unt_move_list as $race => $unt_type)
-	$sql .= " WHEN $race THEN ".array_shift($unt_type);
-$sql .= " ELSE 0 END = unt_type";
-$leg_move_array = $_sql->index_array($sql, 'leg_id');
-
+	$where .= " WHEN $race THEN ".array_shift($unt_type);
+$where .= " ELSE 0 END = unt_type";
+$leg_move_array = Unt::select('unt_nb', 'unt_type', 'leg_id', 'mbr_mid', 'mbr_race')->leftJoin('leg', 'unt_lid', 'leg_id')
+        ->leftJoin('mbr', 'leg_mid', 'mbr_mid')->whereRaw($where)->get()->keyBy('leg_id');
 
 // construire les 'dependances' (recherche depend de batiment etc)
 function make_dep($funcs) {
@@ -415,6 +419,6 @@ if(SITE_DEBUG) {
 		$prev_time = $time;
 	}
 	echo "SQL :\n";
-	echo "Time: ". $_sql->total_time . "\n";
-	echo "Req: ". $_sql->nbreq . "\n";
+	echo "Time: ". 0 . "\n"; // TODO with Eloquent
+	echo "Req: ". 0 . "\n"; // TODO with Eloquent
 }

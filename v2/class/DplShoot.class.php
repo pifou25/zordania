@@ -31,7 +31,7 @@ class DplShoot extends Illuminate\Database\Eloquent\Model {
                 "dpl_shoot_texte,mbr_pseudo,mbr_sign,_DATE_FORMAT(dpl_shoot_date) as dpl_shoot_date_formated," .
                 "DATE_FORMAT(dpl_shoot_date,'%a, %d %b %Y %T') as dpl_shoot_date_rss";
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
 
         return DplShoot::selectRaw($sql)
                         ->join('mbr', 'dpl_shoot_mid', 'mbr_mid')

@@ -79,7 +79,7 @@ elseif($_act == 'view')
 				if($result['ambr_etat'] != $aletat[$mid])
 					$cond[$mid] = $aletat[$mid];
 			}
-			$_tpl->set('max_perm',allyFactory::$_drts_max);
+			$_tpl->set('max_perm',allyFactory::MAX_DRTS_ALLY);
 			$_tpl->set('err_msg_aly',$ally->mod_mbr($cond));
 			break;
 		}

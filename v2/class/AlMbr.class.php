@@ -100,7 +100,7 @@ class AlMbr extends Illuminate\Database\Eloquent\Model {
     static function getAccess(int $mid) {
 
         //ajout délais à la date d'entrée dans l'alli
-        return AlMbr::selectRaw('DATE_ADD(ambr_date, INTERVAL ? DAY) as end_date', ALL_NOOB_TIME)
+        return AlMbr::selectRaw('DATE_ADD(ambr_date, INTERVAL ? DAY) as end_date', [ALL_NOOB_TIME])
                         ->where('ambr_mid', $mid)->get()->toArray();
     }
 

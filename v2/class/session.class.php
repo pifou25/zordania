@@ -1,15 +1,13 @@
 <?php
 class session
 {
-	var $sql;
 	var $vars;
 	var $dateformat = '%d-%m-%y à %H:%i:%s'; /* Mettre ça dans les tpl */
 	var $decal = '00:00:00';
 	static public $SES;
         
-	function __construct(&$db)
+	function __construct()
 	{
-		$this->sql = &$db; //objet de la classe mysql
 		if(!CRON){
 			$this->vars = & $_SESSION['user'];
 		}

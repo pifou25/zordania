@@ -27,7 +27,7 @@ class Nte extends Illuminate\Database\Eloquent\Model {
     }
 
     static function get(int $mid, int $nid = 0) {
-        $sql = mysqliext::$bdd->parse_query('_DATE_FORMAT(nte_date) as nte_date_formated');
+        $sql = session::$SES->parseQuery('_DATE_FORMAT(nte_date) as nte_date_formated');
         //$req = Nte::;
 
         if ($nid) {

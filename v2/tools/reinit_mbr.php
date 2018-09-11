@@ -59,7 +59,7 @@ foreach($mid_array as $_user)
 		//cls_frm($mid);
 
 		/* réinitialise la carte pour $mid */ /* , mbr_pts_armee = 0 */
-		$sql = "UPDATE ".$_sql->prebdd."mbr SET mbr_etat = ".MBR_ETAT_INI.", 
+		$sql = "UPDATE ".DB::getTablePrefix()."mbr SET mbr_etat = ".MBR_ETAT_INI.", 
 		mbr_mapcid = 0, mbr_place = 0, mbr_population = 0, mbr_points = 0 
 		WHERE mbr_mid = $mid ";
 		$_sql->query($sql);

@@ -5,7 +5,7 @@ $log_btc = "Batîments";
 // define('BTC_BRU_PERC', 95);
 
 function mbr_btc(&$_user) {
-	global $_sql, $_histo;
+	global $_histo;
 
 	if(isset($_user["no_btc_todo"]))
 		return;
@@ -87,21 +87,16 @@ function mbr_btc(&$_user) {
 		Mbr::edit($mid, array("place" => $_user['mbr_place'] + $update_place));
 	if($update_btc) {
 	foreach($update_btc as $bid => $value) {
-		$sql = "UPDATE ".$_sql->prebdd."btc SET ";
+            $request = [];
 		if(isset($value['vie']))
-			$sql.= " btc_vie = {$value['vie']}";
+                    $request['btc_vie'] = $value['vie'];
 		if(isset($value['etat']))
-			$sql.= " , btc_etat = {$value['etat']} ";
-		$sql.= " WHERE btc_id = $bid ";
-		$_sql->query($sql);
+                    $request['btc_etat'] = $value['etat'];
+            Btc::where('btc_id', $bid)->update($request);
 	}
 	}
 }
 
 function glob_btc() {
-	global $_sql;
-		
-	$sql = "DELETE FROM ".$_sql->prebdd."btc WHERE btc_etat != ".BTC_ETAT_TODO." AND btc_vie = 0 ";
-	$_sql->query($sql);
+    Btc::where('btc_etat', '<>', BTC_ETAT_TODO)->where('btc_vie', 0)->delete();
 }
-?>

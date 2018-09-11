@@ -9,14 +9,17 @@ $_tpl->set("arr_rep",$arr_rep);
 
 if($_act == 'sql') { // lister / lire les logs
 	// lister les tables SQL
-	$tables = $_sql->make_array('SHOW TABLES FROM '.MYSQL_BASE);
-
-	$sql = '';
-	foreach($tables as $tbl)
-		$sql .= ",".$tbl['Tables_in_'.MYSQL_BASE];
-
-	// diagnostic sur toutes les tables
-	$tables = $_sql->make_array('CHECK TABLE '.substr($sql, 1)." FAST");
+	$tables =  DB::sel( 'SHOW TABLES FROM ' . MYSQL_BASE);
+        
+        $tables = array_map(function($val)
+        {
+            foreach ($val as $value)
+                return $value;
+        }, $tables);
+        
+        $sql = join( $tables, ',');
+        // diagnostic sur toutes les tables
+	$tables = DB::connection()->getPdo()->prepare('CHECK TABLE '.$sql." FAST")->fetchAll();
 	$_tpl->set("module_tpl","modules/admin/sql.tpl");
 	$_tpl->set("arr_tbl",$tables);
 } else { // act = log ou vide
@@ -43,4 +46,3 @@ if($_act == 'sql') { // lister / lire les logs
 
 	$_tpl->set("module_tpl","modules/admin/log.tpl");
 }
-?>

@@ -93,7 +93,7 @@ class Ses extends Illuminate\Database\Eloquent\Model {
         $sql .= " ambr_etat, IF(ambr_etat=" . ALL_ETAT_DEM . ", 0, IFNULL(ambr_aid,0)) as ambr_aid, ";
         $sql .= " IF(ambr_etat=" . ALL_ETAT_DEM . ", NULL, al_name) as al_name  ";
         // replace date formatting:
-        $req = Ses::selectRaw(mysqliext::$bdd->parse_query($sql));
+        $req = Ses::selectRaw(session::$SES->parseQuery($sql));
         return $req->join('mbr', 'ses_mid', 'mbr_mid')
                         ->leftJoin('al_mbr', 'mbr_mid', 'ambr_mid')
                         ->leftJoin('al', 'ambr_aid', 'al_aid')

@@ -30,7 +30,7 @@ $sql.= ' ORDER BY zrd_mbr.mbr_lmodif_date ASC';
 
 /* sélection des comptes validés en veille sauf exilés et visiteur vieux de + de 30 jours 
 $sql = 'SELECT mbr_mid, mbr_login, mbr_pseudo, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
-$sql.= ' FROM '.$_sql->prebdd.'mbr WHERE ';
+$sql.= ' FROM '.DB::getTablePrefix().'mbr WHERE ';
 if($mid) $sql .= "mbr_mid = $mid ";
 else $sql.= ' mbr_etat ='.MBR_ETAT_ZZZ.' AND mbr_gid NOT IN ('.GRP_VISITEUR.','.GRP_EXILE.','.GRP_EXILE_TMP.') AND datediff(NOW(), `mbr_ldate`) > 30';
 $sql.= ' ORDER BY mbr_ldate ASC';*/
@@ -63,7 +63,7 @@ foreach($mbr_array as $mbr){
 		echo $mbr['mbr_ldate'].' - mail à '.$mbr['mbr_mail']." : $obj\n";
 		if ($mid) echo "$txt\n";
 
-		$sql = 'UPDATE '.$_sql->prebdd.'mbr SET mbr_ldate = NOW() - INTERVAL 30 DAY WHERE mbr_mid = '.$mbr['mbr_mid'];
+		$sql = 'UPDATE '.DB::getTablePrefix().'mbr SET mbr_ldate = NOW() - INTERVAL 30 DAY WHERE mbr_mid = '.$mbr['mbr_mid'];
 		$_sql->query($sql);
 	} else
 		echo $mbr['mbr_ldate'].' - ECHEC à '.$mbr['mbr_mail']."\n";

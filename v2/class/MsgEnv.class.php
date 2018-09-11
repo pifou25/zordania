@@ -24,7 +24,7 @@ static function get(int $mid, int $msgid = 0) {
 		$req.= ",menv_texte";
 
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($req);
+        $sql = session::$SES->parseQuery($req);
         
         $req = MsgEnv::selectRaw($sql);
         $req->join('mbr', 'menv_to', 'mbr_mid');

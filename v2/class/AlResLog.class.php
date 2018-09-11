@@ -30,7 +30,7 @@ class AlResLog extends Illuminate\Database\Eloquent\Model {
         } else {
             $sql = "mbr_pseudo, mbr_gid,mbr_mid,arlog_mid,arlog_type,arlog_nb,_DATE_FORMAT(arlog_date) as arlog_date_formated ,arlog_ip ";
             // replace date formatting:
-            $sql = mysqliext::$bdd->parse_query($sql);
+            $sql = session::$SES->parseQuery($sql);
         }
 
         $req = AlResLog::selectRaw($sql);

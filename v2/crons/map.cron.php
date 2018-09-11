@@ -2,11 +2,9 @@
 $log_map = "Cartes";
 
 function glob_map() {
-	global $_sql;
-	$sql = "SELECT mbr_race, mbr_points, map_x, map_y ";
-	$sql.= "FROM zrd_mbr JOIN zrd_map ON map_cid = mbr_mapcid ";
-	$sql.= "WHERE mbr_etat = ".MBR_ETAT_OK;
-	$mbr_array = $_sql->make_array($sql);
+
+    $mbr_array = Mbr::select('mbr_race', 'mbr_points', 'map_x', 'map_y')
+            ->join('map', 'mbr_mapcid', 'map_cid')->where('mbr_etat', MBR_ETAT_OK)->get()->toArray();
 
 	pts_map($mbr_array);
 	pop_map($mbr_array);
@@ -108,4 +106,3 @@ function pop_map(&$mbr_array) {
 	imagecopyresampled ($im2, $im, 0, 0, 0, 0, MAP_W, MAP_H, (MAP_W*$coef), (MAP_H*$coef));
 	imagepng($im2, SITE_DIR . "www/img/map/rp-lite/pop.png");
 }
-?>

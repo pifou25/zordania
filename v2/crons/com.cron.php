@@ -3,33 +3,30 @@
 $log_com = "Commerce";
 
 function glob_com() {
-	global $_sql, $_h, $_c;
+	global $_h, $_c;
 
 	// tt les 6h et uniquement à 6h du matin
 	if($_h == 6 && $_c == '6h') {
-		$sql = "INSERT INTO ".$_sql->prebdd."mch_sem (msem_res,msem_date,msem_cours) ";
-		$sql.= "SELECT mcours_res, NOW(), mcours_cours FROM ".$_sql->prebdd."mch_cours ";
-		$_sql->query($sql);
+		$sql = "INSERT INTO ".DB::getTablePrefix()."mch_sem (msem_res,msem_date,msem_cours) ";
+		$sql.= "SELECT mcours_res, NOW(), mcours_cours FROM ".DB::getTablePrefix()."mch_cours ";
+		DB::insert($sql);
 
-		$sql = "UPDATE ".$_sql->prebdd."mch_sem SET  msem_cours = (";
-		$sql.= "SELECT ROUND(AVG(mch_prix/mch_nb),2) FROM ".$_sql->prebdd."mch WHERE mch_etat = ".COM_ETAT_ACH." AND msem_res = mch_type";
-		$sql.= ") WHERE msem_date = CURDATE() AND msem_res IN (SELECT DISTINCT mch_type FROM ".$_sql->prebdd."mch WHERE mch_etat = ".COM_ETAT_ACH.")";
-		$_sql->query($sql);
+		$sql = "UPDATE ".DB::getTablePrefix()."mch_sem SET  msem_cours = (";
+		$sql.= "SELECT ROUND(AVG(mch_prix/mch_nb),2) FROM ".DB::getTablePrefix()."mch WHERE mch_etat = ".COM_ETAT_ACH." AND msem_res = mch_type";
+		$sql.= ") WHERE msem_date = CURDATE() AND msem_res IN (SELECT DISTINCT mch_type FROM ".DB::getTablePrefix()."mch WHERE mch_etat = ".COM_ETAT_ACH.")";
+		DB::update($sql);
 
 		//Virer les vieilles ventes qui ne seront plus prises en compte pour le calcul des cours
-		$sql = "DELETE FROM ".$_sql->prebdd."mch ";
-		$sql.= "WHERE mch_etat = ".COM_ETAT_ACH." AND mch_time < (NOW() - INTERVAL ".MCH_OLD. " DAY)";
-		$_sql->query($sql);
-
+                Mch::where('mch_etat', COM_ETAT_ACH)->whereRaw('mch_time < (NOW() - INTERVAL ? DAY)', MCH_OLD)->delete();
+                
 		//Moyenne de la semaine /!\
-		$sql = "TRUNCATE TABLE ".$_sql->prebdd."mch_cours";
-		$_sql->query($sql);
+                MchCour::truncate();
 
-		$sql = "INSERT INTO ".$_sql->prebdd."mch_cours (mcours_res,mcours_cours) ";
+		$sql = "INSERT INTO ".DB::getTablePrefix()."mch_cours (mcours_res,mcours_cours) ";
 		$sql.= " SELECT msem_res,ROUND(AVG(msem_cours),2)";
-		$sql.= " FROM ".$_sql->prebdd."mch_sem WHERE  msem_date > (NOW() - INTERVAL 3 DAY)";
+		$sql.= " FROM ".DB::getTablePrefix()."mch_sem WHERE  msem_date > (NOW() - INTERVAL 3 DAY)";
 		$sql.= " GROUP BY msem_res ";
-		$_sql->query($sql);
+		DB::insert($sql);
 	}
 
 
@@ -69,15 +66,12 @@ function glob_com() {
 	$time = (MCH_ACCEPT + rand(-1,1)) * ZORD_SPEED;  /* temps en minute */
 	$max = MCH_MAX * ZORD_SPEED;
 
-	$sql = "UPDATE ".$_sql->prebdd."mch SET mch_etat = ".COM_ETAT_OK.", mch_time = (NOW() + INTERVAL $max MINUTE)";
+	$sql = "UPDATE ".DB::getTablePrefix()."mch SET mch_etat = ".COM_ETAT_OK.", mch_time = (NOW() + INTERVAL $max MINUTE)";
 	$sql.= " WHERE mch_etat = ".COM_ETAT_ATT." AND ";
 	$sql.= "NOW() > (mch_time + INTERVAL $time MINUTE)";
-	$_sql->query($sql);
+	DB::update($sql);
 
 	//Virer les ventes en cours non vendues
-	$sql = "DELETE FROM ".$_sql->prebdd."mch ";
-	$sql.= "WHERE mch_etat = ".COM_ETAT_OK." AND mch_time < NOW()";
-	$_sql->query($sql);
+        Mch::where('mch_etat', COM_ETAT_OK)->where('mch_time', '<', DB::raw('NOW()'))->delete();
 }
 
-?>

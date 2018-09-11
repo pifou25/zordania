@@ -17,16 +17,16 @@ $drop = array( 'al_res', 'al_res_log', 'atq', 'atq_mbr', 'btc',
 	'res_todo', 'src', 'src_todo', 'trn', 'unt', 'unt_todo', 'vld');
 foreach($drop as $tbl)
 {
-	$sql = 'TRUNCATE TABLE '. $_sql->prebdd. $tbl;
+	$sql = 'TRUNCATE TABLE '. DB::getTablePrefix(). $tbl;
 	$_sql->query($sql);
 	echo "\ndelete $tbl..." . $_sql->affected_rows();
 }
 // update sur map, mbr
-$sql = 'UPDATE '. $_sql->prebdd.'map SET map_type = '.MAP_LIBRE.' WHERE map_type = '.MAP_VILLAGE;
+$sql = 'UPDATE '. DB::getTablePrefix().'map SET map_type = '.MAP_LIBRE.' WHERE map_type = '.MAP_VILLAGE;
 $_sql->query($sql);
 echo "\nupdate map ... raz villages ..." . $_sql->affected_rows();
 
-$sql = 'UPDATE '. $_sql->prebdd.'mbr SET mbr_etat='.MBR_ETAT_INI.', mbr_race=0, mbr_mapcid=0, 
+$sql = 'UPDATE '. DB::getTablePrefix().'mbr SET mbr_etat='.MBR_ETAT_INI.', mbr_race=0, mbr_mapcid=0, 
   mbr_place=0, mbr_population=0, mbr_points=0, mbr_pts_armee=0, mbr_atq_nb=0, mbr_pseudo = ""
   WHERE mbr_etat IN('.MBR_ETAT_OK.','.MBR_ETAT_ZZZ.') AND mbr_mid <> ' . MBR_WELC;
 $_sql->query($sql);

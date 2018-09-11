@@ -26,7 +26,7 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
             $sql .= ",mrec_texte";
         
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
 
         $req = MsgRec::selectRaw($sql)->leftJoin('mbr', 'mrec_from', 'mbr_mid')
                 ->leftJoin('mbr_old', 'mrec_from', 'mold_mid')
@@ -137,7 +137,7 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
             $sql .= ', zrd_msg.mrec_texte ';
 
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
 
         $req = Sign::selectRaw($sql);
         $req->leftJoin('mbr as mbr2', 'sign_admid', 'mbr2.mbr_mid');

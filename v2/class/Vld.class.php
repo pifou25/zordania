@@ -44,7 +44,7 @@ class Vld extends Illuminate\Database\Eloquent\Model {
 
     static function get(int $mid) {
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query('vld_act, vld_rand, _DATE_FORMAT(vld_date) as vld_date_formated');
+        $sql = session::$SES->parseQuery('vld_act, vld_rand, _DATE_FORMAT(vld_date) as vld_date_formated');
 
         return Vld::selectRaw($sql)->where('vld_mid', $mid)->get()->toArray();
     }

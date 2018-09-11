@@ -43,7 +43,6 @@ if(SITE_DEBUG){
     register_shutdown_function( "fatal_handler" );
 }
 
-
 mark('lib');
 
 /*
@@ -64,16 +63,7 @@ $_tpl->set("_cache", $_cache->get_array());
 
 $_tpl->set('no_cookies',!$_COOKIE);
 
-/*
-* MySQL
-*/
-$_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
-$_sql->set_prebdd(MYSQL_PREBDD);
-$_sql->set_debug(SITE_DEBUG);
-
 mark('mysql');
-
-class DB extends Illuminate\Database\Capsule\Manager{}
 
 // New database Connection (Eloquent)
 $_sql2 = new Illuminate\Database\Capsule\Manager();
@@ -88,21 +78,10 @@ if(SITE_DEBUG){
 
 mark('eloquent');
 
-if(!$_sql->con) /* Utiliser Display = module */
-{
-	$_tpl->set_lang('all');
-	$_tpl->set('page','mysql_error.tpl');
-	$_tpl->set('error',$_sql->err);
-	if(!$_display != "xml")
-		echo $_tpl->get('index.tpl',1);
-
-	exit;
-}
-
 /*
 * Sessions
 */
-$_ses = new session($_sql);
+$_ses = new session();
 $_file = request("file", "string", "get", "vlg");
 $_type = request("type", "string", "get");
 $_act = request("act", "string", "get");
@@ -120,10 +99,6 @@ if(!empty($_mobile)){
 /* pour le fichier html de verification google */
 if($_file == 'google0ae71ec825ebe77e')
 	die(file_get_contents(WWW_DIR.$_SERVER['REQUEST_URI']));
-
-// marquer l'environnement dans $_sql
-$_sql->env = $_file.($_act?'-'.$_act:'').'.html';
-if ($_sub) $_sql->env .= '?sub='.$_sub;
 
 if($_file == "session" AND ($_act == "login" OR $_act == "logout"))
 	$log_in_out = true;
@@ -164,7 +139,6 @@ if(SITE_TRAVAUX && !$_ses->canDo(DROIT_ADM_TRAV))
 /*
 * Petit trucs a faire une fois qu'on a $_user
 */
-$_sql->set_dbdecal($_user['decal']);
 $_tpl->set_lang($_user['lang']);
 $_tpl->set_ref('_user',$_user);
 $_tpl->set('_file',$_file);
@@ -293,7 +267,7 @@ if($_display == "xml") { /* Sortie en XML */
 
 	$_tpl->set("cant_view_this",!$_ses->canDo(DROIT_SITE));
 
-	$_tpl->set("sv_nbreq",$_sql->nbreq);
+	$_tpl->set("sv_nbreq", 'XXX');
 	$_tpl->set("sv_diff",$t1);
 
 	if(SITE_DEBUG)
@@ -301,8 +275,8 @@ if($_display == "xml") { /* Sortie en XML */
 		unset($_histo);
 		$_tpl->set_globals();
 		$_tpl->set('sv_site_debug',true);
-		$_tpl->set('sv_total_sql_time',$_sql->total_time);
-		$_tpl->set_ref('sv_queries',$_sql->queries);
+		$_tpl->set('sv_total_sql_time', 0);
+		$_tpl->set('sv_queries',[]);
                 $_tpl->set('eloQueries',DB::connection()->getQueryLog());
 		$t2 = mtime();
 	}
@@ -325,7 +299,7 @@ if($_display == "xml") { /* Sortie en XML */
 		}
 
 		$total = (mtime() - $t1);
-		$mysql = $_sql->total_time;
+		$mysql = 0; // TODO with eloquqent: mysql time
 		$templ = (mtime() - $t2);
 		$php = $total - $mysql - $templ;
 		echo "<li>Mysql: ".$mysql."</li>";

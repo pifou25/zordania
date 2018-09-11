@@ -45,7 +45,7 @@ class Surv extends Illuminate\Database\Eloquent\Model {
         $sql = "surv_id, surv_mid, surv_etat, surv_admin, _DATE_FORMAT(surv_debut) as debut, ";
         $sql .= " _DATE_FORMAT(surv_debut + INTERVAL ? SECOND) as fin, surv_type, surv_cause";
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
         $req = Surv::selectRaw($sql, [SURV_DUREE])->where('surv_mid', $mid)->where('surv_etat', SURV_OK);
         return $req->get()->toArray();
     }
@@ -54,7 +54,7 @@ class Surv extends Illuminate\Database\Eloquent\Model {
 
         $sql = "surv_mid, surv_type, surv_etat, _DATE_FORMAT(surv_debut + INTERVAL ? SECOND) as fin ";
         // replace date formatting:
-        $sql = mysqliext::$bdd->parse_query($sql);
+        $sql = session::$SES->parseQuery($sql);
         $req = Surv::selectRaw($sql, [SURV_DUREE])->where('surv_id', $sid)->where('surv_etat', SURV_OK);
         return $req->get()->toArray();
     }

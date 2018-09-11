@@ -4,7 +4,6 @@
 class ally {
 
 	/* variables */
-	//private static $sql; // objet mysql.class.php -> global $_sql
 
 	private $fields = array();
 	// type des variables pour protect()
@@ -87,20 +86,6 @@ class ally {
 		$this->isMbrLoaded = true;
 	}
 
-	// chargement des ressources
-	private function loadRes(){
-		global $_sql;
-	
-		$sql="SELECT ares_type,ares_nb FROM ".$_sql->prebdd."al_res WHERE ares_aid = ".$this->al_aid;
-		$sql.=" ORDER BY ares_type ASC";
-	
-		$result = $_sql->make_array($sql);
-		$res = array();
-		foreach($result as $row)
-			$res[$row['ares_type']] = $row['ares_nb'];
-		$this->res = $res;
-	}
-
 	/* méthodes set & get */
 	function __set($key, $value) {
 		/* pour l'alliance: $key = nom du champ, value sa valeur
@@ -111,7 +96,7 @@ class ally {
 		else if(isset($this->members[$key]))
 			// 'ambr_date': /* TODO conversion date à étudier */
 			$this->mbrTmp[$key] = ($this->members[$key]=='string' ? $value: protect($value, $this->members[$key]));
-		else echo "SET 'ally'->$key = $value\n";
+		// IGNORE all other values : else echo "SET 'ally'->$key = $value\n";
 	}
 	function __get($key) {
 		if(isset($this->fields[$key])) return $this->fields[$key];
@@ -181,8 +166,6 @@ class ally {
 	/* edit 1 ou plusieurs mbr = array et MAJ alliance */
 	function mod_mbr($edit)
 	{
-		global $_sql;
-
 		$aid = $this->al_aid;
 		$edit = protect($edit, "array");
 		$arr_sql = array();
@@ -202,7 +185,7 @@ class ally {
 		}
 
 		foreach($count as $etat => $nb)
-			if(isset(allyFactory::$_drts_max[$etat]) && $nb > allyFactory::$_drts_max[$etat])
+			if(isset(allyFactory::MAX_DRTS_ALLY[$etat]) && $nb > allyFactory::MAX_DRTS_ALLY[$etat])
 				$return['count'][$etat] = $nb; // maj impossible, trop de membres dans un état spécial
 
 		// faut absolument un chef
@@ -214,20 +197,21 @@ class ally {
 			foreach($edit as $mid => $etat) // appliquer les modifications
 				$this->mbrs[$mid]['ambr_etat'] = $etat;
 
-			$sql = "UPDATE ".$_sql->prebdd."al_mbr ";
+			$sql = "UPDATE ".DB::getTablePrefix()."al_mbr ";
 			$sql.= "SET ambr_etat = CASE ambr_mid ".implode(' ',$arr_sql) ." ELSE ambr_etat END, ambr_date = NOW() ";
 			$sql.= "WHERE ambr_aid = $aid AND ambr_mid IN (".implode(array_keys( $edit), ',') .")";
-			$_sql->query($sql);
+			DB::update($sql);
 
 			// recompter le nombre de membres parce que ça se met pas à jour
-			$sql = "UPDATE ".$_sql->prebdd."al ";
-			$sql.= "SET al_nb_mbr = (SELECT count(*) FROM ".$_sql->prebdd."al_mbr WHERE ambr_aid = $aid AND ambr_etat <> ".ALL_ETAT_DEM.")";
+			$sql = "UPDATE ".DB::getTablePrefix()."al ";
+			$sql.= "SET al_nb_mbr = (SELECT count(*) FROM ".DB::getTablePrefix()
+                                ."al_mbr WHERE ambr_aid = $aid AND ambr_etat <> ".ALL_ETAT_DEM.")";
 			if (isset($chef)) {
 				$sql .= ", al_mid = $chef"; // maj du chef aussi
 				$this->al_mid = $chef;
 			}
 			$sql.= " WHERE al_aid = $aid";
-			$_sql->query($sql);
+			DB::update($sql);
 			$return = true;
 		}
 		return $return;
@@ -251,7 +235,9 @@ class ally {
 	}
 
 	function getRessources($type = 0){ /* grenier */
-		if(empty($this->res)) $this->loadRes();
+		if(empty($this->res))
+                    $this->res = AlRes::get ($this->al_aid);
+                    //$this->loadRes();
 		$type = protect($type, "uint");
 		if($type)
 			return isset($this->res[$type]) ? $this->res[$type] : 0;
@@ -263,7 +249,7 @@ class ally {
 	function isAccesOk($mid, $acces){ // fonction générique
 		$mbr = $this->getMembers($mid);
 		if(isset($mbr['ambr_etat']))
-			return in_array($mbr['ambr_etat'], allyFactory::$_drts_all[$acces]);
+			return in_array($mbr['ambr_etat'], allyFactory::DROITS_ALLY[$acces]);
 		else
 			return false;
 	}
@@ -291,4 +277,3 @@ class ally {
 		return $return['ambr_etat'] == ALL_ETAT_SECD;
 	}
 }
-?>
