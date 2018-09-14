@@ -1,8 +1,6 @@
 <?php
 $log_cache = "Cache";
 
-require_once(SITE_DIR . "lib/session.class.php");
-
 function glob_cache() {
 	global $_t, $_p, $_ts, $_cache;
 
@@ -15,5 +13,3 @@ function glob_cache() {
 	$_cache->period = $_p;
 
 }
-
-?>

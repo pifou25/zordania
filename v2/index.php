@@ -28,13 +28,9 @@ mark('start');
 
 /* Includes généraux */
 require_once 'vendor/autoload.php';
-require_once("lib/divers.lib.php");
+require_once("src/Zordania/lib/divers.lib.php");
 require_once("conf/conf.inc.php");
 ini_set("include_path", SITE_DIR);
-
-$_cache = new cache('global');
-/*  infos admin en cache : variable globale */
-$admin_cache = new cache('admin');
 
 /* Gestion des erreurs : fonctions dans lib/divers.lib.php */
 $_error = array();
@@ -43,13 +39,17 @@ if(SITE_DEBUG){
     register_shutdown_function( "fatal_handler" );
 }
 
+$_cache = new cache('global');
+/*  infos admin en cache : variable globale */
+$admin_cache = new cache('admin');
+
 mark('lib');
 
 /*
 * Templates
 */
 $_tpl = new Template();
-$_tpl->set_dir('../templates');
+$_tpl->set_dir('../src/Zordania/templates');
 $_tpl->set("charset", SITE_CHARSET);
 
 /* display : xhtml - module - ajax - popup - xml */
@@ -65,17 +65,7 @@ $_tpl->set('no_cookies',!$_COOKIE);
 
 mark('mysql');
 
-// New database Connection (Eloquent)
-$_sql2 = new Illuminate\Database\Capsule\Manager();
-$_sql2->addConnection($settings['database']);
-// Make this Capsule instance available globally via static methods
-$_sql2->setAsGlobal();
-// Setup the Eloquent ORM
-$_sql2->bootEloquent();
-if(SITE_DEBUG){
-    $_sql2->connection()->enableQueryLog();
-}
-
+DB::init($settings['database']);
 mark('eloquent');
 
 /*
@@ -183,7 +173,7 @@ $charset = SITE_CHARSET; // iso-8859-1, utf-8, ...
 
 if($_display == "xml") { /* Sortie en XML */
 	header("Content-Type: application/xml; charset=$charset");
-	$filen = SITE_DIR."modules/".$_file."/xml.php";
+	$filen = MOD_DIR.$_file."/xml.php";
 
 	if(!file_exists($filen))
 		exit;
@@ -198,7 +188,7 @@ if($_display == "xml") { /* Sortie en XML */
 } else if($_display == "json") {
 	if($_user['etat'] != MBR_ETAT_ZZZ and $_user['etat'] != MBR_ETAT_INI and !$cron_lock) {
 		header("Content-Type: application/json; charset=$charset");
-		$filen = SITE_DIR."modules/".$_file."/json.php";
+		$filen = MOD_DIR.$_file."/json.php";
 
 		if(!file_exists($filen))
 			exit;
@@ -217,11 +207,11 @@ if($_display == "xml") { /* Sortie en XML */
 		
 	header("Content-Type: text/html; charset=$charset");
 	if(!$cron_lock || in_array($_file,$lock_array)) {
-		$filen = SITE_DIR."modules/".$_file."/page.php";
+		$filen = MOD_DIR.$_file."/page.php";
 
 		if(!file_exists($filen)) {
 			$_file = "404";
-			require_once(SITE_DIR."modules/404/page.php");
+			require_once(MOD_DIR."404/page.php");
 		} else
 			require_once($filen);
 
@@ -250,11 +240,11 @@ if($_display == "xml") { /* Sortie en XML */
 	$_tpl->set_ref('debugvars', $_debugvars);
 
 	if(!$cron_lock || in_array($_file,$lock_array)) {
-		$filen = SITE_DIR."modules/".$_file."/page.php";
+		$filen = MOD_DIR.$_file."/page.php";
 
 		if(!file_exists($filen)) {
 			$_file = "404";
-			require_once(SITE_DIR."modules/404/page.php");
+			require_once(MOD_DIR."404/page.php");
 		} else
 			require_once($filen);
 		mark($_file);
@@ -262,7 +252,7 @@ if($_display == "xml") { /* Sortie en XML */
 
 	$_tpl->set('module',$_file);
 
-	require_once("include/stats.php");
+	require_once("src/Zordania/lib/stats.php");
 	mark('stats');
 
 	$_tpl->set("cant_view_this",!$_ses->canDo(DROIT_SITE));
@@ -322,3 +312,5 @@ if(!empty($_error)) { // log des erreurs PHP
 	}
 	//$err_log->close();
 }
+
+DB::sqlLog(' WEB mid='.$_user['mid']);

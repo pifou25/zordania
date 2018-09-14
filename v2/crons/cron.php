@@ -28,7 +28,8 @@ mark('start');
 //require_once("/home/zorddev/conf/conf.inc.php");
 require_once(str_replace('crons','',dirname(__FILE__))."/conf/conf.inc.php");
 
-require_once(SITE_DIR . "lib/divers.lib.php");
+require_once SITE_DIR . 'vendor/autoload.php';
+require_once(SITE_DIR . "src/Zordania/lib/divers.lib.php");
 $_cache = new cache('global', true);
 
 /* Gestion des erreurs : fonctions dans lib/divers.lib.php */
@@ -37,26 +38,10 @@ set_error_handler("error_handler");
 
 mark('lib');
 
-$_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
-$_sql->set_prebdd(MYSQL_PREBDD);
-$_sql->set_debug(SITE_DEBUG);
-$_sql->env = 'cron';
-
-
-mark('mysql');
-
-// New database Connection (Eloquent)
-$_sql2 = new Illuminate\Database\Capsule\Manager();
-$_sql2->addConnection($settings['database']);
-// Make this Capsule instance available globally via static methods
-$_sql2->setAsGlobal();
-// Setup the Eloquent ORM
-$_sql2->bootEloquent();
-if(SITE_DEBUG){
-    $_sql2->connection()->enableQueryLog();
-}
-
+DB::init($settings['database']);
 mark('eloquent');
+
+$_ses = new session();  // empty session for static instance $SES
 
 $_h = (int) date('H');
 $_m = (int) date('i');
@@ -135,7 +120,7 @@ $_ally = array(); // liste des alliances utilisées pour diplo
 /*  Templates  */
 $_tpl = new Template();
 $_tpl->set_tmp_dir(SITE_DIR.'tmp');
-$_tpl->set_dir(SITE_DIR.'templates');
+$_tpl->set_dir(TPL_DIR);
 $_tpl->set_ref("_langues", $_langues);
 $_tpl->set_lang('fr_FR');
 $_tpl->get_config('config/config.config');
@@ -147,7 +132,6 @@ $_act = ($argc == 2) ? $argv[1] : "";
 
 mark('args');
 
-require_once('frm.cron.php');
 require_once('cache.cron.php');
 require_once('clean.cron.php');
 require_once('aly.cron.php');
@@ -422,3 +406,5 @@ if(SITE_DEBUG) {
 	echo "Time: ". 0 . "\n"; // TODO with Eloquent
 	echo "Req: ". 0 . "\n"; // TODO with Eloquent
 }
+
+DB::sqlLog(' CRON ');

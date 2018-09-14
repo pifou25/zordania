@@ -17,6 +17,8 @@ define('SITE_MAX_INSCRITS', 10000);
 $host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.fr";
 define('SITE_URL', "http://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
+define('TPL_DIR', SITE_DIR . 'src/Zordania/templates/');
+define('MOD_DIR', SITE_DIR . 'src/Zordania/modules/');
 define('WWW_DIR', SITE_DIR . "www/");
 define('ZORDLOG_URL', 'zordania.free.fr'); // URL des archives
 
