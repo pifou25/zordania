@@ -120,5 +120,5 @@ function glob_unt() {
                 .DB::getTablePrefix()."unt ON leg_id = unt_lid WHERE leg_mid = mbr_mid),0)";
 	DB::update($sql);
 
-        Hro::where('hro_bonus_to', '<', DB::raw('NOW()'))->update('hro_bonus', 0);
+        Hro::where('hro_bonus_to', '<', DB::raw('NOW()'))->update(['hro_bonus' => 0]);
 }

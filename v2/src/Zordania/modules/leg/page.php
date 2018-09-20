@@ -146,7 +146,7 @@ case "edit": // déplacer des unités du village vers la légion
 		// sortir $nb unités $type du village, puis les ajouter dans légion $lid à $rang
 		$legions->legs[$legions->vlg_lid]->add_unt($type, - $nb);
 		$legions->legs[$lid]->add_unt($type, $nb);
-		$legions->flush_all_units();
+		$legions->flush();
 		$_tpl->set("leg_ok", true);
 	}
 

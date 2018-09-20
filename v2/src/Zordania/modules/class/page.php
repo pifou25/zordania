@@ -121,7 +121,7 @@ switch ($type) {
         $req->orderBy('al_points', 'desc')->take(50);
 
         break;
-    case 6: // XP héros
+    case 6: // XP héros => energie
         $req = Hro::select('hro_id', 'hro_mid', 'hro_nom', 'hro_type', 'hro_lid', 'hro_xp', 'hro_xp_tot', 'hro_vie', 'hro_bonus_from', 'mbr_gid', 'mbr_mid', 'mbr_pseudo', 'mbr_race')
                 ->selectRaw(' hro_bonus AS bonus, hro_bonus_to AS bonus_to')
                 ->leftJoin('mbr', 'hro_mid', 'mbr_mid');
@@ -158,6 +158,25 @@ switch ($type) {
         $req->orderBy('mbr_pts_armee', 'desc')->take(50);
 
         break;
+    case 8: //expérience joueur
+        $req = Mbr::select('mbr_gid','mbr_mid','mbr_pseudo','mbr_race', 'mbr_pts_armee', 'mbr_etat','mbr_xp',
+                'ambr_etat', 'mbr_mapcid');
+        $req->selectRaw('IF(ambr_etat= ? , 0, IFNULL(ambr_aid,0)) as al_aid,'
+                        . 'IF(ambr_etat= ?, NULL, al_name) as al_name ', [ALL_ETAT_DEM, ALL_ETAT_DEM])
+                ->leftJoin('al_mbr', 'mbr_mid', 'ambr_mid')
+                ->leftJoin('al', 'al_aid', 'ambr_aid');
+        if ($region) {
+            $req->join('map', 'mbr_mapcid', 'map_cid');
+        }
+        $req->where('mbr_xp', '>', 0)->where('mbr_etat', MBR_ETAT_OK);
+        if ($race) {
+            $req->where('mbr_race', $race);
+        }
+        if ($region) {
+            $req->where('map_region', $region);
+        }
+        $req->orderBy('mbr_xp', 'desc')->take(50);
+
     default:
 
 }

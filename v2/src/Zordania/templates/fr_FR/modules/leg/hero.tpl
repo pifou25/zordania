@@ -83,9 +83,11 @@
 		<h3>{_user[hro_nom]}</h3>
 		<table class="liste"><tr><td style="width: 50%">
 
-			<p><img src="img/{_user[race]}/unt/{_user[hro_type]}.png" title="{_user[hro_nom]}" /></p>
-			<p><zimgbar per="{_user[hro_vie]}" max="{_user[hro_vie_conf]}" />Vie: {_user[hro_vie]} / {_user[hro_vie_conf]}</p>
-			<p>Expérience: {_user[hro_xp]}</p>
+			<p><img src="img/{_user[race]}/unt/{_user[hro_type]}.png" title="{_user[hro_nom]}" />
+			     <img src="img/{_user[race]}/div/vie.png" alt="Vie" /> {_user[hro_vie]} / {_user[hro_vie_conf]} </br>
+			<zimgbar per="{_user[hro_vie]}" max="{_user[hro_vie_conf]}" /> </br>
+			<img src="img/eclair.png" alt="Energie" /> {_user[hro_xp]} / {HEROS_NRJ_MAX} </br>
+			<zimgnrj per="{_user[hro_xp]}" max="{HEROS_NRJ_MAX}" />  </br></p>
 		
 		</td><td style="width: 50%">
 
@@ -121,7 +123,7 @@
 					<zimgcomp type="{_user[bonus]}" race="{_user[race]}" />
 					<p><strong>Fin le : {_user[bonus_to]}</strong> (Durée totale : {compa[tours]} tours)
 					<br />{comp[{_user[race]}][descr][{_user[bonus]}]}</p>
-					<p>Vous pouvez <a href="leg-hero.html?sub=bns&amp;bid=0" title="annuler">annuler</a> la compétence pour en activer une autre. <span class="infos">Aucun remboursement d'XP!</span></p>
+					<p>Vous pouvez <a href="leg-hero.html?sub=bns&amp;bid=0" title="annuler">annuler</a> la compétence pour en activer une autre. <span class="infos">Aucun remboursement d'énergie!</span></p>
 				</dd>
 			</dl>
 		</if>
@@ -139,8 +141,8 @@
 					<zimgcomp type="{id}" race="{_user[race]}" class="blason" />
 					<printf string="{comp[{_user[race]}][descr][{id}]}" vars="{compa[bonus]},{compa[tours]}" />
 					<br/>
-					<if cond="{compa[prix_xp]} > {_user[hro_xp]}"><spanp class="error">Coût: {compa[prix_xp]} XP</spanp></if>
-					<else>Coût: <strong>{compa[prix_xp]} XP</strong></else>
+					<if cond="{compa[prix_xp]} > {_user[hro_xp]}"><spanp class="error">Coût: {compa[prix_xp]} pts d'énergie</spanp></if>
+					<else>Coût: <strong>{compa[prix_xp]} pts d'énergie</strong></else>
 				</dd>
 			</dl>
 			</foreach>

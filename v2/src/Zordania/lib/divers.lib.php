@@ -326,7 +326,8 @@ function fatal_handler() {
     if( $error !== NULL) {
 
         $type = array_search($error['type'], get_defined_constants());
-        $msg = "<pre>DEBUG STACKTRACE\n$type : {$error['message']}\nIN  {$error['file']}:L{$error['line']}";
+        $msg = "<pre>DEBUG STACKTRACE\n$type : {$error['message']}\nIN  {$error['file']}:L{$error['line']}\n"
+        . implode("\n\t\t", callstack()) . "\nMARK\n" . implode("\n\t\t", array_keys( mark(true)));
         if(!empty(DB::connection()->getQueryLog())){
             $msg .= "\n\nLIST OF QUERIES\n";
             $i = 0;
@@ -341,7 +342,7 @@ function fatal_handler() {
         // hide password
         if(!empty(MYSQL_PASS))
             $msg = str_replace(MYSQL_PASS, '***', $msg);
-        
+
         if ($_tpl != null) {
             $_tpl->set_lang('all');
             $_tpl->set('sv_site_debug', false);

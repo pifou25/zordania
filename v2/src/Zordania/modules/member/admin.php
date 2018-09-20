@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if(!defined("_INDEX_") || !$_ses->canDo(DROIT_ADM_MBR)){ exit; }
 
 $_tpl->set("module_tpl","modules/member/admin.tpl");
@@ -256,16 +256,34 @@ if($_act == "del") {
 		
 		if($mbr_array['mbr_etat'] == MBR_ETAT_OK || $mbr_array['mbr_etat'] == MBR_ETAT_ZZZ) {
                     
-			$legions = new legions(array('mid'=>$mid, 
-				'etat' => array(LEG_ETAT_VLG, LEG_ETAT_BTC, LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_ATQ)), true, true);
+			$legions = new legions(['mid'=>$mid,
+                            //'etat' => [LEG_ETAT_VLG, LEG_ETAT_BTC, LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_ATQ]
+                            ], true, true);
+                        
 			//$cond = array('mid'=>$mid);
 			//$legions = new legions($cond, true, true);
 			$hro_array = array('hro_id'=>0, 'hro_type'=>0);
-			foreach($legions->legs as $lid => $leg)
+			foreach($legions->legs as $lid => $leg){
 				if($leg->hid){
+                                        // edit nrj et xp
+                                        $nrj = request('hro_nrj', 'uint', 'post');
+                                        $addNrj = request('hro_add_nrj', 'uint', 'post');
+                                        $vie = request('hro_vie', 'uint', 'post');
+                                        $xp = request('mbr_xp', 'uint', 'post');
+                                        if($nrj){
+                                            $leg->setHro('vie', $vie);
+                                            if($addNrj)
+                                                $leg->addHro('nrj',$addNrj);
+                                            else
+                                                $leg->setHro('nrj',$nrj);
+                                            $leg->flush();
+                                            edit_mbr($mid, ['xp' => $xp]);
+                                        }
 					$hro_array = $leg->infos;
 					break;
 				}
+                        }
+                            
 			$_tpl->set("hro_array", $hro_array);
 
 			// vider les ressources d'une légion

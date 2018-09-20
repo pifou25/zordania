@@ -140,7 +140,7 @@ class Leg extends Illuminate\Database\Eloquent\Model {
 			else if ($dest)
 				$sql .= ', map_x, map_y, mbr_pseudo, mbr_gid, mbr_mid, mbr_race, mbr_etat ';
 			if(!$get_unt && !$count_unt)
-				$sql .= ', hro_id, hro_nom, hro_type, hro_xp, hro_vie, hro_bonus AS bonus, hro_bonus_from, hro_bonus_to AS bonus_to ';
+				$sql .= ', hro_id, hro_nom, hro_type, hro_xp AS hro_nrj, hro_vie, hro_bonus AS bonus, hro_bonus_from, hro_bonus_to AS bonus_to ';
 		}
 		if($get_unt){
                     $sql = ($get_leg ? $sql . ",": "") . "unt_type, unt_rang, unt_nb ";

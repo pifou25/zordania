@@ -17,17 +17,17 @@
 <h3>Conditions d'utilisation</h3>
 
 <p>
-Tout accès ou utilisation de zordania.com est soumis aux dispositions suivantes. 
-Le webmaster de zordania.com se réserve le droit de modifier ces présentes dispositions librement et sans annonce préalable. 
+Tout accès ou utilisation de zordania.fr est soumis aux dispositions suivantes. 
+Le webmaster de zordania.fr se réserve le droit de modifier ces présentes dispositions librement et sans annonce préalable. 
 </p>
 
 <p>
-Les visiteurs de zordania.com accèdent et utilisent ce site et son contenu sous leur propre responsabilité. 
-Le webmaster de zordania.com ne peut être tenu pour responsable de perte ou dommage direct ou indirect de quelque nature que ce soit résultant d'un accès ou d'une utilisation de ce site, d'une erreur ou omission dans ce site, de virus issus de ce site ou de la non accessibilité de ce site.
+Les visiteurs de zordania.fr accèdent et utilisent ce site et son contenu sous leur propre responsabilité. 
+Le webmaster de zordania.fr ne peut être tenu pour responsable de perte ou dommage direct ou indirect de quelque nature que ce soit résultant d'un accès ou d'une utilisation de ce site, d'une erreur ou omission dans ce site, de virus issus de ce site ou de la non accessibilité de ce site.
 </p>
 
 <p>
-Tout inscrit pourra être exclu par le webmaster de zordania.com si cet inscrit est jugé nuisible à zordania.com par le webmaster de zordania.com
+Tout inscrit pourra être exclu par le webmaster de zordania.fr si cet inscrit est jugé nuisible à zordania.fr par le webmaster de zordania.fr
 </p>
 
 <h3>Sécurité des comptes</h3>
@@ -76,7 +76,7 @@ Afin de pouvoir se connecter au site, un <a href="https://fr.wikipedia.org/wiki/
 <h3>Hébergeur</h3>
 
 <p>
-Le Serveur de zordania.com est hébergé par la société 1and1.fr.
+Le Serveur de zordania.fr est hébergé par la société 1and1.fr.
 </p>
 
 <p>
@@ -98,10 +98,10 @@ http://www.1and1.fr.
 Copyright © 2004-{ZORD_ANNEE}
 </p>
 <p>
-Le contenu de ce site Web (à savoir, le concept du jeu Zordania, les règles et les textes) est la propriété du gestionnaire de zordania.com. 
+Le contenu de ce site Web (à savoir, le concept du jeu Zordania, les règles et les textes) est la propriété du gestionnaire de zordania.fr. 
 Toute reproduction, même partielle, est interdite sans autorisation. <br/>
 Les blasons sont la propriété de leur(s) auteur(s) respectif(s).<br/
 Les Smileys sont proposés par Deepnight.net.
 <br/>
-Les scripts (http://www.zordania.com/js/ et http://www.zordania.com/templates/) peuvent être librement réutilisés.
+Les scripts (http://zordania.fr/js/ et http://zordania.fr/templates/) peuvent être librement réutilisés.
 </p>

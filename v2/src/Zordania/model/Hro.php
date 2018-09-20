@@ -96,6 +96,8 @@ class Hro extends Illuminate\Database\Eloquent\Model {
         foreach ($new as $key => $val) {
             if ($key == 'bonus_to') {
                 $request['to'] = $val;
+            } else if ($key == 'nrj') {
+                $request['hro_xp'] = $val;
             } else {
                 $request["hro_$key"] = $val;
             }
@@ -105,12 +107,11 @@ class Hro extends Illuminate\Database\Eloquent\Model {
             return 0; // aucune modif nécessaire
 
         if (isset($new['lid'])) { // transfer du héros de légions
-            global $_user;
             // enlever l'unité de la légion actuelle, il suffit de supprimer le rang
-            $rang = Config::get($_user['race'], 'unt', $_user['hro_type'], 'rang');
-            Unt::where([['unt_lid', $_user['hro_lid']], ['unt_rang', $rang]])->delete();
+            $rang = Config::get(session::$SES->get('race'), 'unt', session::$SES->get('hro_type'), 'rang');
+            Unt::where([['unt_lid', session::$SES->get('hro_lid')], ['unt_rang', $rang]])->delete();
             // ajouter l'unité dans la nouvelle légion
-            Unt::edit($new['lid'], [$rang => [$_user['hro_type'] => 1]]);
+            Unt::edit($new['lid'], [$rang => [session::$SES->get('hro_type') => 1]]);
         }
 
         Hro::where('hro_mid', $mid)->update($request);

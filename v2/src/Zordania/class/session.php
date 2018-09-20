@@ -76,6 +76,7 @@ class session
 		$this->set("place", $mbr_infos['mbr_place']);
 		$this->set("population", $mbr_infos['mbr_population']);
 		$this->set("points", $mbr_infos['mbr_points']);
+                $this->set("xp", $mbr_infos['mbr_xp']);
 		$this->set("pts_arm",$mbr_infos['mbr_pts_armee']);
 		$this->set("mail", $mbr_infos['mbr_mail']);
 		$this->set("mapcid", $mbr_infos['mbr_mapcid']);
@@ -91,6 +92,7 @@ class session
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
                 if(!$this->get('mobile')){
+                    $this->set('mobile', false);
                     $this->set('btc', '');
                 }else{
                     $this->set('btc', '/2');
@@ -314,12 +316,6 @@ class session
 	
 	function update($act)
 	{
-                if(!$this->get('mobile')){
-                    $this->set('mobile', false);
-                    $this->set('btc', '');
-                }else{
-                    $this->set('btc', '/2');
-                }
 		$mid = $this->get("mid");
 		$pass = $this->get("pass");
 		$login = $this->get("login");

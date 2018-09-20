@@ -1,11 +1,9 @@
-<!DOCTYPE html
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 	<if cond='{_user[race]}'>
-	<load file="race/{_user[race]}.config" />
-	<load file="race/{_user[race]}.descr.config" />
+<load file="race/{_user[race]}.config" />
+<load file="race/{_user[race]}.descr.config" />
 	</if>
 	<load file="config/config.config" />
 	<title><if cond="isset({spec_title})">{spec_title} - Zordania</if>
@@ -170,7 +168,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </else>
 
 <# div pour popup jquery #>
-<div id="dialog-modal" title="Titre" style="display:none;"></div>
+<div id="dialog-modal" title="Titre" style="display:none;"><div id="dialog-text"></div></div>
 
 <if cond="isset({sv_site_debug})"><include file="debug.tpl" cache="1" /></if>
 

@@ -12,7 +12,7 @@ class leg_gen extends legion { /* surcharge du constructeur pour 1 légion ... *
 		$this->etat = $this->infos['leg_etat'];
 		if($this->infos['hro_id']) { // récupérer la vie du héros
 			$this->hid = $this->infos['hro_id'];
-			$this->infos['hro_vie_conf'] = Config::get($this->race, 'unt', $this->hro('type'), 'vie');
+			$this->infos['hro_vie_conf'] = Config::get($this->race, 'unt', $this->getHro('type'), 'vie');
 			$this->comp = $this->infos['bonus'];
 		}
 
@@ -56,9 +56,9 @@ class legions { /* classe pour plusieurs légions ... */
 		$cond['mbr'] = true;
 		if(isset($cond['etat']))
 			$cond['etat'] = protect($cond['etat'], array('uint'));
-		else
-			$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
-				LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
+//		else
+//			$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
+//				LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
 
 		$leg_array = Leg::get($cond); // récupérer les légions
 
@@ -156,7 +156,7 @@ class legions { /* classe pour plusieurs légions ... */
 		return $legs;
 	}
 
-	function flush_all_units() { 
+	public function flush() { 
 		// MAJ edit unités
 		foreach($this->legs as $leg)
 			$leg->flush_edit_unt();

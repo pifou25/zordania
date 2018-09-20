@@ -14,11 +14,18 @@
 		<if cond='{hro_array[hro_id]} != 0 || isset({hro_array[leg_id]})'> 
 		<if cond='{leg[leg_id]} == {hro_array[leg_id]}'>
 		<fieldset><legend>{hro_array[hro_nom]}</legend>
-			<zimgunt race="{leg_race}" type="{hro_array[hro_type]}" />
-			<zimgbar per="{hro_array[hro_vie]}" max="{hro_array[hro_vie_conf]}" />
-			Vie: {hro_array[hro_vie]} / {hro_array[hro_vie_conf]}
-			<p>Expérience: {hro_array[hro_xp]}</p>
+			<p><img src="img/{leg_race}/unt/{hro_array[hro_type]}.png" title="{hro_array[hro_nom]}" />
+			<zimgbar per="{hro_array[hro_vie]}" max="{hro_array[hro_vie_conf]}" /> <img src="img/{leg_race}/div/vie.png" alt="Vie" /> {hro_array[hro_vie]} / {hro_array[hro_vie_conf]} </br><zimgnrj per="{hro_array[hro_nrj]}" max="{HEROS_NRJ_MAX}" /> <img src="img/eclair.png" alt="Energie" /> {hro_array[hro_nrj]} / {HEROS_NRJ_MAX} </br></p>
 			<if cond='{hro_array[hro_vie]} <= 0'><p class="infos">Votre héros est mort...</p></if>
+                        
+                        <form action="admin-view.html?module=member&amp;mid={mbr_array[mbr_mid]}" method="post" >
+                        <label for="hro_nrj">Editer l'énergie du héros ({hro_array[hro_nrj]}) : </label><input type="text" size="6" value="{hro_array[hro_nrj]}" name="hro_nrj" />
+                        <label for="hro_add_nrj">ou augmenter l'énergie de : </label><input type="text" size="6" value="0" name="hro_add_nrj" />
+                        <label for="hro_vie">Editer la vie du héros ({hro_array[hro_vie]}) : </label><input type="text" size="6" value="{hro_array[hro_vie]}" name="hro_vie" />
+                        <br/>
+                        <label for="mbr_xp">Editer XP du joueur ({mbr_array[mbr_xp]}) : </label><input type="text" size="6" value="{mbr_array[mbr_xp]}" name="mbr_xp" />
+                        <input type="submit" value="Envoyer" name="submit" />
+                        </form>
 		</fieldset>
 		</if>
 		</if>

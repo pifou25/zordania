@@ -47,7 +47,7 @@ class Template
 		$this->replace[6] = '#<(zimg)(btc)\s*(?:(?:\s*(?:(?:race=(\\\\\'|")(.*?)\\3)|(?:type=(\\\\\'|")(.*?)\\5)))+)\s*(.*?)/>#s';
 		$this->replaceby[6] = '<img src="img/$4/$2{_user[btc]}/$6.png" alt="{$2[$4][alt][$6]}" title="{$2[$4][alt][$6]}" $7 />';
 
-		$this->macro[1] = '#<(zimg)(bar|ba2|ba3)\s*(?:(?:\s*(?:(?:per=(\\\\\'|")(.*?)\\3)|(?:max=(\\\\\'|")(.*?)\\5)))+)\s*/>#s';
+		$this->macro[1] = '#<(zimg)(bar|ba2|ba3|nrj)\s*(?:(?:\s*(?:(?:per=(\\\\\'|")(.*?)\\3)|(?:max=(\\\\\'|")(.*?)\\5)))+)\s*/>#s';
 		
 		//$this->search_include =  '#<(include)(?:(?:\s*(?:(?:file=(\\\\\'|")(.*?)\\2)|(?:cache=(\\\\\'|")(.*?)\\4)))+)\s*/>#s';	
 		$this->search_include =  '#<(include)(\s*((\w*)=(\\\\\'|")(.*?)\\2)*)*\s*/>#s';
@@ -213,7 +213,7 @@ class Template
 			return '\'; $data .= sprintf(\''.$var[3].'\',\''.str_replace(',','\',\'',$var[5]).'\'); $data .= \'';
 		elseif($var[1] == 'zimg')
 		{
-			if($var[2] == 'bar' or $var[2] == 'ba2' or $var[2] == 'ba3')
+			if($var[2] == 'bar' or $var[2] == 'ba2' or $var[2] == 'ba3' or $var[2] == 'nrj')
 			{
 				// affichage barre de progression : $var[4] = % et $var[6] = maxi
 				switch($var[2])
@@ -224,11 +224,15 @@ class Template
 				}
 				$width1 = "'\n\t.floor('{$var[4]}'/'{$var[6]}'*100)\n\t.'";
 				$width2 = "'\n\t.floor(( '{$var[6]}' - '{$var[4]}' )/ '{$var[6]}' *100)\n\t.'";
-
+				
+				if ($var[2] == 'nrj')
+					$color = 'jaune';
+				else 
+					$color = 'verte';
 				return "\n<div class=\"barres_$size\" title=\"$width1%\">
-	<div style=\"width:$width1%;\" class=\"barre_verte\"></div>
-	<div style=\"width:$width2%;\" class=\"barre_rouge\"></div>
-</div>\n";
+				<div style=\"width:$width1%;\" class=\"barre_$color\"></div>
+				<div style=\"width:$width2%;\" class=\"barre_rouge\"></div>
+				</div>\n";
 			} else { // affichage d'une image de zordania: USELESS - remplacement simple; pas de macro
 				// $var[2] = unt|src|trn|btc|res / $var[4] = race / $var[6] = type
 				$alt = '{'.$var[2].'['.$var[4].'][alt]['.$var[6].']}';
@@ -324,7 +328,7 @@ class Template
 	
 	function file_write($file, $data) //ecrit en ecrasant dans un fichier
 	{
-		$data = "<?php\n $data \n ?>";
+		$data = "<?php\n$data";
         // linux only: default mask if creating new log file: rw-rw-
         if(!is_file($file)) umask(0117);
 		$fopen = fopen($file, 'w+') or die('Cannot open or create the file : '.$file);
@@ -354,7 +358,7 @@ class Template
 		$dir1 = $dir.'.compiled.php';
 		//$dir2 = $this->var->tpl->dir2.$this->var->tpl->dir.$this->var->tpl->lang.$nomtpl2;
 		$dir2 = $this->var->tpl->dir.$this->var->tpl->lang.$nomtpl2;
-		//echo "$dir1\n$dir2";
+		//echo "### $dir1 === $dir2 ###<br/>\n";
 
 		if($cache == 0 || !file_exists($dir1)) {
 			$this->file_write($dir1, $this->replace($this->file_get($dir2), 1));

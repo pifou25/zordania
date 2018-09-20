@@ -181,6 +181,7 @@
 			Langue : <img src="img/{mbr_array[mbr_lang]}.png" alt="{mbr_array[mbr_lang]}" /><br />
 			Décalage : {mbr_array[mbr_decal]} H<br /> 
 			Points : {mbr_array[mbr_points]}<br />
+			Expérience : {mbr_array[mbr_xp]}<br />
 			Force armée : {mbr_array[mbr_pts_armee]}<br />
 			Population : {mbr_array[mbr_population]}<br />
 			<if cond='isset({mbr_array[al_name]})'>

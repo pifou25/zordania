@@ -1,4 +1,4 @@
-# fichiers temporaires
+﻿# fichiers temporaires
 vendor/
 v2/tmp/*.compiled.php
 v2/backup/*
@@ -22,6 +22,7 @@ v2/cache/global.cache.php
 *.gz
 *.bat
 v2/scripts/cron.bat
+v2/scripts/syncdev.sh
 
 # data for NetBeans IDE
 v2/nbproject

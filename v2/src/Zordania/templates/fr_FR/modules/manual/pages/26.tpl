@@ -7,13 +7,14 @@
 <li>Héros spécialisé dans le Soutien</li>
 </ul></p>
 
-<h4>Expérience du Héros</h4>
+<h4>Energie du Héros <img src="img/eclair.png" alt="Energie" /> </h4>  
 
-<p>Chaque fois que le héros participe à un combat, il gagne de l'expérience (XP) qui lui permettra d'accéder aux compétences qui lui sont propres. 
-L'utilisation d'une compétence coûte une certaine quantité d'XP, et ne dure qu'un certain laps de temps. Le héros ne peut guère cumuler deux compétences à la fois.</p>
+<p>Chaque fois que le héros participe à un combat, il gagne des points d'énergie jusqu'à un maximum de {HEROS_NRJ_MAX} qui lui permettra d'accéder aux compétences qui lui sont propres. 
+Posséder des donts surnaturels c'est bien, mais votre héros se fatigue à force de faire appel à des pouvoirs divins et autres magies! C'est pourquoi, l'utilisation d'une compétence coûte une certaine quantité d'énergie', et ne dure qu'un certain laps de temps. Le héros ne peut guère cumuler deux compétences à la fois.</p>
+
 <p>Pour sélectionner une compétence, accédez à la page "<a href="leg-hero.html">Gestion du Héros</a>" depuis la page "<a href="leg.html">Attaques, Légions</a>", puis sélectionnez la compétence désirée et validez votre choix.</p>
 
-<h4>Vie du Héros</h4>
+<h4>Vie du Héros <img src="img/{_user[race]}/div/vie.png" alt="Vie" /></h4>
 
 <p>La vie du héros n'est pas illimitée. Aussi, ce dernier peut perdre des points de vie et donc logiquement mourir.
 Pour regagner des points de vie, votre héros doit impérativement être dans votre village pour se ressourcer. Il regagnera ainsi peu à peu de la vie à chaque tour.</p>

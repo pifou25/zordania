@@ -1,4 +1,4 @@
-<p class="menu_module">
+﻿<p class="menu_module">
 <a href="forum.html" title="Sommaire du forum"> Sommaire </a>
 <a href="forum-search.html" title="Rechercher"> Rechercher </a>
 <a href="forum-search.html?action=show_new" title="Nouvaux messages depuis la dernière connexion"> Nouveaux </a>
@@ -57,10 +57,26 @@
 				<label for="statut">Statut : </label>				
 					<select id="statut" name="statut">
 						<option value="-1" >Laisser</option>
-						<option value="{FORUM_REPORT_NEW}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Déclaré</if><else>Proposée</else></option>
-						<option value="{FORUM_REPORT_OK}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Valider</if><else>Accepter</else></option>
-						<option value="{FORUM_REPORT_NOK}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Pas bug</if><else>Refuser</else></option>
-						<option value="{FORUM_REPORT_ON}"><if cond="{pst[forum_id]} == FORUM_BUG_FID">Corrigé</if><else>Codée</else></option>						
+						<option value="{REPORT_STATUT_TALK}">En discussion</option>
+						<option value="{REPORT_STATUT_OK}">Valider</option>
+						<option value="{REPORT_STATUT_NOK}">Refuser</option>
+						<option value="{REPORT_STATUT_DUBL}">Doublon</option>
+						<option value="{REPORT_STATUT_DEV}">Ok en DEV</option>
+						<option value="{REPORT_STATUT_ON}">Codé/corrigé</option>							
+					</select>
+				<label for="statut">Type : </label>				
+					<select id="type" name="type">
+						<option value="-1" >Laisser</option>
+						<option value="{REPORT_TYPE_WAR}">Leg/War</option>
+						<option value="{REPORT_TYPE_HERO}">Héros/Comp</option>
+						<option value="{REPORT_TYPE_UNT}">Unités</option>
+						<option value="{REPORT_TYPE_ALLI}">All/Diplo</option>
+						<option value="{REPORT_TYPE_GEN}">Donjon</option>
+						<option value="{REPORT_TYPE_VLG}">Village</option>
+						<option value="{REPORT_TYPE_GAME}">Inter/GameP</option>
+						<option value="{REPORT_TYPE_COM}">Marché</option>
+						<option value="{REPORT_TYPE_MSG}">Message</option>
+						<option value="{REPORT_TYPE_ELSE}">Autres</option>						
 					</select>
 				</if><br />
 		</if>
@@ -302,10 +318,26 @@
 				<label for="statut">Statut : </label>				
 					<select id="statut" name="statut">
 						<option value="-1" >Laisser</option>
-						<option value="{FORUM_REPORT_NEW}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Déclaré</if><else>Proposée</else></option>
-						<option value="{FORUM_REPORT_OK}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Valider</if><else>Accepter</else></option>
-						<option value="{FORUM_REPORT_NOK}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Pas bug</if><else>Refuser</else></option>
-						<option value="{FORUM_REPORT_ON}"><if cond="{tpc[forum_id]} == FORUM_BUG_FID">Corrigé</if><else>Codée</else></option>						
+						<option value="{REPORT_STATUT_TALK}">En discussion</option>
+						<option value="{REPORT_STATUT_OK}">Valider</option>
+						<option value="{REPORT_STATUT_NOK}">Refuser</option>
+						<option value="{REPORT_STATUT_DUBL}">Doublon</option>
+						<option value="{REPORT_STATUT_DEV}">Ok en DEV</option>
+						<option value="{REPORT_STATUT_ON}">Codé/corrigé</option>						
+					</select>
+				<label for="statut">Type : </label>				
+					<select id="type" name="type">
+						<option value="-1" >Laisser</option>
+						<option value="{REPORT_TYPE_WAR}">Leg/War</option>
+						<option value="{REPORT_TYPE_HERO}">Héros/Comp</option>
+						<option value="{REPORT_TYPE_UNT}">Unités</option>
+						<option value="{REPORT_TYPE_ALLI}">All/Diplo</option>
+						<option value="{REPORT_TYPE_GEN}">Donjon</option>
+						<option value="{REPORT_TYPE_VLG}">Village</option>
+						<option value="{REPORT_TYPE_GAME}">Inter/GameP</option>
+						<option value="{REPORT_TYPE_COM}">Marché</option>
+						<option value="{REPORT_TYPE_MSG}">Message</option>
+						<option value="{REPORT_TYPE_ELSE}">Autres</option>						
 					</select>
 				</if>
 
@@ -343,7 +375,12 @@
 
 		<if cond="empty({pg->get})"><p class="infos">Forum vide ... Soyez le premier à poster !</p></if>
 		<else>
-
+				<if cond="{frm[fid]} == FORUM_BUG_FID ">				
+					<a href="recap.html?fid={FORUM_BUG_FID}&type=0" title="Récap bugs"> Récapitulatif des bugs </a>			
+				</if>
+				<elseif cond="{frm[fid]} == FORUM_SUGGEST_FID  ">				
+					<a href="recap.html?fid={FORUM_SUGGEST_FID}&type=0" title="Récap Suggestions">Récapitulatif des Suggestions </a>			
+				</elseif>
     <p class="pages">
        <foreach cond="{pg->links} as {page}">
             <if cond='is_numeric({page})'>
@@ -373,12 +410,9 @@
 				<elseif cond="{topic[closed]} == 1"><img src="img/forum/closed-{etat}.png" title="Fermé - {etat}" /></elseif>
 				<elseif cond="{topic[sticky]} == 1"><img src="img/forum/sticky-{etat}.png" title="Post-it - {etat}" /></elseif>
 				<else><img src="img/forum/{etat}.png" title="{etat}" /></else>
-				<if cond="{topic[forum_id]} == FORUM_BUG_FID  ">				
-					<img src="img/forum/{topic[statut]}.png" title="{bug_statut[{topic[statut]}]}" />				
+				<if cond="{topic[forum_id]} == FORUM_BUG_FID || {topic[forum_id]} == FORUM_SUGGEST_FID  ">				
+					<img src="img/forum/{topic[statut]}.png" title="{report_statut[{topic[statut]}]}" />				
 				</if>
-				<elseif cond="{topic[forum_id]} == FORUM_SUGGEST_FID ">
-					<img src="img/forum/{topic[statut]}.png" title="{suggest_statut[{topic[statut]}]}" />
-				</elseif>
 
 				</td>
 

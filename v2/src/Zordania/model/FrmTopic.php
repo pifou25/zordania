@@ -30,7 +30,7 @@ class FrmTopic extends Illuminate\Database\Eloquent\Model {
             $sql = ' _UDATE_FORMAT(posted) AS posted, last_post AS posted_unformat, '
                     . '_UDATE_FORMAT(last_post) AS last_post, t.id AS tid, poster, subject, '
                     . 'last_post_id, last_poster, num_views, num_replies, closed, sticky, '
-                    . 'forum_id, statut, id ';
+                    . 'forum_id, statut, report_type, id ';
             $sql = session::$SES->parseQuery($sql);
 
             $req = FrmTopic::selectRaw($sql);
@@ -38,8 +38,8 @@ class FrmTopic extends Illuminate\Database\Eloquent\Model {
             $sql = ' _UDATE_FORMAT(' . DB::getTablePrefix() . 't.posted) AS posted, ' . DB::getTablePrefix() . 't.last_post AS posted_unformat, '
                     . '_UDATE_FORMAT(' . DB::getTablePrefix() . 't.last_post) AS last_post, ' . DB::getTablePrefix() . 't.id AS tid, ' . DB::getTablePrefix() . 't.poster, subject, '
                     . DB::getTablePrefix() . 't.last_post_id, ' . DB::getTablePrefix() . 't.last_poster, num_views, num_replies, num_replies, '
-                    . 'closed, sticky, moved_to, ' . DB::getTablePrefix() . 't.forum_id, statut, '
-                    . '' . DB::getTablePrefix() . 't.id, forum_name, ' . DB::getTablePrefix() . 'f.last_post_id AS frm_last_post_id, ' . DB::getTablePrefix() . 'c.id AS cid, cat_name, '
+                    . 'closed, sticky, moved_to, ' . DB::getTablePrefix() . 't.forum_id, statut, report_type,'
+                    . DB::getTablePrefix() . 't.id, forum_name, ' . DB::getTablePrefix() . 'f.last_post_id AS frm_last_post_id, ' . DB::getTablePrefix() . 'c.id AS cid, cat_name, '
                     . 'IFNULL(read_forum, 1) AS read_forum, IFNULL(post_replies, 1) AS post_replies, '
                     . 'IFNULL(post_topics, 1) AS post_topics ';
             if ($select == 'mbr') {

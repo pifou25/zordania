@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 ignore_user_abort();
 error_reporting (E_ALL | E_STRICT | E_RECOVERABLE_ERROR);
 date_default_timezone_set("Europe/Paris");
@@ -236,7 +236,7 @@ $btc_todo_mid = Btc::distinct('btc_mid')->whereIn('btc_etat', [BTC_ETAT_TODO, BT
         ->get()->keyBy('btc_mid');
 
 /* liste des membres actifs */
-$mid_array = Mbr::select('mbr_mid','mbr_race', 'mbr_mapcid')->where('mbr_etat', MBR_ETAT_OK)->where('mbr_mid', '!=', 1)
+$mid_array = Mbr::select('mbr_mid','mbr_race', 'mbr_mapcid', 'mbr_xp')->where('mbr_etat', MBR_ETAT_OK)->where('mbr_mid', '!=', 1)
         ->orderBy(DB::raw('RAND()'))->get()->toArray();
 
 /* liste des héros */

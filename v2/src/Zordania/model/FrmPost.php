@@ -164,6 +164,7 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
         $fid = isset($cond['fid']) ? protect($cond['fid'], 'uint') : 0;
         $tid = isset($cond['tid']) ? protect($cond['tid'], 'uint') : 0;
         $statut = isset($cond['statut']) ? protect($cond['statut'], 'uint') : 0;
+	$type = isset($cond['type']) ? protect($cond['type'], 'uint') : 0;
 
         if (isset($cond['msg']) ) { // éditer le post
             if (!$pid)
@@ -177,7 +178,7 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
             FrmPost::where('id', $pid)->update($request);
         }
 
-        if ($closed >= 0 || $sticky >= 0 || $title || $fid || $statut >= 0) { // éditer le topic
+        if ($closed >= 0 || $sticky >= 0 || $title || $fid || $statut >= 0 || $type >= 0) { // éditer le topic
             if (!$tid)
                 return false;
 
@@ -223,6 +224,8 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
                 $request['forum_id'] = $fid;
             if ($statut)
                 $request['statut'] = $statut;
+            if($type) $request['report_type'] = $type;
+
             FrmTopic::where('id', $tid)->update($request);
         }// fin edition topic
 

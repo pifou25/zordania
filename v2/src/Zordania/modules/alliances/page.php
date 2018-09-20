@@ -418,12 +418,12 @@ case 'res': /* grenier */
 		$h = explode(":", $hour_sub);//sépare h:m:s
 		$date_to_round=$date_sub*(60/ZORD_SPEED)*24;
 		$hour_to_round=$h[0]*(60/ZORD_SPEED);
-		$min_to_round=ceil($h[1]/ZORD_SPEED);//arrondi à la minute supérieur
+		$min_to_round=ceil($h[1]/ZORD_SPEED);//arrondi au tour sup'
 		
 		//calcul et affichage
 		if ($date_acces > date("Y-m-d H:i:s"))
 			{	//il manque toujours 1tour, bah +1 du coup!
-				$time_left= $date_to_round+$hour_to_round+$min_to_round;
+				$time_left= $date_to_round+$hour_to_round+$min_to_round+1;
 				$_tpl->set('time_res_acces',$time_left);
 				$res_acces_nok= true;				
 			}
