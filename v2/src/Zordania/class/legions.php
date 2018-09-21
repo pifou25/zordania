@@ -1,9 +1,8 @@
 <?php
 
-
 class leg_gen extends legion { /* surcharge du constructeur pour 1 légion ... */
 
-	function __construct($leg, $unt = array(), $res = array()){ /* les 'data' dans les tableaux */
+	function __construct($leg, $unt = [], $res = []){ /* les 'data' dans les tableaux */
 		$this->infos = $leg;
 		$this->mid = $this->infos['mbr_mid'];
 		$this->race = $this->infos['mbr_race'];
@@ -41,9 +40,10 @@ class legions { /* classe pour plusieurs légions ... */
 	public  $btc_lid = 0; // id legion batiments
 	public  $mid = 0; // mid du joueur si toutes les légions ont le même mid
 	public  $cid = 0; // si toutes les légions sont à la même place
-	public  $cids = array(); // emplacements de chaque légion
-	public  $lids = array(); // liste des id des légions
+	public  $cids = []; // emplacements de chaque légion
+	public  $lids = []; // liste des id des légions
 	private $load_unt = false;
+        private $load_res = false;
 
 	function __construct($cond, $unt = false, $res = false){ /* plusieurs légions objet */
 		/* $cond = tableau des critères pour la fonction get_leg_gen :
@@ -55,7 +55,7 @@ class legions { /* classe pour plusieurs légions ... */
 		$cond['leg'] = true;
 		$cond['mbr'] = true;
 		if(isset($cond['etat']))
-			$cond['etat'] = protect($cond['etat'], array('uint'));
+			$cond['etat'] = protect($cond['etat'], ['uint']);
 //		else
 //			$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
 //				LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
@@ -81,19 +81,19 @@ class legions { /* classe pour plusieurs légions ... */
 		if($res)
 			$res_leg = $this->get_all_res();
 		else
-			$res_leg = array();
+			$res_leg = [];
 
 		if($unt)
 			$unt_leg = $this->get_all_unts();
 		else
-			$unt_leg = array();
+			$unt_leg = [];
 
 		foreach($leg_array as $leg){ // définir les objets legion
 			$lid = $leg['leg_id'];
 			if(!$unt) $unt_leg[$lid] = false; // non initialisé
-			else if(!isset($unt_leg[$lid])) $unt_leg[$lid] = true;
+			else if(!isset($unt_leg[$lid])) $unt_leg[$lid] = [];
 			if(!$res) $res_leg[$lid] = false; // non initialisé
-			else if(!isset($res_leg[$lid])) $res_leg[$lid] = true;
+			else if(!isset($res_leg[$lid])) $res_leg[$lid] = [];
 			$this->legs[$lid] = new leg_gen($leg, $unt_leg[$lid], $res_leg[$lid]);
 		}
 		return true;
@@ -115,10 +115,20 @@ class legions { /* classe pour plusieurs légions ... */
 	}
 
 	function get_all_res(){ // toutes les ressources des légions sélectionnées
-		$res_leg = array();
-                foreach($this->legs as $leg)
-                        $res_leg[$leg->lid] = $leg->get_res();
-		return $res_leg;
+            $res = [];
+            if($this->load_res){
+                foreach($this->legs as $leg){
+                    $res[$leg->lid] = $leg->get_res();
+                }
+            }else{
+                $arr = LegRes::whereIn('lres_lid', $this->lids)->get()->toArray();
+                $res = [];
+                foreach ($arr as $val){
+                    $res[$val['lres_lid']][$val['lres_type']] = $val['lres_nb'];
+                }
+                $this->load_res = true;
+            }
+            return $res;
 	}
 
 	function hasUntByRole($role){ // oui si au moins une légion a une unité de ce rôle
