@@ -2,7 +2,7 @@
 require_once('secret_parameters.php');
 
 /* === Configuration Site === */
-define('ZORD_VERSION',"2.3");
+define('ZORD_VERSION',"2.3.1");
 define('ZORD_ANNEE',"2018");
 define('ZORD_SPEED_VFAST', 0.16667); // 1 Tour toutes les 30sec
 define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
@@ -14,13 +14,13 @@ define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
 define('SITE_MAX_CONNECTED', 300);
 define('SITE_MAX_INSCRITS', 10000);
 
-$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.fr";
+$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.com";
 define('SITE_URL', "http://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");
 define('ZORDLOG_URL', 'zordania.free.fr'); // URL des archives
 
-define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.fr');
+define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.com');
 define('SITE_CHARSET', 'utf-8'); // iso-8859-1, utf-8, ...
 
 define('GEN_LENGHT', 6); /* Taille des chaines générées aléatoirement (pass, etc ...) */
