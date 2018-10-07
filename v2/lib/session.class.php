@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class session
 {
 	var $sql;
@@ -74,6 +74,7 @@ class session
 		$this->set("place", $mbr_infos['mbr_place']);
 		$this->set("population", $mbr_infos['mbr_population']);
 		$this->set("points", $mbr_infos['mbr_points']);
+		$this->set("xp", $mbr_infos['mbr_xp']);
 		$this->set("pts_arm",$mbr_infos['mbr_pts_armee']);
 		$this->set("mail", $mbr_infos['mbr_mail']);
 		$this->set("mapcid", $mbr_infos['mbr_mapcid']);
@@ -124,17 +125,10 @@ class session
 		if($this->get("login") != "guest") {
 			$sql="SELECT COUNT(*) AS nb FROM ".$this->sql->prebdd."msg_rec JOIN ".$this->sql->prebdd."mbr ON mrec_from = mbr_mid WHERE mrec_mid = $mid AND mrec_readed = 0";
 			$result = $this->sql->make_array_result($sql);
-			$this->set("msg", $result['nb']);
+			$this->set("msg", $result['nb']);		
 		
-		
-			/* Nouvelle news? mbr_ldate = dernière connexion heure locale */
-			$sql="SELECT count(*) AS nb FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd.
-			  " WHERE forum_id =".ZORD_NEWS_FID." AND posted > " . $this->get("ldate") ;
-			$result = $this->sql->make_array_result($sql);
-			$this->set("news", $result['nb']);
-			
 			/*Select la dernière news*/
-			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted=(SELECT MAX(posted) FROM ".$this->sql->prebdd."frm_topics)";
+			$sql="SELECT id, subject FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE forum_id =".ZORD_NEWS_FID." AND posted > " . $this->get("ldate");
 			$result = $this->sql->make_array_result($sql);
                         if(count($result) > 0){
                             $this->set("tid", $result['id']);
@@ -144,12 +138,21 @@ class session
                             $this->set("sub", 0);
                         }
 			
+			/*Select le dernier com*/
+			$sql="SELECT * FROM ".$this->sql->prebdd."frm_topics ".$this->sql->prebdd." WHERE last_post > " . $this->get("ldate");
+			$result = $this->sql->make_array_result($sql);
+                        if(count($result) > 0){
+                            $this->set("new_post", $result['last_post']);
+                        }else{
+                            $this->set("new_post", 0);
+                        }
+			
 		}	
 		
 		
 			
 	}
-
+	
 	function update_heros() {
 		$mid = $this->get("mid");
 		
@@ -236,7 +239,7 @@ class session
 		
 		$sql="SELECT mbr_mid,mbr_login,mbr_pseudo,mbr_vlg,mbr_pass,mbr_lang,mbr_race,
 			mbr_atq_nb,mbr_gid,mbr_decal,mbr_sign,mbr_population,mbr_place,
-			mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,mbr_design,mbr_parrain,mbr_numposts,mbr_lip,
+			mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,mbr_design,mbr_parrain,mbr_numposts,mbr_lip, mbr_xp,
 			UNIX_TIMESTAMP(mbr_lmodif_date) as mbr_lmodif_date";
 		$sql.=",UNIX_TIMESTAMP(mbr_ldate + INTERVAL '".$this->sql->decal."' HOUR_SECOND) as mbr_ldate ";
 		$sql.=" FROM ".$this->sql->prebdd."mbr";
@@ -388,7 +391,7 @@ class session
 		{
 			$sql="SELECT mbr_mid,mbr_pseudo,mbr_vlg,mbr_login,mbr_pass,mbr_atq_nb,mbr_lang,mbr_race,mbr_gid,mbr_decal,
 					mbr_sign,mbr_population,mbr_place,mbr_points,mbr_pts_armee,mbr_mail,mbr_mapcid,mbr_etat,
-					mbr_design,mbr_parrain,mbr_numposts";
+					mbr_design,mbr_parrain,mbr_numposts, mbr_xp";
 			$sql.=",UNIX_TIMESTAMP(mbr_ldate + INTERVAL '".$this->sql->decal."' HOUR_SECOND) as mbr_ldate ";
 			$sql.=" FROM ".$this->sql->prebdd."ses";
 			$sql.=" JOIN ".$this->sql->prebdd."mbr ON ses_sesid = '$sesid'";
@@ -457,7 +460,7 @@ function get_liste_online($limite1, $limite2)
 
 	$sql = "SELECT ";
 	$sql.= "mbr_etat,mbr_gid,mbr_mid,mbr_pseudo,mbr_mapcid,mbr_race,mbr_population,mbr_place,";
-	$sql.= "mbr_gid,ses_ip,ses_lact, mbr_points,mbr_pts_armee, ses_mid,mbr_lang,";
+	$sql.= "mbr_gid,ses_ip,ses_lact, mbr_points,mbr_pts_armee, ses_mid,mbr_lang,mbr_xp,";
 	$sql.= "DATE_FORMAT(ses_ldate + INTERVAL '".$_sql->decal."' HOUR_SECOND,'".$_sql->dateformat."') as ses_ldate,";
 	$sql.= " ambr_etat, IF(ambr_etat=".ALL_ETAT_DEM.", 0, IFNULL(ambr_aid,0)) as ambr_aid, ";
 	$sql.= " IF(ambr_etat=".ALL_ETAT_DEM.", NULL, al_name) as al_name  ";
@@ -470,4 +473,3 @@ function get_liste_online($limite1, $limite2)
 
 	return $_sql->make_array($sql);
 }
-?>

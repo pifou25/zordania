@@ -72,11 +72,11 @@ function make_class($type, $race = 0, $region = 0)
 			$sql.= ($race ? ' AND ' : ' WHERE ' ) . ' al_points > 0 ';
 			$sql.="ORDER BY al_points DESC LIMIT 50";
 			break;
-		case 6: // XP héros
-			$sql = "SELECT hro_id, hro_mid, hro_nom, hro_type, hro_lid, hro_xp, hro_xp_tot, hro_vie, hro_bonus AS bonus, 
+		case 6: // XP héros, plus utilisée => énergie
+			$sql = "SELECT hro_id, hro_mid, hro_nom, hro_type, hro_lid, hro_xp, hro_vie, hro_bonus AS bonus, 
 				hro_bonus_from, hro_bonus_to AS bonus_to, mbr_gid,mbr_mid,mbr_pseudo,mbr_race ";
 			$sql.= "FROM ".$_sql->prebdd."hero ";
-			$sql.="INNER JOIN ".$_sql->prebdd."mbr ON hro_mid = mbr_mid AND mbr_etat = ".MBR_ETAT_OK;
+			$sql.="INNER JOIN ".$_sql->prebdd."mbr ON hro_mid = mbr_mid  AND mbr_etat = ".MBR_ETAT_OK;
 			if ($region) $sql .= " JOIN ".$_sql->prebdd."map ON mbr_mapcid = map_cid ";
 			if($race) $sql.=" WHERE mbr_race = $race ";
 			if ($region) $sql .= " AND map_region = $region ";
@@ -94,6 +94,20 @@ function make_class($type, $race = 0, $region = 0)
 			if($race) $sql.=" AND mbr_race = $race ";
 			if ($region) $sql .= " AND map_region = $region ";
 			$sql.="ORDER BY mbr_pts_armee DESC LIMIT 50";
+			break;
+		case 8: //expérience joueur
+			$sql ="SELECT mbr_gid,res_type1 as res_nb,mbr_mid,mbr_pseudo,mbr_race, mbr_pts_armee, mbr_etat,mbr_xp,";
+			$sql.= " ambr_etat, mbr_mapcid, IF(ambr_etat=".ALL_ETAT_DEM.", 0, IFNULL(ambr_aid,0)) as al_aid, ";
+			$sql.= " IF(ambr_etat=".ALL_ETAT_DEM.", NULL, al_name) as al_name  ";
+			$sql.="FROM ".$_sql->prebdd."res LEFT JOIN ".$_sql->prebdd."mbr ";
+			$sql.="ON mbr_mid=res_mid ";
+			$sql.="LEFT JOIN ".$_sql->prebdd."al_mbr ON mbr_mid = ambr_mid ";
+			$sql.="LEFT JOIN ".$_sql->prebdd."al ON ambr_aid = al_aid ";
+			if ($region) $sql .= "JOIN ".$_sql->prebdd."map ON mbr_mapcid = map_cid ";
+			$sql.="WHERE res_type1 > 0 AND mbr_xp > 0 AND mbr_etat = ".MBR_ETAT_OK. " ";
+			if($race) $sql.=" AND mbr_race = $race ";
+			if ($region) $sql .= " AND map_region = $region ";
+			$sql.="ORDER BY mbr_xp DESC LIMIT 50";
 			break;
 		default:
 			return array();

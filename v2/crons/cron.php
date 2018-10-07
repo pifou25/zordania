@@ -23,7 +23,7 @@ function mark($title_or_get)
 }
 
 
-mark('start');
+mark('start+'.php_sapi_name());
 
 //require_once("/home/zorddev/conf/conf.inc.php");
 require_once(str_replace('crons','',dirname(__FILE__))."/conf/conf.inc.php");
@@ -252,7 +252,7 @@ $sql.= "WHERE btc_etat IN (".BTC_ETAT_TODO.", ".BTC_ETAT_BRU.", ".BTC_ETAT_REP."
 $btc_todo_mid = $_sql->index_array($sql, 'btc_mid');
 
 /* liste des membres actifs */
-$sql = "SELECT mbr_mid,mbr_race, mbr_mapcid FROM ".$_sql->prebdd."mbr ";
+$sql = "SELECT mbr_mid,mbr_race, mbr_mapcid, mbr_xp FROM ".$_sql->prebdd."mbr ";
 $sql.= "WHERE mbr_etat = ". MBR_ETAT_OK ." AND mbr_mid != 1 ORDER BY RAND() ";
 $mid_array = $_sql->make_array($sql);
 

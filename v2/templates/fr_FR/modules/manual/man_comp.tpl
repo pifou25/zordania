@@ -9,7 +9,7 @@
 		<p><strong>Compétence {type_comp[{comp_value[type]}]}</strong> : 
 		<printf string="{comp[{man_race}][descr][{comp_id}]}" vars="{comp_value[bonus]},{comp_value[tours]}" />
 		</p>
-		<p><em>Prix (en expérience) :</em> {comp_value[prix_xp]} XP
+		<p><em>Prix (en énergie) :</em> {comp_value[prix_xp]}
 <#
 		<if cond="{comp_value[tours]}">- <em>durée :</em> {comp_value[tours]} tours</if>
 		<if cond="{comp_value[bonus]}">

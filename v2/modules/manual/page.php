@@ -17,7 +17,7 @@ foreach($_races as $key => $value)
 
 /* correspondance nom => page */
 $arr = array('jeu' => 1, 'batiment' => 2, 'unite' => 3, 'zordania' => 6, 'guerre' => 8, 'diplomatie' => 10, 'commerce' => 7, 
-	'egeria' => 23, 'res' => 'res');
+	'egeria' => 23, 'res' => 'res', 'arbre' => 27);
 if(isset($arr[$_act]))
 	$page = $arr[$_act];
 else if(is_numeric($_act))
@@ -27,9 +27,9 @@ if($race != $_user['race'])
 	$_tpl->set('man_load', $race);
 
 $_tpl->set('man_race',$race);
-$_tpl->set('mnl_tree', $page === 0);
+$_tpl->set('mnl_tree', $page === 27);
 
-if($page == 0) /* page des arbres, toutes les infos necessaires */
+if( $page == 27) /* page des arbres, toutes les infos necessaires */
 {
 	$_tpl->set('man_unt',$_conf[$race]->unt);
 	$_tpl->set('man_btc',$_conf[$race]->btc);
@@ -38,7 +38,7 @@ if($page == 0) /* page des arbres, toutes les infos necessaires */
 	$_tpl->set('man_url',"manual.html?page=$page");
 } 
 
-if(!$type && is_numeric($page) && $page >= 0 && $page <= 26)
+if(!$type && is_numeric($page) && $page >= 0 && $page <= 27)
 {
 	$_tpl->set('mnl_tpl','modules/manual/pages/'.$page.'.tpl');
 	$_tpl->set_ref('conf', $_conf[$race]);

@@ -248,9 +248,9 @@ div#toolTip p em {
 #stats .contenu {
 	background: url(img/droit.png) repeat-y right; 
 	padding: 6px; 
-	padding-top: 20px;
+	padding-top: 10px;
 	padding-left: 10px;
-	height: 100px;
+	min-height: 100px;
 }
 
 #menu .bas {

@@ -272,7 +272,7 @@ div.forum .stat, div.forum .stat a{
 }
 
 /* Stats */
-.barre_rouge,.barre_verte,.barre_grisec,.barre_grisef {
+.barre_rouge,.barre_verte,.barre_grisec,.barre_grisef,.barre_jaune {
 	float: left;
 	height: 12px;
 }
@@ -293,7 +293,9 @@ div.forum .stat, div.forum .stat a{
 	height: 10px;
 	text-align: center;
 }
-
+.barre_jaune {
+	background-image: url(img/yellow.png);
+}
 /* formulaires */
 input, button, textarea, select{
 	margin:2px;

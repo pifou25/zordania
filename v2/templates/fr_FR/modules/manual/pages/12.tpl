@@ -38,13 +38,13 @@ Voilà, vous possédez maintenant en un temps record un petit village autonome. 
 <p>
 Dans tout les cas, vous devez garder en mémoire que les constructions et recherches ressemblent à des poupées russes. De même qu'il faut ouvrir la première poupée pour voir la seconde, pour pouvoir construire quelque chose de nouveau il faut remplir des conditions préalables. Ces conditions sont détaillées dans le reste du manuel du jeu, dans la section consacrée à votre race. Vous y trouverez notamment un organigramme (arbre technologique) des recherches et bâtiments et une liste détaillée des unités, bâtiments et recherches, avec pour chacun d'eux un descriptif et le détail des conditions nécessaires à leur réalisation.
 </p>
-
+<if cond='{man_race} == 3'>
 <h4>La Spécificité des Nains</h4>
 <p>
 À la différence des autres races, chez les Nains, vous devez vous occuper en priorité de construire une Caverne et une Champignonnière pour "débloquer" l'arbre technologique. Ainsi, vous aurez accès à vos premières recherches. Occupez-vous principalement des recherches "Mine 1" et "Mine 2" (<a href="manual.html?race={man_race}&type=src">Recherches - Caractéristiques</a>) pour avoir rapidement les matières premières. Ruez-vous sur la Pierre car c'est grâce à elle que vous allez pouvoir survivre et construire les bâtiments de base. Après la Pierre, privilégiez plutôt l'Or avant d'acquérir Charbon et Fer.
 Équilibrez, enfin, vos réserves de nourriture et votre population pour poursuivre votre évolution dans des conditions optimales !
 </p>
-
+</if>
 <p align="center" class="menu_module">
 <a href="manual.html?race={man_race}&type=trn">Précédent : Terrains (Caractéristiques)</a>
 <a href="manual.html?race={man_race}&page=0" title="Accueil du Manuel">Manuel</a>

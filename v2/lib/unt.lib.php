@@ -18,16 +18,13 @@ class legion {
 	protected $bonus = array('atq' => 0, 'def' => 0, 'btc' => 0, 'cpt' => array(), 'vie' => 0);
 	private   $cache = array(); // pour la fonction can_unt
 	private   $edit_unt = array(); // pour maj unités
+        private   $edit_hro = []; // pour maj unités
 	public    $sqr = false; // la case (map)
 
 
-	function __construct($lid, $mid = 0){ // rechercher la légion par lid et mid si existe
-		$lid = protect($lid, "uint");
-		$mid = protect($mid, "uint");
+	function __construct(int $lid, int $mid = 0){ // rechercher la légion par lid et mid si existe
 
-		if(!$lid) return false; 
-		else $this->lid = $lid;
-
+		$this->lid = $lid;
 		$cond = array('leg' => array($lid), 
 				'etat' => array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS, 
 					LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ), 'mbr' => true);
@@ -43,7 +40,7 @@ class legion {
 			$this->etat = $this->infos['leg_etat'];
 			if($this->infos['hro_id']) { // récupérer la vie du héros
 				$this->hid = $this->infos['hro_id'];
-				$this->infos['hro_vie_conf'] = get_conf_gen($this->race, 'unt', $this->hro('type'), 'vie');
+				$this->infos['hro_vie_conf'] = get_conf_gen($this->race, 'unt', $this->getHro('type'), 'vie');
 				$this->comp = $this->infos['bonus'];
 			}
 			return true;
@@ -52,9 +49,21 @@ class legion {
 	}
 
 	function __destruct(){
-		// destruction de la legion
-		if (!empty($this->edit_unt)) $this->flush_edit_unt();
+            // destruction de la legion
+            $this->flush();
 	}
+        
+        // vider le cache, maj BDD
+        public function flush(){
+		if (!empty($this->edit_unt)) {
+                    edit_unt_leg($this->mid, $this->lid, $this->edit_unt);
+                    $this->edit_unt = [];
+                }
+                if(!empty($this->edit_hro)) {
+                    edit_hero($this->mid, $this->edit_hro);
+                    $this->edit_hro = [];
+                }
+        }
 
 	private function loadUnt(){ // remplace get_unt_leg
 		// toutes les unités sauf celles des batiments
@@ -67,11 +76,26 @@ class legion {
 		return !empty($this->unt);
 	}
 
-	function hro($val) { // lire une caractérisique du héros (si existe)
-		if ($this->hid && isset($this->infos['hro_'.$val]))
-			return $this->infos['hro_'.$val];
+	function getHro($key) { // lire une caractérisique du héros (si existe)
+		if ($this->hid && isset($this->infos['hro_'.$key]))
+			return $this->infos['hro_'.$key];
 		else
 			return 0;
+	}
+
+	function setHro($key, $value) { // maj une caractérisique du héros (si existe)
+		if ($this->hid && isset($this->infos['hro_'.$key])){
+                    // max d'energie pour le heros
+                    if($key == 'nrj' && $value > HEROS_NRJ_MAX){
+                        $value = HEROS_NRJ_MAX;
+                    }
+                    $this->infos['hro_'.$key] = $value;
+                    $this->edit_hro[$key] = $value;
+                }
+	}
+
+	function addHro($key, $value) { // increment une caractérisique du héros (si existe)
+            $this->setHro($key, $this->getHro($key) + $value);
 	}
 
 	function cp_bonus($type) { // donne le bonus de la compétence $type si elle est activée
@@ -86,8 +110,7 @@ class legion {
 			return 0;		
 	}
 
-	function get_unt($type = 0){ // renvoyer les unités de la légion, toutes ou celles de $type
-		$type = protect($type, "uint");
+	function get_unt(int $type = 0){ // renvoyer les unités de la légion, toutes ou celles de $type
 
 		if(!$this->w_load_unt) // rechercher toutes les unités si pas fait
 			$this->loadUnt();
@@ -101,8 +124,7 @@ class legion {
 			return $this->unt;
 	}
 
-	function getUntByRole($role){ // rend les unités qui ont ce rôle (constants TYPE_UNT*)
-		$role = protect($role, "uint");
+	function getUntByRole(int $role){ // rend les unités qui ont ce rôle (constants TYPE_UNT*)
 		$result = array();
 
 		if(!$this->w_load_unt) // rechercher toutes les unités si pas fait
@@ -116,9 +138,9 @@ class legion {
 		return $result;
 	}
 
-	function unit_normal($type = 0) { // unités 'normales' = sauf le héros
+	function unit_normal(int $type = 0) { // unités 'normales' = sauf le héros
 		$unt = $this->get_unt($type);
-		$hro_type = $this->hro('type');
+		$hro_type = $this->getHro('type');
 		if ($hro_type) unset($unt[$hro_type]);
 		if($type)
 			if(isset($unt[$type]))
@@ -129,19 +151,19 @@ class legion {
 			return $unt;
 	}
 
-	function vide(){ // la légion est-elle vide ?? ni unités ni héros
+	function vide():bool{ // la légion est-elle vide ?? ni unités ni héros
 		if(!$this->w_load_unt) $this->get_unt(); // rechercher les unités si pas fait
 		return empty($this->unt);
 	}
 
-	function can_unt($unt, $nb) { // vérifier qu'on peut former $nb unités $unt
+	function can_unt(int $unt, int $nb) { // vérifier qu'on peut former $nb unités $unt
 		// vérifie prix ressources & unités, et qu'on a les bât et recherches
 		$bad = can_unt($this->mid, $unt, $nb, $this->cache);
 		if (!empty($bad)) return $bad; // manque qqchose pour former cette unitée
 		else return true;
 	}
 
-	function add_unt($unt, $nb = 1, $factor = 1){
+	function add_unt($unt, int $nb = 1, int $factor = 1){
 	/* ajouter $nb unités $unt (peut être négatif)
 		ou ($nb * $factor) unités $unt
 		si $unt = array : $nb est pris en tant que facteur et $factor est ignoré
@@ -171,7 +193,7 @@ class legion {
 		}
 	}
 
-	function del_unt($unt, $nb = -1) { // supprimer nb unités; inverser le résultat
+	function del_unt($unt, int $nb = -1) { // supprimer nb unités; inverser le résultat
 		$return = $this->add_unt($unt, $nb, -1);
 		if (is_array($unt))
 			foreach($return as $key => $val)
@@ -192,7 +214,7 @@ class legion {
 			return $this->edit_unt;
 	}
 
-	function flush_edit_unt($get = false) { // exécuter la MAJ unités ou récupérer
+	public function flushUnt(bool $get = false) { // exécuter la MAJ unités ou récupérer
 		$tmp = $this->edit_unt;
 		$this->edit_unt = array();
 		if ($get)
@@ -201,8 +223,7 @@ class legion {
 			edit_unt_leg($this->mid, $this->lid, $tmp);
 	}
 
-	function get_res($type = 0){ // renvoyer les ressources de la légion, toutes ou celles de $type
-		$type = protect($type, "uint");
+	function get_res(int $type = 0){ // renvoyer les ressources de la légion, toutes ou celles de $type
 
 		if(!$this->w_load_res){ // rechercher toutes les ressources
 			$res = get_res_leg($this->mid, $this->lid);
@@ -260,7 +281,7 @@ class legion {
 						$this->stats['atq_btc'] += (int) get_conf_gen($this->race, 'unt', $unt, 'atq_btc') * $nb;
 						$this->stats['def']     += (int) get_conf_gen($this->race, 'unt', $unt, 'def') * $nb;
 						if ($role == TYPE_UNT_HEROS) // vie restante du héros
-							$this->stats['vie'] += $this->hro('vie');
+							$this->stats['vie'] += $this->getHro('vie');
 						else
 							$this->stats['vie'] += (int) get_conf_gen($this->race, 'unt', $unt, 'vie') * $nb;
 						$bon_unt = get_conf_gen($this->race, "unt", $unt, "bonus");
@@ -352,7 +373,7 @@ class legion {
 		else if(empty($this->unt[$type]))
 			return 0;
 		else // nb unités * vie * bonus compétence
-			return round( $this->get_unt[$type] * (int) get_conf_gen($this->race, 'unt', $unt, 'vie')
+			return round( $this->get_unt[$type] * (int) get_conf_gen($this->race, 'unt', $type, 'vie')
 				* ( 1 + (isset($this->bonus['cpt']['vie'])?$this->bonus['cpt']['vie']:0) / 100));
 	}
 
@@ -456,16 +477,16 @@ class legion {
 		maxi 100% du dégat s'il est tout seul dans la legion
 		*/
 		$deg_hro = 0; $hro_reste = 0; $ratio = 0; /* initialisation si aucun héros */
-		if ($hit_hro && $this->hro('vie')) {
-			$ratio = $this->hro('vie_conf') / $this->stats('vie') * ATQ_RATIO_HEROS;
+		if ($hit_hro && $this->getHro('vie')) {
+			$ratio = $this->getHro('vie_conf') / $this->stats('vie') * ATQ_RATIO_HEROS;
 			$deg_hro = ceil($deg * $ratio);
-			$hro_reste = max(0, $this->hro('vie') - $deg_hro);
+			$hro_reste = max(0, $this->getHro('vie') - $deg_hro);
 			if ($hro_reste <= 0) { /* tuer le heros, sauf compétence resurrection ! */
 				if ($this->comp == CP_RESURECTION) {
 					/* ressucité dans la légion */
-					$hro_reste = $this->hro('vie_conf');
+					$hro_reste = $this->getHro('vie_conf');
 				} else
-					$pertes[$this->hro('type')] = 1;
+					$pertes[$this->getHro('type')] = 1;
 			}
 		}
 
@@ -476,7 +497,7 @@ class legion {
 	function edit($new) {
 		global $_sql;
 		$etat = 0; $vit = 0; $cid = 0;
-		$dest = -1; $xp = 0; $fat = 0; $leg_name = '';
+		$dest = -1; $leg_name = '';
 
 		// editer aussi le heros si existe
 		if ($this->hid) {
@@ -487,8 +508,8 @@ class legion {
 				$edit_hro['type'] = $new['hro_type'];
 			if(isset($new['hro_lid']))
 				$edit_hro['lid'] = $new['hro_lid'];
-			if(isset($new['xp']))
-				$edit_hro['xp'] = $new['xp'];
+			if(isset($new['nrj']))
+				$edit_hro['nrj'] = $new['nrj'];
 			if(isset($new['bonus']))
 				$edit_hro['bonus'] = $new['bonus'];
 			if(isset($new['bonus_from']))
@@ -564,7 +585,7 @@ class leg_gen extends legion { /* surcharge du constructeur pour 1 légion ... *
 		$this->etat = $this->infos['leg_etat'];
 		if($this->infos['hro_id']) { // récupérer la vie du héros
 			$this->hid = $this->infos['hro_id'];
-			$this->infos['hro_vie_conf'] = get_conf_gen($this->race, 'unt', $this->hro('type'), 'vie');
+			$this->infos['hro_vie_conf'] = get_conf_gen($this->race, 'unt', $this->getHro('type'), 'vie');
 			$this->comp = $this->infos['bonus'];
 		}
 
@@ -609,9 +630,9 @@ class legions { /* classe pour plusieurs légions ... */
 		$cond['mbr'] = true;
 		if(isset($cond['etat']))
 			$cond['etat'] = protect($cond['etat'], array('uint'));
-		else
-			$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
-				LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
+		//else
+		//	$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
+		//		LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
 
 		$leg_array = get_leg_gen($cond); // récupérer les légions
 
@@ -715,21 +736,23 @@ class legions { /* classe pour plusieurs légions ... */
 		return $legs;
 	}
 
-	function flush_all_units($unt = array()) { 
+	public function flush() { 
 		global $_sql;
 		// MAJ edit unités : $unt = autre légion à MAJ aussi (leg bât par exemple)
-		foreach($this->legs as $lid => $leg) // récup toutes modifs des légions
-			$unt[$lid] = $leg->flush_edit_unt(true);
+		foreach($this->legs as $lid => $legion){ // récup toutes modifs des légions
+                    $leg = $legion->flushUnt(true);
 
-		$sql_list = array();
-		foreach($unt as $lid => $leg)
-			foreach($leg as $rang => $value)
+			foreach($leg as $rang => $value){
 				foreach($value as $type => $nb) {
 					$rang = protect($rang, "uint");
 					$type = protect($type, "uint");
 					$nb = protect($nb, "int") ;
 					$sql_list[] =  "($lid, $type, $rang, $nb)";
 				}
+                        }
+                    $legion->flush();
+                }
+                
 		if (!empty($sql_list)) {
 			$sql = "INSERT INTO ".$_sql->prebdd."unt (unt_lid, unt_type, unt_rang, unt_nb) ";
 			$sql.= "VALUES ".implode(',',$sql_list);
@@ -898,7 +921,7 @@ function get_leg_gen($cond) {
 			else if ($dest || $mbr)
 				$sql .= ', mbr_pseudo, mbr_gid, mbr_mid, mbr_race, mbr_etat ';
 			if(!$get_unt && !$count_unt)
-				$sql .= ', hro_id, hro_nom, hro_type, hro_xp, hro_vie, hro_bonus AS bonus, hro_bonus_from, hro_bonus_to AS bonus_to ';
+				$sql .= ', hro_id, hro_nom, hro_type, hro_xp as hro_nrj, hro_vie, hro_bonus AS bonus, hro_bonus_from, hro_bonus_to AS bonus_to ';
 		}
 		if($get_leg && $get_unt) $sql .= ",";
 		if($get_unt) $sql.= "unt_type, unt_rang, unt_nb ";

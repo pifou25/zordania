@@ -192,3 +192,14 @@ div#actbar li:nth-child(1){
 @media only screen and (min-width:801px) {
 	#bp_desktop { display:block; }
 }
+/*barre énergie*/
+.barre_jaune {
+	background-repeat: repeat-x;
+	color: #CCCCCC;
+	float: left;
+	height: 12px;
+}
+
+.barre_jaune {
+	background-image: url(img/yellow.png);
+}

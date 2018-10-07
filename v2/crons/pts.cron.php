@@ -29,9 +29,9 @@ function glob_pts() {
 		$pts_armee[$mid] = 0;
 		$race = $mbr_array[$mid]["mbr_race"];
 
-		/* points des XP heros */
-		if (isset($hro_array[$mid]))
-			$pts_armee[$mid] += $hro_array[$mid]['hro_xp'];
+		/* points des XP membre */
+		if (isset($mbr_array[$mid]))
+			$pts_armee[$mid] += $mbr_array[$mid]['mbr_xp'];
 
 		/* points des recherches */
 		if(isset($src_array[$mid])){

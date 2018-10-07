@@ -1,9 +1,9 @@
-<?php
+﻿<?php
 require_once('secret_parameters.php');
 
 /* === Configuration Site === */
 define('ZORD_VERSION',"2.3.1");
-define('ZORD_ANNEE',"2018");
+define('ZORD_ANNEE',date('Y'));
 define('ZORD_SPEED_VFAST', 0.16667); // 1 Tour toutes les 30sec
 define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
 define('ZORD_SPEED_MEDIUM', 15); // 1 Tour toutes les 15 minutes
@@ -109,6 +109,9 @@ define('ATQ_RATIO_HEROS', 1.3); /* % perte dégats PDV héros */
 define('ATQ_RATIO_DIST', 33); /* bonus unités à distance $nb*log($nb)/[ratio] */
 define('ATQ_FAT', 5); /* inutile ici */
 define('ATQ_LEG_IDLE', 5); /* legion idle en position d'attaque - nb jours */
+
+/*Héros*/
+define('HEROS_NRJ_MAX', 200);
 
 /* Butins */
 define('BUT_PILLAGE_COEF', 4); // On ne peux piller au maximum que le ($stock_d'une_ressource / BUT_PILLAGE_COEF)
@@ -236,18 +239,8 @@ $_droits[GRP_DIEU] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_MMSG,
 	DROIT_ADM, DROIT_ADM_AL, DROIT_ADM_COM, DROIT_ADM_MBR, DROIT_ADM_TRAV,DROIT_SDG, DROIT_ADM_EDIT,
 	DROIT_PUNBB_MEMBER,DROIT_PUNBB_MOD,DROIT_PUNBB_ADMIN, DROIT_ANTI_FLOOD);
 
-/* configuration des sites de vote */
-$_votes = array();
-$_votes[VOTES_HIT] = array('img' => 'http://www.jeux-alternatifs.com/im/bandeau/hitP_88x31_v3.gif',
-		'url' => 'http://www.jeux-alternatifs.com/Zordania-jeu177_hit-parade_1_1.html', 'delay' => 24);
-$_votes[VOTES_RPG] = array('img' => 'http://www.rpg-paradize.com/vote.gif', 
-		'url' => 'https://www.rpg-paradize.com/site-Zordania.fr-110465', 'delay' => 3);
-$_votes[VOTES_TOP] = array('img' => 'http://www.xtremeTop100.com/votenew.jpg', 
-		'url' => 'http://www.xtremetop100.com/in.php?site=1132344203', 'delay' => 24);
-
 define('SITE_DEBUG',false);
 define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
-define('CRON', substr(php_sapi_name(), 0, 3) == 'cli');
-
-?>
+define('CRON', !array_key_exists('SERVER_SOFTWARE', $_SERVER)
+        && (php_sapi_name() === 'cli' || !array_key_exists('REMOTE_ADDR', $_SERVER)));

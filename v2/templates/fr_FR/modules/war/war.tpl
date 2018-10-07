@@ -61,9 +61,8 @@
 </foreach>
 <if cond="{leg[hro_vie]}">
 	<p><zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]}
-	<zimgbar per="{leg[hro_vie]}" max="{leg[hro_vie_conf]}" />
-	Vie: {leg[hro_vie]} / {leg[hro_vie_conf]},
-	Expérience: {leg[hro_xp]}
+	<zimgbar per="{leg[hro_vie]}" max="{leg[hro_vie_conf]}" /> <img src="img/{_user[race]}/div/vie.png" alt="Vie" /> Vie: {leg[hro_vie]} / {leg[hro_vie_conf]}
+	<zimgnrj per="{leg[hro_nrj]}" max="{HEROS_NRJ_MAX}" /> <img src="img/eclair.png" alt="Energie" /> {leg[hro_nrj]} 
 	<if cond="!empty({leg[bonus]})">, Compétence active : <zimgcomp type="{leg[bonus]}" race="{leg[mbr_race]}" /></if>
 	</p>
 </if>
@@ -85,8 +84,8 @@
 	<if cond="{leg[hro_vie]}">
 		<p><zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]}
 		<zimgbar per="{leg[hro_vie]}" max="{leg[hro_vie_conf]}" />
-		Vie: {leg[hro_vie]} / {leg[hro_vie_conf]}, 
-		Expérience: {leg[hro_xp]}
+		<img src="img/{_user[race]}/div/vie.png" alt="Vie" /> {leg[hro_vie]} / {leg[hro_vie_conf]} 
+		<zimgnrj per="{leg[hro_nrj]}" max="{HEROS_NRJ_MAX}" /> <img src="img/eclair.png" alt="Energie" /> {leg[hro_nrj]} 
 		<if cond="!empty({leg[bonus]})">, Compétence active : <zimgcomp type="{leg[bonus]}" race="{leg[mbr_race]}" /></if>
 		</p>
 	</if>
@@ -133,8 +132,7 @@
 	<if cond="{bilan[att][hro_vie]}">
 		<br /><zimgunt type="{bilan[att][hro_type]}" race="{_user[race]}" /> {bilan[att][hro_nom]} 
 		a perdu {bilan[att][pertes][deg_hro]} Points de vie
-		<zimgbar per="{bilan[att][pertes][hro_reste]}" max="{_user[hro_vie_conf]}" />
-		Vie : {bilan[att][pertes][hro_reste]} / {_user[hro_vie_conf]}
+		<zimgbar per="{bilan[att][pertes][hro_reste]}" max="{_user[hro_vie_conf]}" /> <img src="img/{_user[race]}/div/vie.png" alt="Vie" /> {bilan[att][pertes][hro_reste]} / {_user[hro_vie_conf]}
 		<if cond="{bilan[att][pertes][hro_reste]} == 0">
 			<p class="error">{bilan[att][hro_nom]} a succombé à ses blessures !</p>
 		</if>
@@ -161,8 +159,7 @@
 		<if cond="{leg[hro_vie]}">
 			<br /><zimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]}
 			a perdu {leg[pertes][deg_hro]} Points de vie
-			<zimgbar per="{leg[pertes][hro_reste]}" max="{leg[hro_vie_conf]}" />
-			Vie : {leg[pertes][hro_reste]} / {leg[hro_vie_conf]}
+			<zimgbar per="{leg[pertes][hro_reste]}" max="{leg[hro_vie_conf]}" /> <img src="img/{_user[race]}/div/vie.png" alt="Vie" /> {leg[pertes][hro_reste]} / {leg[hro_vie_conf]}
 			<if cond="{leg[pertes][hro_reste]} == 0">
 				<p class="error">{leg[hro_nom]} a succombé à ses blessures !</p>
 			</if>
@@ -211,13 +208,13 @@
 	<if cond="!empty({bilan[att][hro_id]})">
 		<if cond="{bilan[att][pertes][hro_reste]} == 0">
 			<if cond="{bilan[att][bonus]} == {CP_RESURECTION}">
-				<p class="ok"><zimgcomp type="{bilan[att][bonus]}" race="{bilan[att][mbr_race]}" /> Votre héros succombe à ses blessures... puis ressucite au village ! Ce combat lui rapporte {bilan[att][xp_won]} XP.</p>
+				<p class="ok"><zimgcomp type="{bilan[att][bonus]}" race="{bilan[att][mbr_race]}" /> Votre héros succombe à ses blessures... puis ressucite au village ! Ce combat vous rapporte {bilan[att][xp_won]} XP.</p>
 			</if><else>
-				<p class="error">Votre héros est mort... Ce combat lui rapporte {bilan[att][xp_won]} XP à titre posthume.</p>
+				<p class="error">Votre héros est mort... Ce combat vous rapporte {bilan[att][xp_won]} XP à titre posthume.</p>
 			</else>
 		</if>
 		<else>
-			<p class="ok">Votre héros gagne {bilan[att][xp_won]} XP</p>
+			<p class="ok">Vous gagnez {bilan[att][xp_won]} XP</p>
 		</else>
 	</if>
 	<else>
@@ -249,7 +246,7 @@
 			<th>Perte vie Heros</th>
 		</tr>
 		<tr>
-			<td>{bilan[att][leg_name]} ({bilan[att][hro_xp]})</td>
+			<td>{bilan[att][leg_name]} ({bilan[att][hro_nrj]})</td>
 			<td>{bilan[att][vie_leg]}</td>
 			<td>{bilan[att][stat][unt]}</td>
 			<td>{bilan[att][stat][bonus][atq]} %</td>

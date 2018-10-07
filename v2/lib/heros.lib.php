@@ -20,7 +20,7 @@ function add_hero($mid, $name, $type) {
 	$prix_res = get_conf('unt', $type, 'prix_res');
 	// ajouter le héros, l'unité et payer le prix
 	$sql = "INSERT INTO ".$_sql->prebdd."hero ";
-	$sql .= "VALUES (NULL,$mid, '$name', $type, $lid, 0,'$vie' ,0, NULL, NULL)";
+	$sql .= "VALUES (NULL,$mid, '$name', $type, $lid, 0,'$vie' ,0, NULL, NULL,0)";
 	$res = $_sql->query($sql);
 	$edit_unt[$type] = -1; // ajouter le héros comme unité
 	edit_unt_gen($mid, LEG_ETAT_VLG, $edit_unt, -1); // prix unités & héros
@@ -69,7 +69,7 @@ function edit_hero($mid, $new = array()) {
 	global $_sql;
 
 	$type = 0; $lid = 0; $vie = false;
-	$bonus_from = 0; $bonus_to = 0; $xp = 0; $bonus = false; $nom = "";
+	$bonus_from = 0; $bonus_to = 0; $nrj = 0; $bonus = false; $nom = "";
 
 	$mid = protect($mid, "uint");
 	
@@ -81,8 +81,8 @@ function edit_hero($mid, $new = array()) {
 		$lid = protect($new['lid'], "uint");
 	if(isset($new['vie']))
 		$vie = protect($new['vie'], "uint");
-	if(isset($new['xp']))
-		$xp = protect($new['xp'], "int");
+	if(isset($new['nrj']))
+		$nrj = protect($new['nrj'], "int");
 	if(isset($new['bonus']))
 		$bonus = protect($new['bonus'], "uint");
 	if(isset($new['bonus_from']))
@@ -90,7 +90,7 @@ function edit_hero($mid, $new = array()) {
 	if(isset($new['bonus_to']))
 		$bonus_to = protect($new['bonus_to'], "uint");
 
-	if(!$mid || (!$nom && !$type && !$lid && ($vie==false) && !$xp && ($bonus===false) && !$bonus_from && !$bonus_to))
+	if(!$mid || (!$nom && !$type && !$lid && ($vie==false) && !$nrj && ($bonus===false) && !$bonus_from && !$bonus_to))
 		return 0; // aucune modif nécessaire
 
 	if($lid) { // transfer du héros de légions
@@ -102,14 +102,11 @@ function edit_hero($mid, $new = array()) {
 		add_unt_leg($_user['mid'], $lid, $rang, $_user['hro_type'], 1);
 	}
 
-	// maj mbr
-	$_sql->query('UPDATE '.$_sql->prebdd.'mbr SET mbr_lmodif_date = NOW()');
-
 	$sql = "UPDATE ".$_sql->prebdd."hero SET ";
 	if($nom) $sql.= "hro_nom = '$nom',";
 	if($type) $sql.= "hro_type = $type,";
 	if($lid) $sql.= "hro_lid = $lid,";
-	if($xp) $sql.= "hro_xp = hro_xp + $xp, hro_xp_tot = hro_xp_tot + $xp,";
+	if($nrj) $sql.= "hro_xp = $nrj,";
 	if($vie !== false) $sql.= "hro_vie = $vie,";
 	if($bonus!==false) $sql.= "hro_bonus = $bonus,";
 	if($bonus_from) $sql.= "hro_bonus_from = '$bonus_from',";
@@ -184,12 +181,12 @@ function hro_resurrection($id, $mid, $lid) {
 		SET hro_lid = ('.$sql_leg_vlg.'),
 			hro_bonus = 0,
 			hro_xp = FLOOR(hro_xp/2),
-			hro_vie=FLOOR('.$this->hro('vie_conf').'/2)
+			hro_vie=FLOOR('.$this->getHro('vie_conf').'/2)
 		WHERE hro_id ='.$hid;
 	$_sql->query($sql); // héros retour maison
 	/* déplacer l'unité correspondante */
 	$sql = 'UPDATE '.$_sql->prebdd.'unt SET unt_lid = ('.$sql_leg_vlg.
-		') WHERE unt_lid ='.$lid.' AND unt_type='.$this->hro('type');
+		') WHERE unt_lid ='.$lid.' AND unt_type='.$this->getHro('type');
 	$_sql->query($sql);
 
 }

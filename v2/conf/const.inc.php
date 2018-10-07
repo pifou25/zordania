@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /* 
  * constantes du jeu
  * ces constantes ne doivent en aucun cas être modifiées
@@ -240,22 +240,33 @@ define('SURV_TYPE_MP',  3); // Message Privé
 define('SURV_TYPE_FRM', 4); // Forum
 define('SURV_TYPE_ALL', 5); // All
 
-/* Votes */
-define('VOTES_HIT', 1); // hit parade 
-define('VOTES_RPG',  2); // RPG paradize
-define('VOTES_TOP',  3); // xtreme top100
+/*ID Forum fid*/
+define('ZORD_NEWS_FID',25); //news
+define('FORUM_PLAINTES_FID',30); //plaintes
+define('FORUM_SUGGEST_FID',6); //fid suggestion
+define('FORUM_BUG_FID',8); //fid bug
 
-/*ID Forum news*/
-define('ZORD_NEWS_FID',25);
-define('FORUM_PLAINTES_FID',30);
 define('FORUM_QUETES',9);
 
 /*Etat bug/suggestion*/
-define('FORUM_SUGGEST_FID',6); //fid suggestion
-define('FORUM_BUG_FID',8); //fid bug
-define('FORUM_REPORT_NEW',0); //nouvellement reporté
-define('FORUM_REPORT_OK',1); //avéré(bug) ou accepté (suggestion)
-define('FORUM_REPORT_NOK',2); //pas bug ou refusé
-define('FORUM_REPORT_ON',3); //codé
+define('REPORT_STATUT_NEW',0); //nouvellement reporté
+define('REPORT_STATUT_OK',1); //avéré(bug) ou accepté (suggestion)
+define('REPORT_STATUT_NOK',2); //pas bug ou refusé
+define('REPORT_STATUT_ON',3); //codé
+define('REPORT_STATUT_DEV',4); //codé en dev
+define('REPORT_STATUT_TALK',5); //en discution
+define('REPORT_STATUT_DUBL',6); //double
 
+/*type de bug/sugg*/
+define('REPORT_TYPE_NEW',0); //Bah nouveau
+define('REPORT_TYPE_WAR',1); //legion et guerre
+define('REPORT_TYPE_HERO',2); //heros + comp
+define('REPORT_TYPE_UNT',3); //unités
+define('REPORT_TYPE_ALLI',4); //alliance
+define('REPORT_TYPE_GEN',5); //Donjon
+define('REPORT_TYPE_VLG',6); //Village
+define('REPORT_TYPE_GAME',7); //Interface et gameplay
+define('REPORT_TYPE_COM',8); //Marché
+define('REPORT_TYPE_MSG',9); //Messagerie
+define('REPORT_TYPE_ELSE',10); //Autres
 ?>

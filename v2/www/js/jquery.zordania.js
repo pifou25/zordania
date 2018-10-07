@@ -75,6 +75,7 @@ $(document).ready(  function()
         
 	// ce script pilote le popup de confirmation (leg/act.tpl)
 	$("#make_atq").click(function(){ // au clic sur le lien
+            $("#dialog-text").text("Confirmez vous l'attaque ?");
 		$("#dialog-modal").dialog({ // popup
 			buttons: [{
 				text: "Annuler", // bouton annuler

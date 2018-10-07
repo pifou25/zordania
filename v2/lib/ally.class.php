@@ -38,6 +38,7 @@ class ally {
 		'map_y' => 'uint',
 		'mbr_lang' => 'string',
 		'mbr_lip' => 'string',
+                'mbr_xp' => 'string',
 		);
 
 	private $mbrs = array(); // liste des membres

@@ -13,31 +13,31 @@
 	<ul class="infos">
 	<li>{mbr_array[pts][src][nb]} Recherches (coef = {mbr_array[pts][src][coef]}) = {mbr_array[pts][src][pts]}</li>
 	<li>{mbr_array[pts][btc][nb]} Bâtiments (vie={mbr_array[pts][btc][vie]}) = {mbr_array[pts][btc][pts]}</li>
-	<li><if cond="{hro_array[hro_id]}"> XP heros = {hro_array[hro_xp]}</if><else>aucun héros</else></li>
+	<li><if cond="{hro_array[hro_id]}"> XP heros = {hro_array[hro_nrj]}</if><else>aucun héros</else></li>
 	<li>unités = {mbr_array[pts][unt][pts]} points. Détail (nb x pts = total) (les civils ne comptent pas)</li>
 	<li><foreach cond="{unt_done} as {value}">
 	{value[unt_sum]}<zimgunt type="{value[unt_type]}" race="{mbr_array[mbr_race]}" /> x {value[pts]} = {value[total]} /
 	</foreach>
 	</li>
-	<li>Armée = <math oper="{mbr_array[pts][unt][pts]}+(isset({hro_array[hro_xp]})?{hro_array[hro_xp]}:0)" /> / Total = <math oper="{mbr_array[pts][src][pts]}+{mbr_array[pts][btc][pts]}+{mbr_array[pts][unt][pts]}+(isset({hro_array[hro_xp]})?{hro_array[hro_xp]}:0)" /></li>
+	<li>Armée = <math oper="{mbr_array[pts][unt][pts]}+(isset({hro_array[hro_nrj]})?{hro_array[hro_nrj]}:0)" /> / Total = <math oper="{mbr_array[pts][src][pts]}+{mbr_array[pts][btc][pts]}+{mbr_array[pts][unt][pts]}+(isset({hro_array[hro_nrj]})?{hro_array[hro_nrj]}:0)" /></li>
 	</ul>
 </if>
 
 <div class="content" id="infos_leg" style="display: none;">
-	<a name="leg"></a><hr />
+    <a name="leg"><h3>Légions</h3></a>
 	<if cond="isset({lres_ok})"><p class="ok">Ressources de la légion vidées.</p></if>
 	<include file="modules/member/leg_list.tpl" cache="1" />
 </div>
 
 
 <div class="content" id="infos_res" style="display: none;">
-	<a name="res" /><h3>Ressources :</h3>
+    <a name="res" ><h3>Ressources :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>
 			<h4>Finies</h4>
 			<if cond='{res_done}'>
-				<form action="admin-view.html?module=member&amp;mid={mbr_array[mbr_mid]}" method="post" />
+				<form action="admin-view.html?module=member&amp;mid={mbr_array[mbr_mid]}" method="post">
 					<table class="liste">
 					<tr>
 						<th>Type</th>
@@ -85,7 +85,7 @@
 
 
 <div class="content" id="infos_trn" style="display: none;">
-	<a name="trn" /><h3>Terrains :</h3>
+    <a name="trn"><h3>Terrains :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>
@@ -114,8 +114,7 @@
 
 
 <div class="content" id="infos_src" style="display: none;">
-	<debug print="{src_done}" />
-	<a name="src" /><h3>Recherches :</h3>
+	<a name="src"><h3>Recherches :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>
@@ -165,8 +164,7 @@
 
 
 <div class="content" id="infos_btc" style="display: none;">
-	<debug print="{btc_done}" />
-	<a name="bat" /><h3>Bâtiments :</h3>
+	<a name="bat"><h3>Bâtiments :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>
@@ -225,8 +223,7 @@
 
 
 <div class="content" id="infos_unt" style="display: none;">
-
-	<a name="unt" /><h3>Unités :</h3>
+	<a name="unt"><h3>Unités :</h3></a>
 	<table class="liste">
 	<tr>
 		<td>

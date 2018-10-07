@@ -307,17 +307,36 @@ if($_act == "del") {
 			require_once("lib/unt.lib.php");
 			require_once("lib/trn.lib.php");
 			require_once("lib/src.lib.php");
+                        require_once("lib/heros.lib.php");
 
-			$legions = new legions(array('mid'=>$mid, 
-				'etat' => array(LEG_ETAT_VLG, LEG_ETAT_BTC, LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_ATQ)), true, true);
+			$legions = new legions(['mid'=>$mid,
+                            //'etat' => [LEG_ETAT_VLG, LEG_ETAT_BTC, LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_ATQ]
+                            ], true, true);
+                        
 			//$cond = array('mid'=>$mid);
 			//$legions = new legions($cond, true, true);
 			$hro_array = array('hro_id'=>0, 'hro_type'=>0);
-			foreach($legions->legs as $lid => $leg)
+			foreach($legions->legs as $lid => $leg){
 				if($leg->hid){
+                                        // edit nrj et xp
+                                        $nrj = request('hro_nrj', 'uint', 'post');
+                                        $addNrj = request('hro_add_nrj', 'uint', 'post');
+                                        $vie = request('hro_vie', 'uint', 'post');
+                                        $xp = request('mbr_xp', 'uint', 'post');
+                                        if($nrj){
+                                            $leg->setHro('vie', $vie);
+                                            if($addNrj)
+                                                $leg->addHro('nrj',$addNrj);
+                                            else
+                                                $leg->setHro('nrj',$nrj);
+                                            $leg->flush();
+                                            edit_mbr($mid, ['xp' => $xp]);
+                                        }
 					$hro_array = $leg->infos;
 					break;
 				}
+                        }
+                            
 			$_tpl->set("hro_array", $hro_array);
 
 			// vider les ressources d'une légion
@@ -335,7 +354,6 @@ if($_act == "del") {
 					$_tpl->set("lres_ok", true);
 				}
 			}
-
 			$_tpl->set("res_leg", $legions->get_all_res());
 			$_tpl->set("unt_leg", $legions->get_all_unts());
 			$_tpl->set("leg_array", $legions->get_all_legs_infos());

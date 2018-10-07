@@ -104,7 +104,7 @@ case 'make_atq':
 	$legions = new legions($cond, true, true);
 
 	/* sa légion est bien prête à attaquer */
-	if($legions->legs[$lid1]->mid != $_user['mid']) {
+	if(!isset($legions->legs[$lid1]) || $legions->legs[$lid1]->mid != $_user['mid']) {
 		$_tpl->set("atq_bad_leg1", true);
 		break;
 	} 
@@ -358,7 +358,6 @@ case 'make_atq':
 
 	/* Attaque batiment et repartition des degats */
 	$att_bat = $att['bat'] * ATQ_RATIO_COEF_BAT;
-	//$bilan['deg_bat'] = 0; // apparemment inutile (23.07.2010)
 	foreach ($legs['def'] as $lid) { // si la def est consequente on divise l'atq bat par 2
 		$leg = $legions->legs[$lid];
 		if ($lid != $lid1) // defenseur
@@ -368,10 +367,7 @@ case 'make_atq':
 			}
 	}
 	$bilan['atq_bat'] = $att_bat;
-
-	//$bilan['atq_bat_mino'] = $att_bat; // apparemment inutile (23.07.2010)
 	$update_place = 0;
-
 	$sol_bat_det = 0;
 
 	/* limite à 6 batiments détruits */
@@ -534,6 +530,8 @@ case 'make_atq':
 	
 	foreach ($legs['def'] as $lid) { // parcourir les légions en défense
 		$bilan['def'][$lid]['xp_won'] = $xp_def * $bilan['def'][$lid]['ratio'];
+                // xp est l'energie gagnée par le héros
+                
 	}
 
 	/* DEBUT DE L'ENREGISTREMENT EN BDD */
@@ -546,35 +544,44 @@ case 'make_atq':
 	/* Mises a jour  Légions (table 'leg') */
 	foreach ($legs['combat'] as $lid) { // parcourrir les legions
 		$leg = $legions->legs[$lid];
-		if ($lid == $lid1) { // xp gagnee par l'attaquant + retour à la maison
-			$new = array('xp' => (int) ($bilan['att']['xp_won']),
-				'hro_vie' => $bilan['att']['pertes']['hro_reste']);
-    		$new['etat'] = LEG_ETAT_RET;
-			$new['vit'] = $leg_1->calc_vit();
-    		$new['dest'] = $_user['mapcid'];
-		} else {
-			$new = array();
-			$new['etat'] = $etats_defs[$lid];
-			$new['hro_vie'] = (int) $bilan['def'][$lid]['pertes']['hro_reste'];
-			$new['xp'] = (int) ($bilan['def'][$lid]['xp_won']);
+		if ($lid == $lid1) { // retour à la maison
+			$new = ['etat' => LEG_ETAT_RET,
+                            'vit' => $leg_1->calc_vit(),
+                            'dest' => $_user['mapcid']];
+                        $leg->setHro('vie', $bilan['att']['pertes']['hro_reste']);
+                        $leg->addHro('nrj',$bilan['att']['xp_won']);
+		} else { // état: au village ou en défense
+			$new = ['etat' => $etats_defs[$lid]];
+                        $leg->setHro('vie', $bilan['def'][$lid]['pertes']['hro_reste']);
+                        $leg->addHro('nrj',$bilan['def'][$lid]['xp_won']);
 		}
 		$leg->edit($new);
 	}
 
-	// Mises a jour unites (table 'unt') 
-	$legions->flush_all_units();
+	// Mises a jour unites (table 'unt' et 'hero') 
+        // flush pour avoir le SQL dans le debug, ce n'est pas assuré avec __destruct
+	$legions->flush();
 
-
-	// Population : 'recompter' la population pour tous les joueurs participants
+	// Population : 'recompter' la population pour tous les joueurs participants et l'XP gagnée
+        // joueur : compter le gain d'énergie des héros
 	$edit_mid = array(); // liste des joueurs concernés
 	$histo = array();
 	foreach ($legs['combat'] as $lid) { // parcourrir les legions
 		$leg = $legions->legs[$lid];
 		if (!isset($edit_mid[$leg->mid]))
 			$edit_mid[$leg->mid]['population'] = count_pop($leg->mid);
+
+                // cumul XP de toutes les légions par joueurs
+                if(!isset($edit_mid[$leg->mid]['xp']))
+                    $edit_mid[$leg->mid]['xp'] = 0;
+		if ($lid == $lid1)
+			$edit_mid[$leg->mid]['xp'] += (int) ($bilan['att']['xp_won']);
+		else
+			$edit_mid[$leg->mid]['xp'] += (int) ($bilan['def'][$lid]['xp_won']);
+                
 		// pour les évènements : attaquant & défenseur seulement sont cités
-		$tmp = array('lid' => $lid, 'leg' => $leg->infos['leg_name'],
-			'name' => $leg->infos['mbr_pseudo'], 'mid' => $leg->mid);
+		$tmp = ['lid' => $lid, 'leg' => $leg->infos['leg_name'],
+			'name' => $leg->infos['mbr_pseudo'], 'mid' => $leg->mid];
 		if ($lid == $lid1)
 			$histo['atq'] = $tmp;
 		else if ($lid == $legions->vlg_lid)
@@ -582,10 +589,11 @@ case 'make_atq':
 	}
 	if($update_place) // place perdue si batiments detruits ...
 		$edit_mid[$mid_def]["place"] = $mbr_def_array['mbr_place'] - $update_place;
-
+            
 	foreach ($edit_mid as $mid => $edit_tmp) {
-		if (!empty($edit_tmp)) // éditer les membres : table 'mbr'
+		if (!empty($edit_tmp)){ // éditer les membres : table 'mbr'
 			edit_mbr($mid, $edit_tmp);
+                }
 		// ajouter un evenement dans l'historique sauf pour l'attaquant
 		if ($mid != $_user['mid'])
 			$_histo->add($mid, $_user['mid'], ($mid == $mid_def ? HISTO_LEG_ATQ_VLG : HISTO_LEG_ATQ_LEG), $histo);
@@ -614,7 +622,6 @@ case 'make_atq':
 	
 	// Ajout du journal de guerre
 	add_atq_all($bilan);
-
 
 	$_tpl->set("bilan", $bilan);
 	$_tpl->set("mbr2_array", $mbr_def_array);
