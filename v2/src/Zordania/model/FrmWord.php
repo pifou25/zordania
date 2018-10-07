@@ -17,11 +17,6 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
 // construire la liste des résultats pour les mots clés recherchés
     static
             function search_keywords_results($keywords, $search_in) {
-        global $_tpl;
-
-        // mots censurés
-        $stopwords = (array) file($_tpl->var->tpl->dir2 . $_tpl->var->tpl->dir . $_tpl->var->tpl->lang . '/modules/forum/stopwords.txt');
-        $stopwords = array_map('trim', $stopwords);
 
         // filtrer caractères non alphabétiques
         $noise_match = array('^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '[', ']', '{', '}', ':', '\\', '/', '=', '#', '\'', ';', '!');
@@ -42,7 +37,7 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
 
         foreach ($keywords_array as $i => $word) {
             $num_chars = strlen($word);
-            if ($num_chars < 3 || $num_chars > 20 || in_array($word, $stopwords))
+            if ($num_chars < 3 || $num_chars > 20 || in_array($word, self::getStopWords()))
                 unset($keywords_array[$i]);
         }
 
@@ -109,23 +104,17 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
     /**
      * "Cleans up" a text string and returns an array of unique words
      * This function depends on the current locale setting
-     * @global type $_tpl
      * @staticvar string $noise_match
      * @staticvar string $noise_replace
-     * @staticvar type $stopwords
      * @param string $text
      * @return array
      */
     static function split(string $text): array {
-        global $_tpl;
-        static $noise_match, $noise_replace, $stopwords;
+        static $noise_match, $noise_replace;
 
         if (empty($noise_match)) {
             $noise_match = array('[quote', '[code', '[url', '[img', '[email', '[color', '[colour', 'quote]', 'code]', 'url]', 'img]', 'email]', 'color]', 'colour]', '^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '+', '[', ']', '{', '}', ':', '\\', '/', '=', '#', ';', '!', '*');
             $noise_replace = array('', '', '', '', '', '', '', '', '', '', '', '', '', '', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', ' ', ' ', ' ', ' ', '', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '', ' ', ' ', ' ', ' ', ' ', ' ');
-
-            $stopwords = (array) file($_tpl->var->tpl->dir2 . $_tpl->var->tpl->dir . $_tpl->var->tpl->lang . '/modules/forum/stopwords.txt');
-            $stopwords = array_map('trim', $stopwords);
         }
 
 	// Clean up
@@ -148,7 +137,7 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
                 $words[$i] = trim($word, '.');
                 $num_chars = strlen($word);
 
-                if ($num_chars < 3 || $num_chars > 20 || in_array($word, $stopwords))
+                if ($num_chars < 3 || $num_chars > 20 || in_array($word, self::getStopWords()))
                     unset($words[$i]);
             }
         }
@@ -156,6 +145,16 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
         return array_unique($words);
     }
 
+    private static function getStopWords(){
+        global $_tpl;
+        static $stopwords;
+        if($stopwords == null){
+            $stopwords = (array) file($_tpl->var->tpl->dir2 . $_tpl->var->tpl->dir . $_tpl->var->tpl->lang . '/modules/forum/stopwords.txt');
+            $stopwords = array_map('trim', $stopwords);
+        }
+        return $stopwords;
+    }
+    
 //
 // Updates the search index with the contents of $post_id (and $subject)
 //

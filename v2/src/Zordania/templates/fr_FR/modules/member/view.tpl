@@ -112,6 +112,7 @@
 		</if>
 		<else><a href="admin-new.html?module=surv&mid={mbr_array[mbr_mid]}"><img src="img/groupes/9.png" alt="Surveiller ce compte" /> Surveiller</a></else>
 	   	<a href="admin-histo.html?module=war&mid={mbr_array[mbr_mid]}"><img src="img/info.png" alt="Journal" /> Journal</a>
+	   	<a href="admin-mbr.html?module=qst&mid={mbr_array[mbr_mid]}"><img src="img/plus.png" alt="Quêtes du joueur" /> Quêtes</a>
 		</p>
 	</if>
 	

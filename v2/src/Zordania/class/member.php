@@ -209,12 +209,15 @@ class member {
 
     /*     * * ressources ** */
 
-    function res() {
+    function res($type = null) {
         if (!$this->res_load) {
             $this->res = Res::get($this->mid);
             $this->res_load = true;
         }
-        return $this->res;
+        if($type == null)
+            return $this->res;
+        else
+            return isset($this->res[$type]) ? $this->res[$type] : 0;
     }
 
     function res_todo() {
@@ -233,13 +236,18 @@ class member {
 
     /*     * * recherches ** */
 
-    function src() {
+    function src($type = null) {
         if (!$this->src_load) {
             $tmp = Src::get($this->mid);
             $this->src = index_array($tmp, 'src_type');
             $this->src_load = true;
         }
-        return $this->src;
+        if($type == null)
+            return $this->src;
+        else if (!isset($this->src[$type]))
+            return 0;
+        else
+            return $this->src[$type];
     }
 
     function src_todo() {

@@ -4,7 +4,9 @@ class session
 	var $vars;
 	var $dateformat = '%d-%m-%y à %H:%i:%s'; /* Mettre ça dans les tpl */
 	var $decal = '00:00:00';
-	static public $SES;
+        var $mbr = null; // object member
+        
+	static public $SES; // singleton
         
 	function __construct()
 	{
@@ -19,6 +21,12 @@ class session
 		if(!CRON) $_SESSION['user'] = $this->vars;
 	}
 
+        function getMbr(){
+            if($this->mbr == null)
+                $this->mbr = new member($this->get('mid'));
+            return $this->mbr;
+        }
+        
 	function set_cookie($login, $pass) {
 		if(CRON) return true;
 		else return setcookie("zrd",serialize(array($login,$pass)), time() + 60 * 60 * 24 * 7);
@@ -201,6 +209,13 @@ class session
 		}
 	}
 
+        function update_qst(){
+            if($this->get("login") != "guest") {
+                $qst = Qst::get($this->get('mid'));
+                $this->set('qst', $qst);
+            }
+        }
+        
 	/* Trucs spécifiques a certains modules */
 	function set_forum_vars($ldate) {
 		/* Pour le forum */
@@ -269,6 +284,7 @@ class session
 			$this->update_heros();
 			$this->update_aly();
 			$this->update_pos();
+                        $this->update_qst();
 
 			if($login != "guest")
 				$this->set_cookie($login, $pass);
@@ -353,6 +369,7 @@ class session
 				$this->update_pos();
 				$this->update_heros();
 				$this->update_aly();
+                                $this->update_qst();
 				
 				return true;
 			}
@@ -449,4 +466,45 @@ class session
 		return $req;
 	}
 
+        /**
+         * vérifier un paramètre pour une quête
+         * @param int $param
+         * @param int $value
+         */
+        function checkParam( $param, $value){
+            switch ($param){
+                case 1: // race
+                    return $value == $this->get('race');
+                case 2: // quete précédente -- ne pas tester ici
+                    return Qst::where('qst_cfg_id', $value)->where('qst_mid', $this->get('mid'))
+                        ->count() != 0;
+                case 3: // former une unité
+                    return $this->getMbr()->nb_unt($value) > 0;
+                case 4: // construire un batiment
+                    return $this->getMbr()->nb_btc_done([$value]) > 0;
+                case 5: // découvrir une recherche
+                    return $this->getMbr()->src($value) > 0;
+                case 6: // fabriquer une ressource
+                    return $this->getMbr()->res($value) > 0;
+                case 7: // commerce
+                    return false;
+                case 8: // rejoindre une alliance
+                    return $this->get('ally') != 0;
+                case 9: // mener une attaque
+                    return false;
+                case 10: // défendre son village
+                    return false;
+                case 11: // former une légion
+                    return count($this->getMbr()->leg()) > 0;
+                case 12: // se présenter sur le forum
+                    return false;
+                case 13: // former un  héros
+                    return false;
+                case 14: // utiliser une compétence du héros
+                    return false;
+                default : // erreur de paramétrage
+                    return true;
+                        
+            }
+        }
 }

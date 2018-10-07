@@ -69,6 +69,7 @@
 	</p>
 	
 	<p class="menu_module">
+        <a href="Mes Quêtes">Mes Quêtes</a>
 	<a href="parrain.html" title="Parrainer.">Parrainage</a>
 	<a href="zzz.html" title="Mise en veille du compte.">Mise&nbsp;en&nbsp;veille</a>
 	<a href="member-edit.html" title="Paramétrer mon compte (avatar, signature, etc ...)">Paramétrer&nbsp;mon&nbsp;compte</a>

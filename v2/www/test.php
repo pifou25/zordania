@@ -1,37 +1,32 @@
-<?php
-class a {
-	private $var = array();
-	/* méthodes set & get */
-	public function __set($key, $value) {
-		//$this->row->$key = $value;
-		$this->var[$key] = $value;
-	}
-	public function __get($key) {
-		//return $this->row->$key;
-		return $this->var[$key];
+<pre><?php
+class animal {
+	var $color;
+	var $race;
+	var $genre;
+	function __construct(string $color, string $race, string $genre){
+		$this->color = $color;
+		$this->race = $race;
+		$this->genre = $genre;
 	}
 }
 
-class b extends a {
-	private $var = 'toto';
-	/* méthodes set & get
-	function __set($key, $value) {
-		//$this->row->$key = $value;
-		parent::__set($key, $value);
-	}
-	function __get($key) {
-		//return $this->row->$key;
-		return parent::__get($key);
-	} */
-	public function fillin($var){
-		$this->fillin = $var;
-	} 
-}
+$ricard = new animal('jaune', '25cl', 'liquide');
+$rhum = new animal('ambre', '4cl', 'liquide');
 
-$a = new b('too');
-$a->toto = 'fait du vélo';
-$a->var = 'test';
-echo $a->var;
-$a->fillin('test');
+$a = ['too' => 'premier element', 'ricard' => $ricard];
+
+$b = $a;
+
+$a['rhum'] = $rhum;
+$a['too'] = 'copie du premier element';
+$rhum->genre = 'alcool';
+
+echo "b = \n";
+var_dump($b);
+
+echo "a = \n";
 var_dump($a);
+
+
 ?>
+</pre>

@@ -35,8 +35,6 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
         $group = isset($cond['group']) ? protect($cond['group'], 'string') : ''; // utile ??
         $sort_by = isset($cond['sort_by']) ? protect($cond['sort_by'], 'string') : '';
         $sortDir = isset($cond['sort_dir']) && $cond['sort_dir'] == 'DESC' ? 'DESC' : 'ASC';
-        $start = isset($cond['start']) ? protect($cond['start'], 'uint') : -1;
-        $limite = isset($cond['limit']) ? protect($cond['limit'], 'uint') : LIMIT_PAGE;
 
         if ($select == 'tid')
             $sql = 'DISTINCT ' . DB::getTablePrefix() . 't.id AS tid ';
@@ -139,7 +137,7 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
     }
 
     static function getById(int $pid) {
-        $pst = FrmPost::get(['select' => 'post', 'pid' => $pid])->get()->toArray();
+        $pst = FrmPost::get(['select' => 'mbr', 'pid' => $pid])->get()->toArray();
         return $pst ? $pst[0] : [];
     }
 

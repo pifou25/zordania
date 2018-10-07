@@ -1,4 +1,4 @@
-﻿<!-- sous-menu liste des bâtiments = plus utile avec nouveaux villages
+﻿<# sous-menu liste des bâtiments = plus utile avec nouveaux villages
 <if cond='{ses_loged}'> 
 <if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
 
@@ -15,7 +15,7 @@
 </div>
 
 </if>
-</if> -->
+</if> #>
 
 <div class="menu_gauche">
 <h2><label for="menu2">Zordania</label></h2>
@@ -24,6 +24,7 @@
 
 	<if cond='{ses_loged}'> 
 	<if cond='{ses_can_play} AND {ses_mbr_etat_ok}'>
+		<li><a href="qst.html" title="Quêtes.">Quêtes</a></li>
 		<li><if cond='{_user[tid]} > 0'><a href="forum-<math oper="Template::str2url({_user[sub]})"/>.html?tid={_user[tid]}" title="Nouvelle News!" >{_user[sub]}</a><img src="img/acts/notif.gif"/></if>
 			<else><a href="news.html" title="Voir les dernières news.">News</a></else>
 		</li>

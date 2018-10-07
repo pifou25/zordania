@@ -7,7 +7,9 @@
 		<dd>
 		<foreach cond="{_user} as {key} => {value}">
 			[{key}] => 
-			<if cond="is_array({value})">( array )</if><else>{value}</else><br/>
+			<if cond="is_array({value})">
+                            <eval oper="$data .= print_r({value}, true)"/>
+                        </if><else>{value}</else><br/>
 		</foreach>
 		</dd>
 		<if cond="{_get}">

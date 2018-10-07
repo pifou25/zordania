@@ -6,7 +6,7 @@ $(document).ready(  function()
 	var isMobile  = isVisible('#bp_mobile');
 
 	/* envoyer le device au script php */
-	if (typeof mobilePhp == "undefined" || mobilePhp != isMobile) {
+	if (typeof mobilePhp === "undefined" || mobilePhp !== isMobile) {
 		$.ajax({
 			url: 'index.php',
 			data: 'mobile='+ isMobile,
@@ -30,14 +30,14 @@ $(document).ready(  function()
 		{
 			$("#menu").clearQueue().animate({
 				left : '2px'
-			})
+			});
 			isMenuOpen = true;
 		}
 		else
 		{
 			$("#menu").clearQueue().animate({
 				left : '-260px'
-			})
+			});
 			isMenuOpen = false;
 		}
 	});
@@ -92,7 +92,11 @@ $(document).ready(  function()
   
 	// activer le comportement ajax sur les formulaires
 	$("form.ajax").submit(funcZrdFormulaire);
-    
+
+    // Ajoute l'autocomplétion sur l'input d'id 'msg_pseudo'
+    // $("#msg_pseudo").autocomplete({source: "/json--member-search.html?type=ajax"});
+//alert($("#msg_pseudo").length());
+
     // réponse ajax dans une popup
     traiterZrdPopUp();
 
@@ -167,7 +171,8 @@ function jqShowMod(module, output) {
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			output.html('<p class="error">Erreur : ' + textStatus + ' sur le module ' + module + ' - ' + errorThrown + '</p>');
-		},
+
+                },
 		complete: function(jqXHR, textStatus){
 			if(textStatus != 'success')
 				output.append('<p class="infos">' + textStatus + '</p>');
@@ -256,7 +261,7 @@ var funcZrdPopup = function(){ // au clic sur le lien
 		}
 	});
 	return false;
-}
+};
 
 var funcZrdModal = function(){ // au clic sur le lien - popup CSS style selendia
 
@@ -281,7 +286,7 @@ var funcZrdModal = function(){ // au clic sur le lien - popup CSS style selendia
 		}
 	});
 	return false;
-}
+};
 
 // check visibility of an element
 // used to detect desktop or mobile responsive design

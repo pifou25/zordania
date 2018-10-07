@@ -1,9 +1,6 @@
 <p class="menu_module">
-[
 <a href="admin-cours.html?module=com" title="Cours moyens">Cours</a>
-]-[
 <a href="admin-cours_sem.html?module=com" title="Cours sur la semaine">Cours de la Semaine</a>
-]
 </p>
 <if cond='{btc_act} == "cours"'>
 	<form method="post" action="admin-cours.html?module=com">

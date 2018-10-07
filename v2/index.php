@@ -43,8 +43,6 @@ $_cache = new cache('global');
 /*  infos admin en cache : variable globale */
 $admin_cache = new cache('admin');
 
-mark('lib');
-
 /*
 * Templates
 */
@@ -63,7 +61,7 @@ $_tpl->set("_cache", $_cache->get_array());
 
 $_tpl->set('no_cookies',!$_COOKIE);
 
-mark('mysql');
+mark('lib');
 
 DB::init($settings['database']);
 mark('eloquent');
@@ -85,10 +83,6 @@ if(!empty($_mobile)){
 	$_ses->set('mobile', $_mobile);
 	die($_mobile);
 }
-
-/* pour le fichier html de verification google */
-if($_file == 'google0ae71ec825ebe77e')
-	die(file_get_contents(WWW_DIR.$_SERVER['REQUEST_URI']));
 
 if($_file == "session" AND ($_act == "login" OR $_act == "logout"))
 	$log_in_out = true;
@@ -149,6 +143,7 @@ $_tpl->set($const['user']);
 
 /* Config */
 $_tpl->set("cfg_url",SITE_URL);
+$_tpl->set("_act",$_act);
 $_tpl->set("cfg_style",request("style", "string", "cookie", "Marron"));
 $_tpl->set("zordlog_url",ZORDLOG_URL);
 if(!in_array($_user['design'], $_css)) // check if the current css exist
@@ -223,20 +218,30 @@ if($_display == "xml") { /* Sortie en XML */
 	echo $_tpl->get("ajax.tpl",1);
 	mark('tpl');
 } else {
+    
+    // vérifier si une quête a été achevée
+    if(isset($_user['qst']) && is_array($_user['qst']) && isset($_user['qst']['qst_id'])){
+        if($_ses->checkParam($_user['qst']['cfg_objectif'], $_user['qst']['cfg_obj_value'])){
+            // valider la quête - rechercher la suivante
+            Qst::where('qst_id', $_user['qst']['qst_id'])->update(['finished_at' => DB::raw('NOW()')]);
+            $_ses->update_qst();
+            $_file = 'qst';
+        }
+    }
 	header("Content-Type: text/html; charset=$charset");
 	
 	if($_file != "session") {
 		if($_user['etat'] == MBR_ETAT_ZZZ)
 			$_file = 'zzz';
 		else if($_user['etat'] == MBR_ETAT_INI) {
-			$ok = array('ini', 'carte', 'manual', 'inscr', 'forum', 'a_propos', 'sdg', 'news', 'stat', 'member', 'parrain', 'irc', 'notes', 'msg', 'histo');
+			$ok = ['ini', 'carte', 'manual', 'inscr', 'forum', 'a_propos', 'sdg', 'news', 'stat', 'member', 'parrain', 'irc', 'notes', 'msg', 'histo'];
 			if(!in_array($_file, $ok))
 				$_file = 'ini';
 		}
 	}
 	
 	// var contenant des infos de débugage ! $debugvars
-	$_debugvars = array();
+	$_debugvars = [];
 	$_tpl->set_ref('debugvars', $_debugvars);
 
 	if(!$cron_lock || in_array($_file,$lock_array)) {
