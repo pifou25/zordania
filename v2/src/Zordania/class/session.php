@@ -279,7 +279,7 @@ class session
 			
 			$this->init_vars();
 			$this->set_vars($req);
-			$this->set_forum_vars($req['mbr_ldate']);
+			$this->set_forum_vars($req['mbr_unix_ldate']);
 			$this->update_msg();
 			$this->update_heros();
 			$this->update_aly();
@@ -459,9 +459,11 @@ class session
 		if($this->get('decal') != '00:00:00'){
 			$req = preg_replace("/_UDATE_FORMAT\((.*?)\)/i","DATE_FORMAT(FROM_UNIXTIME($1) + INTERVAL '".$this->get('decal')."' HOUR_SECOND,'".$this->dateformat."')",$req);
 			$req = preg_replace("/_DATE_FORMAT\((.*?)\)/i","DATE_FORMAT($1 + INTERVAL '".$this->get('decal')."' HOUR_SECOND,'".$this->dateformat."')",$req);
+                        $req = preg_replace("/_UNIX_FORMAT\((.*?)\)/i", "UNIX_TIMESTAMP($1 + INTERVAL '".$this->get('decal')."' HOUR_SECOND)", $req);
 		}else{
 			$req = preg_replace("/_UDATE_FORMAT\((.*?)\)/i","FROM_UNIXTIME($1,'".$this->dateformat."')",$req);
 			$req = preg_replace("/_DATE_FORMAT\((.*?)\)/i","DATE_FORMAT($1,'".$this->dateformat."')",$req);
+                        $req = preg_replace("/_UNIX_FORMAT\((.*?)\)/i", "UNIX_TIMESTAMP($1)", $req);
 		}
 		return $req;
 	}

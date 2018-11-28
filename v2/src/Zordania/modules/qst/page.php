@@ -7,7 +7,9 @@ if(!$_ses->canDo(DROIT_PLAY))
 else
 {
 
-    $_ses->update_qst();
+    if($_act == 'update'){// maj session
+        $_ses->update_qst();
+    }
     
     $_tpl->set("module_tpl","modules/qst/page.tpl");
         
@@ -20,5 +22,6 @@ else
     else
         $_tpl->set('quete', QstCfg::get(false));
         
+    $_tpl->set('hist', Qst::getAll($_ses->get('mid')));
 
 }

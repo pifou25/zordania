@@ -1,6 +1,6 @@
 <div class="block_forum">
 <img class="blason" title="{quete[username]}" src="img/mbr_logo/{quete[poster_id]}.png" />
-    <h4>{quete[subject]}</h4>
+    <h4>{quete[cfg_subject]}</h4>
 
 <p><math oper='Parser::parse({quete[message]})' /></p>
 <if cond='{quete[edited]}'>
@@ -31,8 +31,8 @@
 </p>
 
 <p>
-    <a href="forum-post.html?pid={quete[pid]}#{quete[pid]}">le {quete[posted]}</a> par
-    <if cond="{quete[mbr_gid]}">
+    <a href="forum-post.html?pid={quete[cfg_pid]}#{quete[cfg_pid]}">le {quete[posted]}</a> par
+    <if cond="isset({quete[mbr_gid]})">
             <zurlmbr gid="{quete[mbr_gid]}" mid="{quete[poster_id]}" pseudo="{quete[username]}"/>
     </if>
     <else>{quete[username]}</else>

@@ -144,6 +144,7 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
             $sql .= " ambr_etat, al_name, ambr_aid, al_nb_mbr,al_open ";
             $sql .= ",mbr_sign, mbr_descr, mbr_lip ";
             $sql .= ",map_cid,map_x,map_y,map_type,map_region, mbr_parrain, mbr_numposts,mbr_design ";
+            $sql .= ",_UNIX_FORMAT(mbr_ldate) as mbr_unix_ldate";
             // replace date formatting:
             $sql = session::$SES->parseQuery($sql);
         } else if ($list) {

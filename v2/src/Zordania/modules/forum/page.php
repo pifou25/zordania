@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if(!defined("_INDEX_")){ exit; }
 /*
 if(!can_d(DROIT_PLAY)) {

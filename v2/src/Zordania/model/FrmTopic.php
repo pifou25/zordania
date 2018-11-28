@@ -13,7 +13,34 @@ class FrmTopic extends Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     // override table name
     protected $table = 'frm_topics';
+    
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    //protected $appends = ['posted_formatted'];
 
+    /**
+     * convert @UnixTimestamp into formatted date-time
+     * @return string
+     */
+//    public function getPostedFormattedAttribute(){
+//        $date = new DateTime($this->attributes['posted']);
+//        return $date->format('Y-m-d H:i:s');
+//    }
+    
+    /**
+     * accessor for 'posted':
+     * @param int $value
+     * @return formated date time
+     */
+//    public function getPostedAttribute($value){
+//        $date = new DateTime($value);
+//        echo $date;
+//        return $date->format('Y-m-d H:i:s');
+//    }
+    
     /* les topics du forum */
 
     static function get(array $cond) {
@@ -28,12 +55,12 @@ class FrmTopic extends Illuminate\Database\Eloquent\Model {
         if ($select == 'topic') {// optimisé: table 'topic' seulement
             // posted_unformat: pour la comparaison de date
             $sql = ' _UDATE_FORMAT(posted) AS posted, last_post AS posted_unformat, '
-                    . '_UDATE_FORMAT(last_post) AS last_post, t.id AS tid, poster, subject, '
+                    . '_UDATE_FORMAT(last_post) AS last_post, id AS tid, poster, subject, '
                     . 'last_post_id, last_poster, num_views, num_replies, closed, sticky, '
-                    . 'forum_id, statut, report_type, id ';
+                    . DB::getTablePrefix() . 't.forum_id, statut, report_type, id ';
             $sql = session::$SES->parseQuery($sql);
 
-            $req = FrmTopic::selectRaw($sql);
+            $req = FrmTopic::selectRaw($sql)->from('frm_topics as t');
         } else {
             $sql = ' _UDATE_FORMAT(' . DB::getTablePrefix() . 't.posted) AS posted, ' . DB::getTablePrefix() . 't.last_post AS posted_unformat, '
                     . '_UDATE_FORMAT(' . DB::getTablePrefix() . 't.last_post) AS last_post, ' . DB::getTablePrefix() . 't.id AS tid, ' . DB::getTablePrefix() . 't.poster, subject, '
@@ -65,9 +92,9 @@ class FrmTopic extends Illuminate\Database\Eloquent\Model {
                                         . 'WHERE p3.topic_id = ' . DB::getTablePrefix() . 't.id)'))
                         ->leftJoin('mbr AS m2', 'p2.poster_id', 'm2.mbr_mid');
             }
+            $req->whereRaw('(read_forum IS NULL OR read_forum=1)'); // droit de lecture au minimum!
         }
 
-        $req->whereRaw('(read_forum IS NULL OR read_forum=1)'); // droit de lecture au minimum!
         if ($fid) {
             $req->where('t.forum_id', $fid);
         }
@@ -85,7 +112,7 @@ class FrmTopic extends Illuminate\Database\Eloquent\Model {
             }
             return $req->offset($start)->take($limit); // for paginator
         } else {
-            //echo $req->toSql();
+            echo $req->toSql();
             return $req->get()->toArray();
         }
     }

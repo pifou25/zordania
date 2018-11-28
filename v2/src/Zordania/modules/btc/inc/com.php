@@ -117,7 +117,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 			$com_mod_max = 1;
 			$com_mod = 1;
 		}
-		if ($_user['bonus'] == CP_GENIE_COMMERCIAL) {
+		if ($_user['hro_bonus'] == CP_GENIE_COMMERCIAL) {
 			$bonus = $_ses->getConf('comp', CP_GENIE_COMMERCIAL, 'bonus');
 			$com_mod_max = $com_mod_max*(1-$bonus/100);
 			$com_mod = $com_mod*(1-$bonus/100);

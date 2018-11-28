@@ -146,11 +146,10 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
     }
 
     private static function getStopWords(){
-        global $_tpl;
-        static $stopwords;
+        static $stopwords = null;
         if($stopwords == null){
-            $stopwords = (array) file($_tpl->var->tpl->dir2 . $_tpl->var->tpl->dir . $_tpl->var->tpl->lang . '/modules/forum/stopwords.txt');
-            $stopwords = array_map('trim', $stopwords);
+            $stopwords = (array) file(SITE_DIR . 'src/Zordania/cache/stopwords.txt', 
+                    FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         }
         return $stopwords;
     }
@@ -194,8 +193,7 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
         $unique_words = array_unique(array_merge($words['add']['post'], $words['add']['subject']));
 
         if (!empty($unique_words)) {
-            $result = FrmWord::whereIn('word', preg_replace('#^(.*)$#', '\'\1\'', $unique_words))
-                            ->get()->toArray();
+            $result = FrmWord::whereIn('word', $unique_words)->get()->toArray();
 
             $word_ids = [];
             foreach ($result as $row)
@@ -205,8 +203,7 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
             unset($unique_words);
 
             if (!empty($new_words)) {
-                $insert = preg_replace('#^(.*)$#', '(\'\1\')', $new_words);
-                foreach ($insert as $value)
+                foreach ($new_words as $value)
                     $request[] = ['word' => $value];
                 FrmWord::insert($request);
             }
@@ -228,17 +225,16 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
             }
         }
 
-        // Add new matches
-        $sql = 'INSERT INTO ' . DB::getTablePrefix() .
-                'frm_search_matches (post_id, word_id, subject_match) SELECT ?' .
-                ', id, ? FROM ' . DB::getTablePrefix() .
-                'frm_search_words WHERE word IN(?)';
         while (list($match_in, $wordlist) = @each($words['add'])) {
             $subject_match = ($match_in == 'subject') ? 1 : 0;
+            // Add new matches
+            $sql = 'INSERT INTO ' . DB::getTablePrefix() .
+                    'frm_search_matches (post_id, word_id, subject_match) SELECT ' .
+                    "'$post_id', id, '$subject_match' FROM " . DB::getTablePrefix() .
+                    'frm_search_words WHERE word IN(?)';
 
             if (!empty($wordlist)) {
-                DB::insert($sql, [$post_id, $subject_match,
-                    preg_replace('#^(.*)$#', '\'\1\'', $wordlist)]);
+                DB::insert($sql, $wordlist);
             }
         }
 

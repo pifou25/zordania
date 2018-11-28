@@ -17,6 +17,9 @@ if($_act == 'edit'){
         $mbr = $mbr_infos = Mbr::get(array('pseudo' => $_POST['msg_pseudo']));
         $mid = empty($mbr) ? null : $mbr[0]['mbr_mid'];
         $request = ['cfg_mid' => $mid];
+        if(!empty($_POST['cfg_subject'])){
+            $request['cfg_subject'] = $_POST['cfg_subject'];
+        }
         
         if($_POST['param1'] != 0){
             $request['cfg_param1'] = $_POST['param1'];
@@ -50,7 +53,7 @@ if($_act == 'edit'){
             $request['cfg_objectif'] = $_POST['param5'];
             $request['cfg_obj_value'] = $_POST['value5'];
         }else{
-            $request['cfg_objectif'] = null;
+            $request['cfg_objectif'] = 0; // aucun objectif? devrait faire une erreur
             $request['cfg_obj_value'] = null;
         }
         $_tpl->set('update', QstCfg::where('cfg_id', $id)->update($request));
@@ -63,5 +66,17 @@ if($_act == 'edit'){
         
     }
 }else{
-    $_tpl->set('qst', QstCfg::join('frm_topics', 'cfg_tid', 'id')->get()->toArray());
+    $tid = request('tid', 'uint', 'get');
+    if($tid){
+        // liste complete des quetes
+        $qst =  QstCfg::where('cfg_tid', $tid)->get()->toArray();
+        foreach($qst as $row){
+            $ids[] = $row['cfg_pid'];
+        }
+        $psts = FrmPost::whereIn('id', $ids)->get()->toArray();
+        $_tpl->set('qstDetail', QstCfg::join('frm_posts', 'cfg_pid', 'id')->where('cfg_tid', $tid)->get()->toArray());
+    }else{
+        // liste des topics uniquement
+        $_tpl->set('qst', FrmTopic::get(['fid' => QUETES_FID, 'select' => 'topic']));
+    }
 }

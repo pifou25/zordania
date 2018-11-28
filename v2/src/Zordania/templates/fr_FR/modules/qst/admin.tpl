@@ -26,8 +26,11 @@
     
     <form action="admin-edit.html?module=qst&amp;id={quete[cfg_id]}" method="post">
 
+        <p><label for="cfg_subject">Modifier le titre :</label>
+        <input type="text" id="cfg_subject" name="cfg_subject" value="{quete[cfg_subject]}" tabindex="1" />
+
         <p><label for="msg_pseudo">PNJ de la quête :</label>
-        <input type="text" id="msg_pseudo" name="msg_pseudo" value="{quete[username]}" tabindex="1" maxlength="{TAILLE_MAX_PSEUDO}">
+        <input type="text" id="msg_pseudo" name="msg_pseudo" value="{quete[username]}" tabindex="2" maxlength="{TAILLE_MAX_PSEUDO}" />
         ( <a href="member-liste.html" title="Liste des joueurs">Liste</a> )</p>
 
         <h4>Prérequis pour cette quête :</h4>
@@ -74,17 +77,27 @@
     </form>
     
 </elseif>
+<elseif cond='isset({qstDetail})'>
+<foreach cond="{qstDetail} as {val}">
+
+    (<a href="forum.html?pid={val[cfg_pid]}#{val[cfg_pid]}"> forum </a>) :
+    <a href="admin-edit.html?module=qst&amp;id={val[cfg_id]}"> {val[cfg_subject]} </a>
+    [ id = {val[cfg_id]} ]
+    <include file="modules/qst/qst.tpl" quete="{val}" cache="1" />
+    
+    <if cond="!empty({val[cfg_param1]})">( param1({val[cfg_param1]}) = {val[cfg_value1]} )</if>
+    <if cond="!empty({val[cfg_param2]})"> - ( param2({val[cfg_param2]}) = {val[cfg_value2]} )</if>
+    <if cond="!empty({val[cfg_param3]})"> - ( param4({val[cfg_param3]}) = {val[cfg_value3]} )</if>
+    <if cond="!empty({val[cfg_param4]})"> - ( param3({val[cfg_param4]}) = {val[cfg_value4]} )</if>
+    <if cond="!empty({val[cfg_objectif]})"> - {val[cfg_objectif]} = {val[cfg_obj_value]}</if>
+    <br/>
+</foreach>
+</elseif>
 <elseif cond="isset({qst})">
 <foreach cond="{qst} as {val}">
 
-    (<a href="forum.html?tid={val[cfg_tid]}#{val[cfg_tid]}"> forum </a>)
-    <a href="forum.html?pid={val[cfg_pid]}#{val[cfg_pid]}">{val[subject]}</a> :
-    (<a href="admin-edit.html?module=qst&amp;id={val[cfg_id]}"> editer </a>)
-    <if cond="!empty({val[cfg_param1]})">( {val[cfg_param1]} = {val[cfg_value1]} )</if>
-    <if cond="!empty({val[cfg_param2]})"> - ( {val[cfg_param2]} = {val[cfg_value2]} )</if>
-    <if cond="!empty({val[cfg_param3]})"> - ( {val[cfg_param3]} = {val[cfg_value3]} )</if>
-    <if cond="!empty({val[cfg_param4]})"> - ( {val[cfg_param4]} = {val[cfg_value4]} )</if>
-    <if cond="!empty({val[cfg_objectif]})"> - {val[cfg_objectif]} = {val[cfg_obj_value]}</if>
+    <a href="forum.html?tid={val[tid]}#{val[tid]}"> {val[subject]} </a>
+    (<a href="admin.html?module=qst&amp;tid={val[tid]}"> Lister </a>)
     <br/>
 </foreach>
     

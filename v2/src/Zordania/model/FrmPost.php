@@ -13,6 +13,32 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     // override table name
     protected $table = 'frm_posts';
+    
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    //protected $appends = ['posted_formatted'];
+
+    /**
+     * convert @UnixTimestamp into formatted date-time
+     * @return string
+     */
+//    public function getPostedFormattedAttribute(){
+//        $date = new DateTime("@{$this->attributes['posted']}");
+//        return $date->format('Y-m-d H:i:s');
+//    }
+    
+    /**
+     * accessor for 'posted':
+     * @param int $value
+     * @return formated date time
+     */
+//    public function getPostedAttribute($value){
+//        $date = new DateTime("@$value");
+//        return $date->format('Y-m-d H:i:s');
+//    }
 
     /**
      * select = tid|pid|post (seulement table posts)|mbr (infos membre+ally+grade)

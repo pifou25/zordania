@@ -1,4 +1,4 @@
-<table class="liste" id="showComForm">
+<table class="liste">
 <tr>
 	<th>Nombre</th>
 	<th>Prix</th>
@@ -22,9 +22,9 @@
 		</td>
 		<td>
 			<if cond="{res_value[mch_mid]} != {_user[mid]}">
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ach&amp;com_cid={res_value[mch_cid]}" title="Acheter {res[{_user[race]}][alt][{mch_type}]}" class="com">Acheter</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ach&amp;com_cid={res_value[mch_cid]}" title="Acheter {res[{_user[race]}][alt][{mch_type}]}" class="showComForm">Acheter</a>
 			-
-			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ach&amp;com_cid={res_value[mch_cid]}&amp;com_neg=true" title="Négocier la vente de {res[{_user[race]}][alt][{mch_type}]}" class="com">Négocier</a>
+			<a href="btc-use.html?btc_type={btc_id}&amp;sub=ach&amp;com_cid={res_value[mch_cid]}&amp;com_neg=true" title="Négocier la vente de {res[{_user[race]}][alt][{mch_type}]}" class="showComForm">Négocier</a>
 			</if>
 		</td>
 		<td>

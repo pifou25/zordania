@@ -26,7 +26,7 @@ function mark($title_or_get)
 $t1 = mtime();
 mark('start');
 
-/* Includes généraux */
+/* Includes g�n�raux */
 require_once 'vendor/autoload.php';
 require_once("src/Zordania/lib/divers.lib.php");
 require_once("conf/conf.inc.php");
@@ -47,7 +47,7 @@ $admin_cache = new cache('admin');
 * Templates
 */
 $_tpl = new Template();
-$_tpl->set_dir('../src/Zordania/templates');
+$_tpl->set_dir(__DIR__ . '/src/Zordania/templates');
 $_tpl->set("charset", SITE_CHARSET);
 
 /* display : xhtml - module - ajax - popup - xml */
@@ -89,12 +89,12 @@ if($_file == "session" AND ($_act == "login" OR $_act == "logout"))
 else
 	$log_in_out = false;
 
-/* Si c'est la première fois qu'on vient, on se connecte automatiquement*/
+/* Si c'est la premi�re fois qu'on vient, on se connecte automatiquement*/
 if(!$_ses->session_opened()) {
 	if(!$_ses->auto_login()) die( "Erreur auto-login");
 } elseif(!$log_in_out) { /* Sinon, si on est sur une page normale */
 	if(!$_ses->update($_file)) { /* On maj la session */
-		if(!$_ses->auto_login()) die( "Erreur auto-login"); /* Ca a merdé .. on tente de se connecter en n'importe quoi */
+		if(!$_ses->auto_login()) die( "Erreur auto-login"); /* Ca a merd� .. on tente de se connecter en n'importe quoi */
 	}
 }
 
@@ -219,13 +219,13 @@ if($_display == "xml") { /* Sortie en XML */
 	mark('tpl');
 } else {
     
-    // vérifier si une quête a été achevée
+    // v�rifier si une qu�te a �t� achev�e
     if(isset($_user['qst']) && is_array($_user['qst']) && isset($_user['qst']['qst_id'])){
         if($_ses->checkParam($_user['qst']['cfg_objectif'], $_user['qst']['cfg_obj_value'])){
-            // valider la quête - rechercher la suivante
+            // valider la qu�te - rechercher la suivante
             Qst::where('qst_id', $_user['qst']['qst_id'])->update(['finished_at' => DB::raw('NOW()')]);
             $_ses->update_qst();
-            $_file = 'qst';
+            //$_file = 'qst';
         }
     }
 	header("Content-Type: text/html; charset=$charset");
@@ -240,7 +240,7 @@ if($_display == "xml") { /* Sortie en XML */
 		}
 	}
 	
-	// var contenant des infos de débugage ! $debugvars
+	// var contenant des infos de d�bugage ! $debugvars
 	$_debugvars = [];
 	$_tpl->set_ref('debugvars', $_debugvars);
 
@@ -307,11 +307,11 @@ if($_display == "xml") { /* Sortie en XML */
 
 if(!empty($_error)) { // log des erreurs PHP
 	$err_log = new log(SITE_DIR."logs/phperr/php_".date("d_m_Y").".log", "H:i:s", false);
-	$err_log->text("****** Erreurs pour {$_user['pseudo']} ( {$_user['mid']} ) à ".date("H:i:s")." *****");
+	$err_log->text("****** Erreurs pour {$_user['pseudo']} ( {$_user['mid']} ) � ".date("H:i:s")." *****");
 	foreach($_error as $key => $err){
 		$err_log->text(error_print($err));
 		if($key>4) {
-			$err_log->text('Plus de 4 erreurs **** le reste ignoré *** '.count($_error));
+			$err_log->text('Plus de 4 erreurs **** le reste ignor� *** '.count($_error));
 			break;
 		}
 	}

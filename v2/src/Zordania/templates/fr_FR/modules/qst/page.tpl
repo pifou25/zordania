@@ -10,3 +10,21 @@
 </p>
 </if>
 <else><p class="infos">Aucune quête disponible.</p></else>
+
+<if cond="!empty({hist})">
+<h3>Quêtes Terminées</h3>
+    <table>
+        <tr>
+        <th>Date Début</th>
+        <th>Date Fin</th>
+        <th>Quête</th>
+        </tr>
+    <foreach cond='{hist} as {value}'>
+        <tr>
+            <td>{value[created_at]}</td>
+            <td>{value[finished_at]}</td>
+            <td>{value[cfg_subject]}</td>
+        </tr>
+    </foreach>
+    </table>
+</if>

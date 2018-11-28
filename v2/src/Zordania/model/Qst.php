@@ -56,6 +56,11 @@ class Qst extends Illuminate\Database\Eloquent\Model {
         return false; // aucune quête disponible    
     }
     
+    /**
+     * rajouter la config dans l'array de quete
+     * @param array $qst
+     * @return type
+     */
     private static function fillQst(array $qst){
         if(empty($qst['read_at'])){
             $qst['display'] = true;
@@ -65,13 +70,16 @@ class Qst extends Illuminate\Database\Eloquent\Model {
         $cfg = QstCfg::get($qst['qst_cfg_id']);
         return array_merge( $qst, $cfg);
     }
+    
     /**
      * rechercher toutes les quêtes d'un membre
      * @param type $mid
      */
     public static function getAll(int $mid){
         
-        return Qst::where('qst_mid', $mid)->orderBy('created_at', 'desc')->get()->toArray();
+        return Qst::join('qst_cfg', 'qst_cfg_id', 'cfg_id')
+                ->select('qst.*', 'cfg_subject')
+                ->where('qst_mid', $mid)->orderBy('created_at', 'desc')->get()->toArray();
 
     }
 }

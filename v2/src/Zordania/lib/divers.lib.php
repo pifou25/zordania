@@ -2,7 +2,6 @@
 
 /* fonction de chargement automatique pour les classes */
 spl_autoload_register(function ($classname) {
-	//$folders = glob(__DIR__ . "\*", GLOB_ONLYDIR);
 
     if (is_file(SITE_DIR ."src/Zordania/class/$classname.php"))
 		require_once SITE_DIR ."src/Zordania/class/$classname.php";
@@ -10,10 +9,6 @@ spl_autoload_register(function ($classname) {
 		require_once SITE_DIR ."src/Zordania/model/$classname.php";
         else return false;
         
-//	else
-//		for ($i = 0; $i < count($folders); $i++)
-//			if (is_file($folders[$i] . "/$classname.class.php"))
-//				require_once $folders[$i] . "/$classname.class.php";
 });
 
 /* Envoie un mail */
@@ -333,9 +328,9 @@ function fatal_handler() {
             $i = 0;
             foreach(DB::connection()->getQueryLog() as $query){
                 $i++;
-                $msg .= "$i: {$query['query']}\nBinding:\n";
+                $msg .= "\n$i: {$query['query']}\nBinding:\n";
                 $msg .= print_r($query['bindings'], TRUE);
-                $msg .= "\n\tCallstack:\n" . implode("\n\t\t", $query['callstack']);
+                $msg .= "\n\tCallstack:\n" . implode("\n\t", $query['callstack']);
             }
         }
         $msg .= "</pre>";

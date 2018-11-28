@@ -48,12 +48,14 @@ class QstCfg extends Illuminate\Database\Eloquent\Model {
      */
     public static function majAll() {
 
-        $sql = 'INSERT INTO zrd_qst_cfg (cfg_pid, cfg_tid)
-                SELECT id, topic_id from zrd_frm_posts WHERE topic_id in (
-                SELECT id from zrd_frm_topics WHERE forum_id = ?)
-                AND NOT EXISTS (SELECT 1 FROM zrd_qst_cfg WHERE id = cfg_pid AND topic_id = cfg_tid);';
+        $sql = 'INSERT INTO zrd_qst_cfg (cfg_pid, cfg_tid, cfg_subject)
+    SELECT p.id, topic_id, subject FROM zrd_frm_posts p 
+      INNER JOIN zrd_frm_topics t ON topic_id = t.id
+    WHERE forum_id = ?
+    AND NOT EXISTS (SELECT 1 FROM zrd_qst_cfg WHERE p.id = cfg_pid AND topic_id = cfg_tid);';
 
         DB::insert($sql, [QUETES_FID]);
+        
     }
 
 }

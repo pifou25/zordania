@@ -27,10 +27,10 @@
 	var cfg_url = '{cfg_url}';
 	var user_css = {_user[design]};
 	<if cond="isset({_user[mobile]})">
-        var mobilePhp = '{_user[mobile]}';</if>
+        var mobilePhp = {_user[mobile]};</if>
         <if cond="!empty({_user[qst]}) && {_user[qst][display]} == 1">
-        var popupQst = 1;</if><else>
-        var popupQst = 0;</else>
+        var popupQst = true;</if><else>
+        var popupQst = false;</else>
 
 	</script>
 	<# script type="text/javascript" src="js/functionAddEvent.js"></script #>
@@ -174,11 +174,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 <# div pour popup jquery #>
 <div id="dialog-modal" title="Titre" style="display:none;"><div id="dialog-text"></div></div>
 
-<if cond="!empty({_user[qst]}) && {_user[qst][display]} == 1">
-    <div id="popupqst">
-<include file="modules/qst/qst.tpl" quete="{_user[qst]}" cache="1" />
-</div>
-</if>
 <if cond="isset({sv_site_debug})"><include file="debug.tpl" cache="1" /></if>
 
 <script type="text/javascript">
