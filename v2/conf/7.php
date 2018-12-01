@@ -243,9 +243,9 @@ $this->trn[T7_MONTAGNE] = array();
 *	Nom			Type				Fonction
 *	bonusdef		uint				Bonus de d?ence
 *	vie			uint				Points de vie du btc
-*	population		uint				Crée x places
-*	tours			uint				Met x tour a être construit
-*	com			array()				Recherche => array(quantitée, vente)
+*	population		uint				Crï¿½e x places
+*	tours			uint				Met x tour a ï¿½tre construit
+*	com			array()				Recherche => array(quantitï¿½e, vente)
 */
 
 //<btc>
@@ -1109,7 +1109,7 @@ $this->src[S7_DRESSEUR_EXP]=array(
 
 //</src>	
 
-/* compétences du héros - offensif / défensif / soutient */
+/* compï¿½tences du hï¿½ros - offensif / dï¿½fensif / soutient */
 
 //<comp>
 $this->comp[CP_BOOST_OFF]=array(
@@ -1140,7 +1140,7 @@ $this->comp[CP_TELEPORTATION]=array(
 	'heros'		=> array(U7_HOBGOB_OFF),
 	'tours'		=> 24,
 	'bonus'		=> 10,
-	'prix_xp'	=> 50,
+	'prix_xp'	=> 180,
 	'type'		=> 1
 );
 
@@ -1216,13 +1216,13 @@ $this->comp[CP_GUERISON]=array(
 
 /*
 *	Config de la race
-*	'primary_res'	Ressources les plus importantes, affichées en haut a gauche
-*	'second_res'	Ressources importantes, affichées dans le donjon
-*	'primary_btc'	Bâtiment les plus importants, affichés dans le menu
+*	'primary_res'	Ressources les plus importantes, affichï¿½es en haut a gauche
+*	'second_res'	Ressources importantes, affichï¿½es dans le donjon
+*	'primary_btc'	Bï¿½timent les plus importants, affichï¿½s dans le menu
 *	'bonus_res'	Coef pour calculer combien de bonus en fonction des points .. en pratique, seul celui
-*				de l'or est censé être utilisé
-*	'modif_pts_btc'	Coef pour determiner combien les bâtiments rapportent de points
-*	'debut'		Trucs a donner au début
+*				de l'or est censï¿½ ï¿½tre utilisï¿½
+*	'modif_pts_btc'	Coef pour determiner combien les bï¿½timents rapportent de points
+*	'debut'		Trucs a donner au dï¿½but
 *	'trn'		Terrains a donner en fonction de la carte
 */
 
