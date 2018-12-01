@@ -525,7 +525,7 @@ case 'make_atq':
 	$coeff_xp = min($att['fin'],$def_tot) / max($att['fin'],$def_tot);
 	$xp_def = ceil( $def_tot * $coeff_xp / 45 );
 
-	$bilan['atq_bat_xp'] = 	floor(($bilan['atq_bat'] - $att_bat) * ((1 + count($btc_edit)) * $sol_bat_det /8000)/ 300); // XP atq bat
+	$bilan['atq_bat_xp'] = 	floor(($bilan['atq_bat'] - $att_bat) * ((1 + count($btc_edit)) * $sol_bat_det /2000)/ 300); // XP atq bat
 	$bilan['att']['xp_won'] = ceil( $att['fin'] * $coeff_xp / 45 + $bilan['atq_bat_xp']);
 	
 	foreach ($legs['def'] as $lid) { // parcourir les légions en défense
