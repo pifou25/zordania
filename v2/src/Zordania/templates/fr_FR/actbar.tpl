@@ -1,4 +1,4 @@
-<a name="actbar"></a>
+﻿<a name="actbar"></a>
 <ul>
     <li>
         <a href="#" id="openmenulat" title="Menu."><img src="img/acts/menu_bg.png" /></a>

@@ -1,4 +1,4 @@
-/* zordania fonctions jQuery */
+﻿/* zordania fonctions jQuery */
 
 $(document).ready(function ()
 {

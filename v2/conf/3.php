@@ -2114,7 +2114,7 @@ $this->comp[CP_GUERISON]=array(
 
          'bonus'                => 0,
 
-         'prix_xp'        => 50,
+         'prix_xp'        => 180,
 
         'type'                => 3
 

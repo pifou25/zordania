@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once('secret_parameters.php');
 
 /* === Configuration Site === */
