@@ -128,7 +128,6 @@ if($_act == "del") {
 		$_tpl->set("mbr_sign", Parser::unparse($array['mbr_sign']));
 
 		// champs pour renommer les lÃ©gions
-		require_once("lib/unt.lib.php");
 		$_tpl->set('leg',Leg::getAll($mid));
 	}
 		
@@ -410,7 +409,6 @@ if($_act == "del") {
 } else if ($_act == 'exp') 
 { // exporter membre
 	$mid = request("mid", "uint", "get");
-	require_once("lib/mysql.lib.php");
 	
 	// telecharger fichier sql
 	header('Content-Type: text');
