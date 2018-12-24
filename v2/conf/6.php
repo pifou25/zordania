@@ -26,6 +26,9 @@ define("T6_MONTAGNE", 5);
 
 define("B6_DONJON", 1);
 define("B6_MARCHE", 2);
+define("B6_MAISON", 3);
+define("B6_FORTERESSE", 4);
+define("B6_TOUR", 5);
 
 define("U6_DRESSEUR", 1);
 define("U6_SOLDAT", 2);
@@ -178,9 +181,9 @@ $this->btc[B6_DONJON]=array(
 		"tours"	=>	500,
 		"bonus" 	=>  array('gen' => 300, 'bon' => 40),
 		"prix_res"	=>	array(R6_BOIS => 2250, R6_PIERRE => 2250, R6_ACIER => 200),
-		"prod_pop"	=>	1000,
+		"prod_pop"	=>	100,
 		"prod_src"	=>	true,
-		"prod_unt"	=>	80,
+		"prod_unt"	=>	100,
 		"prod_res_auto"	=>	array(R6_NOURRITURE => 1000, R6_OR => 20)
 );
 
@@ -191,6 +194,37 @@ $this->btc[B6_MARCHE]=array(
 		"bonus" 	=>  array('gen' => 300, 'bon' => 40),
 		"prix_res"	=>	array(R6_BOIS => 200, R6_PIERRE => 200, R6_OR => 200),
 		"com"	=>	array(S6_ARME_1 => array(COM_MAX_NB3,COM_MAX_VENTES3))
+);
+	
+	
+$this->btc[B6_MAISON]=array(
+		"vie"	=>	1000,
+		"limite"	=>	1,
+		"tours"	=>	500,
+		"bonus" 	=>  array('gen' => 300, 'bon' => 40),
+		"prix_res"	=>	array(R6_BOIS => 2250, R6_PIERRE => 2250, R6_ACIER => 200),
+		"prod_pop"	=>	50,
+		"prod_unt"	=>	0,
+);
+
+$this->btc[B6_FORTERESSE]=array(
+		"vie"	=>	7000,
+		"tours"	=>	2000,
+		"bonus"         =>      array('gen' => 300, 'bon' => 13.5),
+		"prod_unt"	=>	20,
+		"prod_src"	=>	true,
+		"prod_pop"	=>	0,
+		"prix_res"	=>	array(R6_BOIS => 4500, R6_PIERRE => 4500, R6_ACIER => 400),
+		"limite"	=>	1,
+		
+);
+
+$this->btc[B6_TOUR]=array(
+		"bonus"         =>      array('bon' => 3.5),
+		"vie"		=>	1000,
+		"tours"		=>	100,
+		"prix_res"	=>	array(R6_BOIS => 2750, R6_PIERRE => 3000, R6_ACIER => 200),
+		"limite"	=>	4,
 );
 //</btc>
 
@@ -239,7 +273,7 @@ $this->unt[U6_ELITE] = array(
 	'atq_unt' => 30,
 	'atq_btc' => 8,
 	'vit' => 12,
-	'rang' => 8,
+	'rang' => 4,
 	'bonus' => array(
 		'atq' => 0.5),
 );
@@ -430,7 +464,7 @@ $this->unt[U6_ARBALETRIER]=array(
 		"vit"	=>	9,
 		"bonus" => array('vie' => 1),
 		"group"	=>	13,
-		"rang" => 8,
+		"rang" => 4,
 		"role"	=>	TYPE_UNT_DISTANCE,
 		"prix_res"	=>	array(R6_ARBALETE => 1,R6_COTTE_MAILLE => 1, R6_OR => 5),
 		"need_btc"	=>	array(B6_DONJON),
@@ -445,7 +479,7 @@ $this->unt[U6_MAGICIEN]=array(
 		"vit"	=>	4,
 		"group"	=>	13,
 		"role"	=>	TYPE_UNT_MAGIQUE,
-		"rang" => 12,
+		"rang" => 6,
 		"prix_res"	=>	array(R6_NOURRITURE => 30, R6_OR => 5, R6_ACIER =>2, R6_MITHRIL => 2),
 		"need_btc"	=>	array(B6_DONJON),
 		"in_btc"	=>	array(B6_DONJON),
@@ -494,8 +528,8 @@ $this->race_cfg = array(
 	'bonus_res'	=>	array(R6_OR => 0.05),
 	'modif_pts_btc'	=>	10,
 	'debut'	=>	array(
-		'res'	=>	array(R6_OR => 10000, R6_BOIS => 10000, R6_PIERRE => 10000, R6_NOURRITURE => 500000),
-		'unt'	=> 	array(U6_DRESSEUR => 1),
+		'res'	=>	array(R6_OR => 10000, R6_BOIS => 10000, R6_PIERRE => 10000, R6_NOURRITURE => 500000),R6_FER => 10000,R6_CHARBON => 10000,R6_CHEVAUX => 10000,R6_ACIER => 10000,R6_B_BOIS => 10000,R6_B_ACIER => 10000,R6_EPEE => 10000,R6_EPEE_LON => 10000,R6_ARC => 10000,R6_ARBALETE => 10000,R6_COTTE_MAILLE => 10000,R6_COTTE_MITHRIL => 10000,R6_MITHRIL => 10000,
+		'unt'	=> 	array( U6_DRESSEUR => 20, U6_GROSLUTIN => 100, U6_SOLIDELUTIN => 200),
 		'btc'	=> 	array(B6_DONJON => array()),
 		'src'	=>	array(S6_ARME_1)),
 	'bonus_map' => array(MAP_EAU => 0, MAP_LAC => 0, MAP_HERBE => 2, MAP_MONTAGNE => 0, MAP_FORET => 0),
