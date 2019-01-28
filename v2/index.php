@@ -250,9 +250,14 @@ if($_display == "xml") { /* Sortie en XML */
 		if($_user['etat'] == MBR_ETAT_ZZZ)
 			$_file = 'zzz';
 		else if($_user['etat'] == MBR_ETAT_INI) {
-			$ok = array('ini', 'carte', 'manual', 'inscr', 'forum', 'a_propos', 'sdg', 'news', 'stat', 'member', 'parrain', 'irc', 'notes', 'msg', 'histo');
+			$ok = array('ini', 'carte', 'manual', 'inscr', 'forum', 'a_propos', 'sdg', 'news', 'stat', 'member', 'parrain', 'irc', 'notes', 'msg', 'histo', 'presentation');
 			if(!in_array($_file, $ok))
 				$_file = 'ini';
+		}
+		else if($_user['mid'] == 1) { // guest
+			$ok = array( 'carte', 'manual', 'inscr', 'forum', 'a_propos', 'sdg', 'news', 'stat', 'parrain', 'irc', 'presentation');
+			if(!in_array($_file, $ok))
+				$_file = 'presentation';
 		}
 	}
 	

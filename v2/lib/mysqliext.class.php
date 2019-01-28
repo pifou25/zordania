@@ -20,7 +20,7 @@ class mysqliext
 	var $con = false;
 	var $total_time;
 	var $debug;
-	var $queries;
+	var $queries = [];
 	var $env = ''; // environnement ajouté pour le log ($act et $file)
 	var $log = false; // objet log.class.php
 	var $mysqli;
