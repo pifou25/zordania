@@ -3,7 +3,7 @@ require_once('secret_parameters.php');
 
 /* === Configuration Site === */
 define('ZORD_VERSION',"2.3.1");
-define('ZORD_ANNEE',"2018");
+define('ZORD_ANNEE',date('Y'));
 define('ZORD_SPEED_VFAST', 0.16667); // 1 Tour toutes les 30sec
 define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
 define('ZORD_SPEED_MEDIUM', 15); // 1 Tour toutes les 15 minutes
