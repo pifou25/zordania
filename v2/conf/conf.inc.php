@@ -14,13 +14,13 @@ define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
 define('SITE_MAX_CONNECTED', 300);
 define('SITE_MAX_INSCRITS', 10000);
 
-$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.fr";
+$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.com";
 define('SITE_URL', "http://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");
 define('ZORDLOG_URL', 'zordania.free.fr'); // URL des archives
 
-define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.fr');
+define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.com');
 define('SITE_CHARSET', 'utf-8'); // iso-8859-1, utf-8, ...
 
 define('GEN_LENGHT', 6); /* Taille des chaines générées aléatoirement (pass, etc ...) */
@@ -68,8 +68,9 @@ define('ALL_MIN_PTS', 4000); // Points pour entrer
 define('ALL_MIN_ADM_PTS', 7000); // Points pour créer une alliance
 define('ALL_CREATE_PRICE', 1000); // Prix pour créer une alliance
 define('ALL_JOIN_PRICE', 200); //Prix pour rejoindre une alliance
-define('ALL_NOOB_TIME', 3); // Temps en jour pendant le quel on reste "NOOB"
+define('ALL_NOOB_TIME', 1); // Temps en jour pendant le quel on reste "NOOB"
 define('ALL_MIN_DEP', 10); // Dépot minimal
+define('ALL_MBR_TODISPL', 1); // Nombre minimum de joueur avant affichage dans la liste all
 
 define('ALL_TAX',10); // Taxe du grenier (%)
 define('ALL_SEUIL_PILLAGE', 1000); //En dessous de 1000 on ne considère pas un retrait comme un pillage potentiel

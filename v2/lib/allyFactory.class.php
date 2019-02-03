@@ -59,7 +59,7 @@ class allyFactory {
 			if($name)
 				$sql.=" al_name LIKE '%$name%' AND ";
 			if($mini3)
-				$sql.= "al_nb_mbr >= 3 AND ";
+				$sql.= "al_nb_mbr >= ". ALL_MBR_TODISPL . " AND ";
 
 			$sql = substr($sql, 0, strlen($sql) - 4);
 		}
