@@ -335,7 +335,7 @@ function mod_aly_res($aid, $mid, $res, $coef = 1)/* prendre/retirer au grenier p
 			$sql .= " ON DUPLICATE KEY UPDATE ares_nb = ares_nb + $nb;";
 			$_sql->query($sql);
 
-			$sql_log[] = "('',$aid,$mid,$type,$nb,NOW(),'$ip')";
+			$sql_log[] = "(NULL,$aid,$mid,$type,$nb,NOW(),'$ip')";
 		}
 	}
 
