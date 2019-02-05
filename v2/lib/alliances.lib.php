@@ -317,13 +317,11 @@ function add_aly_res($aid, $mid, $type, $nb)/* prendre/retirer au grenier 1 ress
 	return mod_aly_res($aid, $mid, array($type => $nb));
 }
 
-function mod_aly_res($aid, $mid, $res, $coef = 1)/* prendre/retirer au grenier plusieurs ressources */
+function mod_aly_res(int $aid, int $mid, array $res, int $coef = 1)/* prendre/retirer au grenier plusieurs ressources */
 {
 	global $_sql;
 	
-	$aid = protect($aid, "uint");
-	$mid = protect($mid, "uint");
-	$res = protect($res, "array");
+	$res = protect($res, ['uint']);
 	$sql = '';
 	$sql_log = array();
 	$ip = get_ip();
