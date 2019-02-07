@@ -1,10 +1,13 @@
 <?php
 
-/* fonction de chargement automatique pour les classes */
+/* fonction de chargement automatique pour les classes 
 function __autoload($classname) {
 	require_once(SITE_DIR ."lib/$classname.class.php");
+}*/
+function my_autoloader($classname){
+	require_once(SITE_DIR ."lib/$classname.class.php");
 }
-
+spl_autoload_register('my_autoloader');
 /* Envoie un mail */
 function mailto($from, $to, $sujet, $message, $html=FALSE)
 {
