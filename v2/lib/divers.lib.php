@@ -172,6 +172,8 @@ function get_ip()
 			$realip = getenv( 'REMOTE_ADDR' ); 
 		} 
 	} 
+	$first_ip = explode(",", $realip); //on scinde les ip bizarre x.x.x.x,y.y.y.y
+	$realip = $first_ip[0];
 	return $realip; 
 }
 		
