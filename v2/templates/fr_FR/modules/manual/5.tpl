@@ -42,8 +42,8 @@
 <area shape="rect" coords="350,909,379,939" onmouseover="TagToTip('src_16')" onmouseout="UnTip()"  alt="Connaissances Niveau 2" />
 <area shape="rect" coords="383,757,412,787" onmouseover="TagToTip('src_17')" onmouseout="UnTip()"  alt="Druidisme Niveau 1" />
 <area shape="rect" coords="471,833,502,862" onmouseover="TagToTip('src_18')" onmouseout="UnTip()"  alt="Druidisme Niveau 2" />
-<area shape="rect" coords="88,945,117,974" onmouseover="TagToTip('src_19')" onmouseout="UnTip()"  alt="Maîtrise Défensive" />
-<area shape="rect" coords="41,945,70,975" onmouseover="TagToTip('src_20')" onmouseout="UnTip()"  alt="Maîtrise Offensive" />
+<area shape="rect" coords="88,945,117,974" onmouseover="TagToTip('src_20')" onmouseout="UnTip()"  alt="Maîtrise Défensive" />
+<area shape="rect" coords="41,945,70,975" onmouseover="TagToTip('src_19')" onmouseout="UnTip()"  alt="Maîtrise Offensive" />
 <area shape="rect" coords="487,1058,514,1089" onmouseover="TagToTip('src_21')" onmouseout="UnTip()"  alt="Appel Divin" />
 <area shape="rect" coords="429,1059,457,1090" onmouseover="TagToTip('src_22')" onmouseout="UnTip()"  alt="Harmonie Sylvestre" />
 <area shape="rect" coords="68,1058,95,1089" onmouseover="TagToTip('src_23')" onmouseout="UnTip()"  alt="Sang de Dragon" />
