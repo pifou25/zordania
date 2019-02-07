@@ -11,7 +11,7 @@ function glob_stats() {
 		$_sql->query($sql);
 	}
 	
-	if($_h == 0) { /* Statistiques */
+	if($_h == 1) { /* Statistiques */
 		$sql = "INSERT INTO ".$_sql->prebdd."stq VALUES (NOW(),";
 		$sql.= "(SELECT COUNT(*) FROM ".$_sql->prebdd."mbr WHERE mbr_etat = ".MBR_ETAT_OK."),";
 		$sql.= "(SELECT COUNT(*) FROM ".$_sql->prebdd."mbr WHERE mbr_etat = ".MBR_ETAT_ZZZ."),";
@@ -19,7 +19,7 @@ function glob_stats() {
 		$_sql->query($sql);
 	}	
 	
-	if($_m == 0) { //on ne garde que 3 mois pour ne pas surcharger la db
+	if($_h == 2) { //on ne garde que 3 mois pour ne pas surcharger la db
 	$sql = "DELETE FROM ".$_sql->prebdd."con WHERE con_date < (NOW() - INTERVAL 90 DAY)";
 		$_sql->query($sql);
 	}

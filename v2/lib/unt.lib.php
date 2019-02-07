@@ -22,7 +22,7 @@ class legion {
 	public    $sqr = false; // la case (map)
 
 
-	function __construct(int $lid, int $mid = 0){ // rechercher la légion par lid et mid si existe
+	function __construct( $lid, $mid = 0){ // rechercher la légion par lid et mid si existe
 
 		$this->lid = $lid;
 		$cond = array('leg' => array($lid), 
@@ -110,7 +110,7 @@ class legion {
 			return 0;		
 	}
 
-	function get_unt(int $type = 0){ // renvoyer les unités de la légion, toutes ou celles de $type
+	function get_unt( $type = 0){ // renvoyer les unités de la légion, toutes ou celles de $type
 
 		if(!$this->w_load_unt) // rechercher toutes les unités si pas fait
 			$this->loadUnt();
@@ -124,7 +124,7 @@ class legion {
 			return $this->unt;
 	}
 
-	function getUntByRole(int $role){ // rend les unités qui ont ce rôle (constants TYPE_UNT*)
+	function getUntByRole($role){ // rend les unités qui ont ce rôle (constants TYPE_UNT*)
 		$result = array();
 
 		if(!$this->w_load_unt) // rechercher toutes les unités si pas fait
@@ -138,7 +138,7 @@ class legion {
 		return $result;
 	}
 
-	function unit_normal(int $type = 0) { // unités 'normales' = sauf le héros
+	function unit_normal( $type = 0) { // unités 'normales' = sauf le héros
 		$unt = $this->get_unt($type);
 		$hro_type = $this->getHro('type');
 		if ($hro_type) unset($unt[$hro_type]);
@@ -151,19 +151,19 @@ class legion {
 			return $unt;
 	}
 
-	function vide():bool{ // la légion est-elle vide ?? ni unités ni héros
+	function vide(){ // la légion est-elle vide ?? ni unités ni héros
 		if(!$this->w_load_unt) $this->get_unt(); // rechercher les unités si pas fait
 		return empty($this->unt);
 	}
 
-	function can_unt(int $unt, int $nb) { // vérifier qu'on peut former $nb unités $unt
+	function can_unt($unt, $nb) { // vérifier qu'on peut former $nb unités $unt
 		// vérifie prix ressources & unités, et qu'on a les bât et recherches
 		$bad = can_unt($this->mid, $unt, $nb, $this->cache);
 		if (!empty($bad)) return $bad; // manque qqchose pour former cette unitée
 		else return true;
 	}
 
-	function add_unt($unt, int $nb = 1, int $factor = 1){
+	function add_unt($unt, $nb = 1, $factor = 1){
 	/* ajouter $nb unités $unt (peut être négatif)
 		ou ($nb * $factor) unités $unt
 		si $unt = array : $nb est pris en tant que facteur et $factor est ignoré
@@ -193,7 +193,7 @@ class legion {
 		}
 	}
 
-	function del_unt($unt, int $nb = -1) { // supprimer nb unités; inverser le résultat
+	function del_unt($unt, $nb = -1) { // supprimer nb unités; inverser le résultat
 		$return = $this->add_unt($unt, $nb, -1);
 		if (is_array($unt))
 			foreach($return as $key => $val)
@@ -214,7 +214,7 @@ class legion {
 			return $this->edit_unt;
 	}
 
-	public function flushUnt(bool $get = false) { // exécuter la MAJ unités ou récupérer
+	public function flushUnt( $get = false) { // exécuter la MAJ unités ou récupérer
 		$tmp = $this->edit_unt;
 		$this->edit_unt = array();
 		if ($get)
@@ -223,7 +223,7 @@ class legion {
 			edit_unt_leg($this->mid, $this->lid, $tmp);
 	}
 
-	function get_res(int $type = 0){ // renvoyer les ressources de la légion, toutes ou celles de $type
+	function get_res( $type = 0){ // renvoyer les ressources de la légion, toutes ou celles de $type
 
 		if(!$this->w_load_res){ // rechercher toutes les ressources
 			$res = get_res_leg($this->mid, $this->lid);
@@ -630,9 +630,9 @@ class legions { /* classe pour plusieurs légions ... */
 		$cond['mbr'] = true;
 		if(isset($cond['etat']))
 			$cond['etat'] = protect($cond['etat'], array('uint'));
-		//else
-		//	$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
-		//		LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
+		else
+			$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
+				LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
 
 		$leg_array = get_leg_gen($cond); // récupérer les légions
 

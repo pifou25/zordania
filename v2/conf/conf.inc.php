@@ -63,13 +63,14 @@ define('MBR_NIV_1',7000);
 define('MBR_NIV_2',35000);
 
 /* Alliance */
-define('ALL_MAX',8); // Nombre maximum de joueurs
+define('ALL_MAX',6); // Nombre maximum de joueurs
 define('ALL_MIN_PTS', 4000); // Points pour entrer
 define('ALL_MIN_ADM_PTS', 7000); // Points pour créer une alliance
 define('ALL_CREATE_PRICE', 1000); // Prix pour créer une alliance
 define('ALL_JOIN_PRICE', 200); //Prix pour rejoindre une alliance
 define('ALL_NOOB_TIME', 1); // Temps en jour pendant le quel on reste "NOOB"
 define('ALL_MIN_DEP', 10); // Dépot minimal
+define('ALL_MBR_TODISPL', 1); // Nombre minimum de joueur avant affichage dans la liste all
 
 define('ALL_TAX',10); // Taxe du grenier (%)
 define('ALL_SEUIL_PILLAGE', 1000); //En dessous de 1000 on ne considère pas un retrait comme un pillage potentiel
@@ -79,22 +80,22 @@ define('SHOOT_LIMIT_NB_PAGE',15);
 
 $_limite_grenier = array(
 	 1 =>  4294967295,   // # Or
-	 2 =>  120000,        // # Bois
-	 3 =>  120000,        // # Pierre
-	 4 =>  1200000,      // # Nourriture
-	 5 =>  25000,        // # Fer
-	 6 =>  25000,        // # Charbon
-	 7 =>  4500,         // # Chevaux
-	 8 =>  10000,        // # Acier
-	 9 =>  8000,         // # Mithril
-	 10 => 4500,         // # Bouclier en bois
-	 11 => 4500,         // # Bouclier en acier
-	 12 => 4500,         // # Epee
-	 13 => 4500,         // # Epee longue
-	 14 => 4500,         // # Arc
-	 15 => 4500,         // # Arbalete
-	 16 => 4500,         // # Cotte de mail
-	 17 => 4500          // # Cotte de mithril
+	 2 =>  60000,        // # Bois
+	 3 =>  60000,        // # Pierre
+	 4 =>  600000,      // # Nourriture
+	 5 =>  12000,        // # Fer
+	 6 =>  12000,        // # Charbon
+	 7 =>  1000,         // # Chevaux
+	 8 =>  5000,        // # Acier
+	 9 =>  4000,         // # Mithril
+	 10 => 1000,         // # Bouclier en bois
+	 11 => 1000,         // # Bouclier en acier
+	 12 => 1000,         // # Epee
+	 13 => 1000,         // # Epee longue
+	 14 => 1000,         // # Arc
+	 15 => 1000,         // # Arbalete
+	 16 => 1000,         // # Cotte de mail
+	 17 => 1000          // # Cotte de mithril
 	 );
 
 /* Attaques */
@@ -133,14 +134,14 @@ define('LIMIT_MBR_PAGE',50);
 define('LIMIT_NB_PAGE',15);
 
 /* Messages */
-define('MSG_DEL_OLD',30); //60 jours
+define('MSG_DEL_OLD',60); //60 jours
 define('MSG_FLOOD_TIME',30); /* 30 secondes */
 define('MSG_MAX_MMSG',5); /* Max de multi messages */
 /* mid qui envoie le msg d'accueil cf ini/page.php */
 define('MBR_WELC', 7203 );
 
 /* Historique */
-define('HISTO_DEL_OLD',7); //7 jours
+define('HISTO_DEL_OLD',15); //7 jours
 define('HISTO_DEL_LOG_ALLY', 15); // 15 jours
 
 /* Commerce */
