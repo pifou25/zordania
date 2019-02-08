@@ -53,7 +53,7 @@ define('LEG_MAX_RANG', 22);
 define('LEG_MAX_RANG_UNT', 700);
 define('LEG_MAX_RANG_SAME_UNT', 1);
 
-/* Ressource principale (pour le commerce)*/
+/* Ressource principale (pour le commerce) */
 define('GAME_RES_PRINC',1);
 /* Nourriture */
 define('GAME_RES_BOUF',4);
@@ -240,7 +240,7 @@ $_droits[GRP_DIEU] = array(DROIT_SITE, DROIT_PLAY, DROIT_MSG, DROIT_MMSG,
 	DROIT_ADM, DROIT_ADM_AL, DROIT_ADM_COM, DROIT_ADM_MBR, DROIT_ADM_TRAV,DROIT_SDG, DROIT_ADM_EDIT,
 	DROIT_PUNBB_MEMBER,DROIT_PUNBB_MOD,DROIT_PUNBB_ADMIN, DROIT_ANTI_FLOOD);
 
-define('SITE_DEBUG',false);
+define('SITE_DEBUG',true);
 define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
 define('CRON', !array_key_exists('SERVER_SOFTWARE', $_SERVER)
