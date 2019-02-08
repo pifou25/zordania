@@ -53,7 +53,7 @@ define('LEG_MAX_RANG', 22);
 define('LEG_MAX_RANG_UNT', 700);
 define('LEG_MAX_RANG_SAME_UNT', 1);
 
-/* Ressource principale (pour le commerce) */
+/* Ressource principale (pour le commerce)*/
 define('GAME_RES_PRINC',1);
 /* Nourriture */
 define('GAME_RES_BOUF',4);
