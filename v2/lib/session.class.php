@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class session
 {
 	var $sql;
@@ -90,12 +90,12 @@ class session
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
 		/* CSS version mobile ou desktop */
-                if(!$this->get('mobile')){
-                    $this->set('mobile', false);
-                    $this->set('btc', '');
-                }else{
-                    $this->set('btc', '/2');
-                }
+		if(!$this->get('mobile')){
+			$this->set('mobile', false);
+			$this->set('btc', '');
+		}else{
+			$this->set('btc', '/2');
+		}
 
 		/* Visiteur */
 		if($this->get("login") == "guest") {
@@ -363,7 +363,7 @@ class session
 		/* Est ce que la ligne a changée depuis la dernière fois ? on peut utiliser mid, parce que si elle est pas changée, elle a pas changée :D 
 		   Par contre, si on vient de régénérer la session, il ne faut pas verifier la date, puisqu'on vient de la changer !
 		*/
-		$sql="SELECT UNIX_TIMESTAMP(mbr_lmodif_date) FROM ".$this->sql->prebdd."mbr WHERE mbr_mid = $mid";
+		$sql="SELECT UNIX_TIMESTAMP(mbr_lmodif_date) FROM ".$this->sql->prebdd."mbr WHERE mbr_mid = '$mid'";
 		$res = $this->sql->query($sql);
 
 		if(!$this->sql->num_rows($res)) 

@@ -145,7 +145,7 @@ $_act = ($argc == 2) ? $argv[1] : "";
 
 mark('args');
 
-require_once('frm.cron.php');
+//require_once('frm.cron.php');
 require_once('cache.cron.php');
 require_once('clean.cron.php');
 require_once('aly.cron.php');
