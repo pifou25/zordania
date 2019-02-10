@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /* 
  * constantes du jeu
  * ces constantes ne doivent en aucun cas être modifiées
@@ -245,6 +245,8 @@ define('ZORD_NEWS_FID',25); //news
 define('FORUM_PLAINTES_FID',30); //plaintes
 define('FORUM_SUGGEST_FID',6); //fid suggestion
 define('FORUM_BUG_FID',8); //fid bug
+
+define('FORUM_QUETES',9);
 
 /*Etat bug/suggestion*/
 define('REPORT_STATUT_NEW',0); //nouvellement reporté

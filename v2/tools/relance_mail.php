@@ -22,19 +22,19 @@ $_tpl->set_tmp_dir(SITE_DIR .'tmp');
 $_tpl->set_lang('fr_FR');
 $_tpl->set("cfg_url",SITE_URL);
 
-/* sélection des comptes non validés */
-$sql = 'SELECT mbr_mid, mbr_login, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
+/* SELECT TOUS LES COMPTES! 
+$sql = 'SELECT mbr_mid, mbr_login, mbr_mail, mbr_pseudo, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
 $sql.= ' FROM zrd_mbr WHERE ';
 if($mid) $sql .= "mbr_mid > $mid AND ";
-$sql.= ' mbr_gid ='.GRP_DEMI_DIEU. 'AND mbr_etat ='.MBR_ETAT_ZZZ.'AND mbr_etat ='.MBR_ETAT_INI.;
-$sql.= ' ORDER BY zrd_mbr.mbr_lmodif_date ASC';
+$sql.= ' 1'; //ATTENTION CA ENVOIE A TOUT LE MONDE!!
+$sql.= ' ORDER BY zrd_mbr.mbr_lmodif_date ASC';*/
 
-/* sélection des comptes validés en veille sauf exilés et visiteur vieux de + de 30 jours 
+/* sélection des comptes validés en veille sauf exilés et visiteur vieux de - de 30 jours pour savoir pourquoi ils se sont pas revenus*/
 $sql = 'SELECT mbr_mid, mbr_login, mbr_pseudo, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
 $sql.= ' FROM '.$_sql->prebdd.'mbr WHERE ';
 if($mid) $sql .= "mbr_mid = $mid ";
-else $sql.= ' mbr_etat ='.MBR_ETAT_ZZZ.' AND mbr_gid NOT IN ('.GRP_VISITEUR.','.GRP_EXILE.','.GRP_EXILE_TMP.') AND datediff(NOW(), `mbr_ldate`) > 30';
-$sql.= ' ORDER BY mbr_ldate ASC';*/
+else $sql.= ' mbr_etat ='.MBR_ETAT_ZZZ.' OR mbr_etat ='.MBR_ETAT_INI.' OR mbr_gid < '.GRP_PRETRE.''; // AND mbr_gid NOT IN ('.GRP_VISITEUR.','.GRP_EXILE.','.GRP_EXILE_TMP.')AND datediff(NOW(), `mbr_ldate`) < 30
+$sql.= ' ORDER BY mbr_ldate ASC';
 
 //echo $sql;
 
@@ -59,13 +59,13 @@ foreach($mbr_array as $mbr){
 
 	$txt = $_tpl->get('modules/inscr/mails/text_relance.tpl',1);
 	$obj = $_tpl->get('modules/inscr/mails/objet_relance.tpl',1);
-	if(mailto('webmaster@zordania.fr', $mbr['mbr_mail'], $obj, $txt)) {
+	if(mailto('webmaster@zordania.com', $mbr['mbr_mail'], $obj, $txt)) {
 		// debug !
 		echo $mbr['mbr_ldate'].' - mail à '.$mbr['mbr_mail']." : $obj\n";
 		if ($mid) echo "$txt\n";
 
-		$sql = 'UPDATE '.$_sql->prebdd.'mbr SET mbr_ldate = NOW() - INTERVAL 30 DAY WHERE mbr_mid = '.$mbr['mbr_mid'];
-		$_sql->query($sql);
+		//$sql = 'UPDATE '.$_sql->prebdd.'mbr SET mbr_ldate = NOW() - INTERVAL 30 DAY WHERE mbr_mid = '.$mbr['mbr_mid'];
+		//$_sql->query($sql);
 	} else
 		echo $mbr['mbr_ldate'].' - ECHEC à '.$mbr['mbr_mail']."\n";
 

@@ -247,6 +247,12 @@
 						<img src="img/editer.png" alt="Editer" title="Editer" />
 					</a>
 				</if>
+                                
+                                <if cond='{is_admin}'>
+                                <!-- adm quest link -->
+                                <a href="admin-{post[pid]}.html?module=qst">Quest</a>
+                                </if>
+                                
 				<a href="forum-post.html?pid={post[pid]}#{post[pid]}">le {post[posted]}</a> par 
 				<if cond="{post[mbr_gid]}">
 					<zurlmbr gid="{post[mbr_gid]}" mid="{post[poster_id]}" pseudo="{post[username]}"/>

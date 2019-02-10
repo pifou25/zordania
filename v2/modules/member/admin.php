@@ -357,8 +357,12 @@ if($_act == "del") {
 			$_tpl->set("res_leg", $legions->get_all_res());
 			$_tpl->set("unt_leg", $legions->get_all_unts());
 			$_tpl->set("leg_array", $legions->get_all_legs_infos());
-			$leg_bat_reel = $legions->legs[$legions->btc_lid]->get_unt();
-			$_tpl->set("leg_bat_reel", $leg_bat_reel);
+                        if(isset($legions->legs[$legions->btc_lid])){
+                            $leg_bat_reel = $legions->legs[$legions->btc_lid]->get_unt();
+                        }else{
+                            $leg_bat_reel = [];
+                        }
+                        $_tpl->set("leg_bat_reel", $leg_bat_reel);
 			$_tpl->set("leg_race", $mbr_array['mbr_race']);
 			$btc_array = get_nb_btc($mid, array(), array(BTC_ETAT_OK,BTC_ETAT_BRU,BTC_ETAT_DES,BTC_ETAT_REP));
 			$_tpl->set('btc_done', $btc_array);
@@ -457,14 +461,9 @@ if($_act == "del") {
 } else if ($_act == 'exp') 
 { // exporter membre
 	$mid = request("mid", "uint", "get");
-	require_once("lib/mysql.lib.php");
 	
 	// telecharger fichier sql
 	header('Content-Type: text');
 	header('Content-Disposition: attachment; filename="export.'.$mid.'.sql"');
-	die(zrd_dump($mid));
-	
-	$_tpl->set("sql",htmlspecialchars(zrd_dump($mid)));	
-	$_tpl->set("mbr_act","exp");
+	die(SqlAdm::dumpMbr($mid, SqlAdm::EXP_DATA));	
 }
-?>
