@@ -2,21 +2,18 @@
 
 Chers {pseudo},
 
-Le 1er octobre, il y a eu en effet une coupure du domaine.
-Cela a été vite réglé, mais nous avons changé et récupéré le domaine de départ
+Nouveau départ pour Zordania. Le monde renait de ses cendres, et n'attend plus que vous !
 
-http://zordania.com/
+Découvrez les nouveaux villages et la nouvelle interface. D'un seul coup d'oeil, construisez, recherchez, formez votre armée pour partir au combat.
 
-Nous nous sommes aperçu, et ce aussi par le rapport de certains joueurs, que non seulement vous en êtes pas tous au courant,
-mais qu'il y aurait quelques trous de mémoires dirons-nous concernant vos login ou mot de passe...
+Le nouveau monde de Zordania est rempli de surprises, venez le découvrir ou le redécouvrir, tout le monde a été remis sur le même pied d'estale et la course au top50 n'est jamais finie!
 
-Les mots de passes, on ne peut rien, mais il y a le module de récupération 
 
-http://zordania.com/inscr-newpass.html
 
 Par contre, on peut donner un rappel de vos coordonnées :
 Login: {login}
 Email: {mail}
+mdp oublié: http://zordania.com/inscr-newpass.html
 
 Cordialement,
 

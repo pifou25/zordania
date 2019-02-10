@@ -59,7 +59,7 @@ foreach($mbr_array as $mbr){
 
 	$txt = $_tpl->get('modules/inscr/mails/text_relance.tpl',1);
 	$obj = $_tpl->get('modules/inscr/mails/objet_relance.tpl',1);
-	if(mailto('webmaster@zordania.fr', $mbr['mbr_mail'], $obj, $txt)) {
+	if(mailto('webmaster@zordania.com', $mbr['mbr_mail'], $obj, $txt)) {
 		// debug !
 		echo $mbr['mbr_ldate'].' - mail à '.$mbr['mbr_mail']." : $obj\n";
 		if ($mid) echo "$txt\n";
