@@ -1,1 +1,1 @@
- {pseudo}, Zordania n'a pas discparu!
+ {pseudo}, Pourquoi es-tu parti?
