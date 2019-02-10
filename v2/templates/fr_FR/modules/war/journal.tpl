@@ -73,7 +73,7 @@ $(document).ready(  function()
 	</elseif>
 	<else>
 		<a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
-		attaque votre allié <a href="member.html?mid={value[atq_mid2]}">{value[atq_bilan][def][{value[atq_lid2]}][mbr_pseudo]}</a>, vous prenez sa défense
+		attaque votre allié <a href="member-<math oper="str2url({result[mbr_pseudo]})"/>.html?mid={value[atq_mid2]}">{value[atq_bilan][def][{value[atq_lid2]}][mbr_pseudo]}</a>, vous prenez sa défense
 	</else>
 	</dt>
 

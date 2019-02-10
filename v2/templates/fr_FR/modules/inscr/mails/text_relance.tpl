@@ -1,22 +1,30 @@
 <include file="commun/mail_debut.tpl" cache="1" />
 
-Chers {pseudo},
+Chers Zordanien, Zordaniennes,
 
-Si tu reçois ce mail c'est que nous nous intérrogeons!
-En effet, début janvier nous avons remis les compteurs à zéro, tous les comptes ont été en réinitialisation pour tout refaire dès le début.
-Certains sont revenus par curiosité mais sans rester au final. D'autres n'ont même pas réouvert le compte.
+Nous refaisons appel à vous, mais cette fois dans le but de vous informer d'un lot de nouveautés!
+Vous en avez sans doute entendu parlé en début d'année, mais ce coup-ci on y est passé, les nouveaux villages sont disponibles!
+Exemple avec le village Gobelin
+{cfg_url}img/7/vlg/cite-gobelin-final.jpg
 
-Si tu as reçu ce mail, c'est pour en connaître les raisons, non pas qu'on te force à revenir (mais si vient, on est biennnn..) c'est surtout pour comprendre ce qui ne t'a pas motivé.
-Nous travaillons sur l'accroche et il y a du travail! Et une des manières d'y arriver c'est de te poser la question: est-ce le boulot? Plus envie? C'est mort? C'est long? etc etc
-Tout cela serait fort constructif pour nous et on en serait fort reconnaissant d'avoir ton retour sur ce point :)
+○ Vous l'aurez compris, une toute nouvelle interface !
+○ Dorénavant, toute action passe par le village, dans le but de lui donner plus d'utilité, rendre un peu de dynamisme!
+{cfg_url}img/portail/marchpopup.PNG
+{cfg_url}img/portail/rcorc.PNG
 
-Merci d'avance d'en prendre le temps,
+○ La formation d'unités, forger des armes, lancer des recherches, tout cela est géré via le village.
+○ Une adaptation graphique en fonction de votre appareil est aussi en place
+○ Et d'autres petits aménagements ou corrections
 
+Nous reconaissons que la reprise n'a pas été très stable, peut-être que cela vous a freiné ou démotivé, sachez que c'est de l'histoire ancienne et nous le garantissons, tout comme:
+○ Une évolution constante
+○ Des animations régulières 
+○ Une équipe aux petits oignons pour vous!
+○ Des tours réduits à 15minutes
 
-Par contre, juste au cas où .... :D
+Rappel de vos coordonnées :
 Login: {login}
 Email: {mail}
-mdp oublié: http://zordania.com/inscr-newpass.html
 
 Cordialement,
 
