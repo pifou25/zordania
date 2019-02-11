@@ -11,7 +11,7 @@ function glob_stats() {
 		$_sql->query($sql);
 	}
 	
-	if($_h == 1) { /* Statistiques */
+	if($_h == 1 && $_m == 0) { /* Statistiques */
 		$sql = "INSERT INTO ".$_sql->prebdd."stq VALUES (NOW(),";
 		$sql.= "(SELECT COUNT(*) FROM ".$_sql->prebdd."mbr WHERE mbr_etat = ".MBR_ETAT_OK."),";
 		$sql.= "(SELECT COUNT(*) FROM ".$_sql->prebdd."mbr WHERE mbr_etat = ".MBR_ETAT_ZZZ."),";
