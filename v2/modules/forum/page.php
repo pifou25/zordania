@@ -568,7 +568,7 @@ case 'rep' : // formulaire de création & réponse
 		$_tpl->set('new','post');
 		$info = get_info_topic($tid,$group);
 		$_tpl->set('pst',$info);
-		$fid = $info['forum_id'];
+		if (!isset($info['forum_id']) )$fid = $info['forum_id'];
 		$action = 'post'; // nouvelle réponse
 		if (!isset($info['read_forum']) || $info['read_forum'])
 			$_tpl->set('messages',get_last_msg($tid));
