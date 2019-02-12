@@ -3,9 +3,7 @@ if(!defined("INDEX_BTC")){ exit; }
 require_once("lib/res.lib.php");
 require_once("lib/trn.lib.php");
 
-//définir la limite de population
-if ($_user['race'] == 7) define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_2); //si gobelin
-else define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_1); // les autres
+
 
 if(!$_sub) { 
 	$_tpl->set("btc_act", "infos");
@@ -20,6 +18,10 @@ if(!$_sub) {
 		$res_array = $res_array[0];
 	}
 	if(isset($btc_conf['prod_pop'])) {
+		//définir la limite de population
+		if ($_user['race'] == 7) define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_2); //si gobelin
+		else define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_1); // les autres
+		
 		$btc_pop_utils = array();
 		$btc_pop_max = 0;
 
