@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class session
 {
 	var $sql;
@@ -90,12 +90,12 @@ class session
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
 		/* CSS version mobile ou desktop */
-		if(!$this->get('mobile')){
-			$this->set('mobile', false);
-			$this->set('btc', '');
-		}else{
-			$this->set('btc', '/2');
-		}
+                if(!$this->get('mobile')){
+                    $this->set('mobile', false);
+                    $this->set('btc', '');
+                }else{
+                    $this->set('btc', '/2');
+                }
 
 		/* Visiteur */
 		if($this->get("login") == "guest") {
