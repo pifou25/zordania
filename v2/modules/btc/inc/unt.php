@@ -9,9 +9,9 @@ require_once("lib/btc.lib.php");
 require_once("lib/member.lib.php");
 
 //définir la limite de population
-if ($_user['race'] == 7) $TOTAL_MAX_UNT= TOTAL_MAX_UNT_2; //si gobelin
-else $TOTAL_MAX_UNT= TOTAL_MAX_UNT_1; // les autres
-define('TOTAL_MAX_UNT', $TOTAL_MAX_UNT);
+if ($_user['race'] == 7) define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_2); //si gobelin
+else define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_1); // les autres
+
 
 $_tpl->set('TOTAL_MAX_UNT', TOTAL_MAX_UNT);
 if($_sub == "cancel_unt")

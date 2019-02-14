@@ -5,7 +5,7 @@
 <if cond="{leg[leg_etat]} == LEG_ETAT_VLG">Le village de </if>
 <else>La légion de </else> [img]{SITE_URL}img/{leg[mbr_race]}/{leg[mbr_race]}.png[/img] [url={SITE_URL}member-view.html?mid={leg[mbr_mid]}]{leg[mbr_pseudo]}[/url] : [b]{leg[leg_name]}[/b]<if cond="isset({leg[ratio_def]}) && {leg[ratio_def]} < 1">(Défense groupée à <math oper="{leg[ratio_def]}*100" /> %)</if>
 </else>
-<if cond='{war_act} == "histo" && {leg[hro_vie]}'>menée par <bbimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]} (énergie {leg[hro_xp]} )
+<if cond='{war_act} == "histo" && {leg[hro_vie]}'>menée par <bbimgunt type="{leg[hro_type]}" race="{leg[mbr_race]}" /> {leg[hro_nom]} (énergie {leg[hro_nrj]} )
 <if cond="!empty({leg[bonus]})"><include file="modules/comp/bbcode/{leg[bonus]}.tpl" cache="1" cpt="{leg[comp]}" />
 </if>
 </if>

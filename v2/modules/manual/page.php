@@ -62,6 +62,7 @@ if(!$type && is_numeric($page) && $page >= 0 && $page <= 27)
 
 	$_tpl->set('res_array',$res_array);
 	$_tpl->set('mnl_tpl','modules/manual/res.tpl');
+	$_tpl->set('man_url',"manual-res.html?race=$race");
 
 } elseif($race) { /* detail d'une race (btc unt res src comp trn) */
 
