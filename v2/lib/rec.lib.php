@@ -34,7 +34,7 @@ function del_rec($mid = 0, $type = 0)
 	if ($mid && $type)
 		$sql.= "LIMIT 1 ";
 	$_sql->query($sql);
-	return mysql_affected_rows();
+	return mysqli_affected_rows();
 }
 
 function add_rec($mid,$type)
