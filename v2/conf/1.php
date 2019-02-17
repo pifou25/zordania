@@ -409,7 +409,7 @@ $this->btc[B1_TOURS]=array(
 		"vie"		=>	800,
 		"tours"		=>	100,
 		"prix_res"	=>	array(R1_BOIS => 275, R1_PIERRE => 300, R1_ACIER => 20),
-		"prix_unt"	=>	array(U1_RECRUE => 4),
+		"prix_unt"	=>	array(U1_ARCHER => 4),
 		"need_src"	=>	array(S1_DEFENSE_3),
 		"limite"	=>	4,
 );
