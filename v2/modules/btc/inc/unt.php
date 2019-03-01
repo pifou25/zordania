@@ -8,12 +8,7 @@ require_once("lib/src.lib.php");
 require_once("lib/btc.lib.php");
 require_once("lib/member.lib.php");
 
-//définir la limite de population
-if ($_user['race'] == 7) define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_2); //si gobelin
-else define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_1); // les autres
 
-
-$_tpl->set('TOTAL_MAX_UNT', TOTAL_MAX_UNT);
 if($_sub == "cancel_unt")
 {
 	$uid = request("uid", "uint", "get");
@@ -99,6 +94,12 @@ if($_sub == "cancel_unt")
 //Nouvelle unt (sauf de type heros)
 elseif($_sub == "add_unt")
 {
+	//définir la limite de population
+	if ($_user['race'] == 7) define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_2); //si gobelin
+	else define('TOTAL_MAX_UNT', TOTAL_MAX_UNT_1); // les autres
+
+
+$_tpl->set('TOTAL_MAX_UNT', TOTAL_MAX_UNT);
 	$type = request("type", "uint", "post");
 	$role = get_conf("unt", $type, "role");
 	$nb = request("nb", "uint", "post");
