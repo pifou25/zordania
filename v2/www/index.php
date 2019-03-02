@@ -10,6 +10,4 @@ if(isset($_SERVER['HTTP_HOST']) and $_SERVER['HTTP_HOST'] == 'www.zordania.com' 
 define("_INDEX_",true);
 
 require("../index.php");
-
-require("../index.php");
 ?>
