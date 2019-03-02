@@ -6,12 +6,7 @@ if(isset($_SERVER['HTTP_HOST']) and $_SERVER['HTTP_HOST'] == 'www.zordania.com' 
 	header("Location: $url");
 	exit();
 }
-if(isset($_SERVER['HTTP_HOST']) and $_SERVER['HTTP_HOST'] == 'dev.zordania.com'){
-	$url = 'https://dev.zordania.com' . $_SERVER['REQUEST_URI'];
-	header('Status: 301 Moved Permanently', false, 301);
-	header("Location: $url");
-	exit();
-}
+
 define("_INDEX_",true);
 
 require("../index.php");
