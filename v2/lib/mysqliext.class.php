@@ -27,6 +27,10 @@ class mysqliext
 
 	function __construct($host,$login,$pass,$base) //se connecte a mysql a la creation de classe
 	{
+                if (!defined('MYSQLI_OPT_READ_TIMEOUT')) {
+                    define ('MYSQLI_OPT_READ_TIMEOUT', 11);
+                }
+                
 		$debut = $this->getmicrotime();
 
 		$this->nbreq = 0;
@@ -38,8 +42,12 @@ class mysqliext
 		} else {
 			$this->con = true;
 			if (!$this->mysqli->set_charset("utf8")) {
-				$this->err = "Erreur lors du chargement du jeu de caractères utf8 : " . $this->mysqli->error;
+                            $this->err = "Erreur lors du chargement du jeu de caractères utf8 : " . $this->mysqli->error;
 			}
+                        //specify the read timeout
+                        if(!$this->mysqli->options(MYSQLI_OPT_READ_TIMEOUT, 10)) {
+                            $this->err .= "Erreur sur l'option MYSQLI_OPT_READ_TIMEOUT : " . $this->mysqli->error;
+                        }
 		}
 
 		$this->total_time = $this->getmicrotime() - $debut;
