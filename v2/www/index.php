@@ -1,15 +1,15 @@
 <?php
 /* redirection ici remplace le .htaccess de apache - pour lighttpd */
-
-if(isset($_SERVER['HTTP_HOST']) and $_SERVER['HTTP_HOST'] == 'www.zordania.com' || $_SERVER['HTTP_HOST'] == 'tmp.zordania.eu' || $_SERVER['HTTP_HOST'] == 'http://zordania.com'){
+if(isset($_SERVER['HTTP_HOST']) and $_SERVER['HTTP_HOST'] == 'www.zordania.com' || $_SERVER['HTTP_HOST'] == 'zordania.com' || $_SERVER['HTTP_HOST'] == 'http://zordania.com' || $_SERVER['HTTP_HOST'] == 'http://www.zordania.com'){
 	$url = 'https://zordania.com' . $_SERVER['REQUEST_URI'];
-
 	header('Status: 301 Moved Permanently', false, 301);
 	header("Location: $url");
 	exit();
 }
 
 define("_INDEX_",true);
+
+require("../index.php");
 
 require("../index.php");
 ?>
