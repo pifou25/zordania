@@ -24,7 +24,7 @@
 		<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste</a>
 	</if>
 	<else>
-		<a href="btc-use.html?sub=list" title="Tous les bâtiments" class="zrdPopUp">Liste&nbsp;complète</a>
+		<a href="vlg.html" >IRetour au village</a>
 	</else>
 </p>
 
