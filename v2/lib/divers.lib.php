@@ -255,7 +255,7 @@ function request($name, $type, $method, $default = false)
 		$var = $_FILES[$name];
 	elseif($method == 'server' && isset($_SERVER[$name]))
 		$var = $_SERVER[$name];
-	elseif($default)
+	elseif($default !== false)
 		return $default;
 	elseif(is_array($type))
 		return $def['array'];
