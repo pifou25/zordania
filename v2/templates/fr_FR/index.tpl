@@ -98,7 +98,7 @@
 
 			  <a id="content"></a>
 			  <if cond='{cron_lock} == true'>
-			  <p class="infos">Calculs des tours en cours, patientez quelques minutes, puis actualisez la page ...</p>
+			  <p class="infos">Calculs des tours en cours, patientez quelques secondes, puis actualisez la page ...</p>
 			  <div class="block">{cron_lock}</div>
 			  </if>
 			  <if cond='{no_cookies} == true'>
