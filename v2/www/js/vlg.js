@@ -190,6 +190,9 @@ var Vlg = {
 		case 6:
 			this.VlgCoords[1] = new Array(277,138);
 			this.VlgCoords[2] = new Array(436,113);
+			this.VlgCoords[3] = new Array(507, 110);
+			this.VlgCoords[4] = new Array(456,43);
+			this.VlgCoords[5] = new Array(7, 80);
 			break;
 		case 7:
 			this.VlgCoords[1] = new Array(340,205);
@@ -425,7 +428,10 @@ var VlgV2 = {
 					
 				case 6:
 					this.VlgCoords[1] = new Array(277,138);
-					this.VlgCoords[2] = new Array(436,113);
+					this.VlgCoords[2] = new Array(436,113);						
+					this.VlgCoords[3] = new Array(507, 110);
+					this.VlgCoords[4] = new Array(456,43);
+					this.VlgCoords[5] = new Array(7, 80);
 					break;
 					
 				case 7:
@@ -602,7 +608,10 @@ var VlgV2 = {
 					
 				case 6:
 					this.VlgCoords[1] = new Array(277,138);
-					this.VlgCoords[2] = new Array(436,113);
+					this.VlgCoords[2] = new Array(200,513);						
+					this.VlgCoords[3] = new Array(277, 310);
+					this.VlgCoords[4] = new Array(456,43);
+					this.VlgCoords[5] = new Array(7, 80);
 					break;
 					
 				case 7:

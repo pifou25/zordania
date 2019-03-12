@@ -14,15 +14,15 @@ define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
 define('SITE_MAX_CONNECTED', 300);
 define('SITE_MAX_INSCRITS', 10000);
 
-$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.fr";
-define('SITE_URL', "http://".$host."/");
+$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.com";
+define('SITE_URL', "https://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('TPL_DIR', SITE_DIR . 'src/Zordania/templates/');
 define('MOD_DIR', SITE_DIR . 'src/Zordania/modules/');
 define('WWW_DIR', SITE_DIR . "www/");
 define('ZORDLOG_URL', 'zordania.free.fr'); // URL des archives
 
-define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.fr');
+define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.com');
 define('SITE_CHARSET', 'utf-8'); // iso-8859-1, utf-8, ...
 
 define('GEN_LENGHT', 6); /* Taille des chaines générées aléatoirement (pass, etc ...) */
@@ -65,13 +65,14 @@ define('MBR_NIV_1',7000);
 define('MBR_NIV_2',35000);
 
 /* Alliance */
-define('ALL_MAX',8); // Nombre maximum de joueurs
+define('ALL_MAX',6); // Nombre maximum de joueurs
 define('ALL_MIN_PTS', 4000); // Points pour entrer
 define('ALL_MIN_ADM_PTS', 7000); // Points pour créer une alliance
 define('ALL_CREATE_PRICE', 1000); // Prix pour créer une alliance
 define('ALL_JOIN_PRICE', 200); //Prix pour rejoindre une alliance
 define('ALL_NOOB_TIME', 1); // Temps en jour pendant le quel on reste "NOOB"
 define('ALL_MIN_DEP', 10); // Dépot minimal
+define('ALL_MBR_TODISPL', 1); // Nombre minimum de joueur avant affichage dans la liste all
 
 define('ALL_TAX',10); // Taxe du grenier (%)
 define('ALL_SEUIL_PILLAGE', 1000); //En dessous de 1000 on ne considère pas un retrait comme un pillage potentiel
@@ -81,22 +82,22 @@ define('SHOOT_LIMIT_NB_PAGE',15);
 
 $_limite_grenier = array(
 	 1 =>  4294967295,   // # Or
-	 2 =>  120000,        // # Bois
-	 3 =>  120000,        // # Pierre
-	 4 =>  1200000,      // # Nourriture
-	 5 =>  25000,        // # Fer
-	 6 =>  25000,        // # Charbon
-	 7 =>  4500,         // # Chevaux
-	 8 =>  10000,        // # Acier
-	 9 =>  8000,         // # Mithril
-	 10 => 4500,         // # Bouclier en bois
-	 11 => 4500,         // # Bouclier en acier
-	 12 => 4500,         // # Epee
-	 13 => 4500,         // # Epee longue
-	 14 => 4500,         // # Arc
-	 15 => 4500,         // # Arbalete
-	 16 => 4500,         // # Cotte de mail
-	 17 => 4500          // # Cotte de mithril
+	 2 =>  60000,        // # Bois
+	 3 =>  60000,        // # Pierre
+	 4 =>  600000,      // # Nourriture
+	 5 =>  12000,        // # Fer
+	 6 =>  12000,        // # Charbon
+	 7 =>  1000,         // # Chevaux
+	 8 =>  5000,        // # Acier
+	 9 =>  4000,         // # Mithril
+	 10 => 1000,         // # Bouclier en bois
+	 11 => 1000,         // # Bouclier en acier
+	 12 => 1000,         // # Epee
+	 13 => 1000,         // # Epee longue
+	 14 => 1000,         // # Arc
+	 15 => 1000,         // # Arbalete
+	 16 => 1000,         // # Cotte de mail
+	 17 => 1000          // # Cotte de mithril
 	 );
 
 /* Attaques */
@@ -135,14 +136,14 @@ define('LIMIT_MBR_PAGE',50);
 define('LIMIT_NB_PAGE',15);
 
 /* Messages */
-define('MSG_DEL_OLD',30); //60 jours
+define('MSG_DEL_OLD',60); //60 jours
 define('MSG_FLOOD_TIME',30); /* 30 secondes */
 define('MSG_MAX_MMSG',5); /* Max de multi messages */
 /* mid qui envoie le msg d'accueil cf ini/page.php */
 define('MBR_WELC', 7203 );
 
 /* Historique */
-define('HISTO_DEL_OLD',7); //7 jours
+define('HISTO_DEL_OLD',15); //7 jours
 define('HISTO_DEL_LOG_ALLY', 15); // 15 jours
 
 /* Commerce */
@@ -214,8 +215,6 @@ $_regions = array(1=> array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0, 6=>0, 7=>0, 8=>0),
 /* include pour les constantes descriptives du jeu */
 include 'const.inc.php';
 
-define('SITE_DEBUG',true);
-define('SITE_TRAVAUX',false);
 // CRON ou INTERNET ?
 define('CRON', !array_key_exists('SERVER_SOFTWARE', $_SERVER)
         && (php_sapi_name() === 'cli' || !array_key_exists('REMOTE_ADDR', $_SERVER)));

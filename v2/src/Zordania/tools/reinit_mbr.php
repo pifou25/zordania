@@ -15,7 +15,7 @@ require_once(SITE_DIR . "lib/src.lib.php");
 require_once(SITE_DIR . "lib/alliances.lib.php");
 require_once(SITE_DIR . "lib/histo.class.php");
 
-$_sql = new mysql(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
+$_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 $_sql->set_debug(SITE_DEBUG);
 
@@ -29,7 +29,7 @@ $exec = true; //isset($_GET['exec']) ? true : false;
 
 // RAZ du jeu, tous les membres réinitialiés
 $sql = 'SELECT mbr_mid, mbr_race, mbr_pseudo, mbr_mapcid
-FROM zrd_mbr WHERE mbr_mid <> '.MBR_WELC.' AND mbr_etat IN ('.MBR_ETAT_OK.','.MBR_ETAT_ZZZ.')';
+FROM zrd_mbr WHERE mbr_mid NOT IN ('.MBR_WELC.', 1) AND mbr_etat IN ('.MBR_ETAT_OK.','.MBR_ETAT_ZZZ.')';
 /* toutes les membres en veille qui ont moins de xxx points
 WHERE mbr_etat = 3 AND mbr_points < 1000
 ORDER BY mbr_mid';  */

@@ -1900,7 +1900,7 @@ $this->src[S3_MURANG]=array(
 
                 "prix_res"                =>        array(R3_OR => 200, R3_PIERRE => 400, R3_CHAMPI => 200),
 
-                "group"                =>        25,
+                "group"                =>        24,
 
 );
 

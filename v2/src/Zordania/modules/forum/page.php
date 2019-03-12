@@ -108,7 +108,7 @@ case 'post' : // valider le formulaire & créer le topic / message
 						'embeds' => array(
 							array(
 								'title' => $pst_titre, // Intitulé de la news
-								'url' => 'http://zordania.fr/forum-post.html?pid='.$pid.'#'.$pid.'', // Adresse de la news									  
+								'url' => 'http://zordania.com/forum-post.html?pid='.$pid.'#'.$pid.'', // Adresse de la news									  
 								'author' => array(
 									'name' => 'Nouvelle News postée:', // texte annonce 
 								  	),

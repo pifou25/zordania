@@ -1,4 +1,4 @@
-<div class="infos">Ce journal est régulièrement vidé pour ne pas encombrer la base de données du site</div>
+﻿<div class="infos">Ce journal est régulièrement vidé pour ne pas encombrer la base de données du site</div>
 <div class="menu_module">
 	<a href="war-histo.html?sub=atq" title="Attaques de vos légions sur les autres joueurs">Attaque</a>
 	- 
@@ -83,8 +83,8 @@ $(document).ready(  function()
 		Vous êtes attaqué par <a href="member-<math oper="Template::str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
 	</elseif>
 	<else>
-		<a href="member-<math oper="Template::str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
-		attaque votre allié <a href="member-<math oper="Template::str2url({result[mbr_pseudo]})"/>.html?mid={value[atq_mid2]}">{value[atq_bilan][def][{value[atq_lid2]}][mbr_pseudo]}</a>, vous prenez sa défense
+		<a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
+		attaque votre allié <a href="member.html?mid={value[atq_mid2]}">{value[atq_bilan][def][{value[atq_lid2]}][mbr_pseudo]}</a>, vous prenez sa défense
 	</else>
 	</dt>
 

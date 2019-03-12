@@ -23,6 +23,4 @@ v2/cache/global.cache.php
 *.bat
 v2/scripts/cron.bat
 v2/scripts/syncdev.sh
-
-# data for NetBeans IDE
-v2/nbproject
+/v2/nbproject/**/*

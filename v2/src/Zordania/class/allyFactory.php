@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /* tableau d'alliances et fonctions SQL dédiées */
 class allyFactory {
 

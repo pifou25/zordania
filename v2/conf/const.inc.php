@@ -202,6 +202,8 @@ define('QUETES_FID',30); // Forum des Quetes
 define('FORUM_SUGGEST_FID',6); //fid suggestion
 define('FORUM_BUG_FID',8); //fid bug
 
+define('FORUM_QUETES',9);
+
 /*Etat bug/suggestion*/
 define('REPORT_STATUT_NEW',0); //nouvellement reporté
 define('REPORT_STATUT_OK',1); //avéré(bug) ou accepté (suggestion)

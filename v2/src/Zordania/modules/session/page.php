@@ -9,7 +9,7 @@ if($_act == "login")
 		$_tpl->set("ses_is_loged",true);	
 	else {
 		$login = request("login", "string", "post");
-		$pass = request("pass", "raw", "post");
+		$pass = request("pass", "raw", "post", '');
 		if(!$login || !$pass)
 		{
 			$_tpl->set("ses_noallpost",true);

@@ -413,8 +413,5 @@ if($_act == "del") {
 	// telecharger fichier sql
 	header('Content-Type: text');
 	header('Content-Disposition: attachment; filename="export.'.$mid.'.sql"');
-	die(zrd_dump($mid));
-	
-	$_tpl->set("sql",htmlspecialchars(zrd_dump($mid)));	
-	$_tpl->set("mbr_act","exp");
+	die(SqlAdm::dumpMbr($mid, SqlAdm::EXP_DATA));	
 }

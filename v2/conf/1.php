@@ -409,7 +409,7 @@ $this->btc[B1_TOURS]=array(
 		"vie"		=>	800,
 		"tours"		=>	100,
 		"prix_res"	=>	array(R1_BOIS => 275, R1_PIERRE => 300, R1_ACIER => 20),
-		"prix_unt"	=>	array(U1_RECRUE => 4),
+		"prix_unt"	=>	array(U1_ARCHER => 4),
 		"need_src"	=>	array(S1_DEFENSE_3),
 		"limite"	=>	4,
 );
@@ -792,11 +792,11 @@ $this->unt[U1_GRIFFON]=array(
 		"vit"	=>	12,
 		"group"	=>	23,
 		"role"	=>	TYPE_UNT_HEROS,
-		"rang" => 18,
+		"rang" => 17,
 		"prix_res"	=>	array(R1_EPEE_LON => 1, R1_COTTE_MITHRIL => 1, R1_B_ACIER => 1, R1_MITHRIL => 1, R1_NOURRITURE => 50),
 		"prix_unt"	=>	array(7 => 1),
 		"need_src" 	=>	array(S1_DOMPTAGE),
-		"need_btc"	=>	array(B1_GUILDE_DES_HEROS, B1_ECOLE_MAGIE),
+		"need_btc"	=>	array(B1_GUILDE_DES_HEROS),
 		"in_btc"	=>	array(B1_GUILDE_DES_HEROS),
 );
 
@@ -827,7 +827,7 @@ $this->unt[U1_INGENIEUR_GNOME]=array(
 		"prix_res"	=>	array(R1_EPEE_LON => 1, R1_COTTE_MITHRIL => 1, R1_B_ACIER => 1, R1_MITHRIL => 1, R1_NOURRITURE => 50),
 		"prix_unt"	=>	array(7 => 1),
 		"need_src" 	=>	array(S1_GNOME),
-		"need_btc"	=>	array(B1_GUILDE_DES_HEROS, B1_ATELIER),
+		"need_btc"	=>	array(B1_GUILDE_DES_HEROS),
 		"in_btc"	=>	array(B1_GUILDE_DES_HEROS),
 );
 
@@ -1020,21 +1020,21 @@ $this->src[S1_MAGIE_NR]=array(
 $this->src[S1_DOMPTAGE]=array(
 		"tours"	=>	50,
 		"group"	=>	22,
-		"need_src"	=>	array(S1_MAGIE_NR, S1_MAGIE_BL),
+		"need_btc"	=>	array(B1_GUILDE_DES_HEROS, B1_ECOLE_MAGIE),
 		"prix_res"	=>	array(R1_NOURRITURE => 1000, R1_OR => 80, R1_MITHRIL => 15),
 		);
 		
 $this->src[S1_GENERAL]=array(
 		"tours"	=>	50,
 		"group"	=>	22,
-		"need_src"	=>	array(S1_MAGIE_NR, S1_MAGIE_BL),
+		"need_btc"	=>	array(B1_GUILDE_DES_HEROS),
 		"prix_res"	=>	array(R1_NOURRITURE => 1000, R1_OR => 80, R1_MITHRIL => 15),
 		);
 		
 $this->src[S1_GNOME]=array(
 		"tours"	=>	50,
 		"group"	=>	22,
-		"need_src"	=>	array(S1_MAGIE_NR, S1_MAGIE_BL),
+		"need_btc"	=>	array(B1_GUILDE_DES_HEROS, B1_ECOLE_MAGIE),
 		"prix_res"	=>	array(R1_NOURRITURE => 1000, R1_OR => 80, R1_MITHRIL => 15),
 		);
 //</src>

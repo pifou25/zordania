@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 echo php_sapi_name()."\n";
 $mid = (isset($argv[1]) && is_numeric($argv[1]) ? (int)$argv[1] : 0);
 $limit = (isset($argv[2]) && is_numeric($argv[2]) ? (int)$argv[2] : 0);
@@ -21,19 +21,19 @@ $_tpl->set_tmp_dir(SITE_DIR .'tmp');
 $_tpl->set_lang('fr_FR');
 $_tpl->set("cfg_url",SITE_URL);
 
-/* sélection des comptes non validés */
-$sql = 'SELECT mbr_mid, mbr_login, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
+/* SELECT TOUS LES COMPTES! 
+$sql = 'SELECT mbr_mid, mbr_login, mbr_mail, mbr_pseudo, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
 $sql.= ' FROM zrd_mbr WHERE ';
 if($mid) $sql .= "mbr_mid > $mid AND ";
-$sql.= ' mbr_gid ='.GRP_DEMI_DIEU. 'AND mbr_etat ='.MBR_ETAT_ZZZ.'AND mbr_etat ='.MBR_ETAT_INI;
+$sql.= ' mbr_gid ='.GRP_DEMI_DIEU. 'AND mbr_etat ='.MBR_ETAT_ZZZ.'AND mbr_etat ='.MBR_ETAT_INI.;
 $sql.= ' ORDER BY zrd_mbr.mbr_lmodif_date ASC';
 
-/* sélection des comptes validés en veille sauf exilés et visiteur vieux de + de 30 jours 
+/* sélection des comptes validés en veille sauf exilés et visiteur vieux de - de 30 jours pour savoir pourquoi ils se sont pas revenus*/
 $sql = 'SELECT mbr_mid, mbr_login, mbr_pseudo, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
 $sql.= ' FROM '.DB::getTablePrefix().'mbr WHERE ';
 if($mid) $sql .= "mbr_mid = $mid ";
-else $sql.= ' mbr_etat ='.MBR_ETAT_ZZZ.' AND mbr_gid NOT IN ('.GRP_VISITEUR.','.GRP_EXILE.','.GRP_EXILE_TMP.') AND datediff(NOW(), `mbr_ldate`) > 30';
-$sql.= ' ORDER BY mbr_ldate ASC';*/
+else $sql.= ' mbr_etat ='.MBR_ETAT_ZZZ.' OR mbr_etat ='.MBR_ETAT_INI.' OR mbr_gid < '.GRP_PRETRE.''; // AND mbr_gid NOT IN ('.GRP_VISITEUR.','.GRP_EXILE.','.GRP_EXILE_TMP.')AND datediff(NOW(), `mbr_ldate`) < 30
+$sql.= ' ORDER BY mbr_ldate ASC';
 
 //echo $sql;
 
@@ -58,7 +58,7 @@ foreach($mbr_array as $mbr){
 
 	$txt = $_tpl->get('modules/inscr/mails/text_relance.tpl',1);
 	$obj = $_tpl->get('modules/inscr/mails/objet_relance.tpl',1);
-	if(mailto('webmaster@zordania.fr', $mbr['mbr_mail'], $obj, $txt)) {
+	if(mailto('webmaster@zordania.com', $mbr['mbr_mail'], $obj, $txt)) {
 		// debug !
 		echo $mbr['mbr_ldate'].' - mail à '.$mbr['mbr_mail']." : $obj\n";
 		if ($mid) echo "$txt\n";
