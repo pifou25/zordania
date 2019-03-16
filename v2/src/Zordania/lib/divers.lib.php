@@ -249,52 +249,13 @@ function get_list_page($page, $nb_page, $nb = 3)
 	return $list_page;
 }
 
-/* Gestion des erreurs */
-function error_handler($errno, $errstr, $errfile, $errline, $errcontext)
-{
-	global $_error;
-	
-	/* Ignore error, @ */
-	if (error_reporting() === 0)
-		return ;
-	
-	$error = array(
-		'errno' => $errno
-		, 'errstr' => $errstr
-		, 'errfile' => $errfile
-		, 'errline' => $errline
-		, 'errcontext' => $errcontext
-		, 'errmsg' => sprintf('File: %s[%03d]', pathinfo($errfile, PATHINFO_FILENAME), $errline), 'callstack' => callstack()
-	);
-	if(SITE_DEBUG){
-		echo '<div style="border:1px #000 solid; text-align:left; font-family:monospace; background-color:#CCC; color:#000;">'.nl2br(error_print($error)).'</div>';
-	}
-	$_error[] = $error;
-}
 
-function error_print($error) {
-	$errlvl = array(
-		E_ERROR        => 'Fatal Error',
-		E_WARNING      => 'Warning',
-		E_NOTICE       => 'Notice',
-		E_USER_ERROR   => 'User Fatal Error',
-		E_USER_WARNING => 'User Warning',
-		E_USER_NOTICE  => 'User Notice'
-	);
-	$txt = '';
-	if(isset($errlvl[$error['errno']]))
-		$txt .= '<strong>'.$errlvl[$error['errno']]."</strong> : ".$error['errstr']."\n";
-	else
-		$txt .= '<strong>ERREUR('.$error['errno'].')</strong> : '.$error['errstr']."\n";
-	if(CRON)
-		$txt .= "CRON: ".$_SERVER['PHP_SELF']."\n";
-	else
-		$txt .= "URL: ".$_SERVER["REQUEST_URI"]."\n";
-	$txt .= $error['errmsg']."\n";
-	$txt .= "<strong>callstack</strong>\n".implode("\n", $error['callstack']);
-	return $txt;
-}
-
+/**
+ * ajout d'une dépendance avec cette fonction dans:
+ * \illuminate\database\Connection.php[685]
+ * TODO: supprimer cette dépendance si possible, conserver la stacktrace pour les requetes sql
+ * @return array
+ */
 function callstack() { /* pile d'appel */
 	$retval = array();
 	$backtrace = debug_backtrace();
@@ -312,42 +273,4 @@ function callstack() { /* pile d'appel */
 		$retval[] = sprintf("\t%-32s\t%s()", $file, $func);
 	}
 	return $retval;
-}
-
-function fatal_handler() {
-    global $_tpl, $_display;
-    $error = error_get_last();
-
-    if( $error !== NULL) {
-
-        $type = array_search($error['type'], get_defined_constants());
-        $msg = "<pre>DEBUG STACKTRACE\n$type : {$error['message']}\nIN  {$error['file']}:L{$error['line']}\n"
-        . implode("\n\t\t", callstack()) . "\nMARK\n" . implode("\n\t\t", array_keys( mark(true)));
-        if(!empty(DB::connection()->getQueryLog())){
-            $msg .= "\n\nLIST OF QUERIES\n";
-            $i = 0;
-            foreach(DB::connection()->getQueryLog() as $query){
-                $i++;
-                $msg .= "\n$i: {$query['query']}\nBinding:\n";
-                $msg .= print_r($query['bindings'], TRUE);
-                $msg .= "\n\tCallstack:\n" . implode("\n\t", $query['callstack']);
-            }
-        }
-        $msg .= "</pre>";
-        // hide password
-        if(!empty(MYSQL_PASS))
-            $msg = str_replace(MYSQL_PASS, '***', $msg);
-
-        if ($_tpl != null) {
-            $_tpl->set_lang('all');
-            $_tpl->set('sv_site_debug', false);
-            $_tpl->set('page', 'mysql_error.tpl');
-            $_tpl->set('error', $msg);
-            if (!$_display != "xml")
-                die($_tpl->get('index.tpl', 1));
-        }
-        die("$msg\nEnd of script");
-        
-    }
-
 }

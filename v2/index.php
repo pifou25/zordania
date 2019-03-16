@@ -32,12 +32,8 @@ require_once("src/Zordania/lib/divers.lib.php");
 require_once("conf/conf.inc.php");
 ini_set("include_path", SITE_DIR);
 
-/* Gestion des erreurs : fonctions dans lib/divers.lib.php */
-$_error = array();
-set_error_handler("error_handler");
-if(SITE_DEBUG){
-    register_shutdown_function( "fatal_handler" );
-}
+/* Gestion des erreurs : fonctions dans ExceptionHandler.php */
+$_excHandler = new ExceptionHandler();
 
 $_cache = new cache('global');
 /*  infos admin en cache : variable globale */
@@ -60,6 +56,8 @@ $_tpl->set_ref("_langues", $_langues);
 $_tpl->set("_cache", $_cache->get_array());
 
 $_tpl->set('no_cookies',!$_COOKIE);
+/* set tpl to the error handler */
+$_excHandler->_tpl = $_tpl;
 
 mark('lib');
 
@@ -102,6 +100,7 @@ $_user = & $_ses->vars;
 if($_file == "connec" && $_user["loged"]) {
 	$_file = "news";
 }
+$_excHandler->_user =  "{$_user['pseudo']} ({$_user['mid']})";
 
 mark('ses');
 
@@ -308,19 +307,6 @@ if($_display == "xml") { /* Sortie en XML */
 		echo "<li>Total: ".$total."</li>";
 		echo "</ul></div>";
 	}
-}
-
-if(!empty($_error)) { // log des erreurs PHP
-	$err_log = new log(SITE_DIR."logs/phperr/php_".date("d_m_Y").".log", "H:i:s", false);
-	$err_log->text("****** Erreurs pour {$_user['pseudo']} ( {$_user['mid']} ) � ".date("H:i:s")." *****");
-	foreach($_error as $key => $err){
-		$err_log->text(error_print($err));
-		if($key>4) {
-			$err_log->text('Plus de 4 erreurs **** le reste ignor� *** '.count($_error));
-			break;
-		}
-	}
-	//$err_log->close();
 }
 
 DB::sqlLog(' WEB mid='.$_user['mid']);
