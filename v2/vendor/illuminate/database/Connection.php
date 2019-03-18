@@ -682,8 +682,12 @@ class Connection implements ConnectionInterface
         $this->event(new QueryExecuted($query, $bindings, $time, $this));
 
         if ($this->loggingQueries) {
-            $callstack = callstack();
-            $this->queryLog[] = compact('query', 'bindings', 'time', 'callstack');
+            /**
+             * add the callstack of every query
+             * this is added for zordania logging
+             */
+            //$callstack = callstack();
+            $this->queryLog[] = compact('query', 'bindings', 'time'); //, 'callstack');
         }
     }
 

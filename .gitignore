@@ -1,5 +1,5 @@
 ﻿# fichiers temporaires
-vendor/
+v2/vendor/
 v2/tmp/*.compiled.php
 v2/backup/*
 v2/logs/**/*

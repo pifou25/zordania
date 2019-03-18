@@ -266,7 +266,7 @@ if($_display == "xml") { /* Sortie en XML */
 
 	$_tpl->set("cant_view_this",!$_ses->canDo(DROIT_SITE));
 
-	$_tpl->set("sv_nbreq", 'XXX');
+	$_tpl->set("sv_nbreq", count(DB::connection()->getQueryLog()));
 	$_tpl->set("sv_diff",$t1);
 
 	if(SITE_DEBUG)
@@ -274,11 +274,12 @@ if($_display == "xml") { /* Sortie en XML */
 		unset($_histo);
 		$_tpl->set_globals();
 		$_tpl->set('sv_site_debug',true);
-		$_tpl->set('sv_total_sql_time', 0);
+                $mysql = DB::getSqlTime();
+		$_tpl->set('sv_total_sql_time', $mysql);
 		$_tpl->set('sv_queries',[]);
                 $_tpl->set('eloQueries',DB::connection()->getQueryLog());
 		$t2 = mtime();
-	}
+        }
 
 	if($_file == "connec")
 		echo $_tpl->get("connec.tpl", 1);
@@ -297,8 +298,11 @@ if($_display == "xml") { /* Sortie en XML */
 			$prev_time = $time;
 		}
 
+
+                // log every sql requests into mysql.log
+                DB::sqlLog(' WEB mid='.$_user['mid']);
+
 		$total = (mtime() - $t1);
-		$mysql = 0; // TODO with eloquqent: mysql time
 		$templ = (mtime() - $t2);
 		$php = $total - $mysql - $templ;
 		echo "<li>Mysql: ".$mysql."</li>";
@@ -309,4 +313,4 @@ if($_display == "xml") { /* Sortie en XML */
 	}
 }
 
-DB::sqlLog(' WEB mid='.$_user['mid']);
+            

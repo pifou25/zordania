@@ -248,29 +248,3 @@ function get_list_page($page, $nb_page, $nb = 3)
 	}
 	return $list_page;
 }
-
-
-/**
- * ajout d'une dépendance avec cette fonction dans:
- * \illuminate\database\Connection.php[685]
- * TODO: supprimer cette dépendance si possible, conserver la stacktrace pour les requetes sql
- * @return array
- */
-function callstack() { /* pile d'appel */
-	$retval = array();
-	$backtrace = debug_backtrace();
-	for ($idx = count($backtrace) - 1; $idx > 0; $idx--) {
-		$item = $backtrace[$idx];
-		if (isset($item['file']))
-			$file = sprintf('%s[%03d]', pathinfo($item['file'], PATHINFO_FILENAME), $item['line']);
-                else
-			$file = 'eval()';
-		if (isset($item['class']))
-			$func = $item['class'] . '->' . $item['function'];
-		else
-			$func = $item['function'];
-		if ($func == 'error_handler') break; // fin d'analyse de la pile
-		$retval[] = sprintf("\t%-32s\t%s()", $file, $func);
-	}
-	return $retval;
-}

@@ -33,9 +33,9 @@ class log
 		return $this->fp;
 	}
 	
-	function text($text)
+	function text($text, $timed = true)
 	{
-		if ($this->time_format !== false) $text = date($this->time_format)." - ".$text."\n";
+		if ($timed && $this->time_format !== false) $text = date($this->time_format)." - ".$text."\n";
 		else $text .= "\n";
 		if($this->open)
 			fwrite($this->fp, $text);

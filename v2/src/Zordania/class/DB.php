@@ -53,15 +53,21 @@ class DB extends Illuminate\Database\Capsule\Manager {
         // log des requetes
         $sqllog = new log(SITE_DIR."logs/mysql/mysqli_".date("d_m_Y").".log");
         $time = 0;
+        $sqllog->text('**** '.date("H:i:s d/m/Y")."$msg ***");
         foreach(DB::connection()->getQueryLog() as $i => $query){
-            $text = '**** '.date("H:i:s d/m/Y")."$msg ***\n";
-            $text .= $i . " | time= " . $query['time'] . " | " . $query['query'] . 
+            $text = $i . " | time= " . $query['time'] . " | " . $query['query'] . 
                     "\nBINDINGS = [" . implode(', ', $query['bindings']) . ']';
-            $text .= "\nCALLSTACK:\n".implode("\n", $query['callstack']);
-            $sqllog->text($text);
+            $sqllog->text($text, false);
             $time += $query['time'];
         }
-        $sqllog->text('*** TOTAL ' . count(DB::connection()->getQueryLog()) . ' requêtes -- TIME = ' . $time );
-        
+        $sqllog->text('*** TOTAL ' . count(DB::connection()->getQueryLog()) . ' requêtes -- TIME = ' . $time ." ms\n", false);
+    }
+    
+    static function getSqlTime(){
+        $t = 0;
+        foreach(DB::connection()->getQueryLog() as $query){
+            $t += $query['time'];
+        }
+        return $t / 1000;
     }
 }

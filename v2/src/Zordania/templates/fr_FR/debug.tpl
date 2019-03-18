@@ -46,49 +46,13 @@
                                 <foreach cond='{eloQueries} as {values}'>
 			<li>
 				<math oper="htmlspecialchars({values[query]})" /><br/>
-				Bindings: <math oper="Template::printDebug({values[bindings]})" />
+				Bindings:  <math oper="print_r({values[bindings]}, true)" />
+                                <br/>
 				Temps: <math oper="round({values[time]},2)" /> ms
-				<if cond="is_array({values[callstack]})"><pre>Callstack:
-				<foreach cond="{values[callstack]} as {line}">
-					{line}
-				</foreach>
-				</pre></if>
 			</li>
                                 </foreach>
                             </if>
                             
-			<if cond="{sv_queries}">
-                        <h3>OLD MANAGED QUERIES</h3>
-			<foreach cond='{sv_queries} as {values}'>
-			<li>
-				<math oper="htmlspecialchars({values[req]})" /><br/>
-				Err: {values[errno]} {values[err]} <br/>
-				<if cond="{values[infos]}">
-				Infos: {values[infos]} <br/>
-				</if>
-				<if cond="{values[num]}">
-				Num: {values[num]} <br/>
-				</if>
-				<if cond="isset({values[explain]}) && is_array({values[explain]})">
-				Explain:
-					<div class="code">
-					<foreach cond="{values[explain]} as {key} => {value}">
-						 <foreach cond="{value} as {key2} => {value2}">
-							<if cond="{value2}">{key2} = {value2}<br/></if>
-						</foreach>
-						<br/>
-					</foreach>
-					</div>
-				</if>
-				<pre>Callstack:
-				<foreach cond="{values[callstack]} as {line}">
-					{line}
-				</foreach>
-				</pre>
-				Temps: <math oper="round({values[time]}*1000,2)" /> ms
-			</li>
-			</foreach>
-			</if>
 			</ol>
 			Au total: <math oper='round({sv_total_sql_time},4)' /> sur <math oper='round(mtime()-{sv_diff},4)' /> secondes<br/>
 			Donc: <math oper='round({sv_total_sql_time} /  (mtime()-{sv_diff}) * 100,2)' /> % du temps.
