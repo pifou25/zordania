@@ -567,11 +567,13 @@ case 'rep' : // formulaire de création & réponse
 		$_tpl->set('form_url', "forum-post.html?sub=new&tid=$tid#lst_pst");
 		$_tpl->set('new','post');
 		$info = get_info_topic($tid,$group);
-		$_tpl->set('pst',$info);
-		$fid = $info['forum_id'];
-		$action = 'post'; // nouvelle réponse
-		if (!isset($info['read_forum']) || $info['read_forum'])
-			$_tpl->set('messages',get_last_msg($tid));
+                if(!empty($info)){
+                    $_tpl->set('pst',$info);
+                    $fid = $info['forum_id'];
+                    $action = 'post'; // nouvelle réponse
+                    if (!isset($info['read_forum']) || $info['read_forum'])
+                            $_tpl->set('messages',get_last_msg($tid));
+                }
 	}
 
 	elseif ($pid) // on édite un message
