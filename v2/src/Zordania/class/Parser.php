@@ -1,6 +1,6 @@
 <?php
 
-class parser {
+class Parser {
     /* Smileys */
 
 // Tous les Smileys
@@ -377,7 +377,7 @@ class parser {
     static public function getSmileysMore() {
 
         $smileys_more = array();
-        $smileys_base = parser::getSmileysBase();
+        $smileys_base = Parser::getSmileysBase();
 
         foreach (self::SMILEY as $img => $val) {
             if (is_array($val)) {
