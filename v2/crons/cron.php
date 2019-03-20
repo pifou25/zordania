@@ -32,9 +32,8 @@ require_once SITE_DIR . 'vendor/autoload.php';
 require_once(SITE_DIR . "src/Zordania/lib/divers.lib.php");
 $_cache = new cache('global', true);
 
-/* Gestion des erreurs : fonctions dans lib/divers.lib.php */
-$_error = array();
-set_error_handler("error_handler");
+/* Gestion des erreurs : fonctions dans ExceptionHandler.php */
+$_excHandler = new ExceptionHandler();
 
 mark('lib');
 
@@ -127,7 +126,7 @@ $_tpl->get_config('config/config.config');
 
 mark('class');
 
-$_act = ($argc == 2) ? $argv[1] : "";
+$_act = (isset($argc) && $argc == 2) ? $argv[1] : "";
 
 
 mark('args');
