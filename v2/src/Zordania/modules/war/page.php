@@ -587,3 +587,5 @@ case 'make_atq':
 }// switch($_act)
 
 }// else can_d(DROIT_PLAY)
+
+}
