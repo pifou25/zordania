@@ -85,7 +85,6 @@ class Hro extends Illuminate\Database\Eloquent\Model {
 
     /**
      * editer un héros. et l'unité liée.
-     * @global type $_user
      * @param int $mid
      * @param array $new
      * @return boolean|int

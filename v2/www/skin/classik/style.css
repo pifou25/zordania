@@ -10,7 +10,7 @@
 	border:1px solid #BCB29F;
 }
 /*
-* Design Général
+* Design Gï¿½nï¿½ral
 */
 .menu_module a, .retour_module a {
    border-left: solid 1px #4C5C7B;
@@ -55,7 +55,7 @@ h3, h4, h5, h6 { font-size: 1.1em; }
 
 hr { background-color: #060609; border-color: #666666; border-style: solid; border-width: 1px; width: 50%; }
 
-/* Utilisé dans le manuel et les listes de bâtiments */
+/* Utilisï¿½ dans le manuel et les listes de bï¿½timents */
 dd,dt{ margin: 1px; padding: 2px; }
 dl li { margin: 3px; padding: 3px; }
 dt{ margin-top:10px;  background-color: #BCB29F; }
@@ -77,6 +77,9 @@ th {
 	border: #000000 solid 1px;
 	font-weight: bold;
 	text-align: center;
+}
+table {
+    font-size: 11px; 
 }
 
 
@@ -109,7 +112,7 @@ th {
 	}
 
 
-/* Y'a écrit "zordania" */
+/* Y'a ï¿½crit "zordania" */
 #text_logo{
 	display: none;
 	visibility: hidden;
@@ -298,7 +301,7 @@ height:0px;
 	background-color: #B0B5A8; border-color: #111111; 
 }
 
-/* Quand c'est un alliée dans une liste */
+/* Quand c'est un alliï¿½e dans une liste */
 .allie td, .allie tr {
 	background-color: #B0B5A8;
 	border-color: #111111;
@@ -366,7 +369,7 @@ height:0px;
 	margin-top: -150px;
 }*/
 
-/* Quelque chose de désactivé */
+/* Quelque chose de dï¿½sactivï¿½ */
 .disabled{ background-color: #BCB29F; }
 
 /* Block a metre en valeur */

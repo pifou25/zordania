@@ -132,6 +132,9 @@ td {
 th {
 	background-color: #332B19; border-color: #000000; border-style: solid; border-width: 1px;
 }
+table {
+    font-size: 11px; 
+}
 
 
 /* Tout ce qu'il y'a dans body */

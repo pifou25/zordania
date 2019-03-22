@@ -31,7 +31,7 @@ a.zrdPopUp:hover {
 }*/
 
 /*
-* Design Général
+* Design Gï¿½nï¿½ral
 */
 a{ 
 	font-size: 12px;
@@ -120,7 +120,7 @@ border-color: #666666;
  width: 50%; 
  }
 
-/* Utilisé dans le manuel et les listes de bâtiments */
+/* Utilisï¿½ dans le manuel et les listes de bï¿½timents */
 dd
 { 
 background-color: #000000;
@@ -159,6 +159,9 @@ th {
 	font-weight: bold;
 	text-align: center;
 }
+table {
+    font-size: 11px; 
+}
 
 
 /* Tout ce qu'il y'a dans body */
@@ -189,7 +192,7 @@ th {
     height: 0px;
 }
 
-/* Y'a écrit "zordania" */
+/* Y'a ï¿½crit "zordania" */
 #text_logo{
 	display: none;
 	visibility: hidden;
@@ -595,7 +598,7 @@ width: 90%;
  border-color: #111111; 
  }
 
-/* Quand c'est un alliée dans une liste */
+/* Quand c'est un alliï¿½e dans une liste */
 .allie td, .allie tr {
 
 background-color: #00000f;
@@ -753,7 +756,7 @@ background-color: #00000f;
 }
 
 
-/* Permet de faire des espaces, utilisé sur la page des bâtiments et sur l'index */
+/* Permet de faire des espaces, utilisï¿½ sur la page des bï¿½timents et sur l'index */
 .blason{ float: right; }
 
 /* rosace pour la carte */

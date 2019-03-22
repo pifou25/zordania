@@ -139,6 +139,9 @@ th {
 	font-weight: bold;
 	text-align: center;
 }
+table {
+    font-size: 11px; 
+}
 
 
 /* NiceTitles */

@@ -57,11 +57,11 @@ class legion {
         // vider le cache, maj BDD
         public function flush(){
 		if (!empty($this->edit_unt)) {
-                    edit_unt_leg($this->mid, $this->lid, $this->edit_unt);
+                    Unt::edit($this->lid, $this->edit_unt);
                     $this->edit_unt = [];
                 }
                 if(!empty($this->edit_hro)) {
-                    edit_hero($this->mid, $this->edit_hro);
+                    Hro::edit($this->mid, $this->edit_hro);
                     $this->edit_hro = [];
                 }
         }
@@ -261,13 +261,19 @@ class legion {
 	function back_unt($type) { // rentrer les unités $type au village
         if (!$this->vide())
             if (isset($this->unt[$type]) && $this->unt[$type])
+                // si la legion est bien au village
                 if (session::$SES->get('mapcid') == $this->cid && $this->infos['leg_etat'] == LEG_ETAT_GRN) {
-                    $nb = $this->unt[$type];
-                    // supprimer les unités de la légion en cours
-                    Unt::where('unt_lid', $this->lid)->where('unt_type', $type)->delete();
-                    // ajouter au village
-                    Unt::editVlg($this->mid, array($type => $nb));
-                    unset($this->unt[$type]); // suppr en mémoire
+                    $vlg = Leg::where('leg_mid', $this->mid)->where('leg_etat', LEG_ETAT_VLG);
+                    if($vlg->count() == 0){
+                        echo 'Aucun village ici';
+                    }else{
+                        $nb = $this->unt[$type];
+                        // supprimer les unités de la légion en cours
+                        Unt::where('unt_lid', $this->lid)->where('unt_type', $type)->delete();
+                        // ajouter au village
+                        Unt::edit($vlg->first()->leg_id, [$type, $nb]);
+                        unset($this->unt[$type]); // suppr en mémoire
+                    }
                 }
         }
 

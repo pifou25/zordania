@@ -169,7 +169,7 @@ class legions { /* classe pour plusieurs légions ... */
 	public function flush() { 
 		// MAJ edit unités
 		foreach($this->legs as $leg)
-			$leg->flush_edit_unt();
+			$leg->flush();
 	}
 
 } /* fin classe legions */

@@ -26,9 +26,9 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
             $sql .= ",mrec_texte";
         
         // replace date formatting:
-        $sql = session::$SES->parseQuery($sql);
+        $raw = session::$SES->parseQuery($sql);
 
-        $req = MsgRec::selectRaw($sql)->leftJoin('mbr', 'mrec_from', 'mbr_mid')
+        $req = MsgRec::selectRaw($raw)->leftJoin('mbr', 'mrec_from', 'mbr_mid')
                 ->leftJoin('mbr_old', 'mrec_from', 'mold_mid')
                 ->where('mrec_mid', $mid);
         if ($msgid) {
@@ -54,7 +54,9 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
             'mrec_readed' => 0];
 
         $mrec_id = MsgRec::insertGetId($request);
-        MsgEnv::add($mid, $mid2, $mrec_id, $titre, $text);
+        if($copy){
+            MsgEnv::add($mid, $mid2, $mrec_id, $titre, $text);
+        }
     }
 
     static function del(int $mid, $msgid = []) {
@@ -91,15 +93,28 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
 
     static function addAll(int $mid, string $titre, string $text, array $grp = []) {
 
-
-        $sql = "INSERT INTO zrd_msg_rec (mrec_mid, mrec_from, mrec_date, mrec_titre, mrec_texte, mrec_readed) ";
-        $sql .= " SELECT mbr_mid, ? ,NOW(), ? , ? ,0 FROM zrd_mbr ";
-        $sql .= " WHERE mbr_etat = ?";
-        if (empty($grp)) {
-            DB::insert($sql, [$mid, $titre, $text, MBR_ETAT_OK]);
-        } else {
-            DB::insert($sql . ' AND mbr_gid IN (?)', [$mid, $titre, $text, MBR_ETAT_OK, $grp]);
+        /**
+         * Wherever your Select may come from
+         **/
+        $select = Mbr::where('mbr_etat', MBR_ETAT_OK);
+        if (!empty($grp)) {
+                $select->whereIn('mbr_gid', $grp);
         }
+        $select->selectRaw(' mbr_mid, ? ,NOW(), ? , ? ,0',  [$mid, $titre, $text]);
+        
+        /**
+         * get the binding parameters
+         **/ 
+        $bindings = $select->getBindings();
+        /**
+         * now go down to the "Network Layer"
+         * and do a hard coded select, Laravel is a little
+         * stupid here
+         */
+        $sql = 'INSERT INTO zrd_msg_rec (mrec_mid, mrec_from, mrec_date, mrec_titre, mrec_texte, mrec_readed) '
+                        . $select->toSql();
+
+        DB::insert($sql, $bindings);
 
         MsgEnv::add($mid, $mid, 0, $titre, $text);
     }
@@ -137,9 +152,9 @@ class MsgRec extends Illuminate\Database\Eloquent\Model {
             $sql .= ', zrd_msg.mrec_texte ';
 
         // replace date formatting:
-        $sql = session::$SES->parseQuery($sql);
+        $raw = session::$SES->parseQuery($sql);
 
-        $req = Sign::selectRaw($sql);
+        $req = Sign::selectRaw($raw);
         $req->leftJoin('mbr as mbr2', 'sign_admid', 'mbr2.mbr_mid');
         $req->leftJoin('msg_rec as msg', 'sign_msgid', 'msg.mrec_id');
         $req->join('mbr as mbr', 'msg.mrec_mid', 'mbr.mbr_mid');

@@ -23,7 +23,7 @@ background: url(img/fond.png);
   line-height: 20px; /* hauteur de ligne (identique) */
 }
 /*
-* Design Général
+* Design Gï¿½nï¿½ral
 */
 <meta name="viewport" content="width=device-width"/>
 a {
@@ -118,7 +118,7 @@ hr {
 	width: 50%; 
 }
 
-/* Utilisé dans le manuel et les listes de bâtiments */
+/* Utilisï¿½ dans le manuel et les listes de bï¿½timents */
 dd{ 
 	background-color: #000000;
 }
@@ -155,6 +155,9 @@ th {
 	border: #454545 solid 1px;
 	font-weight: bold;
 	text-align: center;
+}
+table {
+    font-size: 11px; 
 }
 
 
@@ -216,7 +219,7 @@ div#toolTip p em {
 	height: 0px;
 }
 
-/* Y'a écrit "zordania" */
+/* Y'a ï¿½crit "zordania" */
 #text_logo {
 	display: none;
 	visibility: hidden;
@@ -617,7 +620,7 @@ min-height: 50px;
 	border-color: #111111; 
 }
 
-/* Quand c'est un alliée dans une liste */
+/* Quand c'est un alliï¿½e dans une liste */
 .allie td, .allie tr {
 	background-color: #00000f;
 	border-color: #111111;
@@ -677,7 +680,7 @@ legend {
          color: silver;
 }
 
-/* Quelque chose de désactivé */
+/* Quelque chose de dï¿½sactivï¿½ */
 .disabled {
 	background-color: #101010;
 }
@@ -749,7 +752,7 @@ legend {
 }
 
 
-/* Permet de faire des espaces, utilisé sur la page des bâtiments et sur l'index */
+/* Permet de faire des espaces, utilisï¿½ sur la page des bï¿½timents et sur l'index */
 .blason {
 	float: right;
 }

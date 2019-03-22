@@ -177,6 +177,7 @@ textarea
 table {
    border-collapse: collapse;
     border-bottom: 3px solid #000000;
+    font-size: 11px; 
 }
 
 td {
@@ -391,7 +392,7 @@ td {
 }
 
 
-/* Quand c'est un allié dans une liste */
+/* Quand c'est un alliï¿½ dans une liste */
 .allie
 {
     border:1px solid #000000;
