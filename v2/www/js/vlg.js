@@ -248,11 +248,11 @@ var VlgV2 = {
 			img.css('top', value[1]+decX).css('left', value[0]+decY).css('position', 'absolute');	
 			 if(isMobile)
 			 {
-				img.attr('src', "img/"+ race + "/btc/2/" + index + ".png");			
+				img.attr('src', "img/"+ race + "/vlg/mob/" + index + ".png");			
 			 }
 			 else
 			 {
-				img.attr('src', "img/"+ race + "/btc/" + index + ".png");			
+				img.attr('src', "img/"+ race + "/vlg/desk/" + index + ".png");			
 			 }
 		  }
 		});
