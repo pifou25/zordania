@@ -1,11 +1,11 @@
 <dl>
 <foreach cond='{man_array} as {comp_id} => {comp_value}'>
 	<dt id="comp_{comp_id}">
-		<a href="manual.html?race={man_race}&type=comp#comp_{comp_id}">
+		<span class="left"><zimgcomp type="{comp_id}" race="{man_race}" /></span><a href="manual.html?race={man_race}&type=comp#comp_{comp_id}">
 		{comp[{man_race}][alt][{comp_id}]}</a>
 	</dt>
 	<dd>
-		<span class="right"><zimgcomp type="{comp_id}" race="{man_race}" /></span>
+		
 		<p><strong>Compétence {type_comp[{comp_value[type]}]}</strong> : 
 		<printf string="{comp[{man_race}][descr][{comp_id}]}" vars="{comp_value[bonus]},{comp_value[tours]}" />
 		</p>
