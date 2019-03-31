@@ -174,7 +174,7 @@ class Template
 		if ($var[2] == '{')
 		{
 			$var[4] = strtr($var[4], array('[' => "'}['", ']' => "']{'", '->' => "'}->{'"));
-			$var[4] = strtr($var[4], array("'}'}[''" => "'}['", "'']{'{'" => "']{'"));
+			$var[4] = strtr($var[4], array("'}'}[''" => "'}['", "'']{'{'" => "']{'", "'}'}->{'{'" => "'}->{'"));
 			$return = $var[1]."'.\$this->var->{'".$var[3].$var[4]."'}.'".$var[5];
 			if (preg_match($this->search[0], $return))
 				return preg_replace_callback($this->search[0], array($this, 'var_back'), $return);

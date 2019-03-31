@@ -6,11 +6,16 @@ if(!$_ses->canDo(DROIT_PLAY))
 else
 {
 
+    // Leg: model eloquent
+    $legs = Leg::where('leg_mid', $_user['mid'])
+            ->where('leg_etat', '<>', LEG_ETAT_BTC)
+            ->get()->keyBy('leg_id');
+    $_tpl->set('legs', $legs);
+    
+    
 $_tpl->set("module_tpl", "modules/leg/leg.tpl");
-$_tpl->set("leg_act", $_act);
 $_tpl->set("leg_race", $_user['race']);
-//$_tpl->set("_fat", $_fat);
-$sub = request('sub', 'string','get');
+$_sub = request('sub', 'string','get');
 
 function list_comp($hro_type) { // liste des comp du héros
 	$comp_array = session::$SES->getConf('comp');
@@ -21,11 +26,80 @@ function list_comp($hro_type) { // liste des comp du héros
 	return $result;
 }
 
-$member = new member($_user['mid']);
 
 switch($_act) {
+   
+    // selection d'unites a deplacer d'une legion a une autre
+case 'unit1':
+    
+    $lid = request('lid', 'uint', 'get', 0);
+    $_tpl->set('lid', $lid);
+    // $unit = unt_type 
+    $type = request('type', 'uint', 'get', 0);
+    if(isset($legs[$lid])){
+        $leg = $legs[$lid];
+        $rang = $leg->rang($type);
+        //check si les unites sont militaires
+        $civils = Config::get($_user['race'], 'unt', $type, 'role') == TYPE_UNT_CIVIL;
+        if(empty($rang) || $civils){
+            $_tpl->set('error', 'leg_empty');
+        }else{
+            $_tpl->set('unit', $rang);
+        }
+    }else{
+        $_tpl->set('error', 'leg_no_leg');
+    }
+    
+    break;
+
+    // deplacer des unites d'une legion a une autre
+case 'unit2':
+    
+    $fromLid = request('from_leg', 'uint', 'post', 0);
+    $toLid = request('to_leg', 'uint', 'post', 0);
+    $nb = request('unt_nb', 'uint', 'post', 0);
+    $type = request("unt_type", "uint", "post");
+    
+    if(!isset($legs[$fromLid]) || !isset($legs[$toLid])){
+        // une legion n'existe pas
+        $_tpl->set('error', 'leg_bad_lid');
+    }else if($legs[$fromLid]->leg_cid != $legs[$toLid]->leg_cid){
+        // les 2 legions ne sont pas sur la meme position
+        $_tpl->set('error', 'leg_bad_pos');
+    }else{
+        //check si les unites sont militaires
+        $civils = Config::get($_user['race'], 'unt', $type, 'role') == TYPE_UNT_CIVIL;
+        $toRang = $legs[$toLid]->rang($type);
+        $fromRang = $legs[$fromLid]->rang($type);
+        if(empty($fromRang) || $fromRang->unt_nb < $nb || $civils){
+            // pas assez d'unites ou ils sont civils
+            $_tpl->set('error', 'leg_no_unt_vlg');
+        }else{
+            if(empty($toRang)){
+                $toRang = new Unt();
+                $toRang->unt_lid = $toLid;
+                $toRang->unt_type = $type;
+                $toRang->unt_rang = Config::get( $_user['race'], 'unt', $type, 'rang');
+                $toRang->unt_nb = $nb;
+            }else{
+                $toRang->unt_nb += $nb;
+            }
+            $fromRang->unt_nb -= $nb;
+            if(!$toRang->save()){
+                $_tpl->set('error', 'leg_ko1');
+            }else if(!$fromRang->save()){
+                $_tpl->set('error', 'leg_ko2');
+            }else{
+                $_tpl->set('error', 'L\'opération est un succès.');
+            }
+        }
+    }
+    
+    break;
+
 case "move":
 
+    // deplacer une legion sur la carte
 	$cid = request("cid", "uint", "get");
 	$lid_get = request("lid", "uint", "get");
 	$arr_lid = request("move", "array", "post",array($lid_get => 1));
@@ -34,18 +108,10 @@ case "move":
 	$map_array = Map::getGen($cid, ['x'=>$_user['map_x'], 'y'=>$_user['map_y']]); // destination
 	$_tpl->set("map_array", $map_array);
 	$_tpl->set("map_cid", $cid);
-/*	$_tpl->set("leg_sub",$sub);
-
-	// il faut savoir quel type de déplacement il s'agit 
-	// (vers un ennemi ou vers un allié).
-	if (!$sub || ($sub != 'atq' && $sub != 'sou')) {
-		$_tpl->set("leg_move_psub",true);
-		break;
-	}*/
 
 	/* correction du bug 'légion bloquée en attaque à domicile' */
 	if($cid == $_user['mapcid'])
-		$sub = 'sou';
+		$_sub = 'sou';
 	else{
 
 		// verif qu'il y a bien un membre en état sur la case indiquée.
@@ -56,7 +122,7 @@ case "move":
 
 		$mbr_cible = Mbr::getFull($map_array['mbr_mid']);
 
-		$sub = 'atq'; // par défaut c'est toujours une attaque
+		$_sub = 'atq'; // par défaut c'est toujours une attaque
 		if($_user['alaid'] != 0 and $mbr_cible[0]['ambr_aid'] != 0){ // tt les 2 dans une alliance
 			$pactes = new diplo(array('aid' => $_user['alaid'])); // mes pactes
 			$pactes_array = $pactes->actuels();
@@ -67,14 +133,14 @@ case "move":
 		$mbr_cible = Mbr::canAtq($mbr_cible,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $pactes_array); 
 		$mbr_cible = $mbr_cible[0];
 		if ($mbr_cible['pna'])
-			$sub = 'pna';
+			$_sub = 'pna';
 		elseif ($mbr_cible['can_def'])
-			$sub = 'def';
+			$_sub = 'def';
 		else
-			$sub = 'atq';
+			$_sub = 'atq';
 	} /* fin correction de bug */
 
-	$_tpl->set("leg_sub",$sub);
+	$_tpl->set("leg_sub",$_sub);
 	$_tpl->set("show_form",true);
 
 	$cond = array('mid'=>$_user['mid']);
@@ -96,11 +162,11 @@ case "move":
 					// si la légion est déjà sur la bonne case, on passe en état d'attente.
 					if ($legions->legs[$lid]->cid == $cid)
 						$new = array('dest' => 0,
-								'etat' => $sub ==  'atq' ? LEG_ETAT_POS : LEG_ETAT_GRN);
+								'etat' => $_sub ==  'atq' ? LEG_ETAT_POS : LEG_ETAT_GRN);
 					else
 						// calculer et enregistrer la vitesse de la légion
 						$new = array('vit' => $legions->legs[$lid]->vitesse(), 'dest' => $cid, 
-								'etat' => $sub == 'atq' ? LEG_ETAT_DPL : LEG_ETAT_ALL);
+								'etat' => $_sub == 'atq' ? LEG_ETAT_DPL : LEG_ETAT_ALL);
 					$legions->legs[$lid]->edit($new);
 					$_tpl->set("show_form",false);
 					$_tpl->set("leg_move_ok", true);
@@ -113,7 +179,7 @@ case "move":
 				} elseif($legions->legs[$lid]->comp != CP_TELEPORTATION)
 					$_tpl->set("leg_no_tele", true);
 				else { // téléporter la légion à destination & désactiver la compétence
-					$new = array('dest'=>0,  'etat' => ($sub=='atq'?LEG_ETAT_POS:LEG_ETAT_GRN),
+					$new = array('dest'=>0,  'etat' => ($_sub=='atq'?LEG_ETAT_POS:LEG_ETAT_GRN),
 						'cid'=>$cid, 'bonus'=>0);
 					$legions->legs[$lid]->edit($new);
 					$_tpl->set("show_form",false);
@@ -122,39 +188,8 @@ case "move":
 			}
 	}
 	break;
-case "edit": // déplacer des unités du village vers la légion
-	$cond = array('mid'=>$_user['mid']);
-	$legions = new legions($cond, true, true);
-	$lid = request("to_leg", "uint", "post");
-	$type = request("unt_type", "uint", "post");
-	$nb = request("unt_nb", "uint", "post");
-
-	// unités (légion) du village
-	if($legions->vlg_lid != 0)
-		$vlg_array = $legions->legs[$legions->vlg_lid]->get_unt();
-
-	$action = array('lid'=>$lid, 'type'=>$type, 'nb'=>$nb, 'vlg' => $vlg_array);
-	$_debugvars['action'] = $action;
-
-	if(!isset($legions->legs[$lid]) || $legions->legs[$lid]->cid != $_user['mapcid'])
-		$_tpl->set("leg_bad_lid", true);
-	else if(!isset($vlg_array[$type]) || $vlg_array[$type] < $nb) /* Pas d'unités au village */
-		$_tpl->set("leg_no_unt_vlg", true);
-	else if(!$nb)
-		$_tpl->set("leg_cant_add_unt", true);
-	else {
-		// sortir $nb unités $type du village, puis les ajouter dans légion $lid à $rang
-		$legions->legs[$legions->vlg_lid]->add_unt($type, - $nb);
-		$legions->legs[$lid]->add_unt($type, $nb);
-		$legions->flush();
-		$_tpl->set("leg_ok", true);
-	}
-
-	$_act = "";
-	$_tpl->set("leg_act", '');
-	$_tpl->set('action', $action);
-	break;
-case "new": // nouvelle légion
+    
+case "new": // creer une nouvelle légion
 	$name = request("name", "string", "post");
 	$_tpl->set('ren_leg_name', $name);
 
@@ -194,7 +229,7 @@ case "del": // supprimer légion
 
 	$_act = "";
 	break;
-case "recup": // TODO
+case "recup": // recuperer une legion vide
 	$lid = request("lid", "uint", "get");
 
 	$cond = array();
@@ -229,11 +264,13 @@ case "recup": // TODO
 	break;
 
 case "hero":
+    // gestion du heros
+    
 	$cond = array('mid'=>$_user['mid']);
 	$legions = new legions($cond, true, true);
 	// utiliser les valeurs connues dans $_ses
 	if($_user['hro_id']){
-		if($sub == "form")
+		if($_sub == "form")
 			$_tpl->set("already_hro", true);
 		$hero_conf = $_ses->getConf('unt',$_user['hro_type']);
 		$_tpl->set("hero_conf", $hero_conf);
@@ -247,7 +284,7 @@ case "hero":
 		if ($legions->legs[$_user['hro_lid']]->cid == $_user['mapcid'])
 			$_tpl->set("leg_array", $legions->get_all_legs_infos()); // liste des légions
 
-		if($sub == "bns" && $_user['hro_vie'] > 0){ // activer une comp ?
+		if($_sub == "bns" && $_user['hro_vie'] > 0){ // activer une comp ?
 			$bid = request('bid', 'uint','post');
 			if(!$bid && $_user['hro_bonus'] == 0)
 				$_tpl->set("no_bid",true);
@@ -270,7 +307,7 @@ case "hero":
 					$_tpl->set("bad_bid",true);
 			}
 		}
-		else if($sub == "del_hero"){ // supprimer le héros ?
+		else if($_sub == "del_hero"){ // supprimer le héros ?
 			$rep = request("Oui", "string", "post");
 			if(isset($rep) && $rep == "Oui"){
 				$nb = Hro::del($_user['hro_lid'], $_user['hro_type']);
@@ -284,7 +321,7 @@ case "hero":
 			else
 				$_tpl->set("verif_del_hro", true);
 		}
-		else if($sub == "move_hero" && $_user['hro_vie'] > 0){// changer le héros de légion
+		else if($_sub == "move_hero" && $_user['hro_vie'] > 0){// changer le héros de légion
 			// interdire le changement de légion selon comp active
 			if ($_user['hro_bonus'] == CP_INVULNERABILITE) {
 				$_tpl->set("err",'imm_cause_comp');
@@ -309,13 +346,14 @@ case "hero":
 				}
 			}
 		}
-	} else if($sub == "form"){ // formation héros étape 1: demander son nom
+	} else if($_sub == "form"){ // formation héros étape 1: demander son nom
 		// pour la formation, visu des bâtiments & recherches
 		$id_hro = request("id_hro", "uint", "get");
 		$name = request("hro_name", "string", "post");
 
 		if($id_hro) { // vérifier qu'on peut le payer
 			//$bad = $legions->legs[$legions->vlg_lid]->can_unt($id_hro, 1);
+                        $member = new member($_user['mid']);
 			$bad = $member->can_unt($id_hro, 1);
 			foreach($bad as $key => $value) if (empty($value)) unset($bad[$key]);
 			if (!empty($bad)) // trop cher

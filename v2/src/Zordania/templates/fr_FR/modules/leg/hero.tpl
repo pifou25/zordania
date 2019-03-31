@@ -91,13 +91,13 @@
 		
 		</td><td style="width: 50%">
 
-			<if cond='isset({leg_array}) && {_user[hro_vie]} > 0'>
+			<if cond='!empty({legs}) && {_user[hro_vie]} > 0'>
 			<form method="post" action="leg-hero.html?sub=move_hero">
 				<label for="to">Déplacer le héros vers</label><br />
 				<select name="to" id="to">
-				<foreach cond="{leg_array} as {value}">
-					<if cond='{_user[hro_lid]} != {value[leg_id]}'><option value="{value[leg_id]}">
-						<if cond='{value[leg_etat]} != {LEG_ETAT_VLG}'>{value[leg_name]}</if>
+				<foreach cond="{legs} as {leg}">
+					<if cond='{_user[hro_lid]} != {leg->leg_id}'><option value="{leg->leg_id}">
+						<if cond='{leg->leg_etat} != {LEG_ETAT_VLG}'>{leg->leg_name}</if>
 						<else>Rentrer au village</else>
 					</option>
 					</if>
