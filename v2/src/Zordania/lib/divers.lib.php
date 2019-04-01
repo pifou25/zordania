@@ -10,7 +10,9 @@ spl_autoload_register(function ($classname) {
 	else if (is_file(SITE_DIR ."src/$classname.php"))
 		require_once SITE_DIR ."src/$classname.php";
         else{
-            //echo "no file for class $classname -- ";
+            if(SITE_DEBUG){
+                echo SITE_DIR .  "zrc/$classname.php -- no file for class !";
+            }
             return false;
         }
         
