@@ -73,7 +73,7 @@ case 'unit2':
         $fromRang = $legs[$fromLid]->rang($type);
         if(empty($fromRang) || $fromRang->unt_nb < $nb || $civils){
             // pas assez d'unites ou ils sont civils
-            $_tpl->set('error', 'leg_no_unt_vlg');
+            $_tpl->set('error', 'leg_no_unt');
         }else{
             if(empty($toRang)){
                 $toRang = new Unt();
@@ -90,7 +90,7 @@ case 'unit2':
             }else if(!$fromRang->save()){
                 $_tpl->set('error', 'leg_ko2');
             }else{
-                $_tpl->set('error', 'L\'opération est un succès.');
+                $_tpl->set('confirm', [$type => $nb]);
             }
         }
     }

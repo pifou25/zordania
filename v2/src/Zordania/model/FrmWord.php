@@ -232,7 +232,7 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
                 /**
                  * Wherever your Select may come from
                  **/
-                $select = FrmSearchWord::selectRaw('?, id, ?',  [$post_id, $subject_match])
+                $select = FrmWord::selectRaw('?, id, ?',  [$post_id, $subject_match])
                         ->whereIn('word', $wordlist);
 
                 /**

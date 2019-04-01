@@ -46,12 +46,11 @@
     </p>
 
     </if>
-    <else>
-        <p class="error">Pas assez d'unités, ou les unités sont des civils.</p>
-    </else>
 </if>
 
-
+                        <if cond='{_act} == "unit2" && isset({confirm})'><foreach cond="{confirm} as {key} => {value}">
+<p class="ok">Déplacement effectué : {value} <zimgunt race="{_user[race]}" type="{key}" </p>
+                        </foreach></if>
 
 <if cond='!{_act} || {_act} =="del" ||  {_act} =="recup" || {_act} == "edit" || {_act} == "etat" || {_act} =="move" || {_act} =="new"'>
 	<if cond='{_act} == "del"'>

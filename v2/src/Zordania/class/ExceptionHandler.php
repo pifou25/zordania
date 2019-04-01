@@ -147,7 +147,6 @@ class ExceptionHandler {
                 $i++;
                 $msg .= "\n$i: {$query['query']}\nBinding:\n";
                 $msg .= print_r($query['bindings'], TRUE);
-                $msg .= "\n\tCallstack:\n" . implode("\n\t", $query['callstack']);
             }
         }
         return $msg;
