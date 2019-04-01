@@ -27,7 +27,7 @@ class Leg extends Illuminate\Database\Eloquent\Model {
      */
     function unites(){
         if($this->unites == null){
-            $this->unites = $this->hasMany('unt', 'unt_lid');
+            $this->unites = $this->hasMany('Unt', 'unt_lid');
         }
         return $this->unites;
     }
