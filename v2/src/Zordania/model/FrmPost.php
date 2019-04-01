@@ -294,7 +294,7 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
     static function del(array $pst, array $tpc): bool {
 
         // MAJ indexation recherche
-        FrmMatch::index($pst['pid']);
+        FrmMatch::index([$pst['pid']]);
 
         //puis on supprime le post lui-même
         FrmPost::where('id', $pst['pid'])->delete();

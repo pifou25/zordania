@@ -17,17 +17,18 @@ class FrmMatch extends Illuminate\Database\Eloquent\Model {
 //
 // Strip search index of indexed words in $post_ids
 //
-    static function index($post_ids) {
+    static function index(array $post_ids) {
 
         $result = FrmMatch::select('word_id')->whereIn('post_id', $post_ids)->distinct()->get()->toArray();
 
         if (!empty($result)) {
-            $word_ids = '';
+            $word_ids = [];
             foreach ($result as $row)
-                $word_ids .= ($word_ids != '') ? ',' . $row['word_id'] : $row['word_id'];
+                $word_ids[] = $row['word_id'];
+            array_unique($word_ids, SORT_NUMERIC);
 
             $result = FrmMatch::select('word_id')->whereIn('word_id', $word_ids)
-                            ->groupBy('word_id')->havingRaw('COUNT(word_id) = ?', 1)->get()->toArray();
+                            ->groupBy('word_id')->havingRaw('COUNT(word_id) = ?', [1])->get()->toArray();
 
             if (!empty($result)) {
                 $word_ids = '';

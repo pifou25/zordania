@@ -228,13 +228,27 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
         while (list($match_in, $wordlist) = @each($words['add'])) {
             $subject_match = ($match_in == 'subject') ? 1 : 0;
             // Add new matches
-            $sql = 'INSERT INTO ' . DB::getTablePrefix() .
-                    'frm_search_matches (post_id, word_id, subject_match) SELECT ' .
-                    "'$post_id', id, '$subject_match' FROM " . DB::getTablePrefix() .
-                    'frm_search_words WHERE word IN(?)';
-
             if (!empty($wordlist)) {
-                DB::insert($sql, $wordlist);
+                /**
+                 * Wherever your Select may come from
+                 **/
+                $select = FrmSearchWord::selectRaw('?, id, ?',  [$post_id, $subject_match])
+                        ->whereIn('word', $wordlist);
+
+                /**
+                 * get the binding parameters
+                 **/ 
+                $bindings = $select->getBindings();
+                /**
+                 * now go down to the "Network Layer"
+                 * and do a hard coded select, Laravel is a little
+                 * stupid here
+                 */
+                $sql = 'INSERT INTO ' . DB::getTablePrefix() .
+                    'frm_search_matches (post_id, word_id, subject_match) ' 
+                    . $select->toSql();
+
+                DB::insert($sql, $bindings);
             }
         }
 

@@ -13,8 +13,48 @@
 	</p>
 </if>
 
-<if cond='!{leg_act} || {leg_act} =="del" ||  {leg_act} =="recup" || {leg_act} == "edit" || {leg_act} == "etat" || {leg_act} =="move" || {leg_act} =="new"'>
-	<if cond='{leg_act} == "del"'>
+        <if cond="isset({error})">
+<load file="config/errors.properties" />
+<if cond="isset({err[{error}]})">
+    <p class="error">{err[{error}]}</p>
+</if>
+<else><p class="error">Undocumented Error : {error}</p></else>
+        </if>
+        
+<if cond='{_act} == "unit1"'>
+    <if cond="isset({legs[{lid}]}) && isset({unit})">
+
+    <p>Déplacer des unités de {legs[{lid}]->leg_name} :
+        <form method="post" action="leg-unit2.html">
+        <fieldset>
+            <legend>Gestion des unités du village</legend>
+            <label for="unt_nb">max {unit->unt_nb} <zimgunt race="{_user[race]}" type="{unit->unt_type}" /></label>
+            <input type="number" name="unt_nb" size="5" min="0" max="{unit->unt_nb}" />
+            <input type="hidden" name="from_leg" value="{lid}" />
+            <input type="hidden" name="unt_type" value="{unit->unt_type}" />
+            <label for="to_leg">Ajouter dans</label>
+            <select name="to_leg">
+                <foreach cond="{legs} as {leg}">
+                    <if cond='{leg->leg_etat} != {LEG_ETAT_BTC} && {leg->leg_id} != {lid}'>
+                        <option value="{leg->leg_id}">{leg->leg_name}</option>
+                    </if>
+                </foreach>
+            </select>
+            <input type="submit" value="Déplacer" />
+        </fieldset>
+        </form>
+    </p>
+
+    </if>
+    <else>
+        <p class="error">Pas assez d'unités, ou les unités sont des civils.</p>
+    </else>
+</if>
+
+
+
+<if cond='!{_act} || {_act} =="del" ||  {_act} =="recup" || {_act} == "edit" || {_act} == "etat" || {_act} =="move" || {_act} =="new"'>
+	<if cond='{_act} == "del"'>
 		<if cond="isset({leg_need_ok})">
 			<div class="infos">
 			Voulez-vous vraiment supprimer cette légion ?
@@ -30,7 +70,7 @@
 
 	<else>
 		<if cond="isset({leg_new})"><p class="ok">Nouvelle légion créée ! {ren_leg_name}</p></if>
-		<if cond='{leg_act} == "recup" and !isset({err})'><p class="ok">Légion retournée au village. La légion a perdu la moitié de ses ressources.</p></if>
+		<if cond='{_act} == "recup" and !isset({err})'><p class="ok">Légion retournée au village. La légion a perdu la moitié de ses ressources.</p></if>
 
 		<if cond="isset({leg_bad_lid})">
 			<div class="error">Cette légion ne peut pas se déplacer ici !</div>
@@ -73,22 +113,22 @@
 		</elseif>
 	</else>
 
-	<if cond='{leg_act} =="move" && isset({show_form}) && {show_form}'><# déplacement des légions #>
+	<if cond='{_act} =="move" && isset({show_form}) && {show_form}'><# déplacement des légions #>
 		<if cond="isset({map_array}) && {map_array} ">
 			<h3>Destination</h3>
 			<set name="result" value="{map_array}" />
 			<include file="modules/carte/tile.tpl" cache="1" />
 			<h3>Déplacer une légion</h3>
-			<if cond='!{leg_array}'>
+			<if cond='empty({legs})'>
 				<p class="error">Aucune légion disponible !</p>
 			</if>
 			<else>
-				<form method="post" action="leg-move.html?sub={leg_sub}&amp;cid={map_cid}">
+				<form method="post" action="leg-move.html?sub={_sub}&amp;cid={map_cid}">
 			</else>
 		</if>
 	</if>
 	<else><# formulaire gestion des légions #>
-		<if cond="count({leg_array}) - 1 < {LEG_MAX_NB}">
+		<if cond="count({legs}) - 1 < {LEG_MAX_NB}">
 			<form method="post" action="leg-new.html">
 				<fieldset>
 					<legend>Nouvelle légion</legend>
@@ -98,36 +138,11 @@
 				</fieldset>
 			</form>
 		</if>
-		<form method="post" action="leg-edit.html">
-		<fieldset>
-			<legend>Gestion des unités du village</legend>
-			<label for="to_leg">Ajouter dans</label>
-			<select name="to_leg" id="to_leg">
-				<foreach cond="{leg_array} as {value}">
-					<if cond='{value[leg_etat]} != {LEG_ETAT_VLG} && {_user[mapcid]} == {value[leg_cid]}'>
-						<option value="{value[leg_id]}">{value[leg_name]}</option>
-					</if>
-				</foreach>
-			</select><br/>
-			<label for="unt_type">Type d'unités</label>
-			<select id="unt_type" name="unt_type">
-				<if cond="isset({unt_leg[{lid_vlg}]})">
-				<foreach cond="{unt_leg[{lid_vlg}]} as {type} => {nb}">
-					<if cond="{unt_conf[{type}][role]}!={TYPE_UNT_CIVIL} && {unt_conf[{type}][role]}!={TYPE_UNT_HEROS}">
-						<option value="{type}">{unt[{_user[race]}][alt][{type}]} ({nb})</option>
-					</if>
-				</foreach>
-				</if>
-			</select><br/>
-			<label for="unt_nb">nombre</label>
-			<input type="text" id="unt_nb" name="unt_nb" size="5" />
-			<input type="submit" value="Déplacer" />		
-		</form>
-		</fieldset><!-- fin formulaire de gestion -->
+                <!-- fin formulaire de gestion -->
 	</else>
-	<if cond='isset({leg_array}) '>
+	<if cond='!empty({legs}) '>
 
-		<if cond='!({leg_act} == "move" && isset({show_form}) && {show_form})'>
+		<if cond='!({_act} == "move" && isset({show_form}) && {show_form})'>
 			<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_VLG}" />
 			<hr/>
 		</if>
@@ -136,7 +151,7 @@
 		<# include avec paramètre 'thisetat' #>
 		<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_GRN}" />
 		
-		<if cond='! ({leg_act} == "move" && isset({show_form}) && {show_form} && {leg_sub} == "atq" )'>
+		<if cond='! ({_act} == "move" && isset({show_form}) && {show_form} && {_sub} == "atq" )'>
 			<hr/>
 			<h3>{leg_etat[{LEG_ETAT_POS}]}</h3>
 			<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_POS}" />
@@ -149,7 +164,7 @@
 			<h3>{leg_etat[{LEG_ETAT_ALL}]}</h3>
 			<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_ALL}" />
 
-			<if cond='!({leg_act} == "move" && isset({show_form}) && {show_form})'>
+			<if cond='!({_act} == "move" && isset({show_form}) && {show_form})'>
 				<hr/>
 				<h3>{leg_etat[{LEG_ETAT_RET}]}</h3>
 				<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_RET}" />
@@ -160,14 +175,14 @@
 			</if>
 		</if>
 
-		<if cond='{leg_act} =="move" && {leg_array} && isset({show_form}) && {show_form}'>
+		<if cond='{_act} =="move" && !empty({legs}) && isset({show_form}) && {show_form}'>
 			<input type="submit" value="Envoyer" />
 			</form>
 		</if>
 	</if>
 	
 </if>
-<elseif cond='{leg_act} =="view"'>
+<elseif cond='{_act} =="view"'>
 	<if cond="isset({leg_bad_lid})">
 		<div class="error">Cette légion n'existe pas !</div>
 	</if>
@@ -175,6 +190,6 @@
 		<include file="modules/leg/view.tpl" cache="1" />
 	</else>
 </elseif>
-<elseif cond='{leg_act} == "hero" || {leg_act} == "bns"'>
+<elseif cond='{_act} == "hero" || {_act} == "bns"'>
 	<include file="modules/leg/hero.tpl" cache="1" />
 </elseif>

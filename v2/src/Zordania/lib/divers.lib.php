@@ -7,7 +7,12 @@ spl_autoload_register(function ($classname) {
 		require_once SITE_DIR ."src/Zordania/class/$classname.php";
 	else if (is_file(SITE_DIR ."src/Zordania/model/$classname.php"))
 		require_once SITE_DIR ."src/Zordania/model/$classname.php";
-        else return false;
+	else if (is_file(SITE_DIR ."src/$classname.php"))
+		require_once SITE_DIR ."src/$classname.php";
+        else{
+            //echo "no file for class $classname -- ";
+            return false;
+        }
         
 });
 

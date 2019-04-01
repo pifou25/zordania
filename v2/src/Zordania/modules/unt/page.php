@@ -6,6 +6,7 @@ if(!$_ses->canDo(DROIT_PLAY)){
 
 $_tpl->set("module_tpl","modules/unt/unt.tpl");
 
+// member: class helper
 $mbr = new member($_user['mid']);
 $unt_type = request("unt_type", "uint", "get");
 

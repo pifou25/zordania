@@ -16,7 +16,49 @@ class Leg extends Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     // override table name
     protected $table = 'leg';
+    
+    protected $primaryKey = 'leg_id';
+    
+    private $unites = null;
 
+    /**
+     * toutes les unités de la légion
+     * @return type
+     */
+    function unites(){
+        if($this->unites == null){
+            $this->unites = $this->hasMany('unt', 'unt_lid');
+        }
+        return $this->unites;
+    }
+    
+    /**
+     * un rang de la legion = 1 row de zrd_unt
+     * @param type $type d'unite
+     * @return type
+     */
+    function rang($type){
+        if($this->unites == null){
+            $this->unites = $this->hasMany('unt', 'unt_lid');
+        }
+        foreach($this->unites->get() as $unit){
+            if($unit->unt_type == $type)
+                return $unit;
+        }
+        return []; // empty result
+    }
+    
+    /**
+     * les légions village et batiment ne sont pas modifiables
+     * @return type
+     */
+    function getIsModifiableAttribute(){
+        return $this->leg_etat != LEG_ETAT_VLG && $this->leg_etat != LEG_ETAT_BTC;
+    }
+    
+    /**
+     * liste des fonctions 'static' : aucune reference a $this
+     */
     /* une légion */
 
     static function getById(int $lid) {
@@ -72,7 +114,7 @@ class Leg extends Illuminate\Database\Eloquent\Model {
 	if(!$mid || !$name)
 		return false;
 
-        return Leg::where('leg_mid', $mid)->where('leg_lid', '<>', $lid)->where('leg_name', 'LIKE', $name)
+        return Leg::where('leg_mid', $mid)->where('leg_id', '<>', $lid)->where('leg_name', 'LIKE', $name)
                 ->count() == 0;
     }
     

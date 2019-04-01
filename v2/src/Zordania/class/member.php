@@ -220,14 +220,6 @@ class member {
             return isset($this->res[$type]) ? $this->res[$type] : 0;
     }
 
-    function res_todo() {
-        if (!$this->res_todo_load) { // TODO?
-            $this->res_todo = get_res_gen(array('mid' => $this->mid));
-            $this->res_toto_load = true;
-        }
-        return $this->res_todo;
-    }
-
     /* Verifie qu'on peut faire telle ou telle ressource */
 
     function can_res(int $type, int $nb) {

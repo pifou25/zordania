@@ -6,6 +6,12 @@
  * unt_lid = leg_id
  */
 class Unt extends Illuminate\Database\Eloquent\Model {
+    use \Zordania\model\HasCompositePrimaryKey;
+
+    /**
+     * composite primary key with 3 columns:
+     */
+    protected $primaryKey = ['unt_lid', 'unt_type', 'unt_rang'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -45,11 +51,11 @@ class Unt extends Illuminate\Database\Eloquent\Model {
     }
 
     static function editVlg(int $mid, array $unt, int $factor = 1){
-        $lid = Leg::get(['mid' => $mid, 'etat' => [LEG_ETAT_VLG]]);
+        $lid = Leg::where('leg_mid', $mid)->where('leg_etat', LEG_ETAT_VLG)->first()->leg_id;
         if(empty($lid)){
             return false;
         }
-        Unt::edit($lid[0]['leg_id'], $unt, $factor);
+        Unt::edit($lid, $unt, $factor);
         return true;
     }
 

@@ -143,6 +143,7 @@ $_tpl->set($const['user']);
 /* Config */
 $_tpl->set("cfg_url",SITE_URL);
 $_tpl->set("_act",$_act);
+$_tpl->set("_sub",$_sub);
 $_tpl->set("cfg_style",request("style", "string", "cookie", "Marron"));
 $_tpl->set("zordlog_url",ZORDLOG_URL);
 if(!in_array($_user['design'], $_css)) // check if the current css exist

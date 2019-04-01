@@ -251,14 +251,16 @@ function traiterZrdPopUp() {
     // autre popup ajax pour les modules - plus grande. specifique selon le CSS
     if (user_css == 6) {
         // popup specifique
-        $("#village .zrdPopUp").click(funcZrdModal);
-        $(".liste .zrdPopUp").click(funcZrdModal);
-        $("#dialog-modal .zrdPopUp").click(funcZrdModal);
+//        $("#village .zrdPopUp").click(funcZrdModal);
+//        $(".liste .zrdPopUp").click(funcZrdModal);
+//        $("#dialog-modal .zrdPopUp").click(funcZrdModal);
+        $(".zrdPopUp").click(funcZrdModal);
     } else {
         // popup jquery-iu classique
-        $("#village .zrdPopUp").click(funcZrdPopup);
-        $(".liste .zrdPopUp").click(funcZrdPopup);
-        $("#dialog-modal .zrdPopUp").click(funcZrdPopup);
+//        $("#village .zrdPopUp").click(funcZrdPopup);
+//        $(".liste .zrdPopUp").click(funcZrdPopup);
+//        $("#dialog-modal .zrdPopUp").click(funcZrdPopup);
+        $(".zrdPopUp").click(funcZrdPopup);
     }
 }
 
