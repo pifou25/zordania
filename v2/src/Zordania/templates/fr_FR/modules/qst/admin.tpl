@@ -1,3 +1,9 @@
+<p class="menu_module">
+    <a href="admin.html?module=qst">Admin Quêtes</a>
+    <a href="admin-exp.html?module=qst">Export des Quêtes</a>
+    <a href="forum-topic.html?fid={FORUM_QUETES}">Forum des Quêtes</a>
+</p>
+
 <h3>Paramétrage des Quêtes - <a href="admin-update.html?module=qst">update</a></h3>
 
 <if cond="isset({update})">
@@ -16,92 +22,32 @@
         <br/>
     </foreach>
 </if>
-<elseif cond="isset({quete})">
+<elseif cond='isset({qstDetail})'>
+<foreach cond="{qstDetail} as {quete}">
 
-    <h4>
-    <a href="forum-<math oper="Template::str2url({quete[subject]})"/>.html?pid={quete[pid]}#{quete[pid]}">{quete[subject]}</a>
-    </h4>
-
+    (<a href="forum.html?pid={quete->cfg_pid}#{quete->cfg_pid}"> forum </a>) :
+    <a href="admin-edit.html?module=qst&amp;id={quete->cfg_id}"> {quete->cfg_subject} </a>
+    [ id = {quete->cfg_id} ]
     <include file="modules/qst/qst.tpl" quete="{quete}" cache="1" />
     
-    <form action="admin-edit.html?module=qst&amp;id={quete[cfg_id]}" method="post">
-
-        <p><label for="cfg_subject">Modifier le titre :</label>
-        <input type="text" id="cfg_subject" name="cfg_subject" value="{quete[cfg_subject]}" tabindex="1" />
-
-        <p><label for="msg_pseudo">PNJ de la quête :</label>
-        <input type="text" id="msg_pseudo" name="msg_pseudo" value="{quete[username]}" tabindex="2" maxlength="{TAILLE_MAX_PSEUDO}" />
-        ( <a href="member-liste.html" title="Liste des joueurs">Liste</a> )</p>
-
-        <h4>Prérequis pour cette quête :</h4>
-        <p class="infos">Attention : si on modifie ces paramètres, ça ne s'applique pas aux joueurs qui ont déjà cette quête en cours.</p>
-        
-    <select id="param1" name="param1">
-        <foreach cond="QstCfg::PARAMS as {key} => {value}">
-            <option value="{key}" <if cond="{key} == {quete[cfg_param1]}">selected="selected"</if>>{value}</option>
-        </foreach>
-    </select>
-    <input id="value1" name="value1" type="text" size="8" value="{quete[cfg_value1]}" /><br/>
-    
-    <select id="param2" name="param2">
-        <foreach cond="QstCfg::PARAMS as {key} => {value}">
-            <option value="{key}" <if cond="{key} == {quete[cfg_param2]}">selected="selected"</if>>{value}</option>
-        </foreach>
-    </select>
-    <input id="value2" name="value2" type="text" size="8" value="{quete[cfg_value2]}" /><br/>
-    
-    <select id="param3" name="param3">
-        <foreach cond="QstCfg::PARAMS as {key} => {value}">
-            <option value="{key}" <if cond="{key} == {quete[cfg_param3]}">selected="selected"</if>>{value}</option>
-        </foreach>
-    </select>
-    <input id="value3" name="value3" type="text" size="8" value="{quete[cfg_value3]}" /><br/>
-    
-    <select id="param4" name="param4">
-        <foreach cond="QstCfg::PARAMS as {key} => {value}">
-            <option value="{key}" <if cond="{key} == {quete[cfg_param4]}">selected="selected"</if>>{value}</option>
-        </foreach>
-    </select>
-    <input id="value4" name="value4" type="text" size="8" value="{quete[cfg_value4]}" /><br/>
-    
-    <label for="param5">Objectif de la quête : </label>
-    <select id="param5" name="param5">
-        <foreach cond="QstCfg::PARAMS as {key} => {value}">
-            <option value="{key}" <if cond="{key} == {quete[cfg_objectif]}">selected="selected"</if>>{value}</option>
-        </foreach>
-    </select>
-    <input id="value5" name="value5" type="text" size="8" value="{quete[cfg_obj_value]}" /><br/>
-    
-    <input type="submit" name="Valider" value="Valider" />
-    <input type="reset" name="Annuler" value="Annuler" />
-    </form>
-    
-</elseif>
-<elseif cond='isset({qstDetail})'>
-<foreach cond="{qstDetail} as {val}">
-
-    (<a href="forum.html?pid={val[cfg_pid]}#{val[cfg_pid]}"> forum </a>) :
-    <a href="admin-edit.html?module=qst&amp;id={val[cfg_id]}"> {val[cfg_subject]} </a>
-    [ id = {val[cfg_id]} ]
-    <include file="modules/qst/qst.tpl" quete="{val}" cache="1" />
-    
-    <if cond="!empty({val[cfg_param1]})">( param1({val[cfg_param1]}) = {val[cfg_value1]} )</if>
-    <if cond="!empty({val[cfg_param2]})"> - ( param2({val[cfg_param2]}) = {val[cfg_value2]} )</if>
-    <if cond="!empty({val[cfg_param3]})"> - ( param4({val[cfg_param3]}) = {val[cfg_value3]} )</if>
-    <if cond="!empty({val[cfg_param4]})"> - ( param3({val[cfg_param4]}) = {val[cfg_value4]} )</if>
-    <if cond="!empty({val[cfg_objectif]})"> - {val[cfg_objectif]} = {val[cfg_obj_value]}</if>
+    <if cond="!empty({quete->cfg_param1})">( param1({quete->cfg_param1}) = {quete->cfg_value1} )</if>
+    <if cond="!empty({quete->cfg_param2})"> - ( param2({quete->cfg_param2}) = {quete->cfg_value2} )</if>
+    <if cond="!empty({quete->cfg_param3})"> - ( param4({quete->cfg_param3}) = {quete->cfg_value3} )</if>
+    <if cond="!empty({quete->cfg_param4})"> - ( param3({quete->cfg_param4}) = {quete->cfg_value4} )</if>
+    <if cond="!empty({quete->cfg_objectif})"> - {quete->cfg_objectif} = {quete->cfg_obj_value}</if>
     <br/>
 </foreach>
 </elseif>
 <elseif cond="isset({qst})">
 <foreach cond="{qst} as {val}">
 
-    <a href="forum.html?tid={val[tid]}#{val[tid]}"> {val[subject]} </a>
-    (<a href="admin.html?module=qst&amp;tid={val[tid]}"> Lister </a>)
+    {val[subject]} (<a href="forum.html?tid={val[tid]}#{val[tid]}"> Forum </a>)
+    (<a href="admin.html?module=qst&amp;tid={val[tid]}"> Paramètres </a>)
     <br/>
 </foreach>
     
-    <p class="infos">Le forum permet de créer de nouvelles quêtes. Ensuite, faire "update", puis "editer" pour la paramétrer ici.
+    <p class="infos">Le forum permet de créer de nouvelles quêtes. Ensuite, faire "update",
+        puis "editer" pour la paramétrer ici.
         <br/>
     il faut au minimum spécifier l'objectif, éventuellement une valeur,
     et autant de paramètres comme prérequis et leur valeur associée.</p>

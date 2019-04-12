@@ -11,9 +11,6 @@ spl_autoload_register(function ($classname) {
     else if (is_file(SITE_DIR ."src/$classname.php"))
         include_once SITE_DIR ."src/$classname.php";
     else{
-        if(SITE_DEBUG){
-            echo SITE_DIR .  "zrc/$classname.php -- no file for class !";
-        }
         return false;
     }
 });

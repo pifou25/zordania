@@ -1,9 +1,13 @@
 <?php
 
+namespace Zordania\model;
+
+use session;
+
 /**
  * Liste des quetes en cours et termnées des joueurs
  */
-class Qst extends Illuminate\Database\Eloquent\Model {
+class Qst extends \Illuminate\Database\Eloquent\Model {
 
     // override table name
     protected $table = 'qst';
