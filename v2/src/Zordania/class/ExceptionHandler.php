@@ -91,7 +91,8 @@ class ExceptionHandler {
         try
         {
             if($e instanceof Illuminate\Database\QueryException){
-                echo "erreur SQL Eloquent";
+                echo "<div class'error'>erreur SQL Eloquent</div>";
+                echo self::formatException($e, true);
             }else if($e instanceof Error){
                 self::dieWithTemplate(self::formatException($e, true));
             }
@@ -117,7 +118,7 @@ class ExceptionHandler {
             if (error_reporting() === 0)
                     return ;
 
-            // convert simple error into excption
+            // convert simple error into execption
             $ex = new ErrorException("[error $severity] ".$errstr, $severity, $severity, $errfile, $errline);
             self::handleException($ex);
     }

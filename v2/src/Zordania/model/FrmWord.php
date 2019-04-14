@@ -41,8 +41,6 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
                 unset($keywords_array[$i]);
         }
 
-        // recherche dans le texte ou uniquement le sujet ?
-        $search_in_cond = ($search_in) ? (($search_in > 0) ? ' AND m.subject_match = 0' : ' AND m.subject_match = 1') : '';
 
         $word_count = 0;
         $match_type = 'and';
@@ -58,9 +56,10 @@ class FrmWord extends Illuminate\Database\Eloquent\Model {
 
                 default: {
                         $cur_word = str_replace('*', '%', $cur_word);
-                        $req = FrmWord::select('m.post_id')->table('frm_search_words AS w')
+                        $req = FrmWord::select('m.post_id')->from('frm_search_words AS w')
                                 ->join('frm_search_matches AS m', 'm.word_id', 'w.id')
                                 ->where('word', 'LIKE', $cur_word);
+                        // recherche dans le texte ou uniquement le sujet ?
                         if ($search_in) {
                             $req->where('m.subject_match', ($search_in > 0 ? 0 : 1));
                         }

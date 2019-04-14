@@ -53,7 +53,9 @@ class Qst extends \Illuminate\Database\Eloquent\Model {
             $id = Qst::insert($request);
             
             $result = Qst::where('qst_id', $id)->get()->toArray();
-            return self::fillQst($result[0]);
+            if(empty($result[0])){
+                return self::fillQst($result[0]);
+            }
 
         }
         

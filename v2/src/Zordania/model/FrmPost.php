@@ -68,7 +68,7 @@ class FrmPost extends Illuminate\Database\Eloquent\Model {
             $sql = DB::getTablePrefix() . 'p.id AS pid ';
         else if ($select == 'substr')
             $sql = DB::getTablePrefix() . 'p.id AS pid, ' . DB::getTablePrefix() . 'p.poster AS pposter, _UDATE_FORMAT(' . DB::getTablePrefix() . 'p.posted) AS pposted,
-		' . DB::getTablePrefix() . 'p.poster_id, SUBSTRING(message, 1, 1000) AS message, ' . DB::getTablePrefix() . 't.id AS tid, ' . DB::getTablePrefix() . 't.poster, t.subject, 
+		' . DB::getTablePrefix() . 'p.poster_id, SUBSTRING(message, 1, 1000) AS message, ' . DB::getTablePrefix() . 't.id AS tid, ' . DB::getTablePrefix() . 't.poster, subject, 
 		_UDATE_FORMAT(' . DB::getTablePrefix() . 't.last_post) AS last_post, ' . DB::getTablePrefix() . 't.last_post_id, ' . DB::getTablePrefix() . 't.last_poster, ' . DB::getTablePrefix() . 't.num_replies, ' . DB::getTablePrefix() . 't.forum_id ';
         else if ($select == 'post')
             $sql = '' . DB::getTablePrefix() . 'p.id AS pid, ' . DB::getTablePrefix() . 'p.poster, _UDATE_FORMAT(' . DB::getTablePrefix() . 'p.posted) AS posted,
