@@ -198,11 +198,9 @@ define('SURV_TYPE_ALL', 5); // All
 /*ID Forum fid*/
 define('ZORD_NEWS_FID',25); //news
 define('FORUM_PLAINTES_FID',30); //plaintes
-define('QUETES_FID',30); // Forum des Quetes
+define('FORUM_QUETES',30); // Forum des Quetes
 define('FORUM_SUGGEST_FID',6); //fid suggestion
 define('FORUM_BUG_FID',8); //fid bug
-
-define('FORUM_QUETES',30);
 
 /*Etat bug/suggestion*/
 define('REPORT_STATUT_NEW',0); //nouvellement reporté

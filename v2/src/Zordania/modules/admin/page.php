@@ -12,9 +12,10 @@ $module = request("module", "string", "get");
 
 $_tpl->set("module_tpl","modules/admin/admin.tpl");
 
-if(!empty($module) && file_exists(MOD_DIR . "$module/admin.php"))
+if(!empty($module) && file_exists(MOD_DIR . "$module/admin.php")){
+        $_tpl->set("module_tpl","modules/$module/admin.tpl");
 	require_once(MOD_DIR . "$module/admin.php");
-else {
+} else {
 	$handle = opendir(MOD_DIR);
 	$pages = array();
 	while ($file = readdir($handle)) {

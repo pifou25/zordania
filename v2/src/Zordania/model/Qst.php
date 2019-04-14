@@ -1,9 +1,13 @@
 <?php
 
+namespace Zordania\model;
+
+use session;
+
 /**
  * Liste des quetes en cours et termnées des joueurs
  */
-class Qst extends Illuminate\Database\Eloquent\Model {
+class Qst extends \Illuminate\Database\Eloquent\Model {
 
     // override table name
     protected $table = 'qst';
@@ -49,7 +53,9 @@ class Qst extends Illuminate\Database\Eloquent\Model {
             $id = Qst::insert($request);
             
             $result = Qst::where('qst_id', $id)->get()->toArray();
-            return self::fillQst($result[0]);
+            if(empty($result[0])){
+                return self::fillQst($result[0]);
+            }
 
         }
         

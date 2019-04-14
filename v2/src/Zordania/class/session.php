@@ -1,4 +1,7 @@
 <?php
+
+use \Zordania\model\Qst;
+
 class session
 {
 	var $vars;
@@ -7,6 +10,13 @@ class session
         var $mbr = null; // object member
         
 	static public $SES; // singleton
+        
+        public static function instance(){
+            if(self::$SES == null){
+                self::$SES = new session();
+            }
+            return self::$SES;
+        }
         
 	function __construct()
 	{

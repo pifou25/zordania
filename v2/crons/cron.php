@@ -25,7 +25,7 @@ function mark($title_or_get)
 
 mark('start+'.php_sapi_name());
 
-//require_once("/home/zorddev/conf/conf.inc.php");
+define('PROTOCOL', 'https');
 require_once(str_replace('crons','',dirname(__FILE__))."/conf/conf.inc.php");
 
 require_once SITE_DIR . 'vendor/autoload.php';

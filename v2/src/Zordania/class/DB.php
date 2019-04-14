@@ -6,6 +6,8 @@
 
 class DB extends Illuminate\Database\Capsule\Manager {
 
+    private static $queries = [];
+    
     /**
      * Convert Eloquent DB::select result into array
      * @param object stdClass $obj
@@ -43,7 +45,15 @@ class DB extends Illuminate\Database\Capsule\Manager {
         // Setup the Eloquent ORM
         $_sql->bootEloquent();
         if(SITE_DEBUG){
+            // keep log of every queries
             $_sql->connection()->enableQueryLog();
+            
+            // ne marche pas :
+            $_sql->connection()->listen(function($sql, $bindings, $time)
+            {
+                self::$queries[] = ['query' => $sql, 'bindings' => $bindings, 'time' => $time];
+                echo "Zordania/class/DB.php : La requete est conservee pour log : $sql";
+            });
         }
         
     }
@@ -54,7 +64,8 @@ class DB extends Illuminate\Database\Capsule\Manager {
         $sqllog = new log(SITE_DIR."logs/mysql/mysqli_".date("d_m_Y").".log");
         $time = 0;
         $sqllog->text('**** '.date("H:i:s d/m/Y")."$msg ***");
-        foreach(DB::connection()->getQueryLog() as $i => $query){
+        self::$queries = DB::connection()->getQueryLog();
+        foreach(self::$queries as $i => $query){
             $text = $i . " | time= " . $query['time'] . " | " . $query['query'] . 
                     "\nBINDINGS = [" . implode(', ', $query['bindings']) . ']';
             $sqllog->text($text, false);

@@ -126,7 +126,7 @@ case 'post' : // valider le formulaire & créer le topic / message
                                     $result = @file_get_contents($url, false, $context);
 				}
 
-				header("Location: forum-post.html?pid=$pid#$pid");
+				header("Location: forum.html?pid=$pid#$pid");
                                 exit("Création du topic OK, redirection : <a href=\"forum-post.html?pid=$pid#$pid\">forum</a>");
 			}			
 		}
@@ -396,7 +396,7 @@ case 'search': // recherche
 		{
 			// recherche par mots clés
 			if ($keywords)
-				$keyword_results = search_keywords_results($keywords, $search_in);
+				$keyword_results = FrmWord::search_keywords_results($keywords, $search_in);
 
 			// recherche par auteur
 			if ($author) // && strcasecmp($author, 'Guest'))
@@ -438,9 +438,9 @@ case 'search': // recherche
 				//$cond['group'] = 'tid';
 				$cond['select'] = 'pid';
 				$show_as = 'posts';
-			}
-			else
-				$cond[$action] = true;
+			}else{
+                            $cond[$action] = true;
+                        }
 		}
 		if(!isset($cond)){
 			break;
@@ -517,14 +517,15 @@ case 'search': // recherche
 		{
 			$cond['select'] = 'substr';
 			$cond['pid_list'] = $search_ids;
-			$_tpl->set('posts_array', FrmPost::get($cond));
+			//$_tpl->set('posts_array', FrmPost::get($cond)->get()->toArray());
+                        $_tpl->set('post_pg', new Paginator(FrmPost::get($cond)));
 		}
 		else
 		{
 			$cond['tid_list'] = $search_ids;
 			$cond['select'] = 'mbr';
-			$_tpl->set('topic_array', FrmTopic::get($cond));
-			$_tpl->set('frm_act',$_act);
+			//$_tpl->set('topic_array', FrmTopic::get($cond)->get()->toArray());
+                        $_tpl->set('topic_pg', new Paginator(FrmTopic::get($cond)));
 		}
 		$_tpl->set('action',empty($action) ? 'search': $action);
 		$_tpl->set('search_id',$search_id);

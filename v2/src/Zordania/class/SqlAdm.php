@@ -72,6 +72,12 @@ class SqlAdm {
         return "$entete \n $sql\n";
     }
 
+    /**
+     * export du forum
+     * @param int $fid
+     * @param int $mode
+     * @return type
+     */
     public static function dumpFrm(int $fid, int $mode = self::EXP_DATA) {
 
         $sql = self::export(SqlAdm::TBL_FRM, $fid, $mode);
@@ -98,7 +104,7 @@ class SqlAdm {
             // si l'utilisateur a demandé la structure
             if ($mode & self::EXP_STRUC) {
                 $creations .= self::comment("creation de la table $table");
-                $data = mysqliext::$bdd->make_array("show create table " . $table);
+                $data = DB::sel("show create table " . $table);
                 foreach ($data as $val) {
                     $creations .= $val['Create Table'] . ";\n\n";
                 }
@@ -180,19 +186,21 @@ class SqlAdm {
      * @return array
      */
     private static function CreeInsertSQL(string $sql, string $table, string $pk = '', string $fk = '') {
-//echo "$sql -- $table -- $pk -- $fk</br>\n";
-        $result = mysqliext::$bdd->query($sql);
+        // echo "$sql -- $table -- $pk -- $fk</br>\n";
+        $result = DB::connection()->getPdo()->query($sql);
         if ($result === false) {
-            self::$errors[] = "-- $table en erreur\n-- $sql\n" . mysqliext::$bdd->err . "\n";
+            self::$errors[] = "-- $table en erreur\n-- $sql\n";
             return[];
         }
-        if ($result->num_rows == 0) {
+        if (empty($result)) {
             self::$errors[] = "-- $table vide\n-- $sql\n";
             return[];
         }
-
-        $fields = $result->fetch_fields();
-        return self::getDatas($result, $fields, $pk, $fk);
+        foreach(range(0, $result->columnCount() - 1) as $column_index)
+        {
+            $meta[] = $result->getColumnMeta($column_index);
+        }
+        return self::getDatas($result, $meta, $pk, $fk);
     }
 
     private static function getInserts(array $datas, string $table, int $groupBy = 20) {
@@ -221,21 +229,25 @@ class SqlAdm {
      */
     private static function getDatas($result, $fields, string $cle = '', string $fk = '') {
         $datas = [];
-
-        while ($nuplet = $result->fetch_array()) { // select * from $table
+        while ($nuplet = $result->fetch()) { // select * from $table
             $values = [];
             $key = 0;
             foreach ($fields as $i => $finfo) {
-                if ($finfo->flags & 512) { // 512 = AUTO_INCREMENT_FLAG
+                // if ($finfo->flags & 512) { // 512 = AUTO_INCREMENT_FLAG
+                if(self::isPk($finfo)){
                     $data = 'NULL'; // self::getAutoIncrement($table);
                     $key = $nuplet[$i];
-                } else if ($finfo->name == $cle) {                    // foreign key as a SQL variable
+                } else if ($finfo['name'] == $cle) {                    // foreign key as a SQL variable
                     $data = "@$fk";
                 } else {                    // char ou assimilé ou date ( 7 )
-                    if ($finfo->type == 253 || $finfo->type == 254 || $finfo->type == 252 || $finfo->type == 7)
+                    if ($finfo['pdo_type'] == 2) // type == 253 || $finfo->type == 254 || $finfo->type == 252 || $finfo->type == 7)
                         $sep = "'";
-                    else
+                    else if ($finfo['pdo_type'] == 1) // numeric 
                         $sep = "";
+                    else{
+                        echo $finfo['name'] . '--' . $finfo['pdo_type'];
+                        $sep = "'";
+                    }
 
                     $data = ($nuplet[$i] == NULL ? 'NULL' : $sep . addslashes($nuplet[$i]) . $sep);
                 }
@@ -252,6 +264,16 @@ class SqlAdm {
         return $datas;
     }
 
+    private static function isPk($field){
+        if(isset($field['flags'])){
+            foreach($field['flags'] as $value){
+                if($value == 'primary_key')
+                    return true;
+            }
+        }
+        return false;
+    }
+    
     private static function getAutoIncrement(string $table, string $fk, string $db = MYSQL_BASE) {
         return "SELECT @$fk := AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES "
                 . "WHERE TABLE_SCHEMA = '$db' AND TABLE_NAME = '$table';\n";

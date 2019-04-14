@@ -112,7 +112,7 @@ class FrmTopic extends Illuminate\Database\Eloquent\Model {
             }
             return $req->offset($start)->take($limit); // for paginator
         } else {
-            echo $req->toSql();
+            //echo $req->toSql();
             return $req->get()->toArray();
         }
     }

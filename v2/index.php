@@ -26,7 +26,7 @@ function mark($title_or_get)
 $t1 = mtime();
 mark('start');
 
-/* Includes g�n�raux */
+/* Includes generaux */
 require_once 'vendor/autoload.php';
 require_once("src/Zordania/lib/divers.lib.php");
 require_once("conf/conf.inc.php");
@@ -87,12 +87,12 @@ if($_file == "session" AND ($_act == "login" OR $_act == "logout"))
 else
 	$log_in_out = false;
 
-/* Si c'est la premi�re fois qu'on vient, on se connecte automatiquement*/
+/* Si c'est la premiere fois qu'on vient, on se connecte automatiquement*/
 if(!$_ses->session_opened()) {
 	if(!$_ses->auto_login()) die( "Erreur auto-login");
 } elseif(!$log_in_out) { /* Sinon, si on est sur une page normale */
 	if(!$_ses->update($_file)) { /* On maj la session */
-		if(!$_ses->auto_login()) die( "Erreur auto-login"); /* Ca a merd� .. on tente de se connecter en n'importe quoi */
+		if(!$_ses->auto_login()) die( "Erreur auto-login"); /* Ca a merde .. on tente de se connecter en n'importe quoi */
 	}
 }
 
@@ -219,11 +219,11 @@ if($_display == "xml") { /* Sortie en XML */
 	mark('tpl');
 } else {
     
-    // v�rifier si une qu�te a �t� achev�e
+    // verifier si une quete a ete achevee
     if(isset($_user['qst']) && is_array($_user['qst']) && isset($_user['qst']['qst_id'])){
         if($_ses->checkParam($_user['qst']['cfg_objectif'], $_user['qst']['cfg_obj_value'])){
-            // valider la qu�te - rechercher la suivante
-            Qst::where('qst_id', $_user['qst']['qst_id'])->update(['finished_at' => DB::raw('NOW()')]);
+            // valider la quete - rechercher la suivante
+            Zordania\model\Qst::where('qst_id', $_user['qst']['qst_id'])->update(['finished_at' => DB::raw('NOW()')]);
             $_ses->update_qst();
             //$_file = 'qst';
         }
@@ -245,7 +245,7 @@ if($_display == "xml") { /* Sortie en XML */
 		}
 	}
 	
-	// var contenant des infos de d�bugage ! $debugvars
+	// var contenant des infos de debugage ! $debugvars
 	$_debugvars = [];
 	$_tpl->set_ref('debugvars', $_debugvars);
 
