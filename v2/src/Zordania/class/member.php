@@ -337,7 +337,7 @@ class member {
         if ($limite && $this->nb_btc($type) >= $limite) // isset($have_btc[$type]['btc_nb']) && $have_btc[$type]['btc_nb'] >= $limite)
             $bad['limit_btc'] = $limite;
         else
-            $bad['limit_btc'] = [];
+            $bad['limit_btc'] = 0;
 
         return $bad;
     }

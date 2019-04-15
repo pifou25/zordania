@@ -49,7 +49,7 @@
 				<include file="modules/carte/tile.tpl" cache="1" /> 
 			</if>
 		</if>
-		<elseif cond="{leg->mbr_mid} == {_user[mid]}">
+		<elseif cond="{leg->leg_mid} == {_user[mid]}">
 			<include file="modules/leg/act.tpl" cache="1" />
 		</elseif>
 

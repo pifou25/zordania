@@ -68,7 +68,7 @@ class Btc extends Illuminate\Database\Eloquent\Model {
                 return false;
 
             $result = [];
-            foreach ($btc as $type => $value) {
+            foreach ($btc as $type => $values) {
 
                 if (isset($values['etat']))
                     $etat = protect($values['etat'], "uint");

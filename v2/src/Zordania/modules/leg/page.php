@@ -90,6 +90,17 @@ case 'unit2':
             }else if(!$fromRang->save()){
                 $_tpl->set('error', 'leg_ko2');
             }else{
+                // stop legion si elles sont en mouvement
+                if(!in_array($legs[$toLid]->leg_etat, [LEG_ETAT_GRN, LEG_ETAT_VLG])){
+                    $legs[$toLid]->leg_etat = LEG_ETAT_GRN;
+                    $legs[$toLid]->leg_vit = 0;
+                    $legs[$toLid]->save();
+                }
+                if(!in_array($legs[$fromLid]->leg_etat, [LEG_ETAT_GRN, LEG_ETAT_VLG])){
+                    $legs[$fromLid]->leg_etat = LEG_ETAT_GRN;
+                    $legs[$fromLid]->leg_vit = 0;
+                    $legs[$fromLid]->save();
+                }
                 $_tpl->set('confirm', [$type => $nb]);
             }
         }
