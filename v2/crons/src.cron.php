@@ -33,7 +33,7 @@ function mbr_src(&$_user) {
 			$speed = 0;
 		} else {
 			$sql.=" WHEN stdo_type = $type THEN  0";
-			$_histo->add($mid, $mid, HISTO_SRC_DONE,array("src_type" => $type));
+			$_histo->add($mid, $mid, Hst::SRC_DONE,array("src_type" => $type));
 			$speed -= $tours;
 		}
 

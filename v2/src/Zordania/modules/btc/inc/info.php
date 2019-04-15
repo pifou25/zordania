@@ -70,7 +70,7 @@ if(!$_sub) {
 				$leg_need_bouf += $nb;// on les comptabilise
 		}
 
-		$vlg_need_bouf = Leg::countUnt($_user['mid'], array(LEG_ETAT_VLG, LEG_ETAT_BTC));
+		$vlg_need_bouf = Leg::countUnt($_user['mid'], array(Leg::ETAT_VLG, Leg::ETAT_BTC));
 
 		$_tpl->set('btc_bouf', true);
 		$_tpl->set('btc_bouf_utils',$btc_bouf_utils);

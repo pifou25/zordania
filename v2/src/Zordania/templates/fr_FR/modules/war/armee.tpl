@@ -1,13 +1,13 @@
 <p>
 
 <if cond="{leg[mbr_mid]} == {_user[mid]}">
-	<if cond="{leg[leg_etat]} == LEG_ETAT_VLG">Votre village </if>
+	<if cond="{leg[leg_etat]} == Leg::ETAT_VLG">Votre village </if>
 	<else>Votre légion </else>
 <strong>{leg[leg_name]}</strong>
 	<if cond="isset({leg[ratio_def]}) && {leg[ratio_def]} < 1">(Défense groupée à <math oper="{leg[ratio_def]}*100" /> %)</if>
 </if>
 <else>
-	<if cond="{leg[leg_etat]} == LEG_ETAT_VLG">Le village de</if>
+	<if cond="{leg[leg_etat]} == Leg::ETAT_VLG">Le village de</if>
 	<else>La légion de</else>
 <img src="img/{leg[mbr_race]}/{leg[mbr_race]}.png" title="{race[{leg[mbr_race]}]}" alt="{race[{leg[mbr_race]}]}"/>
 <a href="member-view.html?mid={leg[mbr_mid]}" title="infos sur {leg[mbr_pseudo]}">{leg[mbr_pseudo]}</a> :

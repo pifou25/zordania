@@ -121,8 +121,8 @@ setTimeout("showMapInfo({map_cid})",500);
 	<foreach cond='{leg_usr} as {leg} => {value}'>
 	<tr>
 		<td>{value[leg_name]} : <a href="{url}?map_cid={value[leg_cid]}" title="voir">{value[map_x]} x {value[map_y]}</a> ( xp: {value[leg_xp]})</td>
-		<if cond='{value[leg_etat]} == LEG_ETAT_DPL || {value[leg_etat]} == LEG_ETAT_RET || 
-		{value[leg_etat]} == LEG_ETAT_ALL'>
+		<if cond='{value[leg_etat]} == Leg::ETAT_DPL || {value[leg_etat]} == Leg::ETAT_RET || 
+		{value[leg_etat]} == Leg::ETAT_ALL'>
 			<td><a href="{url}?map_cid={value[leg_dest]}" title="voir la destination">{value[dest_x]} x {value[dest_y]}</a></td>
 		</if>
 		<else>

@@ -155,7 +155,7 @@ case "send":
 					MsgRec::add($_user['mid'], $mid2, $titre, Parser::parse($texte), true);
 					$result[$pseudo] = $mbr_infos[0];
 					
-					$_histo->add($mid2, $_user['mid'], HISTO_MSG_NEW);
+					$_histo->add($mid2, $_user['mid'], Hst::MSG_NEW);
 				}
 				$_tpl->set("msg_result", $result);
 			}

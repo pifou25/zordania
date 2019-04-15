@@ -12,7 +12,7 @@ function glob_aly() {
                 ->update(['ambr_etat' => ALL_ETAT_NOP]);
 	// calcul des points de l'alliance
 	$sql = 'UPDATE '.DB::getTablePrefix().'al SET al_points = (';
-	$sql.= 'SELECT SUM(mbr_points) FROM '.DB::getTablePrefix().'mbr ';
+	$sql.= 'SELECT COALESCE(SUM(mbr_points), 0) FROM '.DB::getTablePrefix().'mbr ';
 	$sql.= 'JOIN '.DB::getTablePrefix().'al_mbr ON mbr_mid = ambr_mid ';
 	$sql.= 'WHERE ambr_aid = al_aid AND mbr_etat = '.MBR_ETAT_OK;
 	$sql.= ' AND ambr_etat != '.ALL_ETAT_DEM.'  GROUP BY ambr_aid)';

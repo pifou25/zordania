@@ -1,21 +1,5 @@
 <?php
 
-/* Historique */
-define('HISTO_HRO_CP', 1);
-define('HISTO_COM_ACH', 11);
-define('HISTO_BTC_OK', 21);
-define('HISTO_BTC_REP', 22);
-define('HISTO_BTC_BRU', 23);
-define('HISTO_SRC_DONE', 31);
-define('HISTO_LEG_ARV', 41);
-define('HISTO_LEG_ATQ_VLG', 42);
-define('HISTO_LEG_ATQ_LEG', 43);
-define('HISTO_LEG_VIDE_BACK', 44);
-define('HISTO_LEG_IDLE', 45);
-define('HISTO_MSG_NEW', 51);
-define('HISTO_UNT_BOUFF', 61);
-define('HISTO_PARRAIN_BONUS', 71);
-
 /**
  * Historique - les événements
  * lien avec les membres : histo_mid = mbr_id et histo_mid2 = mbr_mid
@@ -30,7 +14,78 @@ class Hst extends Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     // override table name
     protected $table = 'histo';
-    var $histos = array();
+    
+    private $histos = array();
+
+    /**
+     * competence heros activee
+     */
+    const HRO_CP = 1;
+    
+    /**
+     * achat / vente au commerce
+     */
+    const COM_ACH = 11;
+    
+    /**
+     * Construction de batiment terminee
+     */
+    const BTC_OK = 21;
+    
+    /**
+     * Reparation de batiment terminee
+     */
+    const BTC_REP = 22;
+    
+    /**
+     * Un batiment brule
+     */
+    const BTC_BRU = 23;
+    
+    /**
+     * Recherche terminee
+     */
+    const SRC_DONE = 31;
+    
+    /**
+     * Legion arrivee a destination
+     */
+    const LEG_ARV = 41;
+    
+    /**
+     * Legion en position d'attaque
+     */
+    const LEG_ATQ_VLG = 42;
+    
+    /**
+     * Legion en position d'attaque
+     */
+    const LEG_ATQ_LEG = 43;
+    
+    /**
+     * Legion vide rentree au village
+     */
+    const LEG_VIDE_BACK = 44;
+    
+    /**
+     * Legion absente trop longtemps du village
+     */
+    const LEG_IDLE = 45;
+    
+    /**
+     * Vous avez 1 nouveau message
+     */
+    const MSG_NEW = 51;
+    
+    /**
+     * Legion en manque de nourriture
+     */
+    const UNT_BOUFF = 61;
+    
+    /**
+     * Bonus de parrainage
+     */
+    const PARRAIN_BONUS = 71;
 
     function add(int $mid, int $mid2, int $type, array $vars = []) {
         $this->histos[$mid][] = array('mid2' => $mid2, 'type' => $type, 'vars' => $vars);

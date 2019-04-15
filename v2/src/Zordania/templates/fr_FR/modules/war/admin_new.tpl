@@ -135,7 +135,7 @@ function CopyJournalToBBCode(aid) {
 		<if cond="{nb}">{nb} <zimgres type="{type}" race="{mbr_array[mbr_race]}" /></if>
 	</foreach>
 	<foreach cond="{value[atq_bilan][def]} as {lid} => {leg}">
-		<if cond="{leg[leg_etat]} != LEG_ETAT_VLG">
+		<if cond="{leg[leg_etat]} != Leg::ETAT_VLG">
 			<p class="ok">{leg[xp_won]} XP gagnée pour la légion {leg[leg_name]}</p>
 		</if>
 	</foreach>

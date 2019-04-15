@@ -69,7 +69,7 @@
 				<if cond="{value[leg_cid]} != {_user[mapcid]}">
 					 <a href="leg-move.html?sub=sou&amp;cid={_user[mapcid]}&amp;lid={value[leg_id]}" title="ramener la légion au village">rentrer</a> 
 				</if>
-				<if cond="{value[leg_etat]} == {LEG_ETAT_POS} ">
+				<if cond="{value[leg_etat]} == {Leg::ETAT_POS} ">
 					-  <a href="leg-view.html?lid={value[leg_id]}">attaquer</a> 
 				</if>
 			</if>

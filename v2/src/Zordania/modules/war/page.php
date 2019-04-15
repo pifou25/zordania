@@ -58,7 +58,7 @@ case 'make_atq':
 	$mid_def = $mbr_def_array['mbr_mid'];
 
 	$cond = array('cid'=>$mbr_def_array['mbr_mapcid'], 
-		'etat' => array(LEG_ETAT_VLG, LEG_ETAT_BTC, LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_ALL, LEG_ETAT_DPL)); 
+		'etat' => array(Leg::ETAT_VLG, Leg::ETAT_BTC, Leg::ETAT_GRN, Leg::ETAT_POS, Leg::ETAT_ALL, Leg::ETAT_DPL)); 
 	// toutes les légions sur place
 	$legions = new legions($cond, true, true);
 
@@ -67,7 +67,7 @@ case 'make_atq':
 		$_tpl->set("atq_bad_leg1", true);
 		break;
 	} 
-	if ($legions->legs[$lid1]->etat != LEG_ETAT_POS) {
+	if ($legions->legs[$lid1]->etat != Leg::ETAT_POS) {
 		$_tpl->set("atq_bad_etat", true);
 		break;
 	}
@@ -135,8 +135,8 @@ case 'make_atq':
 	foreach($legions->legs as $lid => $leg){
 		if ($lid == $lid1)  // l'attaquant
 			$legs['combat'][] = $lid;
-		else if ($leg->infos['mbr_etat'] == MBR_ETAT_OK && in_array($leg->mid, $mbr_aly2) && $leg->etat != LEG_ETAT_BTC
-				&& (!$leg->vide() || $leg->etat == LEG_ETAT_VLG) ) {
+		else if ($leg->infos['mbr_etat'] == MBR_ETAT_OK && in_array($leg->mid, $mbr_aly2) && $leg->etat != Leg::ETAT_BTC
+				&& (!$leg->vide() || $leg->etat == Leg::ETAT_VLG) ) {
 		/* membre pas en veille & défenseur + ses alliés & (légion non vide OU leg village) SAUF legion batiment */
 
 			// ordre d'arrivée pour les défenseurs alliés :
@@ -166,7 +166,7 @@ case 'make_atq':
 				$legs['def'][] = $lid;
 				$legs['combat'][] = $lid;
 			}
-		} else if ($leg->etat != LEG_ETAT_BTC && $leg->etat != LEG_ETAT_VLG) 
+		} else if ($leg->etat != Leg::ETAT_BTC && $leg->etat != Leg::ETAT_VLG) 
 			$legs['autre'][] = $lid;
 	}
 
@@ -177,7 +177,7 @@ case 'make_atq':
 		$etats_defs[$lid] = $legions->legs[$lid]->etat;
 	}
 	
-	$new = array('etat' => LEG_ETAT_ATQ);
+	$new = array('etat' => Leg::ETAT_ATQ);
 	/* mettre toutes les legions en presence en etat ATQ */
 
 	foreach ($legs['combat'] as $lid)
@@ -500,7 +500,7 @@ case 'make_atq':
 	foreach ($legs['combat'] as $lid) { // parcourrir les legions
 		$leg = $legions->legs[$lid];
 		if ($lid == $lid1) { // retour à la maison
-			$new = ['etat' => LEG_ETAT_RET,
+			$new = ['etat' => Leg::ETAT_RET,
                             'vit' => $leg_1->calc_vit(),
                             'dest' => $_user['mapcid']];
                         $leg->setHro('vie', $bilan['att']['pertes']['hro_reste']);
@@ -550,7 +550,7 @@ case 'make_atq':
 			Mbr::edit($mid, $edit_tmp);
 		// ajouter un evenement dans l'historique sauf pour l'attaquant
 		if ($mid != $_user['mid'])
-			$_histo->add($mid, $_user['mid'], ($mid == $mid_def ? HISTO_LEG_ATQ_VLG : HISTO_LEG_ATQ_LEG), $histo);
+			$_histo->add($mid, $_user['mid'], ($mid == $mid_def ? Hst::LEG_ATQ_VLG : Hst::LEG_ATQ_LEG), $histo);
 	}
 	//$_histo->flush();
 

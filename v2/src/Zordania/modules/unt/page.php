@@ -41,7 +41,7 @@ if(!$_act) {
 
         //unités au village et en légions
 	foreach( $mbr->unt() as $value) {
-		if($value['leg_etat'] == LEG_ETAT_VLG)
+		if($value['leg_etat'] == Leg::ETAT_VLG)
 			$unt_done['vlg'][$value['unt_type']] = $value['unt_nb'];
 		else
 			$unt_done['btc'][$value['unt_type']] = $value['unt_nb'];

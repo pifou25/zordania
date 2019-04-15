@@ -60,7 +60,7 @@ if($_sub == "cancel_unt")
 	
 	$unt_array = array();
     $unt_done = $mbr->nb_unt();
-	$vlg = $mbr->unt_leg(LEG_ETAT_VLG);
+	$vlg = $mbr->unt_leg(Leg::ETAT_VLG);
 	foreach($unt_tmp as $uid => $array) {
 		// on ne garde que les unités dont on a tous les batiments et recherches
 		if($array['bad']['need_src'] || $array['bad']['need_btc']) 

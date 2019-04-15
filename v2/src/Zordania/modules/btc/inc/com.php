@@ -145,7 +145,7 @@ if($_sub == "my") { /* liste des ventes en cours */
 					Mch::achat($com_cid);
 
 					$histo_array = array("mch_type" => $mch_array['mch_type'], 'mch_nb' => $mch_array['mch_nb'], 'mch_prix' => $mch_array['mch_prix']);
-					$_histo->add($mch_array['mch_mid'], $_user['mid'], HISTO_COM_ACH, $histo_array); // évènement
+					$_histo->add($mch_array['mch_mid'], $_user['mid'], Hst::COM_ACH, $histo_array); // évènement
 				}
 			}
 		}

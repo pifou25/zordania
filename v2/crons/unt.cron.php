@@ -66,12 +66,12 @@ function mbr_unt(&$_user) {
 	/* Nourriture */
 	$bouf = $_user["res"][GAME_RES_BOUF];
         $nb = Unt::join('leg', 'unt_lid', 'leg_id')->where('leg_mid', $mid)
-                ->whereIn('leg_etat', [LEG_ETAT_VLG, LEG_ETAT_BTC])->count();
+                ->whereIn('leg_etat', [Leg::ETAT_VLG, Leg::ETAT_BTC])->count();
 
 	if($bouf < $nb) { /* On tue des gens */
 		$sql = "SELECT unt_type, unt_nb, leg_name FROM ".DB::getTablePrefix()."unt ";
 		$sql.= "JOIN ".DB::getTablePrefix()."leg ON leg_id = unt_lid ";
-		$sql.= "WHERE leg_mid = $mid AND leg_etat = ".LEG_ETAT_VLG." AND unt_nb > 0 ";
+		$sql.= "WHERE leg_mid = $mid AND leg_etat = ".Leg::ETAT_VLG." AND unt_nb > 0 ";
 		$sql .= ' AND unt_type NOT IN ('. implode(',', $hro_list[$race]). ') ';
 		$sql.= "ORDER BY RAND() LIMIT 1";
 		$unt_array = DB::sel($sql);
@@ -87,7 +87,7 @@ function mbr_unt(&$_user) {
 				$killed = rand(1, $nb - $bouf);
 
 			$update_unt[$type] -= $killed;
-			$_histo->add($mid, $mid,HISTO_UNT_BOUFF ,array("unt_type" => $type, "unt_nb" => $killed, "leg_name" => $name));
+			$_histo->add($mid, $mid,Hst::UNT_BOUFF ,array("unt_type" => $type, "unt_nb" => $killed, "leg_name" => $name));
 		}
 
 		$nb = $bouf;

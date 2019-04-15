@@ -69,7 +69,7 @@ foreach($mid_array as $_user)
 	}
 
 	/* vérifier la légion batiment */
-	$legions = new legions(array('mid' => $mid, 'etat' => LEG_ETAT_BTC), true);
+	$legions = new legions(array('mid' => $mid, 'etat' => Leg::ETAT_BTC), true);
 	$edit_unt = array();
 	if (!$legions->btc_lid) {
 		echo "Legion batiment introuvable, creation...\n";

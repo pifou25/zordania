@@ -325,7 +325,7 @@ function get_mbr(&$dep) {
 			$user["btc"][$j] = isset($user["btc"][$j]) ? $user["btc"][$j]["btc_nb"] : 0;
 	}
 	if(in_array("unt", $dep)) {
-		$user["unt"] = Leg::get(['mid' => $user['mbr_mid'], 'etat' => [LEG_ETAT_VLG]]);
+		$user["unt"] = Leg::get(['mid' => $user['mbr_mid'], 'etat' => [Leg::ETAT_VLG]]);
 		$user["unt"] = index_array($user["unt"], "unt_type");
 	}
 	if(in_array("res", $dep)) {

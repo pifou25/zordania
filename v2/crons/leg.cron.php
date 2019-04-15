@@ -13,7 +13,7 @@ function glob_leg() {
     $sql .= "LEFT JOIN " . DB::getTablePrefix() . "leg_res ON leg_id = lres_lid AND lres_type = " . GAME_RES_BOUF . " ";
     $sql .= "LEFT JOIN " . DB::getTablePrefix() . "hero ON leg_id = hro_lid ";
     $sql .= "LEFT JOIN " . DB::getTablePrefix() . "unt ON leg_id = unt_lid ";
-    $sql .= "WHERE leg_etat NOT IN (" . LEG_ETAT_VLG . "," . LEG_ETAT_BTC . ") ";
+    $sql .= "WHERE leg_etat NOT IN (" . Leg::ETAT_VLG . "," . Leg::ETAT_BTC . ") ";
     $sql .= "GROUP BY leg_id, leg_mid, leg_cid, IFNULL(lres_nb,0),"
             . " mbr_mapcid, mbr_race, IFNULL(hro_bonus,0), leg_name ";
 
@@ -29,15 +29,15 @@ function glob_leg() {
             // Si la légion est vide on supprime le butin et on place la légion chez le propriétaire
             if($value['leg_cid'] != $value['mbr_mapcid']){
                 LegRes::where('lres_lid', $lid)->delete();
-                $_histo->add($mid, $mid, HISTO_LEG_VIDE_BACK, array("leg_name" => $value['leg_name']));
+                $_histo->add($mid, $mid, Hst::LEG_VIDE_BACK, array("leg_name" => $value['leg_name']));
             }
 
-            Leg::where('lres_lid', $lid)->update([
+            Leg::where('leg_id', $lid)->update([
                 'leg_cid' => $value['mbr_mapcid'],
                 'leg_dest' => 0,
                 'leg_vit' => 0,
                 'leg_stop' => DB::raw('NOW()'),
-                'leg_etat' => LEG_ETAT_GRN,
+                'leg_etat' => Leg::ETAT_GRN,
             ]);
 
         } else if ($nb != 0) {
@@ -91,7 +91,7 @@ function glob_leg() {
                         $vitesse = $legion->calc_vit();
                         Leg::where('leg_id', $lid)->update(['leg_vit' => $vitesse]);
                         
-                        $_histo->add($mid, $mid, HISTO_UNT_BOUFF, ['unt_type' => $type, 'unt_nb' => $nb,
+                        $_histo->add($mid, $mid, Hst::UNT_BOUFF, ['unt_type' => $type, 'unt_nb' => $nb,
                             'leg_name' => $name, 'leg_vit' => $vitesse]);
                     }
                     
@@ -112,20 +112,20 @@ function glob_leg() {
     /* légions camping */
     $sql = "SELECT leg_id, leg_mid, leg_dest, leg_cid, leg_vit, leg_etat, leg_name ";
     $sql .= "FROM " . DB::getTablePrefix() . "leg ";
-    $sql .= "WHERE leg_etat = " . LEG_ETAT_POS . " AND leg_stop < (NOW() - INTERVAL " . ATQ_LEG_IDLE . " DAY)";
+    $sql .= "WHERE leg_etat = " . Leg::ETAT_POS . " AND leg_stop < (NOW() - INTERVAL " . ATQ_LEG_IDLE . " DAY)";
 
     $leg_array = DB::sel($sql);
     foreach ($leg_array as $value) {
         /* TODO ? traiter les tirs défensifs sur les armées en camping */
 
         /* rentrer les armées en place depuis trop longtemps : évènement */
-        $_histo->add($value['leg_mid'], $value['leg_mid'], HISTO_LEG_IDLE, array("leg_name" => $value['leg_name'])); // évènement
+        $_histo->add($value['leg_mid'], $value['leg_mid'], Hst::LEG_IDLE, array("leg_name" => $value['leg_name'])); // évènement
     }
     /* rentrer les légions camping */
     $sql = "UPDATE " . DB::getTablePrefix() . "leg AS leg ";
     $sql .= "JOIN " . DB::getTablePrefix() . "mbr AS mbr ON mbr.mbr_mid = leg.leg_mid ";
-    $sql .= "SET leg.leg_dest = mbr.mbr_mapcid, leg_etat = " . LEG_ETAT_ALL . " ";
-    $sql .= "WHERE leg.leg_etat = " . LEG_ETAT_POS . " AND leg.leg_stop < (NOW() - INTERVAL " . ATQ_LEG_IDLE . " DAY)";
+    $sql .= "SET leg.leg_dest = mbr.mbr_mapcid, leg_etat = " . Leg::ETAT_ALL . " ";
+    $sql .= "WHERE leg.leg_etat = " . Leg::ETAT_POS . " AND leg.leg_stop < (NOW() - INTERVAL " . ATQ_LEG_IDLE . " DAY)";
     DB::update($sql);
 
     /* Avancer les légions en déplacement */
@@ -135,7 +135,7 @@ function glob_leg() {
     $sql .= "JOIN " . DB::getTablePrefix() . "map as a ON a.map_cid = leg_cid ";
     $sql .= "JOIN " . DB::getTablePrefix() . "map as b ON b.map_cid = leg_dest ";
     $sql .= "JOIN " . DB::getTablePrefix() . "mbr ON mbr_mid = leg_mid AND mbr_etat = " . MBR_ETAT_OK . " ";
-    $sql .= "WHERE leg_etat IN (" . LEG_ETAT_DPL . "," . LEG_ETAT_ALL . "," . LEG_ETAT_RET . ") ";
+    $sql .= "WHERE leg_etat IN (" . Leg::ETAT_DPL . "," . Leg::ETAT_ALL . "," . Leg::ETAT_RET . ") ";
 
     $leg_array = DB::sel($sql);
     foreach ($leg_array as $value) { /* déplacement des légions 1 par 1 */
@@ -161,7 +161,7 @@ function glob_leg() {
         $sql .= "(SELECT map_cid FROM " . DB::getTablePrefix() . "map WHERE map_x = $x1 AND map_y = $y1)";
         if ($x1 == $x2 && $y1 == $y2) {// la légion est arrivée à destination!
             $sql .= ", leg_dest = 0, leg_stop = NOW(), leg_etat = ";
-            $sql .= ($value['leg_etat'] == LEG_ETAT_DPL) ? LEG_ETAT_POS : LEG_ETAT_GRN;
+            $sql .= ($value['leg_etat'] == Leg::ETAT_DPL) ? Leg::ETAT_POS : Leg::ETAT_GRN;
             /* vérifier si la légion contient l'unité caravane ET si l'emplacement est libre */
             if (isset($leg_move_array[$lid]) && $value['dest_type'] == MAP_LIBRE) {
                 $leg = $leg_move_array[$lid];

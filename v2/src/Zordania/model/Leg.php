@@ -9,6 +9,46 @@
 class Leg extends Illuminate\Database\Eloquent\Model {
 
     /**
+     * Legion du village
+     */
+    const ETAT_VLG = 1;
+    
+    /**
+     * Legion des unites dans les batiments
+     */
+    const ETAT_BTC = 2;
+    
+    /**
+     * Legion en attente au village
+     */
+    const ETAT_GRN = 3;
+    
+    /**
+     * En position d'attaque
+     */
+    const ETAT_POS = 4;
+    
+    /**
+     * En déplacement pour attaquer
+     */
+    const ETAT_DPL = 5;
+    
+    /**
+     * En déplacement vers un allié
+     */
+    const ETAT_ALL = 6;
+    
+    /**
+     * Retour (deplacement inarretable)
+     */
+    const ETAT_RET = 7;
+    
+    /**
+     * Legion en cours d'attaque
+     */
+    const ETAT_ATQ = 8;
+
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
@@ -53,7 +93,7 @@ class Leg extends Illuminate\Database\Eloquent\Model {
      * @return type
      */
     function getIsModifiableAttribute(){
-        return $this->leg_etat != LEG_ETAT_VLG && $this->leg_etat != LEG_ETAT_BTC;
+        return $this->leg_etat != Leg::ETAT_VLG && $this->leg_etat != Leg::ETAT_BTC;
     }
     
     /**
@@ -66,19 +106,19 @@ class Leg extends Illuminate\Database\Eloquent\Model {
     }
 
     /* Toutes les légions sauf village et batiments (état par défaut) */
-    static function getAll(int $mid, array $etat = [LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_DPL, 
-                            LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ]) {
+    static function getAll(int $mid, array $etat = [Leg::ETAT_GRN, Leg::ETAT_POS, Leg::ETAT_DPL, 
+                            Leg::ETAT_ALL, Leg::ETAT_RET, Leg::ETAT_ATQ]) {
             return Leg::get(array('mid' => $mid, 'leg' => true, 'etat' => $etat));
     }
     
     /* Toutes les légions & leurs unités, sauf village et batiments (état par défaut) */
-    static function getUnt(int $mid, array $etat = [LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_DPL, 
-                            LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ]) {
+    static function getUnt(int $mid, array $etat = [Leg::ETAT_GRN, Leg::ETAT_POS, Leg::ETAT_DPL, 
+                            Leg::ETAT_ALL, Leg::ETAT_RET, Leg::ETAT_ATQ]) {
             return Leg::get(array('mid' => $mid, 'leg' => true, 'count_unt' => true, 'etat' => $etat));
     }
     
-    static function getMap(int $mid, array $etat = [LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_DPL, 
-                            LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ]) {
+    static function getMap(int $mid, array $etat = [Leg::ETAT_GRN, Leg::ETAT_POS, Leg::ETAT_DPL, 
+                            Leg::ETAT_ALL, Leg::ETAT_RET, Leg::ETAT_ATQ]) {
             return Leg::get(array('mid' => $mid, 'leg' => true, 'etat' => $etat, 'map' => true));
     }
 
@@ -323,7 +363,7 @@ class Leg extends Illuminate\Database\Eloquent\Model {
 		&& session::$SES->canDo(DROIT_PLAY)/* Faut pas être un visiteur */
 		&& $etat == MBR_ETAT_OK /* Validé et pas en Veille */
 		&& isset($arr_cid[$value['leg_cid']])/* légion sur la même case */
-		&& in_array($value['leg_etat'],[LEG_ETAT_VLG,LEG_ETAT_GRN,LEG_ETAT_DPL])/* légion en attende d'ordre*/
+		&& in_array($value['leg_etat'],[Leg::ETAT_VLG,Leg::ETAT_GRN,Leg::ETAT_DPL])/* légion en attende d'ordre*/
 		)
 			$leg_array[$key]['can_atq'] = true;
 		else

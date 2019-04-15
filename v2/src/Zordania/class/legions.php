@@ -57,8 +57,8 @@ class legions { /* classe pour plusieurs légions ... */
 		if(isset($cond['etat']))
 			$cond['etat'] = protect($cond['etat'], ['uint']);
 //		else
-//			$cond['etat'] = array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS,
-//				LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ);
+//			$cond['etat'] = array(Leg::ETAT_VLG, Leg::ETAT_GRN, Leg::ETAT_POS,
+//				Leg::ETAT_DPL, Leg::ETAT_ALL, Leg::ETAT_RET, Leg::ETAT_ATQ);
 
 		$leg_array = Leg::get($cond); // récupérer les légions
 
@@ -72,9 +72,9 @@ class legions { /* classe pour plusieurs légions ... */
 			$this->cids[$leg['leg_cid']] = $leg['leg_cid']; // lister les emplacements
 			if($this->mid != $leg['mbr_mid']) $this->mid = 0; // plusieurs joueurs
 			if($this->cid != $leg['leg_cid']) $this->cid = 0; // plusieurs positions
-			if($leg['leg_etat'] == LEG_ETAT_VLG)
+			if($leg['leg_etat'] == Leg::ETAT_VLG)
 				$this->vlg_lid = $leg['leg_id']; // la légion au village
-			else if($leg['leg_etat'] == LEG_ETAT_BTC)
+			else if($leg['leg_etat'] == Leg::ETAT_BTC)
 				$this->btc_lid = $leg['leg_id']; // legion batiments
 		}
 

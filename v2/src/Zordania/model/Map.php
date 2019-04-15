@@ -55,7 +55,7 @@ class Map extends Illuminate\Database\Eloquent\Model {
                         ->join('leg', 'map_cid', 'leg_cid')
                         ->join('mbr', 'leg_mid', 'mbr_mid')
                         ->leftJoin('hero', 'leg_id', 'hro_lid')
-                        ->whereIn('leg_etat', [LEG_ETAT_DPL, LEG_ETAT_RET, LEG_ETAT_ALL, LEG_ETAT_ATQ, LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_VLG])
+                        ->whereIn('leg_etat', [Leg::ETAT_DPL, Leg::ETAT_RET, Leg::ETAT_ALL, Leg::ETAT_ATQ, Leg::ETAT_GRN, Leg::ETAT_POS, Leg::ETAT_VLG])
                         ->whereRaw('IFNULL(hro_bonus, 0) <> ?', [CP_INVISIBILITE])
                         ->whereBetween('map_x', [$x1, $x2])->whereBetween('map_y', [$y1, $y2])
                         ->get()->toArray();
@@ -134,7 +134,7 @@ class Map extends Illuminate\Database\Eloquent\Model {
         $req->join('mbr', 'mbr_mid', 'leg_mid');
         $req->leftJoin('al_mbr', 'ambr_mid', 'mbr_mid');
         $req->where('mbr_etat', MBR_ETAT_OK);
-        $req->where('leg_etat', '!=', LEG_ETAT_BTC);
+        $req->where('leg_etat', '!=', Leg::ETAT_BTC);
         $req->whereIn('map_cid', $list_cid);
         $req->whereRaw('IFNULL(hro_bonus,0) <> ?', [CP_INVISIBILITE]);
         return $req->get()->toArray();

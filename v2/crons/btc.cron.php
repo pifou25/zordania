@@ -18,7 +18,7 @@ function mbr_btc(&$_user) {
 	if(!$btc_array)
 		return;
 
-	$trav =  Leg::get(['mid' => $mid, 'unt' => [1], 'etat' => [LEG_ETAT_VLG]]);
+	$trav =  Leg::get(['mid' => $mid, 'unt' => [1], 'etat' => [Leg::ETAT_VLG]]);
 	if($trav)
 		$trav = $trav[0]['unt_nb'];
 	else
@@ -50,7 +50,7 @@ function mbr_btc(&$_user) {
 					// Et les terrains !
 					mod_trn($mid, get_conf_gen($race, "btc", $type, 'prix_trn'));
 
-					$_histo->add($mid, $mid,HISTO_BTC_BRU ,array("btc_type" => $type));
+					$_histo->add($mid, $mid,Hst::BTC_BRU ,array("btc_type" => $type));
 				}
 				$update_btc[$value["btc_id"]]["vie"] = $value["btc_vie"];
 			}
@@ -72,7 +72,7 @@ function mbr_btc(&$_user) {
 
 				$update_btc[$value["btc_id"]]["etat"] = BTC_ETAT_OK;
 
-				$histo_type = ($value["btc_etat"] == BTC_ETAT_TODO)  ? HISTO_BTC_OK : HISTO_BTC_REP;
+				$histo_type = ($value["btc_etat"] == BTC_ETAT_TODO)  ? Hst::BTC_OK : Hst::BTC_REP;
 				$_histo->add($mid, $mid, $histo_type ,array("btc_type" => $type));
 			}
 

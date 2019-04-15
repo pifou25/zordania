@@ -51,7 +51,7 @@ class Unt extends Illuminate\Database\Eloquent\Model {
     }
 
     static function editVlg(int $mid, array $unt, int $factor = 1){
-        $lid = Leg::where('leg_mid', $mid)->where('leg_etat', LEG_ETAT_VLG)->first()->leg_id;
+        $lid = Leg::where('leg_mid', $mid)->where('leg_etat', Leg::ETAT_VLG)->first()->leg_id;
         if(empty($lid)){
             return false;
         }
@@ -60,7 +60,7 @@ class Unt extends Illuminate\Database\Eloquent\Model {
     }
 
     static function editBtc(int $mid, array $unt, int $factor = 1){
-        $lid = Leg::get(['mid' => $mid, 'etat' => [LEG_ETAT_BTC]]);
+        $lid = Leg::get(['mid' => $mid, 'etat' => [Leg::ETAT_BTC]]);
         if(empty($lid)){
             return false;
         }

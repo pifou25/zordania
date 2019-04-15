@@ -8,7 +8,7 @@ else
 
     // Leg: model eloquent
     $legs = Leg::where('leg_mid', $_user['mid'])
-            ->where('leg_etat', '<>', LEG_ETAT_BTC)
+            ->where('leg_etat', '<>', Leg::ETAT_BTC)
             ->get()->keyBy('leg_id');
     $_tpl->set('legs', $legs);
     
@@ -91,13 +91,13 @@ case 'unit2':
                 $_tpl->set('error', 'leg_ko2');
             }else{
                 // stop legion si elles sont en mouvement
-                if(!in_array($legs[$toLid]->leg_etat, [LEG_ETAT_GRN, LEG_ETAT_VLG])){
-                    $legs[$toLid]->leg_etat = LEG_ETAT_GRN;
+                if(!in_array($legs[$toLid]->leg_etat, [Leg::ETAT_GRN, Leg::ETAT_VLG])){
+                    $legs[$toLid]->leg_etat = Leg::ETAT_GRN;
                     $legs[$toLid]->leg_vit = 0;
                     $legs[$toLid]->save();
                 }
-                if(!in_array($legs[$fromLid]->leg_etat, [LEG_ETAT_GRN, LEG_ETAT_VLG])){
-                    $legs[$fromLid]->leg_etat = LEG_ETAT_GRN;
+                if(!in_array($legs[$fromLid]->leg_etat, [Leg::ETAT_GRN, Leg::ETAT_VLG])){
+                    $legs[$fromLid]->leg_etat = Leg::ETAT_GRN;
                     $legs[$fromLid]->leg_vit = 0;
                     $legs[$fromLid]->save();
                 }
@@ -155,7 +155,7 @@ case "move":
 	$_tpl->set("show_form",true);
 
 	$cond = array('mid'=>$_user['mid']);
-	$cond['etat'] = array(LEG_ETAT_GRN,LEG_ETAT_ALL,LEG_ETAT_POS,LEG_ETAT_DPL);
+	$cond['etat'] = array(Leg::ETAT_GRN,Leg::ETAT_ALL,Leg::ETAT_POS,Leg::ETAT_DPL);
 	$legions = new legions($cond, true, true);
 
 	foreach($legions->legs as $lid => $leg)
@@ -173,11 +173,11 @@ case "move":
 					// si la légion est déjà sur la bonne case, on passe en état d'attente.
 					if ($legions->legs[$lid]->cid == $cid)
 						$new = array('dest' => 0,
-								'etat' => $_sub ==  'atq' ? LEG_ETAT_POS : LEG_ETAT_GRN);
+								'etat' => $_sub ==  'atq' ? Leg::ETAT_POS : Leg::ETAT_GRN);
 					else
 						// calculer et enregistrer la vitesse de la légion
 						$new = array('vit' => $legions->legs[$lid]->vitesse(), 'dest' => $cid, 
-								'etat' => $_sub == 'atq' ? LEG_ETAT_DPL : LEG_ETAT_ALL);
+								'etat' => $_sub == 'atq' ? Leg::ETAT_DPL : Leg::ETAT_ALL);
 					$legions->legs[$lid]->edit($new);
 					$_tpl->set("show_form",false);
 					$_tpl->set("leg_move_ok", true);
@@ -190,7 +190,7 @@ case "move":
 				} elseif($legions->legs[$lid]->comp != CP_TELEPORTATION)
 					$_tpl->set("leg_no_tele", true);
 				else { // téléporter la légion à destination & désactiver la compétence
-					$new = array('dest'=>0,  'etat' => ($_sub=='atq'?LEG_ETAT_POS:LEG_ETAT_GRN),
+					$new = array('dest'=>0,  'etat' => ($_sub=='atq'?Leg::ETAT_POS:Leg::ETAT_GRN),
 						'cid'=>$cid, 'bonus'=>0);
 					$legions->legs[$lid]->edit($new);
 					$_tpl->set("show_form",false);
@@ -206,9 +206,9 @@ case "new": // creer une nouvelle légion
 
 	if(!Leg::canRename($_user['mid'],0,$name))
 		$_tpl->set('err', 'ren_leg_name_exists');
-	elseif(Leg::count($_user['mid'], [LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_ALL, LEG_ETAT_DPL,
-		LEG_ETAT_RET, LEG_ETAT_ATQ]) < LEG_MAX_NB && $name)
-		$_tpl->set("leg_new", Leg::add($_user['mid'], $_user['mapcid'], LEG_ETAT_GRN, $name));
+	elseif(Leg::count($_user['mid'], [Leg::ETAT_GRN, Leg::ETAT_POS, Leg::ETAT_ALL, Leg::ETAT_DPL,
+		Leg::ETAT_RET, Leg::ETAT_ATQ]) < LEG_MAX_NB && $name)
+		$_tpl->set("leg_new", Leg::add($_user['mid'], $_user['mapcid'], Leg::ETAT_GRN, $name));
 
 	$_act = "";
 	break;
@@ -218,7 +218,7 @@ case "del": // supprimer légion
 
 	$cond = array();
 	$cond['leg'] = array($lid);
-	$cond['etat'] = array(LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_POS, LEG_ETAT_ALL, LEG_ETAT_RET);
+	$cond['etat'] = array(Leg::ETAT_GRN, Leg::ETAT_DPL, Leg::ETAT_POS, Leg::ETAT_ALL, Leg::ETAT_RET);
 	$cond['mid'] = $_user['mid'];
 	$leg_array = Leg::get($cond);
 
@@ -245,7 +245,7 @@ case "recup": // recuperer une legion vide
 
 	$cond = array();
 	$cond['leg'] = array($lid);
-	$cond['etat'] = array(LEG_ETAT_POS);
+	$cond['etat'] = array(Leg::ETAT_POS);
 	$cond['mid'] = $_user['mid'];
 	$leg_array = Leg::get($cond);
 
@@ -269,7 +269,7 @@ case "recup": // recuperer une legion vide
 		LegRes::edit($lid, $mod_res);
 		$edit_leg = array();
 		$edit_leg['cid'] = $_user['mapcid'];
-		$edit_leg['etat'] = LEG_ETAT_GRN;
+		$edit_leg['etat'] = Leg::ETAT_GRN;
 		Leg::edit($_user['mid'], $lid, $edit_leg);
 	}
 	break;
@@ -310,7 +310,7 @@ case "hero":
 					$res = Hro::bonus($_user['mid'], $bid);
 					if($res) {
 						// ajouter un évenement
-						$_histo->add($_user['mid'], $_user['mid'], HISTO_HRO_CP, $cp);
+						$_histo->add($_user['mid'], $_user['mid'], Hst::HRO_CP, $cp);
 						$_tpl->set("ok_bonus",$bid);
 					} else
 						$_tpl->set("error_form",true);
@@ -401,7 +401,7 @@ default: // mode 'view' = detail legion, ou page de toutes les légions
 		$res_array = $legions->legs[$lid]->get_res();
 		$unt_array = $legions->legs[$lid]->get_unt();
 
-		if($legions->legs[$lid]->etat == LEG_ETAT_VLG)// aucune action possible sur la légion village
+		if($legions->legs[$lid]->etat == Leg::ETAT_VLG)// aucune action possible sur la légion village
 			$_sub = "";
 		if($legions->legs[$lid]->cid != $_user['mapcid'])
 			$_sub = "";// aucune action possible hors du village
@@ -459,7 +459,7 @@ if($_display == "ajax") print_r($_POST);
 			break;
 		}
 
-		if($legions->legs[$lid]->etat != LEG_ETAT_VLG && $_act == 'view') { // position de la légion
+		if($legions->legs[$lid]->etat != Leg::ETAT_VLG && $_act == 'view') { // position de la légion
 			$pos_array = Map::getGen($legions->legs[$lid]->cid, 
                                 ['x'=>$_user['map_x'], 'y'=>$_user['map_y']]);
 			if($pos_array['mbr_mid'] == $_user['mid'])

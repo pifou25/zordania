@@ -64,16 +64,6 @@ define('TYPE_UNT_DEMENAGEMENT',8);
 define('ATQ_TYPE_DEF', 1);
 define('ATQ_TYPE_ATQ', 2);
 
-/* Légions = zrd_leg.leg_etat */
-define('LEG_ETAT_VLG', 1); /* Le village */
-define('LEG_ETAT_BTC', 2); /* Bâtiment */
-define('LEG_ETAT_GRN', 3); /* En attente */
-define('LEG_ETAT_POS', 4); /* En position d'attaque */
-define('LEG_ETAT_DPL', 5); /* En déplacement pour attaquer */
-define('LEG_ETAT_ALL', 6); /* En déplacement vers un allié */
-define('LEG_ETAT_RET', 7); /* Retour (deplacement inarretable) */
-define('LEG_ETAT_ATQ', 8); /* Attaque */
-
 /* Etat des joueurs = zrd_mbr.mbr_etat */
 define("MBR_ETAT_INSCR",0);
 define("MBR_ETAT_OK",1);

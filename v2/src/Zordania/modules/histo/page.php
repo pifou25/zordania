@@ -15,7 +15,7 @@ else {
 	$_tpl->set('histo_key',calc_key($_file, $_user['login']));
 /*
 foreach ($_tpl->var->histo_array as $key => $val) 
-	if ($val['histo_type'] == HISTO_LEG_ATQ_LEG or $val['histo_type'] == HISTO_LEG_ATQ_VLG) print_r($val);
+	if ($val['histo_type'] == Hst::LEG_ATQ_LEG or $val['histo_type'] == Hst::LEG_ATQ_VLG) print_r($val);
 */
 $_debugvars['histo'] = $_tpl->var->histo_array ;
 }
