@@ -2,7 +2,7 @@
 <foreach cond="{leg_array} as {leg}">
 <if cond="!isset({thisetat}) || {leg[leg_etat]} == {thisetat}">
 	<dt><if cond="!isset({thisetat})">{leg_etat[{leg[leg_etat]}]} : </if>
-		{leg[leg_name]} <if cond='{leg[leg_etat]} == {Leg::ETAT_VLG}'>(Village)</if>
+		{leg[leg_name]} <if cond='{leg[leg_etat]} == Leg::ETAT_VLG'>(Village)</if>
 	</dt>
 	<dd>
 		<if cond="isset({unt_leg[{leg[leg_id]}]})"><p>
