@@ -39,7 +39,7 @@ class Qst {
             return array_merge( $tpl, $this->var);
         }
         else {
-            throw new \Exception("Action '{$this->act}' non définie dans la classe $classeControleur");
+            throw new \Exception("Action '{$this->act}' non définie dans la classe ". array_pop($classeControleur) );
         }
     }
     
@@ -62,7 +62,7 @@ class Qst {
             $this->var['quete'] = QstCfg::get(false);
 
         $this->var['hist'] = \Zordania\model\Qst::getAll(\session::instance()->get('mid'));
-        return $this->act;
+        return 'index';
     }
     
     function update(){
@@ -71,11 +71,15 @@ class Qst {
         return $this->index();
     }
     
-    function read(){
-        if(isset(\session::instance()->get('qst')['qst_id'])){
-            // maj vue quete
-            Qst::where('qst_id', \session::instance()->get('qst')['qst_id'])->update(['read' => 0]);
-
+    function view(){
+        if(!empty($_GET['qst'])){
+            $qst = \Zordania\model\Qst::where('qst_id', $_GET['qst']);
+            if(!empty($qst) && $qst->count() == 1){
+                $hqst = $qst->first();
+                $this->var['hqst'] = $hqst;
+                $this->var['quete'] = QstCfg::where('cfg_id', $hqst->qst_cfg_id)->first();
+                return $this->act;
+            }
         }
         return $this->index();
     }
@@ -144,12 +148,12 @@ class Qst {
                     $request["cfg_value$i"] = null;
                 }
             }
-            if($_POST['param5'] != 0){
+            if(!empty($_POST['param5'])){
                 $request['cfg_objectif'] = $_POST['param5'];
                 $request['cfg_obj_value'] = $_POST['value5'];
             }else{
                 $request['cfg_objectif'] = 0; // aucun objectif? devrait faire une erreur
-                $request['cfg_obj_value'] = null;
+                $request['cfg_obj_value'] = 0;
             }
              $this->var['update'] = QstCfg::where('cfg_id', $id)->update($request);
         }

@@ -2,7 +2,7 @@
 <a href="forum-<math oper="Template::str2url({quete->subject})"/>.html?pid={quete->pid}#{quete->pid}">{quete->subject}</a>
 </h4>
 
-<include file="modules/qst/qst.tpl" quete="{quete}" cache="1" />
+<include file="modules/qst/view.tpl" quete="{quete}" cache="1" />
 
 <form action="admin-edit.html?module=qst&amp;id={quete->cfg_id}" method="post">
 

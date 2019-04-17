@@ -41,3 +41,19 @@
 </p>
 </div>
 </else>
+
+<if cond="!empty({hist})">
+<h3>Quêtes terminées</h3>
+<table class="liste">
+    <th>Quête</th>
+    <th>Commmencée le</th>
+    <th>Terminée le</th>
+<foreach cond="{hist} as {hqst}">
+    <tr>
+        <td><a href="qst-view.html?qst={hqst[qst_id]}" title="{hqst[cfg_subject]}">{hqst[cfg_subject]}</a></td>
+        <td>{hqst[created_at]}</td>
+        <td>{hqst[finished_at]}</td>
+    </tr>
+</foreach>
+</table>
+</if>

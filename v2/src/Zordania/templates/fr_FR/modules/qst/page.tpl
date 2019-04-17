@@ -1,7 +1,7 @@
 <h3>Mes Quêtes</h3>
 
 <if cond="{quete}">
-<include file="modules/qst/qst.tpl" quete="{quete}" cache="1" />
+<include file="modules/qst/view.tpl" quete="{quete}" cache="1" />
 
 <p class="infos">Vous pouvez retrouver votre quête en cours dans la page "Mon Compte" / "Mes Quêtes".
     <br/>
@@ -14,6 +14,7 @@
 <if cond="!empty({hist})">
 <h3>Quêtes Terminées</h3>
     <table>
+        <caption>Quêtes Terminées</caption>
         <tr>
         <th>Date Début</th>
         <th>Date Fin</th>

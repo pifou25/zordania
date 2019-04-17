@@ -13,6 +13,23 @@ class Qst extends \Illuminate\Database\Eloquent\Model {
     protected $table = 'qst';
 
     /**
+     *joueur qui fait la quete
+     * @var type 
+     */
+    private $mbr; // membre auteur de la quete
+  
+    /**
+     * joueur qui fait la quete
+     * @return Mbr
+     */
+    function mbr(){
+        if($this->mbr == null){
+            $this->mbr = $this->belongsTo('Mbr', 'cst_mid', 'mbr_mid');
+        }
+        return $this->mbr;
+    }
+ 
+    /**
      * rechercher la 1ère quête à effectuer pour un membre
      * @param type $mid
      */
