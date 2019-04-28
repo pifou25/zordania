@@ -2,7 +2,7 @@
 <foreach cond="{legs} as {leg}">
 <if cond="!isset({thisetat}) || {leg->leg_etat} == {thisetat}">
 	<dt><if cond="!isset({thisetat})">{leg_etat[{leg->leg_etat}]} : </if>
-		{leg->leg_name} <if cond='{leg->leg_etat} == {LEG_ETAT_VLG}'>(Village)</if></dt>
+		{leg->leg_name} <if cond='{leg->leg_etat} == Leg::ETAT_VLG'>(Village)</if></dt>
 	<dd>
 
 		<if cond="isset({unt_leg[{leg->leg_id}]})"><p>
@@ -49,7 +49,7 @@
 				<include file="modules/carte/tile.tpl" cache="1" /> 
 			</if>
 		</if>
-		<elseif cond="{leg->mbr_mid} == {_user[mid]}">
+		<elseif cond="{leg->leg_mid} == {_user[mid]}">
 			<include file="modules/leg/act.tpl" cache="1" />
 		</elseif>
 

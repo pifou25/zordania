@@ -30,11 +30,12 @@ if($_act == 'btc')
 			$_tpl->set("another_btc", true);
 		else {
 			$array = $mbr->can_btc($type); // can_btc($_user['mid'], $type, $cache);
-			
+                        
 			if(isset($array['do_not_exist']))
 				$_tpl->set("btc_no_type",true);
 			else {
-				$ok = empty($array['need_src']) && empty($array['need_btc']) && $array['limit_btc']==0 && empty($array['prix_res']) && empty($array['prix_trn']) && empty($array['prix_unt']);
+				$ok = empty($array['need_src']) && empty($array['need_btc']) && $array['limit_btc']==0
+                                        && empty($array['prix_res']) && empty($array['prix_trn']) && empty($array['prix_unt']);
 			
 				$_tpl->set("btc_infos", $array);
 				$_tpl->set("const_btc_ok", $ok);

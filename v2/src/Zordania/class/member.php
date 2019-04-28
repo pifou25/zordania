@@ -149,7 +149,7 @@ class member {
         $tmp = array();
         foreach ($this->unt() as $value) {
             if ($unt == null || $value['unt_type'] == $unt) {
-                if ($value['leg_etat'] == LEG_ETAT_VLG) {
+                if ($value['leg_etat'] == Leg::ETAT_VLG) {
                     if (isset($tmp[$value['unt_type']]))
                         $tmp[$value['unt_type']] += $value['unt_nb'];
                     else
@@ -337,7 +337,7 @@ class member {
         if ($limite && $this->nb_btc($type) >= $limite) // isset($have_btc[$type]['btc_nb']) && $have_btc[$type]['btc_nb'] >= $limite)
             $bad['limit_btc'] = $limite;
         else
-            $bad['limit_btc'] = [];
+            $bad['limit_btc'] = 0;
 
         return $bad;
     }

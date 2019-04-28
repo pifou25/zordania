@@ -28,6 +28,6 @@ Le {value[atq_date_formated]} <if cond="{value[atq_mid1]} == {_user[mid]}">Vous 
 <foreach cond="{value[atq_bilan][butin][att]} as {type} => {nb}"><if cond="{nb}">{nb} <bbimgres type="{type}" race="{_user[race]}" /> </if></foreach> 	[color=green]{value[atq_bilan][att][xp_won]} XP gagnée par l'attaquant.[/color]
 [b]Butin défenseur :[/b]
 <foreach cond="{value[atq_bilan][butin][def]} as {type} => {nb}"><if cond="{nb}">{nb} <bbimgres type="{type}" race="{_user[race]}" /> </if></foreach> <foreach cond="{value[atq_bilan][def]} as {lid} => {leg}">
-<if cond="{leg[leg_etat]} != LEG_ETAT_VLG">{leg[xp_won]} XP gagnée pour la légion {leg[leg_name]}</if>
+<if cond="{leg[leg_etat]} != Leg::ETAT_VLG">{leg[xp_won]} XP gagnée pour la légion {leg[leg_name]}</if>
 </foreach>
 

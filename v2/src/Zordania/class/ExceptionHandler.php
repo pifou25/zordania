@@ -91,8 +91,7 @@ class ExceptionHandler {
         try
         {
             if($e instanceof Illuminate\Database\QueryException){
-                echo "<div class'error'>erreur SQL Eloquent</div>";
-                echo self::formatException($e, true);
+                echo '<div class"error">erreur SQL Eloquent</div>';
             }else if($e instanceof Error){
                 self::dieWithTemplate(self::formatException($e, true));
             }

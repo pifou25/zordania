@@ -256,7 +256,7 @@ if($_act == "del") {
 		if($mbr_array['mbr_etat'] == MBR_ETAT_OK || $mbr_array['mbr_etat'] == MBR_ETAT_ZZZ) {
                     
 			$legions = new legions(['mid'=>$mid,
-                            //'etat' => [LEG_ETAT_VLG, LEG_ETAT_BTC, LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_ATQ]
+                            //'etat' => [Leg::ETAT_VLG, Leg::ETAT_BTC, Leg::ETAT_GRN, Leg::ETAT_DPL, Leg::ETAT_ATQ]
                             ], true, true);
                         
 			//$cond = array('mid'=>$mid);

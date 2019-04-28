@@ -39,7 +39,7 @@ if($id == 66656) {
 			{
 				$nb = ceil($nb_res * PARRAIN_BONUS_PRC / 100);
 				Res::mod($_user['parrain'], array($type_res => $nb));
-				$_histo->add($_user['parrain'], $_user['mid'], HISTO_PARRAIN_BONUS,array("res_type" => $type_res, "res_nb" => $nb));
+				$_histo->add($_user['parrain'], $_user['mid'], Hst::PARRAIN_BONUS,array("res_type" => $type_res, "res_nb" => $nb));
 			}
 		}
 		$_tpl->set('bon_nb_res',$nb_res);

@@ -143,12 +143,12 @@ if($demn_ok){
 						foreach($legions->legs as $leg) {
 							$unts = $leg->getUntByRole(TYPE_UNT_DEMENAGEMENT);
 							if (!empty($unts)) {
-								if($leg->etat == LEG_ETAT_VLG) /* légion au village, il faut créer une légion */
+								if($leg->etat == Leg::ETAT_VLG) /* légion au village, il faut créer une légion */
 									$_tpl->set('depl_ok', 'unt_au_vlg');
 								else{ /* déplacer la légion existante vers cette nouvelle destination */
 									// calculer et enregistrer la vitesse de la légion
 									$new = array('vit' => $leg->vitesse(), 'dest' => $arr_cid['map_cid'], 
-										'etat' => LEG_ETAT_ALL);
+										'etat' => Leg::ETAT_ALL);
 									$leg->edit($new);
 						            $_tpl->set('depl_ok', true);
 								}
@@ -168,7 +168,7 @@ if($demn_ok){
 		$_tpl->set('depl_ok', false);
 		foreach($legions->legs as $leg) {
 			$unts = $leg->getUntByRole(TYPE_UNT_DEMENAGEMENT);
-			if (!empty($unts) and $leg->etat == LEG_ETAT_ALL) {
+			if (!empty($unts) and $leg->etat == Leg::ETAT_ALL) {
 				/* calcul de l'avancement */
 				$squares = Map::getGen(
 					[$leg->infos['leg_dest'], $leg->cid], 
@@ -187,14 +187,14 @@ if($demn_ok){
 $atq_array = Leg::get(['dest' => $_user['mapcid']]);
 $_tpl->set('atq_array', $atq_array);
 
-$_tpl->set('leg_array', Leg::get(['mid' => $_user['mid'], 'etat' => [LEG_ETAT_RET, LEG_ETAT_ALL, LEG_ETAT_DPL]]));
+$_tpl->set('leg_array', Leg::get(['mid' => $_user['mid'], 'etat' => [Leg::ETAT_RET, Leg::ETAT_ALL, Leg::ETAT_DPL]]));
 
 $pos_array = Leg::select('leg_name', 'leg_mid', 'leg_cid', 'leg_etat', 'leg_id', 'leg_vit', 'mbr_pseudo AS dest_pseudo',
                  'mbr_race AS race_dest', 'mbr_mid AS mid_dest', 'lres_type', 'lres_nb' )
             ->join('mbr','leg_cid', 'mbr_mid')
             ->join('leg_res', 'leg_id', 'lres_lid')
             ->where('leg_mid', $_user['mid'])->where('lres_type', GAME_RES_BOUF)
-            ->where('leg_etat', LEG_ETAT_POS)
+            ->where('leg_etat', Leg::ETAT_POS)
             ->get()->toArray();
 $_tpl->set('pos_array', $pos_array);
 

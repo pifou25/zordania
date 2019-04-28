@@ -27,8 +27,8 @@ class legion {
 		$this->lid = $lid;
 
 		$cond = array('leg' => array($lid), 
-				'etat' => array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_POS, 
-					LEG_ETAT_DPL, LEG_ETAT_ALL, LEG_ETAT_RET, LEG_ETAT_ATQ), 'mbr' => true);
+				'etat' => array(Leg::ETAT_VLG, Leg::ETAT_GRN, Leg::ETAT_POS, 
+					Leg::ETAT_DPL, Leg::ETAT_ALL, Leg::ETAT_RET, Leg::ETAT_ATQ), 'mbr' => true);
 		if ($mid)
 			$cond['mid'] = $mid;
 
@@ -69,7 +69,7 @@ class legion {
 	private function loadUnt(){ // remplace get_unt_leg
 		// toutes les unités sauf celles des batiments
 		$tmp = Leg::get(array('leg' => array($this->lid), 'sum' => true,
-			'etat' => array(LEG_ETAT_VLG, LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_RET, LEG_ETAT_ATQ)));
+			'etat' => array(Leg::ETAT_VLG, Leg::ETAT_GRN, Leg::ETAT_DPL, Leg::ETAT_RET, Leg::ETAT_ATQ)));
 		$this->unt = array();
 		foreach($tmp as $unt)
 			$this->unt[$unt['unt_type']] = $unt['unt_sum'];
@@ -262,8 +262,8 @@ class legion {
         if (!$this->vide())
             if (isset($this->unt[$type]) && $this->unt[$type])
                 // si la legion est bien au village
-                if (session::$SES->get('mapcid') == $this->cid && $this->infos['leg_etat'] == LEG_ETAT_GRN) {
-                    $vlg = Leg::where('leg_mid', $this->mid)->where('leg_etat', LEG_ETAT_VLG);
+                if (session::$SES->get('mapcid') == $this->cid && $this->infos['leg_etat'] == Leg::ETAT_GRN) {
+                    $vlg = Leg::where('leg_mid', $this->mid)->where('leg_etat', Leg::ETAT_VLG);
                     if($vlg->count() == 0){
                         echo 'Aucun village ici';
                     }else{
@@ -320,7 +320,7 @@ class legion {
 						$this->bonus['cpt']['vit'] = $bonus;
 				}
 				// calculer la vitesse
-				if($this->etat == LEG_ETAT_DPL)
+				if($this->etat == Leg::ETAT_DPL)
 					$this->stats['vit'] = $this->infos['leg_vit'];
 				else
 					$this->stats['vit'] = $this->calc_vit();
@@ -552,7 +552,7 @@ class legion {
 
 	function move($dest) {
 		// donne la destination et la vitesse, et fait le départ sans attendre le tour
-		$new = array('vit' => $this->vitesse(), 'dest' => $dest, 'etat' => LEG_ETAT_DPL);
+		$new = array('vit' => $this->vitesse(), 'dest' => $dest, 'etat' => Leg::ETAT_DPL);
 		$this->edit($new);
 	}
 

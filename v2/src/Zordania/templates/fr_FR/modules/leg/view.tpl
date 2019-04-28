@@ -4,7 +4,7 @@
 	<h3>Unités</h3>
 	<table class="liste">
 	<thead>
-		<if cond='{leg[leg_etat]} != {LEG_ETAT_VLG}'><th>suppr.</th></if>
+		<if cond='{leg[leg_etat]} != Leg::ETAT_VLG'><th>suppr.</th></if>
 		<th>Type</th>
 		<th>Nombre</th>
 		<th>Attaque</th>
@@ -14,9 +14,9 @@
 	<foreach cond="{unt_leg[{leg[leg_id]}]} as {type} => {nb}">
 		<tr>
 
-	<if cond="{leg[leg_etat]} != {LEG_ETAT_VLG}">
+	<if cond="{leg[leg_etat]} != Leg::ETAT_VLG">
 		<td>
-		<if cond="{leg[leg_cid]} == {_user[mapcid]} && ({leg[leg_etat]} == {LEG_ETAT_GRN})">
+		<if cond="{leg[leg_cid]} == {_user[mapcid]} && ({leg[leg_etat]} == Leg::ETAT_GRN)">
 			<if cond="{type} == {_user[hro_type]}">
 				<a href="leg-hero.html?sub=move_hero&to=vlg"><img src="img/drop.png" alt="Rentrer au village" /></a>
 			</if>
@@ -50,7 +50,7 @@
 	</tbody>
 	<tfoot>
 		<th>Total</th>
-		<if cond='{leg[leg_etat]} != {LEG_ETAT_VLG}'><th>&nbsp;</th></if>
+		<if cond='{leg[leg_etat]} != Leg::ETAT_VLG'><th>&nbsp;</th></if>
 		<th>{unt_stats[unt_nb]}</th>
 		<th>{unt_stats[atq_unt]} <img src="img/{_user[race]}/div/atq.png" alt="Attaque Unité" />
 		- {unt_stats[atq_btc]} <img src="img/{_user[race]}/div/atq_btc.png" alt="Attaque Bâtiment" /></th>
@@ -58,7 +58,7 @@
 	</tfoot>
 	</table>
 	
-	<if cond='{leg[leg_etat]} != {LEG_ETAT_VLG}'>
+	<if cond='{leg[leg_etat]} != Leg::ETAT_VLG'>
 		<p>
 		<img src="img/{_user[race]}/div/atq.png" alt="Attaque Unité" /> <strong>Attaque :</strong>
 		{unt_stats[atq_unt]}
@@ -90,13 +90,13 @@
 		<set name="result" value="{pos_array}" />
 		<include file="modules/carte/tile.tpl" cache="1" /> 
 	</if>
-	<if cond='{leg[leg_etat]} == {LEG_ETAT_DPL}'>
+	<if cond='{leg[leg_etat]} == Leg::ETAT_DPL'>
 		Destination : <a href="carte.html?map_cid={leg[leg_dest]}" title="Afficher la position">Voir</a>
 		<set name="result" value="{dst_array}" />
 		<include file="modules/carte/tile.tpl" cache="1" />
 	</if>
 
-	<if cond='{leg[leg_etat]} != {LEG_ETAT_VLG}'>
+	<if cond='{leg[leg_etat]} != Leg::ETAT_VLG'>
 		<h3>Ressources</h3>
 		<if cond="isset({lres_ok})"><div class="ok">Ressources modifiées !</div></if>
 
@@ -106,7 +106,7 @@
 		Consommation par tour: {unt_stats[unt_nb]} <zimgres type="{GAME_RES_BOUF}" race="{_user[race]}" /><br/>
 		Consommation Journalière: <math oper="{unt_stats[unt_nb]} * (60/ZORD_SPEED) * 24" /> <zimgres type="{GAME_RES_BOUF}" race="{_user[race]}" /></p>
 
-		<if cond="{leg[leg_cid]} == {_user[mapcid]} && {leg[leg_etat]} != {LEG_ETAT_VLG}">
+		<if cond="{leg[leg_cid]} == {_user[mapcid]} && {leg[leg_etat]} != Leg::ETAT_VLG">
 			<form method="post" action="leg-view.html?sub=res&amp;lid={leg[leg_id]}">
 				<fieldset>
 					<legend>Nourriture</legend>

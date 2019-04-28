@@ -1,5 +1,8 @@
 <div class="block_forum">
+    <if cond="empty({quete->mbr})">PNJ</if>
+    <else>
 <img class="blason" title="Quêsteur" src="img/mbr_logo/{quete->mbr->mbr_mid}.png" />
+    </else>
     <h4>{quete->cfg_subject}</h4>
 
 <p><math oper='Parser::parse({quete->post->message})' /></p>

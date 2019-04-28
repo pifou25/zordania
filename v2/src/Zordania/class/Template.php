@@ -166,6 +166,8 @@ class Template
 		$search[] = $this->macro[1]; // zimgba*, doit être avant math
 	
 		$data = preg_replace_callback($search, array($this,'var_back'), $data);
+                // restore normal static constants by removing simple quote
+                $data = preg_replace('/\'(\w*::\w*)\'/m', '$1', $data);
 		return strtr(strtr('$data = \''.$data.'\';', array("\\''." => '\\\'\'; $data .= ')), array("{''}" => '', "''." => '', ".''" => '', ".''." => '.'));
 	}
 	

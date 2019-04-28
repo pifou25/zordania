@@ -361,10 +361,10 @@ static function getIps(string $ip = '', int $gid = 0)
         Map::init($cid);
 
         // légion village avec ses unités
-        $lid = Leg::add($mid, $cid, LEG_ETAT_VLG, $vlg);
+        $lid = Leg::add($mid, $cid, Leg::ETAT_VLG, $vlg);
         Unt::init($lid);
         // légion des batiments - vide
-        Leg::add($mid, $cid, LEG_ETAT_BTC, $vlg);
+        Leg::add($mid, $cid, Leg::ETAT_BTC, $vlg);
         Res::init($mid);
         ResTodo::where('rtdo_mid', '=', $mid)->delete();
         Src::init($mid);
@@ -415,7 +415,7 @@ static function getIps(string $ip = '', int $gid = 0)
         // si on renomme le village, il faut renommer les 2 pseudo-légions (civils et village)
         if (isset($new['vlg'])) {
             Leg::where('leg_mid', '=', $mid)
-                    ->whereIn('leg_etat', [LEG_ETAT_VLG, LEG_ETAT_BTC])
+                    ->whereIn('leg_etat', [Leg::ETAT_VLG, Leg::ETAT_BTC])
                     ->update(['leg_name' => $new['vlg']]);
         }
 

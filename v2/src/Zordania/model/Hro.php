@@ -39,7 +39,7 @@ class Hro extends Illuminate\Database\Eloquent\Model {
         if (Session::$SES->getConf('unt', $type, 'role') != TYPE_UNT_HEROS)
             return false;
         // récpérer l'id de la légion au village
-        $lid = Leg::get($mid, LEG_ETAT_VLG)[0]['leg_id'];
+        $lid = Leg::get($mid, Leg::ETAT_VLG)[0]['leg_id'];
         $vie = Session::$SES->getConf('unt', $type, 'vie');
 
         // prix en unités de la légion

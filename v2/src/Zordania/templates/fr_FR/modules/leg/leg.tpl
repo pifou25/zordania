@@ -35,7 +35,7 @@
             <label for="to_leg">Ajouter dans</label>
             <select name="to_leg">
                 <foreach cond="{legs} as {leg}">
-                    <if cond='{leg->leg_etat} != {LEG_ETAT_BTC} && {leg->leg_id} != {lid}'>
+                    <if cond='{leg->leg_etat} != Leg::ETAT_BTC && {leg->leg_id} != {lid}'>
                         <option value="{leg->leg_id}">{leg->leg_name}</option>
                     </if>
                 </foreach>
@@ -142,35 +142,35 @@
 	<if cond='!empty({legs}) '>
 
 		<if cond='!({_act} == "move" && isset({show_form}) && {show_form})'>
-			<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_VLG}" />
+			<include file="modules/leg/list.tpl" cache="1" thisetat="Leg::ETAT_VLG" />
 			<hr/>
 		</if>
 
-		<h3>{leg_etat[{LEG_ETAT_GRN}]}</h3>
+		<h3>{leg_etat[Leg::ETAT_GRN]}</h3>
 		<# include avec paramètre 'thisetat' #>
-		<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_GRN}" />
+		<include file="modules/leg/list.tpl" cache="1" thisetat="Leg::ETAT_GRN" />
 		
 		<if cond='! ({_act} == "move" && isset({show_form}) && {show_form} && {_sub} == "atq" )'>
 			<hr/>
-			<h3>{leg_etat[{LEG_ETAT_POS}]}</h3>
-			<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_POS}" />
+			<h3>{leg_etat[Leg::ETAT_POS]}</h3>
+			<include file="modules/leg/list.tpl" cache="1" thisetat="Leg::ETAT_POS" />
 
 			<hr/>
-			<h3>{leg_etat[{LEG_ETAT_DPL}]}</h3>
-			<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_DPL}" />
+			<h3>{leg_etat[Leg::ETAT_DPL]}</h3>
+			<include file="modules/leg/list.tpl" cache="1" thisetat="Leg::ETAT_DPL" />
 			
 			<hr/>
-			<h3>{leg_etat[{LEG_ETAT_ALL}]}</h3>
-			<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_ALL}" />
+			<h3>{leg_etat[Leg::ETAT_ALL]}</h3>
+			<include file="modules/leg/list.tpl" cache="1" thisetat="Leg::ETAT_ALL" />
 
 			<if cond='!({_act} == "move" && isset({show_form}) && {show_form})'>
 				<hr/>
-				<h3>{leg_etat[{LEG_ETAT_RET}]}</h3>
-				<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_RET}" />
+				<h3>{leg_etat[Leg::ETAT_RET]}</h3>
+				<include file="modules/leg/list.tpl" cache="1" thisetat="Leg::ETAT_RET" />
 
 				<hr/>
-				<h3>{leg_etat[{LEG_ETAT_ATQ}]}</h3>
-				<include file="modules/leg/list.tpl" cache="1" thisetat="{LEG_ETAT_ATQ}" />
+				<h3>{leg_etat[Leg::ETAT_ATQ]}</h3>
+				<include file="modules/leg/list.tpl" cache="1" thisetat="Leg::ETAT_ATQ" />
 			</if>
 		</if>
 

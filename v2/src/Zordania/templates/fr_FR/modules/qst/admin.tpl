@@ -28,7 +28,7 @@
     (<a href="forum.html?pid={quete->cfg_pid}#{quete->cfg_pid}"> forum </a>) :
     <a href="admin-edit.html?module=qst&amp;id={quete->cfg_id}"> {quete->cfg_subject} </a>
     [ id = {quete->cfg_id} ]
-    <include file="modules/qst/qst.tpl" quete="{quete}" cache="1" />
+    <include file="modules/qst/view.tpl" quete="{quete}" cache="1" />
     
     <if cond="!empty({quete->cfg_param1})">( param1({quete->cfg_param1}) = {quete->cfg_value1} )</if>
     <if cond="!empty({quete->cfg_param2})"> - ( param2({quete->cfg_param2}) = {quete->cfg_value2} )</if>

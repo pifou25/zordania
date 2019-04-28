@@ -97,7 +97,7 @@
 				<select name="to" id="to">
 				<foreach cond="{legs} as {leg}">
 					<if cond='{_user[hro_lid]} != {leg->leg_id}'><option value="{leg->leg_id}">
-						<if cond='{leg->leg_etat} != {LEG_ETAT_VLG}'>{leg->leg_name}</if>
+						<if cond='{leg->leg_etat} != Leg::ETAT_VLG'>{leg->leg_name}</if>
 						<else>Rentrer au village</else>
 					</option>
 					</if>
