@@ -162,16 +162,18 @@ function glob_leg() {
         if ($x1 == $x2 && $y1 == $y2) {// la légion est arrivée à destination!
             $sql .= ", leg_dest = 0, leg_stop = NOW(), leg_etat = ";
             $sql .= ($value['leg_etat'] == Leg::ETAT_DPL) ? Leg::ETAT_POS : Leg::ETAT_GRN;
+            
             /* vérifier si la légion contient l'unité caravane ET si l'emplacement est libre */
             if (isset($leg_move_array[$lid]) && $value['dest_type'] == MAP_LIBRE) {
                 $leg = $leg_move_array[$lid];
                 /* déplacement du village */
                 DB::select('CALL move_member(?, ?)', [$mid, $value['leg_dest']]);
-                /* edit = rang => array(type => nb) */
-                $edit = $unt_move_list[$leg['mbr_race']];
-                foreach ($edit as $rang => $unt)
-                    if ($unt == $leg['unt_type']) // en principe toujours vrai (!)
-                        $edit[$rang] = array($leg['unt_type'] => $leg['unt_nb']);
+                /* caravanne : 1 seul type d'unite correspondant */
+                $unt = Config::filter($leg['mbr_race'], 'unt', 'role', TYPE_UNT_DEMENAGEMENT);
+                foreach($unt as $key => $u1){
+                    $edit[$u1['rang']] = [$leg['unt_type'] => $leg['unt_nb']];
+                }
+                
                 /* tuer la caravane */
                 Leg::edit($lid, $edit);
                 Mbr::edit($mid, array('population' => Leg::countUnt($mid)));

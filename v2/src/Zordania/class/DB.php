@@ -81,4 +81,8 @@ class DB extends Illuminate\Database\Capsule\Manager {
         }
         return $t / 1000;
     }
+    
+    static function getQueries(){
+        return self::$queries;
+    }
 }

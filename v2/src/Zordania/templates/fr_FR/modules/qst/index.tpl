@@ -1,4 +1,4 @@
-<if cond="empty({quete})">Aucune quête en cours.</if>
+<if cond="empty({quete})">Aucune quête en cours. (<a href="qst-update.html">update</a>)</if>
 <else>
 <div class="block_forum">
 <img class="blason" title="Quêsteur" src="img/mbr_logo/{quete[poster_id]}.png" />
@@ -11,7 +11,7 @@
 
 <p>
     <strong>Objectif :</strong>
-    <math oper="QstCfg::PARAMS[{quete[cfg_objectif]}]" />
+
 <if cond="{quete[cfg_obj_value]} != 0">
     <if cond="{quete[cfg_objectif]} == 3">
         <zimgunt race="{_user[race]}" type="{quete[cfg_obj_value]}" />
@@ -50,7 +50,7 @@
     <th>Terminée le</th>
 <foreach cond="{hist} as {hqst}">
     <tr>
-        <td><a href="qst-view.html?qst={hqst[qst_id]}" title="{hqst[cfg_subject]}">{hqst[cfg_subject]}</a></td>
+        <td><a href="qst-view.html?qst={hqst[qst_id]}" title="{hqst[cfg_subject]}" class="zrdPopUp">{hqst[cfg_subject]}</a></td>
         <td>{hqst[created_at]}</td>
         <td>{hqst[finished_at]}</td>
     </tr>

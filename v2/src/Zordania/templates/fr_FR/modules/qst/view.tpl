@@ -15,21 +15,24 @@
 
 <if cond="{quete->cfg_obj_value} != 0">
     <if cond="{quete->cfg_objectif} == 3">
-        <zimgunt race="{_user[race]}" type="{quete->cfg_obj_value}" />
+        {quete->cfg_obj_counter} <zimgunt race="{_user[race]}" type="{quete->cfg_obj_value}" />
     </if>
     <elseif cond="{quete->cfg_objectif} == 4">
-        <zimgbtc type="{quete->cfg_obj_value}" race="{_user[race]}" /> 
+        {quete->cfg_obj_counter} <zimgbtc type="{quete->cfg_obj_value}" race="{_user[race]}" /> 
     </elseif>
     <elseif cond="{quete->cfg_objectif} == 5">
         <zimgsrc type="{quete->cfg_obj_value}" race="{_user[race]}" />
     </elseif>
     <elseif cond="{quete->cfg_objectif} == 6">
-        <zimgres type="{quete->cfg_obj_value}" race="{_user[race]}" />
+        {quete->cfg_obj_counter} <zimgres type="{quete->cfg_obj_value}" race="{_user[race]}" />
+    </elseif>
+    <elseif cond="{quete->cfg_objectif} == 13">
+        <zimgunt race="{_user[race]}" type="{quete->cfg_obj_value}" />
     </elseif>
     <elseif cond="{quete->cfg_objectif} == 14">
         <zimgcomp type="{quete->cfg_obj_value}" race="{_user[race]}" />
     </elseif>
-    <else>{quete->cfg_obj_value}</else>
+    <else>(Type / Valeur par défaut) Type = {quete->cfg_objectif}, Valeur = {quete->cfg_obj_value}, compteur = {quete->cfg_obj_counter}</else>
 </if>
 </p>
 

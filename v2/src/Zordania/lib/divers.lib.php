@@ -36,6 +36,21 @@ function strverif($str)
 	//return preg_match("!^[a-zA-Z0-9_\-' éêèëàêôöäüï]*$!i",$str);
 }
 
+/**
+ * unset by $key the value from an array and return the value
+ * @param array $array
+ * @param string $key
+ * @return type
+ */
+function array_unset(&$array, $key){
+    $result = null;
+    if(isset($array[$key])){
+        $result = $array[$key];
+        unset($array[$key]);
+    }
+    return $result;
+}
+
 function array_utf8_encode($data) {
   if (is_array($data)) {
     foreach ($data as & $value) {

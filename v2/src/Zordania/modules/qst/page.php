@@ -1,6 +1,6 @@
 <?php
 
-namespace Zordania\module;
+namespace Zordania\controller;
 
 use \Zordania\model\QstCfg;
 
@@ -92,11 +92,6 @@ class Qst {
         if($tid){
             // liste complete des quetes
             $qst =  QstCfg::where('cfg_tid', $tid)->get();
-//            foreach($qst as $row){
-//                $ids[] = $row['cfg_pid'];
-//            }
-//            $psts = \FrmPost::whereIn('id', $ids)->get()->toArray();
-//            $this->var['qstDetail'] = QstCfg::join('frm_posts', 'cfg_pid', 'id')->where('cfg_tid', $tid)->get()->toArray();
             $this->var['qstDetail'] = $qst;
         }else{
             // liste des topics uniquement
@@ -107,7 +102,7 @@ class Qst {
     
     function config(){
         // inserer les nouvelles quetes a parametrer :
-        QstCfg::majAll();
+        $this->tpl['update'] = QstCfg::majAll();
         return $this->admin();
 
     }
@@ -122,49 +117,36 @@ class Qst {
     
     function mbr(){
         // quetes d'un membre
-        $this->var['mbr'] = \Mbr::where('mbr_id' , $_GET['mid']);
+        $this->var['mbr'] = \Mbr::find($_GET['mid']);
         return $this->admin();
     }
     
     function edit(){
         // editer les parametres de quete
         $id = request('id', 'uint', 'get');
+        $qstCfg = QstCfg::find($id);
 
-        if(!empty($_POST) && isset($_POST['Valider'])){
-            $mbr = \Mbr::where('mbr_pseudo' , $_POST['msg_pseudo'])->first();
-            $mid = empty($mbr) ? null : $mbr->mbr_mid;
-            $request = ['cfg_mid' => $mid];
-            if(!empty($_POST['cfg_subject'])){
-                $request['cfg_subject'] = $_POST['cfg_subject'];
+        $valid = array_unset($_POST, 'Valider');
+        if($valid != NULL){
+            $pseudo = array_unset($_POST, 'msg_pseudo');
+            $mbr = \Mbr::where('mbr_pseudo' , $pseudo)->first();
+            if(!empty($mbr)){
+                $qstCfg->cfg_mid = $mbr->mbr_mid;
             }
-
-            // traiter les 4 param
-            for($i = 1; $i < 5; $i++){
-                if($_POST["param$i"] != 0){
-                    $request["cfg_param$i"] = $_POST["param$i"];
-                    $request["cfg_value$i"] = $_POST["value$i"];
-                }else{
-                    $request["cfg_param$i"] = null;
-                    $request["cfg_value$i"] = null;
+            // every other POST values update the model
+            foreach($_POST as $key => $value){
+                if(!empty($value)){
+                    $qstCfg->$key = $value;
                 }
             }
-            if(!empty($_POST['param5'])){
-                $request['cfg_objectif'] = $_POST['param5'];
-                $request['cfg_obj_value'] = $_POST['value5'];
-            }else{
-                $request['cfg_objectif'] = 0; // aucun objectif? devrait faire une erreur
-                $request['cfg_obj_value'] = 0;
-            }
-             $this->var['update'] = QstCfg::where('cfg_id', $id)->update($request);
+            $this->var['update'] = $qstCfg->save();
+        }
+        if(!empty($qstCfg)){
+            $this->var['quete'] = $qstCfg;
+            return 'edit';
         }
 
-        $qst = QstCfg::where('cfg_id', $id)->first(); // QstCfg::get($id);
-        if($qst){
-             $this->var['quete'] = $qst;
-        }else{
-            return $this->admin();
-        }
-        return 'edit';
+        return $this->admin();
 
     }
 }
@@ -172,5 +154,5 @@ class Qst {
 //Verifications
 if(!defined("_INDEX_")){ exit; }
 
-$controleur = new \Zordania\module\Qst($_act);
+$controleur = new Qst($_act);
 $_tpl->set($controleur->executerAction());

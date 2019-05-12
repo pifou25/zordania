@@ -76,6 +76,24 @@ class Config {
     }
 
     /**
+     * filtrer la config on ne conserve que les elements dont $key = $value.
+     * ex: filtrer les unités dont 'ROLE' = TYPE_UNT_HEROS
+     * @param int $race
+     * @param string $type [unt / src / btc / res / trn ...]
+     * @param type $key
+     * @param type $value
+     * @return type
+     */
+    static public function filter(int $race, string $type, $key, $value){
+        $arr = self::get($race, $type);
+        if(empty($arr))
+            return [];
+        return array_filter($arr, function($val) use ($key, $value) {
+            return isset($val[$key]) && $val[$key] == $value;
+        });
+    }
+    
+    /**
      * chargement du fichier de config de race
      * @param int $race
      * @return boolean

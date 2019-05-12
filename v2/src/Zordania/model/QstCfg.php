@@ -10,9 +10,39 @@ class QstCfg extends \Illuminate\Database\Eloquent\Model {
     // override table name
     protected $table = 'qst_cfg';
 
+    // override primary key
+    protected $primaryKey = 'cfg_id';
+    
     private $mbr; // membre auteur de la quete
     private $post; // FrmPost du forum
     
+    // see templates/fr_FR/config/config.config for translations
+    const NO_PARAM = 0;
+    const RACE = 1;
+    const PREV_QUEST_OVER = 2;
+    const MAKE_UNIT = 3;
+    const MAKE_BAT = 4;
+    const MAKE_SEARCH = 5;
+    const MAKE_RES = 6;
+    const BUY = 7;
+    const JOIN_ALLY = 8;
+    const MAKE_ATQ = 9;
+    const DEF_VILLAGE = 10;
+    const FORM_LEG = 11;
+    const POST_FORUM = 12;
+    const FORM_HEROS = 13;
+    const USE_COMP_HEROS = 14;
+
+    /**
+     * 
+     * @return array of constants [name => value]
+     */
+    public function getConstants()
+    {
+        $reflectionClass = new ReflectionClass($this);
+        return $reflectionClass->getConstants();
+    }
+
     /**
      * PNJ auteur de la quête
      * @return Mbr
@@ -63,7 +93,7 @@ class QstCfg extends \Illuminate\Database\Eloquent\Model {
     WHERE forum_id = ?
     AND NOT EXISTS (SELECT 1 FROM zrd_qst_cfg WHERE p.id = cfg_pid AND topic_id = cfg_tid);';
 
-        DB::insert($sql, [FORUM_QUETES]);
+        return \DB::insert($sql, [FORUM_QUETES]);
         
     }
 

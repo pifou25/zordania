@@ -4,7 +4,7 @@
     <a href="forum-topic.html?fid={FORUM_QUETES}">Forum des Quêtes</a>
 </p>
 
-<h3>Paramétrage des Quêtes - <a href="admin-update.html?module=qst">update</a></h3>
+<h3>Paramétrage des Quêtes - <a href="admin-config.html?module=qst">update</a></h3>
 
 <if cond="isset({update})">
     <p class="ok">Mise à jour effectuée ({update})</p>

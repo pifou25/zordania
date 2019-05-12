@@ -126,8 +126,7 @@ $_tpl->get_config('config/config.config');
 
 mark('class');
 
-$_act = (isset($argc) && $argc == 2) ? $argv[1] : "";
-
+// $_act = (isset($argc) && $argc == 2) ? $argv[1] : "";
 
 mark('args');
 
@@ -241,6 +240,12 @@ $mid_array = Mbr::select('mbr_mid','mbr_race', 'mbr_mapcid', 'mbr_xp')->where('m
 /* liste des héros */
 $hro_array = Hro::leftJoin('leg', 'hro_lid', 'leg_id')->get()->keyBy('hro_mid');
 
+/* liste des quetes en cours */
+$qstsTmp = Qst::join('qst_cfg', 'qst_cfg_id', 'cfg_id')->whereNull('finished_at')->get();
+foreach($qstsTmp as $tmp){
+    $qsts[$tmp->qst_mid][$tmp->cfg_objectif] = $tmp;
+}
+
 
 $hro_list = [];
 $leg_move_list = []; // légions contenant une unités déménagement
@@ -250,22 +255,8 @@ $btc_def_list = [];
  * héros, unité caravane et les batiments défensifs
  */
 foreach ($_races as $race => $visible) {
-	$conf_unt = Config::get($race, "unt");
-	foreach($conf_unt as $unt => $conf)
-		if (isset($conf['role'])){
-			// liste des types de heros (pour ne pas les tuer de faim)
-			if ($conf['role'] == TYPE_UNT_HEROS)
-				$hro_list[$race][$unt] = $unt; // plusieurs héros par race
-			// liste des types de caravanes
-			else if ($conf['role'] == TYPE_UNT_DEMENAGEMENT)
-				$unt_move_list[$race][$conf['rang']] = $unt; // 1 seule unité de déménagement par race! mais on garde aussi son rang
-		}
-
-	// liste des bat défensifs pour la défense TIR
-	$conf_btc = Config::get($race, "btc");
-	foreach($conf_btc as $btc => $conf)
-		if (isset($conf['bonus']['tir']))
-			$btc_def_list[$race][$btc] = 1;
+    $hro_list[$race] = array_keys(Config::filter($race, 'unt', 'role', TYPE_UNT_HEROS));
+    $unt_move_list[$race] = array_keys(Config::filter($race, 'unt', 'role', TYPE_UNT_DEMENAGEMENT));
 }
 
 /* liste des unités de déménagement par joueurs: requete fixe par config:
@@ -276,7 +267,7 @@ foreach ($_races as $race => $visible) {
  *  */
 $where = 'CASE mbr_race ';
 foreach($unt_move_list as $race => $unt_type)
-	$where .= " WHEN $race THEN ".array_shift($unt_type);
+	$where .= " WHEN $race THEN ".array_keys($unt_type)[0];
 $where .= " ELSE 0 END = unt_type";
 $leg_move_array = Unt::select('unt_nb', 'unt_type', 'leg_id', 'mbr_mid', 'mbr_race')->leftJoin('leg', 'unt_lid', 'leg_id')
         ->leftJoin('mbr', 'leg_mid', 'mbr_mid')->whereRaw($where)->get()->keyBy('leg_id');
@@ -401,9 +392,7 @@ if(SITE_DEBUG) {
 		echo  "$title: ".round($time-$prev_time, 5). "\n";
 		$prev_time = $time;
 	}
-	echo "SQL :\n";
-	echo "Time: ". 0 . "\n"; // TODO with Eloquent
-	echo "Req: ". 0 . "\n"; // TODO with Eloquent
+	echo "SQL :  ". count(DB::getQueries()) . " requetes en ". DB::getSqlTime() . " s\n";
 }
 
 DB::sqlLog(' CRON ');

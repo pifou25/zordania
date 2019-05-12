@@ -3,6 +3,7 @@
 /**
  * Historique - les événements
  * lien avec les membres : histo_mid = mbr_id et histo_mid2 = mbr_mid
+ * @see message templates into templates/fr_FR/modules/histo/msg/(const).tpl
  */
 class Hst extends Illuminate\Database\Eloquent\Model {
 

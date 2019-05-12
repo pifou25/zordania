@@ -15,6 +15,8 @@ class Mbr extends Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
 // override table name
     protected $table = 'mbr';
+    // override primary key
+    protected $primaryKey = 'mbr_id';
 
     static function count(array $cond = []) {
         $ret = Mbr::get(array_merge($cond, ['count' => true]));
