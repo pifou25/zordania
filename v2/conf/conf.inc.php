@@ -73,7 +73,7 @@ define('ALL_MIN_DEP', 10); // Dépot minimal
 define('ALL_MBR_TODISPL', 1); // Nombre minimum de joueur avant affichage dans la liste all
 
 define('ALL_TAX',10); // Taxe du grenier (%)
-define('ALL_SEUIL_PILLAGE', 1000); //En dessous de 1000 on ne considère pas un retrait comme un pillage potentiel
+define('ALL_SEUIL_PILLAGE', 5000); //En dessous de 1000 on ne considère pas un retrait comme un pillage potentiel
 
 define('SHOOT_LIMIT_PAGE',20);
 define('SHOOT_LIMIT_NB_PAGE',15);
