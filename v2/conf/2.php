@@ -276,7 +276,7 @@ $this->btc[B2_M_CHASSE] = array(
 
 $this->btc[B2_AIRE_ENTRE] = array(
 		"vie"			=>	500,
-		"limite"	=>	5,
+		"limite"	=>	6,
 		"prix_res"		=>	array(R2_BOIS => 45, R2_PIERRE => 45),
 		"tours"		=>	30,
 		"prix_unt"		=>	array(U2_TETE => 1),
