@@ -45,6 +45,8 @@ define("U6_GARDE3", 12);
 define("U6_CHEVALIER_XP", 13);
 define("U6_MAGICIEN", 14);
 define("U6_ARBALETRIER", 15);
+define("U6_CITROUILLE", 16);
+define("U6_MOMIE", 17);
 
 define("S6_ARME_1", 1);
 
@@ -386,7 +388,23 @@ $this->unt[U6_GARDE3] = array(
 		'atq' => 30.0),
 );
 //</unt-12>
-
+//<unt-17>
+$this->unt[U6_MOMIE] = array(
+	'vie' => 11000,
+	'group' => 3,
+	'role' => TYPE_UNT_HEROS,
+	'prix_res' => array(R6_PIERRE => 500, R6_NOURRITURE => 50000, R6_CHARBON => 500, R6_COTTE_MAILLE => 500, R6_B_ACIER => 500, R6_BOIS => 500, R6_ACIER => 500, R6_MITHRIL => 500, R6_FER => 500, R6_CHEVAUX => 500, R6_B_BOIS => 1000, R6_EPEE_LON => 500, R6_EPEE => 1000, R6_ARC => 500, R6_ARBALETE => 500, R6_COTTE_MITHRIL => 500, ),
+	'need_btc' => array(B6_DONJON, ),
+	'in_btc' => array(B6_DONJON, ),
+	'def' => 3500,
+	'atq_unt' => 5000,
+	'atq_btc' => 0,
+	'vit' => 10,
+	'rang' => 17,
+	'bonus' => array(
+		'atq' => 30.0),
+);
+//</unt-17>
 //<unt-5>
 $this->unt[U6_GROSLUTIN] = array(
 	'vie' => 50,
@@ -470,7 +488,19 @@ $this->unt[U6_ARBALETRIER]=array(
 		"need_btc"	=>	array(B6_DONJON),
 		"in_btc"	=>	array(B6_DONJON),
 );
-
+$this->unt[U6_CITROUILLE]=array(
+		"def"	=>	10,
+		"vie"	=>	18,
+		"atq_unt"	=>	11,
+		"vit"	=>	15,
+		"bonus" => array('vie' => 1),
+		"group"	=>	13,
+		"rang" => 16,
+		"role"	=>	TYPE_UNT_DISTANCE,
+		"prix_res"	=>	array(R6_ARBALETE => 3,R6_COTTE_MAILLE => 3, R6_OR => 7),
+		"need_btc"	=>	array(B6_DONJON),
+		"in_btc"	=>	array(B6_DONJON),
+);
 $this->unt[U6_MAGICIEN]=array(
 		"def"	=>	6,
 		"bonus"	=> array('def' => 1.5),
