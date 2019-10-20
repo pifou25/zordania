@@ -183,7 +183,7 @@ $this->btc[B6_DONJON]=array(
 		"tours"	=>	500,
 		"bonus" 	=>  array('gen' => 300, 'bon' => 40),
 		"prix_res"	=>	array(R6_BOIS => 2250, R6_PIERRE => 2250, R6_ACIER => 200),
-		"prod_pop"	=>	100,
+		"prod_pop"	=>	1500,
 		"prod_src"	=>	true,
 		"prod_unt"	=>	100,
 		"prod_res_auto"	=>	array(R6_NOURRITURE => 1000, R6_OR => 20)
@@ -489,8 +489,8 @@ $this->unt[U6_ARBALETRIER]=array(
 		"in_btc"	=>	array(B6_DONJON),
 );
 $this->unt[U6_CITROUILLE]=array(
-		"def"	=>	10,
-		"vie"	=>	18,
+		"def"	=>	11,
+		"vie"	=>	13,
 		"atq_unt"	=>	11,
 		"vit"	=>	15,
 		"bonus" => array('vie' => 1),
@@ -558,8 +558,8 @@ $this->race_cfg = array(
 	'bonus_res'	=>	array(R6_OR => 0.05),
 	'modif_pts_btc'	=>	10,
 	'debut'	=>	array(
-		'res'	=>	array(R6_OR => 10000, R6_BOIS => 10000, R6_PIERRE => 10000, R6_NOURRITURE => 500000),R6_FER => 10000,R6_CHARBON => 10000,R6_CHEVAUX => 10000,R6_ACIER => 10000,R6_B_BOIS => 10000,R6_B_ACIER => 10000,R6_EPEE => 10000,R6_EPEE_LON => 10000,R6_ARC => 10000,R6_ARBALETE => 10000,R6_COTTE_MAILLE => 10000,R6_COTTE_MITHRIL => 10000,R6_MITHRIL => 10000,
-		'unt'	=> 	array( U6_CITROUILLE => 999),
+		'res'	=>	array(R6_OR => 10000, R6_BOIS => 10000, R6_PIERRE => 10000, R6_NOURRITURE => 500000,R6_FER => 10000,R6_CHARBON => 10000,R6_CHEVAUX => 10000,R6_ACIER => 10000,R6_B_BOIS => 10000,R6_B_ACIER => 10000,R6_EPEE => 10000,R6_EPEE_LON => 10000,R6_ARC => 10000,R6_ARBALETE => 10000,R6_COTTE_MAILLE => 10000,R6_COTTE_MITHRIL => 10000,R6_MITHRIL => 10000),
+		'unt'	=> 	array( U6_CITROUILLE => 1499),
 		'btc'	=> 	array(B6_DONJON => array()),
 		'src'	=>	array(S6_ARME_1)),
 	'bonus_map' => array(MAP_EAU => 0, MAP_LAC => 0, MAP_HERBE => 2, MAP_MONTAGNE => 0, MAP_FORET => 0),
