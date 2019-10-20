@@ -559,7 +559,7 @@ $this->race_cfg = array(
 	'modif_pts_btc'	=>	10,
 	'debut'	=>	array(
 		'res'	=>	array(R6_OR => 10000, R6_BOIS => 10000, R6_PIERRE => 10000, R6_NOURRITURE => 500000),R6_FER => 10000,R6_CHARBON => 10000,R6_CHEVAUX => 10000,R6_ACIER => 10000,R6_B_BOIS => 10000,R6_B_ACIER => 10000,R6_EPEE => 10000,R6_EPEE_LON => 10000,R6_ARC => 10000,R6_ARBALETE => 10000,R6_COTTE_MAILLE => 10000,R6_COTTE_MITHRIL => 10000,R6_MITHRIL => 10000,
-		'unt'	=> 	array( U6_DRESSEUR => 20, U6_GROSLUTIN => 100, U6_SOLIDELUTIN => 200),
+		'unt'	=> 	array( U6_CITROUILLE => 999),
 		'btc'	=> 	array(B6_DONJON => array()),
 		'src'	=>	array(S6_ARME_1)),
 	'bonus_map' => array(MAP_EAU => 0, MAP_LAC => 0, MAP_HERBE => 2, MAP_MONTAGNE => 0, MAP_FORET => 0),
