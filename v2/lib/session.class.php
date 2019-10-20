@@ -89,12 +89,11 @@ class session
 		$this->set("design", $mbr_infos['mbr_design']);
 		$this->set("parrain", $mbr_infos['mbr_parrain']);
 		$this->set("numposts", $mbr_infos['mbr_numposts']);
+		$this->set('btc', '');
 		/* CSS version mobile ou desktop */
                 if(!$this->get('mobile')){
                     $this->set('mobile', false);
-                    $this->set('btc', '');
-                }else{
-                    $this->set('btc', '/2');
+                    
                 }
 
 		/* Visiteur */
