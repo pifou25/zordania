@@ -1,3 +1,4 @@
+Require all granted
 RewriteEngine on
 RewriteBase /
 
@@ -9,14 +10,6 @@ RewriteBase /
 #RewriteRule ^(.*)$ http://www.zordania.com/$1 [R=301,L]
 
 #RewriteRule ^zordania\.com(.*)$ http://www.zordania.com/$1 [R=301,L]
-
-
-# Set REQUEST_SCHEME (standard environment variable in Apache 2.4)
-RewriteCond %{HTTPS} off
-RewriteRule .* - [E=REQUEST_SCHEME:http]
-
-RewriteCond %{HTTPS} on
-RewriteRule .* - [E=REQUEST_SCHEME:https]
 
 # Cas des xml
 RewriteRule	^([a-zA-Z0-9_]+)-([a-zA-Z0-9_]+).xml$ 	/index.php?display=xml&file=$1&act=$2&%{QUERY_STRING} [L]
@@ -45,4 +38,3 @@ RewriteRule	^img/al_logo/([0-9]+)-thumb.png$	/img/al_logo/index.php?alid=$1&thum
 <FilesMatch "\.(compiled\.php|class\.php|inc|log)$">
 	deny from all
 </FilesMatch>
-
