@@ -1,3 +1,4 @@
+Require all granted
 RewriteEngine on
 RewriteBase /
 
@@ -37,4 +38,3 @@ RewriteRule	^img/al_logo/([0-9]+)-thumb.png$	/img/al_logo/index.php?alid=$1&thum
 <FilesMatch "\.(compiled\.php|class\.php|inc|log)$">
 	deny from all
 </FilesMatch>
-
