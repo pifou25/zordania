@@ -39,7 +39,7 @@ function mbr_res(&$_user) {
 				if (isset($_user['hro']) &&
 						($_user['hro']['hro_bonus'] == CP_PRODUCTIVITE
 						 or $_user['hro']['hro_bonus'] == CP_INVULNERABILITE))
-					$_bonus = get_conf_gen($race, 'comp', $_user['hro']['hro_bonus'], 'bonus')/100;
+					$bonus = get_conf_gen($race, 'comp', $_user['hro']['hro_bonus'], 'bonus')/100;
 				else
 					$bonus = 1;
 				$res_nb = floor($res_nb * $btc_nb * $bonus);
