@@ -24,7 +24,7 @@
 		<a href="btc-use.html?btc_type={btc_id}&amp;sub=list" title="Liste des bâtiments" class="zrdPopUp">Liste</a>
 	</if>
 	<else>
-		<a href="vlg.html" >IRetour au village</a>
+		<a href="vlg.html" >Retour au village</a>
 	</else>
 </p>
 
@@ -53,8 +53,8 @@
 					Solidité : <math oper='round(({btc_vars[btc_vie]} / ({btc_vie})*100))' /> % | <em>{btc_vars[btc_vie]}/{btc_vie}</em>
 				</label>
 
-				<a href="btc-use.html?btc_type={btc_vars[btc_type]}" title="{btc[{_user[race]}][alt][{btc_vars[btc_type]}]}" class="zrdPopUp">Liste
-				</a> - <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=det" title="Détruire le Bâtiment et récupérer la moitié des ressources" class="zrdPopUp">Détruire</a>
+				<a href="btc-use.html?btc_type={btc_vars[btc_type]}" title="{btc[{_user[race]}][alt][{btc_vars[btc_type]}]}" class="zrdPopUp">Info
+				</a> - <a href="#"  title="Détruire le Bâtiment et récupérer la moitié des ressources" onclick="post_btc('det');">Détruire</a>
 				<if cond="{btc_vars[btc_etat]} == {BTC_ETAT_OK}">
 					- <a href="btc-use.html?btc_bid={btc_bid}&amp;sub=des" title="Désactiver le Bâtiment" class="zrdPopUp">Désactiver</a>
 				</if>
