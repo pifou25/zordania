@@ -168,10 +168,13 @@ else if(!$_act) {
 	/* mes pactes */
 	$dpl_atq = new diplo(array('aid' => $_user['alaid']));
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
-
+	/*mon état dans l'alliance*/
+	$aetat = get_aetat_mid($_user['mid']);
+	$ambr_aetat= $aetat[0]['ambr_etat'];
+	
 	$mbr_array = get_liste_mbr($cond, $limite_mysql, $limite_page, $order_by);
-	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
-
+	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr,$ambr_aetat);
+	
 	$_tpl->set("mbr_array",$mbr_array);	
 	$_tpl->set('mbr_page',$mbr_page);
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);

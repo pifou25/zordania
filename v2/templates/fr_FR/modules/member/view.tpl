@@ -84,7 +84,7 @@
 	Région : {regions[{mbr_array[map_region]}][name]}<br/>
 	Distance : {mbr_dst}<br/>
 	</else>
-	<if cond='isset({mbr_array[al_name]}) && {mbr_array[ambr_aid]}'>
+	<if cond='isset({mbr_array[al_name]}) && {mbr_array[ambr_aid]} && {mbr_array[ambr_etat]} > {ALL_ETAT_DEM}'>
 	Alliance: <a href="alliances-view.html?al_aid={mbr_array[ambr_aid]}" title="Infos sur {mbr_array[al_name]}">
 		<img src="img/al_logo/{mbr_array[ambr_aid]}-thumb.png" class="mini_al_logo"/>
 		{mbr_array[al_name]}</a>

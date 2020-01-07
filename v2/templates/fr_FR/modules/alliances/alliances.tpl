@@ -1,5 +1,5 @@
 <p class="menu_module">
-<if cond='{_user[alaid]} AND {al_act} != "view"'>
+<if cond='{_user[alaid]} AND {al_act} != "view" AND !isset({al_waiting})'>
 <a href="alliances-admin.html" title="Gestion de l'Alliance">Gestion</a>
 -
 <a href="alliances-my.html" title="Discuter, etc ...">Table ronde</a>

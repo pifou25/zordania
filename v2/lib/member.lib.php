@@ -290,14 +290,14 @@ function get_nb_race($race = 0)
 }
 
 // vérifier sur chaque membre de $mbr_array s'il peut attaquer / défendre qq1
-function can_atq_lite($mbr_array, $points, $mid, $groupe, $alaid, $dpl_array = false)
+function can_atq_lite($mbr_array, $points, $mid, $groupe, $alaid, $dpl_array = false, $ambr_aetat)
 {
 	$mid = protect($mid, "uint");
 	$points = protect($points, "uint");
 	$groupe = protect($groupe, "uint");
 	$alaid = protect($alaid, "int");
+	$ambr_aetat = protect($ambr_aetat, "int");
 	if($dpl_array !== false) $dpl_array = protect($dpl_array, 'array');
-
 	foreach($mbr_array as $key => $mbr) {
 		$pts = $mbr['mbr_pts_armee'];	
 		$alid = $mbr['ambr_aid'];
@@ -320,7 +320,7 @@ function can_atq_lite($mbr_array, $points, $mid, $groupe, $alaid, $dpl_array = f
 		}
 
 		if($alid && $alaid){
-			if ($alid == $alaid) // même alliance
+			if ($alid == $alaid && $ambr_aetat > ALL_ETAT_DEM) // même alliance et pas encore accepté
 				$mbr_array[$key]['can_def'] = true;
 			elseif (isset($dpl_array[$alid])) { // a un pacte
 				if($dpl_array[$alid] == DPL_TYPE_MIL or $dpl_array[$alid] == DPL_TYPE_MC)
@@ -345,7 +345,6 @@ function can_atq_lite($mbr_array, $points, $mid, $groupe, $alaid, $dpl_array = f
 	}
 	return $mbr_array;	
 }
-
 
 function upload_logo_mbr($mid, $fichier)
 {
@@ -866,6 +865,14 @@ function get_fin_surv_list (){
 	$sql.= " WHERE surv_etat = ".SURV_CLOSE. " AND surv_fin >= DATE_SUB(NOW(),INTERVAL 1 MONTH)";
 	return $_sql->make_array($sql);
 
+}
+function get_aetat_mid($mid){ // récupére l'état du joueur dans son alliance, comparer ensuite can_atq/def 
+	global $_sql;
+	$mid = protect($mid, "uint");	
+	$sql = " SELECT ambr_etat ";
+	$sql.= " FROM ".$_sql->prebdd."al_mbr ";
+	$sql.= " WHERE ambr_mid = $mid";	
+	return $_sql->make_array($sql);	
 }
 function close_surv($sid){
 	$sid =  protect($sid, "uint");
