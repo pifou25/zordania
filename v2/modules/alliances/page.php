@@ -65,12 +65,15 @@ case 'view': // vue d'une alliance
 	$_tpl->set('ally',$ally->getInfos());
 	$_tpl->set('chef',$ally->getMembers($ally->al_mid));
 	$_tpl->set('al_logo',$ally->getLogo());
-
+	/*mon état dans l'alliance*/
+	$aetat = get_aetat_mid($_user['mid']);
+	$ambr_aetat= $aetat[0]['ambr_etat'];
+	
 	$al_mbr = $ally->getMembers();
 	foreach($al_mbr as $key => $value) {
 		$al_mbr[$key]['mbr_dst'] = calc_dst($_user['map_x'], $_user['map_y'], $value['map_x'], $value['map_y']);
 	}
-	$al_mbr = can_atq_lite($al_mbr, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+	$al_mbr = can_atq_lite($al_mbr, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr, $ambr_aetat);
 
 	$_tpl->set('al_mbr',$al_mbr);
 	break;
