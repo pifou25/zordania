@@ -71,7 +71,7 @@
 			<if cond="isset({mbr_dpl[{result[ambr_aid]}]})">
 				<img src="img/dpl/{mbr_dpl[{result[ambr_aid]}]}.png" title="{dpl_type[{mbr_dpl[{result[ambr_aid]}]}]}"/>
 			</if>
-			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]}'>
+			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]} && {result[can_def]}'>
 				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
 			</elseif>
@@ -128,7 +128,7 @@
 			<if cond="isset({mbr_dpl[{result[ambr_aid]}]})">
 				<img src="img/dpl/{mbr_dpl[{result[ambr_aid]}]}.png" title="{dpl_type[{mbr_dpl[{result[ambr_aid]}]}]}"/>
 			</if>
-			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]}'>
+			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]} && {result[can_def]}'>
 				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
 			</elseif>
@@ -184,7 +184,7 @@
 			<if cond="isset({mbr_dpl[{result[ambr_aid]}]})">
 				<img src="img/dpl/{mbr_dpl[{result[ambr_aid]}]}.png" title="{dpl_type[{mbr_dpl[{result[ambr_aid]}]}]}"/>
 			</if>
-			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]}'>
+			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]} && {result[can_def]}'>
 				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
 			</elseif>
@@ -235,7 +235,7 @@
 			<if cond="isset({mbr_dpl[{result[ambr_aid]}]})">
 				<img src="img/dpl/{mbr_dpl[{result[ambr_aid]}]}.png" title="{dpl_type[{mbr_dpl[{result[ambr_aid]}]}]}"/>
 			</if>
-			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]}'>
+			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]} && {result[can_def]}'>
 				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
 			</elseif>
@@ -317,7 +317,7 @@
 			<if cond="isset({mbr_dpl[{result[ambr_aid]}]})">
 				<img src="img/dpl/{mbr_dpl[{result[ambr_aid]}]}.png" title="{dpl_type[{mbr_dpl[{result[ambr_aid]}]}]}"/>
 			</if>
-			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]}'>
+			<elseif cond='{result[ambr_aid]} && {result[ambr_aid]} == {_user[alaid]} && {result[can_def]}'>
 				- <a href="leg-move.html?sub=sou&amp;cid={result[mbr_mapcid]}" title="Protéger {result[mbr_pseudo]}">
 				<img src="img/{_user[race]}/div/def.png" alt="Protéger" /></a>
 			</elseif>

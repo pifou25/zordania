@@ -41,12 +41,16 @@ if($_user['alaid']) {
 	$dpl_atq = new diplo(array('aid' => $_user['alaid']));
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
+	/*mon état dans l'alliance*/	
+	$aetat = get_aetat_mid($_user['mid']);
+	$ambr_aetat= $aetat[0]['ambr_etat'];
 }
-else
+else {
 	$dpl_atq_arr = array();
-
+	$ambr_aetat = 0;
+}
 if($type != 5 && $type != 6)
-	$tab_class = can_atq_lite($tab_class, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+	$tab_class = can_atq_lite($tab_class, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr,$ambr_aetat);
 	
 $_tpl->set("class_array", $tab_class);
 ?>

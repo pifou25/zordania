@@ -202,9 +202,12 @@ elseif($_act == "liste_online")
 	/* mes pactes */
 	$dpl_atq = new diplo(array('aid' => $_user['alaid']));
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
+	/*mon état dans l'alliance*/
+	$aetat = get_aetat_mid($_user['mid']);
+	$ambr_aetat= $aetat[0]['ambr_etat'];
 
 	$mbr_array = get_liste_online($limite_mysql,$limite_page);
-	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr,$ambr_aetat);
 	$_tpl->set("mbr_array",$mbr_array);
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
 }
@@ -365,12 +368,15 @@ elseif($mid) //elseif($_act == "view" && $mid)
 	/* mes pactes */
 	$dpl_atq = new diplo(array('aid' => $_user['alaid']));
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
+	/*mon état dans l'alliance*/
+	$aetat = get_aetat_mid($_user['mid']);
+	$ambr_aetat= $aetat[0]['ambr_etat'];
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
 
 	//Infos sur un type
 	$mbr_array = get_mbr_by_mid_full($mid);
 
-	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr);
+	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr,$ambr_aetat);
 
 	if(!empty($mbr_array)) {
 		$mbr_array = $mbr_array[0];
@@ -397,13 +403,13 @@ elseif($mid) //elseif($_act == "view" && $mid)
 		$_tpl->set("mbr_logo", get_mbr_logo($mid));
 		$rec_array = get_rec($mid);
 		$_tpl->set("mbr_rec", $rec_array);
-
+		
 		//Lister les filleuls
 		$cond = array();
 		$cond['parrain'] = $mid;
 		$cond['list'] = true;
 		$filleuls = get_mbr_gen($cond);
-		$filleuls = can_atq_lite($filleuls, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid']);
+		$filleuls = can_atq_lite($filleuls, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr,$ambr_aetat);
 		$_tpl->set("filleuls", $filleuls);
 
 	}
