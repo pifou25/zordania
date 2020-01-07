@@ -871,8 +871,9 @@ function get_aetat_mid($mid){ // récupére l'état du joueur dans son alliance,
 	$mid = protect($mid, "uint");	
 	$sql = " SELECT ambr_etat ";
 	$sql.= " FROM ".$_sql->prebdd."al_mbr ";
-	$sql.= " WHERE ambr_mid = $mid";	
-	return $_sql->make_array($sql);	
+	$sql.= " WHERE ambr_mid = $mid";
+	if (!$_sql->make_array($sql)) return 0;
+	else	return $_sql->make_array($sql);	
 }
 function close_surv($sid){
 	$sid =  protect($sid, "uint");
