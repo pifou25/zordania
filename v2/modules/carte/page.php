@@ -79,6 +79,9 @@ if($_act == "view") {
 	/* mes pactes */
 	$dpl_atq = new diplo(array('aid' => $_user['alaid']));
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
+	/*mon état dans l'alliance*/
+	$aetat = get_aetat_mid($_user['mid']);
+	$ambr_aetat= $aetat[0]['ambr_etat'];
 
 	$map_cid = request("map_cid", "uint", "get");
 	if(!$map_cid){ // chercher map_cid
@@ -88,14 +91,14 @@ if($_act == "view") {
 			$map_cid = get_cid($map_x,$map_y);
 	}
 
-	$leg_array = leg_can_atq_lite(get_square_leg($map_cid), $_user['pts_arm'], $_user['mid'], $_user["groupe"], $_user['alaid'], $dpl_atq_arr);
+	$leg_array = leg_can_atq_lite(get_square_leg($map_cid), $_user['pts_arm'], $_user['mid'], $_user["groupe"], $_user['alaid'], $dpl_atq_arr,$ambr_aetat);
 	$_tpl->set("leg_array", $leg_array);
 
 	$map_array = get_square($map_cid,true);
 
 	if (isset($map_array['mbr_mid']) && $map_array['mbr_mid']) {
 		$mbr = get_mbr_by_mid_full($map_array['mbr_mid']);
-		$mbr = can_atq_lite($mbr,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr); 
+		$mbr = can_atq_lite($mbr,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr,$ambr_aetat); 
 		$mbr = $mbr[0];
 		$map_array['can_atq'] = $mbr['can_atq'];
 		$map_array['can_pro'] = $mbr['can_def'];
