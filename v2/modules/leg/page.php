@@ -68,11 +68,16 @@ case "move":
 		if($_user['alaid'] != 0 and $mbr_cible[0]['ambr_aid'] != 0){ // tt les 2 dans une alliance
 			$pactes = new diplo(array('aid' => $_user['alaid'])); // mes pactes
 			$pactes_array = $pactes->actuels();
+			/*mon état dans l'alliance*/
+			$aetat = get_aetat_mid($_user['mid']);
+			$ambr_aetat= $aetat[0]['ambr_etat'];
 		}
-		else
+		else{
 			$pactes_array = array();
+			$ambr_aetat = 0;
+		}
 
-		$mbr_cible = can_atq_lite($mbr_cible,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $pactes_array); 
+		$mbr_cible = can_atq_lite($mbr_cible,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $pactes_array,$ambr_aetat); 
 		$mbr_cible = $mbr_cible[0];
 		if ($mbr_cible['pna'])
 			$sub = 'pna';
