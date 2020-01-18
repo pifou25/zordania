@@ -141,6 +141,7 @@
 		</p>
 		<p class="signature">{result[mbr_sign]}</p>
 		</div>
+		</br>
 	</foreach>
 
 	<p class="pages">
