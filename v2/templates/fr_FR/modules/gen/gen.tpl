@@ -89,8 +89,37 @@
 
 </if>
 
-		<if cond="!empty({atq_array})">
+		<if cond="!empty({comming_array})">
 			<h4>Légion en approche :</h4>
+			<ul>
+				<foreach cond='{comming_array} as {result}'>
+					<if cond="(max(abs({result[map_x]} - {_user[map_x]}),abs({result[map_y]} - {_user[map_y]}))) < {dst_view_max} AND {result[hro_bonus]} != {CP_INVISIBILITE}">
+						<li> 
+							<img src="img/info.png" alt="Légion de {result[mbr_pseudo]}" id="leg{result[leg_id]}" class="toggle" />
+							- légion <img src="img/{result[mbr_race]}/{result[mbr_race]}.png" alt="{result[mbr_pseudo]}" /> de
+							<zurlmbr mid="{result[mbr_mid]}" pseudo="{result[mbr_pseudo]}" />
+							<fieldset id="leg{result[leg_id]}_toggle" style="display: none;">
+								<if cond="!empty({result[ambr_aid]})"> 
+									Alliance:
+									<a href="alliances-view.html?al_aid={result[ambr_aid]}">
+										<img src="img/al_logo/{result[ambr_aid]}-thumb.png" class="mini_al_logo" alt="Alliance" title="Alliance"/> {result[al_name]}
+									</a>
+								</if>
+								<br/>
+								Destination: 
+								<a href="carte.html?map_cid={result[leg_dest]}" title="Voir">{_user[map_x]}x{_user[map_y]}</a>
+								<br/>
+								Position : <a href="carte.html?map_cid={result[leg_cid]}" title="Voir">{result[map_x]}x{result[map_y]}</a>
+								<br/>
+								Distance : <math oper="max(abs({result[map_x]} -{_user[map_x]}),abs({result[map_y]}-{_user[map_y]}))" />
+							</fieldset>
+						</li>
+					</if>
+				</foreach>
+			</ul>
+		</if>
+		<if cond="!empty({atq_array})">
+			<h4>Légion à vos portes :</h4>
 			<ul>
 				<foreach cond='{atq_array} as {result}'>
 					<if cond="(max(abs({result[map_x]} - {_user[map_x]}),abs({result[map_y]} - {_user[map_y]}))) < {dst_view_max} AND {result[hro_bonus]} != {CP_INVISIBILITE}">
@@ -139,12 +168,33 @@
 				</foreach>
 			</ul>
 		</if>
+		<if cond="!empty({allyLeg_array})">
+			<h4>Légion chez un allié :</h4>
+			<ul>
+				<foreach cond="{allyLeg_array} as {result}">
+					<li>
+						<img src="img/info.png" alt="Info" title="Info sur {result[leg_name]}" id="leg{result[leg_id]}" class="toggle" />
+						- <a href="leg-view.html?lid={result[leg_id]}">{result[leg_name]}</a> 
+						chez
+						<img src="img/{result[race_dest]}/{result[race_dest]}.png" alt="{result[dest_pseudo]}" title="{result[dest_pseudo]}" />
+						<zurlmbr mid="{result[mid_dest]}" pseudo="{result[dest_pseudo]}"/>
+
+						<fieldset id="leg{result[leg_id]}_toggle" style="display: none;">
+							Nourriture : {result[lres_nb]} <zimgres type="{GAME_RES_BOUF}" race="{_user[race]}" /><br/>
+							Vitesse : {result[leg_vit]}<br/>
+							Position : <a href="carte.html?map_cid={result[leg_cid]}">voir</a><br/>
+							<a href="leg-move.html?sub=sou&cid={_user[mapcid]}&lid={result[leg_id]}">Rentrer</a>
+						</fieldset>
+					</li>
+				</foreach>
+			</ul>
+		</if>
 		<if cond="!empty({pos_array})">
 		<h4>Légion en position d'attaque :</h4>
 			<ul>
 				<foreach cond="{pos_array} as {result}">
 					<li>
-						<img src="img/plus.png" alt="Info" title="Info sur {result[leg_name]}" id="leg{result[leg_id]}" class="toggle" />
+						<img src="img/info.png" alt="Info" title="Info sur {result[leg_name]}" id="leg{result[leg_id]}" class="toggle" />
 						- <a href="leg-view.html?lid={result[leg_id]}">{result[leg_name]}</a> 
 						chez
 						<img src="img/{result[race_dest]}/{result[race_dest]}.png" alt="{result[dest_pseudo]}" title="{result[dest_pseudo]}" />

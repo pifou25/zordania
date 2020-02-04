@@ -515,3 +515,6 @@ border: 1px #AAA solid;
 
 #amour{visibility:hidden;display:none;}
 
+.clickable {
+	cursor: pointer;
+}
