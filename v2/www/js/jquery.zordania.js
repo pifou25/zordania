@@ -115,7 +115,7 @@ function initToggle(){
 		$("#"+$(this).attr('id')+"_toggle" ).toggle('slide');
 		var src=($(this).attr('src')==='img/plus.png'?'img/minus.png':'img/plus.png');
 		$(this).attr('src',src);
-	});
+	}).addClass('clickable');
 	
 	// remove class to avoid reccursive effects
 	$(".toggle").removeClass("toggle");

@@ -194,9 +194,35 @@ if($demn_ok){
 //$atq_array = get_leg_dst_vlg($_user['map_x'], $_user['map_y'], 5);
 // toutes les légions ennemies venant vers le village
 $atq_array = get_leg_dest($_user['mid'], $_user['mapcid']);
-$_tpl->set('atq_array', $atq_array);
+$commingLeg = [];
+$doorsLeg = [];
+foreach($atq_array as $leg) {
+	if($leg['leg_dest'] == 0) {
+		$doorsLeg[] = $leg;
+	} else {
+		$commingLeg[] = $leg;
+	}
+}
+$awayLeg = get_leg_pos($_user['mid']);
+$atkLeg = [];
+$allyLeg = [];
+foreach($awayLeg as $leg) {
+	if($leg['leg_etat'] == LEG_ETAT_POS) {
+		$atkLeg[] = $leg;
+	} else {
+		$allyLeg[] = $leg;
+	}
+}
+/* Légion en approche */
+$_tpl->set('comming_array', $commingLeg);
+/* Légion à vos portes */
+$_tpl->set('atq_array', $doorsLeg);
+/* Légion en déplacement */
 $_tpl->set('leg_array', get_leg_dpl($_user['mid']));
-$_tpl->set('pos_array', get_leg_pos($_user['mid']));
+/* Légion chez un allié */
+$_tpl->set('allyLeg_array', $allyLeg);
+/* Légion en position d'attaque */
+$_tpl->set('pos_array', $atkLeg);
 $_tpl->set('dst_view_max', DST_VIEW_MAX);
 
 //ventes
