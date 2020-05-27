@@ -269,4 +269,3 @@ define('REPORT_TYPE_GAME',7); //Interface et gameplay
 define('REPORT_TYPE_COM',8); //Marché
 define('REPORT_TYPE_MSG',9); //Messagerie
 define('REPORT_TYPE_ELSE',10); //Autres
-?>
