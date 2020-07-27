@@ -1,7 +1,8 @@
+DELIMITER //
 DROP PROCEDURE IF EXISTS `move_member`//
 CREATE PROCEDURE `move_member`( in member int, in move_to int)
 BEGIN
-  -- position de départ
+-- position de départ
   declare move_from int;
   select mbr_mapcid into move_from from zrd_mbr where mbr_mid = member;
 
@@ -19,4 +20,4 @@ UPDATE zrd_map SET map_type=7 WHERE map_cid = move_to;
 UPDATE zrd_map SET map_type=6 WHERE map_cid = move_from;
 
 END
-
+//

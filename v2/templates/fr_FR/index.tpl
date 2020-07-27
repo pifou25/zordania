@@ -96,6 +96,7 @@
 		<div class="centre">
 			<div class="contenu">
 
+			  <if cond="isset({sv_site_debug})"><div class="infos">Vous êtes sur le site de développement, veuillez aller sur <a href="https://zordania.com" >https://zordania.com</a> et vider vos caches/cookies</div></if>
 			  <a id="content"></a>
 			  <if cond='{cron_lock} == true'>
 			  <p class="infos">Calculs des tours en cours, patientez quelques secondes, puis actualisez la page ...</p>

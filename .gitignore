@@ -1,7 +1,5 @@
 # fichiers temporaires
 v2/tmp/*.compiled.php
-v2/backup
-v2/logs
 
 v1/**/*
 v2/www/img/mbr_logo/*.png

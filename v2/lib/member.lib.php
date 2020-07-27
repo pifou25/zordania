@@ -283,7 +283,7 @@ function get_nb_race($race = 0)
 	$race = protect($race, "uint");
 	
 	$sql="SELECT mbr_race,COUNT(*) as race_nb FROM ".$_sql->prebdd."mbr ";
-	if($race) $sql.=" WHERE mbr_race = $race ";
+	if($race) $sql.=" WHERE mbr_race = $race AND mbr_etat = ".MBR_ETAT_OK. "";
 	$sql.=" GROUP BY mbr_race ";
 	
 	return $_sql->make_array($sql);

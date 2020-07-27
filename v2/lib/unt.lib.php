@@ -1035,7 +1035,12 @@ function get_leg_map($mid, $etat = array(LEG_ETAT_GRN, LEG_ETAT_POS, LEG_ETAT_DP
 	return get_leg_gen(array('mid' => $mid, 'leg' => true, 'etat' => $etat, 'map' => true));
 }
 
-/* Toutes les légions alliés en déplacement (état par défaut) */
+/**
+ * Toutes les légions alliés en déplacement (état par défaut) 
+ * @param int $mid Id du joueur
+ * @param array $etat Etat des légions
+ * @return array Liste des légions
+ */
 function get_leg_dpl($mid, $etat = array(LEG_ETAT_RET, LEG_ETAT_ALL, LEG_ETAT_DPL)){
 	global $_sql;
 	$mid = protect($mid, "uint");
@@ -1056,17 +1061,23 @@ function get_leg_dpl($mid, $etat = array(LEG_ETAT_RET, LEG_ETAT_ALL, LEG_ETAT_DP
 	return $_sql->make_array($sql);
 }
 
-function get_leg_pos($mid){
+/**
+ * Retourne la liste des légions en position d'attaque ou chez un allié
+ * @param int $mid Id du joueur
+ * @return array Liste des légions
+ */
+function get_leg_pos($mid, $etat = array(LEG_ETAT_GRN, LEG_ETAT_POS)){
 	global $_sql;
 	$mid = protect($mid, "uint");
+	$etat = protect($etat, array('uint'));
 	
 	$sql = "SELECT leg_name, leg_mid, leg_cid, leg_etat, leg_id, leg_vit, mbr_pseudo AS dest_pseudo, mbr_dest.mbr_race AS race_dest, mbr_dest.mbr_mid AS mid_dest, ";
 	$sql.= " lres_type, lres_nb ";
 	$sql.= " FROM ".$_sql->prebdd."leg ";
-	$sql.= " JOIN ".$_sql->prebdd."mbr AS mbr_dest ON mbr_dest.mbr_mapcid = leg_cid ";
+	$sql.= " JOIN ".$_sql->prebdd."mbr AS mbr_dest ON mbr_dest.mbr_mapcid = leg_cid AND mbr_dest.mbr_mid != ".$mid;
 	$sql.= " JOIN ".$_sql->prebdd."leg_res ON lres_lid = leg_id AND lres_type = ".GAME_RES_BOUF." ";
 	$sql.= " WHERE leg_mid = $mid";
-	$sql.= " AND leg_etat = ".LEG_ETAT_POS." ";
+	$sql.= " AND leg_etat IN (".implode(',',$etat).") ";
 	
 	return $_sql->make_array($sql);
 }
