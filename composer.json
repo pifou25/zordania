@@ -1,0 +1,7 @@
+{
+    "name": "zordania/zordania",
+    "description": "a Web-Browser Online Multi-player medieval role-play game",
+    "require": {
+        "php": ">=7.0"
+    }
+}
