@@ -34,14 +34,14 @@ function parse($txt, $light = false, $html = false)
 	if(!$light) {
 		$txt = preg_replace( "#\[modo\](.*?)\[/modo\]#is", "[color=#1E90FF]\\1[/color]",$txt);
 
-		while(preg_match( "#\[color=([^\]]+)\](.+?)\[/color\]#ies", $txt ))
+		while(preg_match( "#\[color=([^\]]+)\](.+?)\[/color\]#is", $txt ))
 			$txt = preg_replace_callback( "#\[color=([^\]]+)\](.+?)\[/color\]#is"  ,
 				function($m){ return regex_font_attr(array('s'=>'col' ,'1'=>$m[1],'2'=>$m[2]));}, $txt );
 
-		while(preg_match( "#\n?\[list\](.+?)\[/list\]\n?#ies" , $txt ))
+		while(preg_match( "#\n?\[list\](.+?)\[/list\]\n?#is" , $txt ))
 			$txt = preg_replace_callback( "#\n?\[list\](.+?)\[/list\]\n?#is", function($m){return regex_list($m[1]);} , $txt );
 			
-		while(preg_match( "#\n?\[list=(a|A|i|I|1)\](.+?)\[/list\]\n?#ies" , $txt ))
+		while(preg_match( "#\n?\[list=(a|A|i|I|1)\](.+?)\[/list\]\n?#is" , $txt ))
 			$txt = preg_replace_callback( "#\n?\[list=(a|A|i|I|1)\](.+?)\[/list\]\n?#is",
 				function($m){return regex_list($m[2],$m[1]);} , $txt );
 
