@@ -33,7 +33,7 @@ $sql.= ' ORDER BY zrd_mbr.mbr_lmodif_date ASC';*/
 $sql = 'SELECT mbr_mid, mbr_login, mbr_pseudo, mbr_mail, mbr_pass, mbr_etat, mbr_decal, mbr_ldate, mbr_lmodif_date, mbr_inscr_date ';
 $sql.= ' FROM '.$_sql->prebdd.'mbr WHERE ';
 if($mid) $sql .= "mbr_mid = $mid ";
-else $sql.= '  mbr_etat ='.MBR_ETAT_OK.''; // AND mbr_gid NOT IN ('.GRP_VISITEUR.','.GRP_EXILE.','.GRP_EXILE_TMP.')AND datediff(NOW(), `mbr_ldate`) < 30
+else $sql.= '  mbr_etat >=0';// ='.MBR_ETAT_OK.''; // AND mbr_gid NOT IN ('.GRP_VISITEUR.','.GRP_EXILE.','.GRP_EXILE_TMP.')AND datediff(NOW(), `mbr_ldate`) < 30
 $sql.= ' ORDER BY mbr_ldate ASC';
 
 //echo $sql;
@@ -50,6 +50,8 @@ foreach($mbr_array as $mbr){
 	/* les autres valeurs sont new res del et edit */
 
 	/* envoi du mail de relance */
+	$objet = "Happy Birthday!";
+	
 	// On filtre les serveurs qui rencontrent des bogues.
 		if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mbr['mbr_mail'])) 
 			{
@@ -69,55 +71,73 @@ foreach($mbr_array as $mbr){
 		//message format html
 		$message_html = 
 			'
-			<html>
+			<html lang="fr">
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
 			<head>
 			</head>
 			<body>
 				<p>Bonjour '.urlencode($mbr['mbr_pseudo']).',</p>
 				<p></p>
-				<p>Grydur veut que j&apos;envoie des mails pour que vous ne nous oubliez pas, donc voilà!  </p>
-				<p>Bon dimanche :D</p>
+				<p>En ce vingtième cycle de la création de notre monde, <br>
+				vous êtes convié à reprendre les armes!  </p>
+				<p>Venez nombreux à arpenter nos contrées et regagnez la place forte d\'Egeria!</p>
+				<p>Nous vous attendons ce 20 novembre!</p>
 				<p></p>
-				<br>
 				Zordialement,<br>
-				Cet email a été envoyé à partir de https://zordania.com <br>
-				Suivez-nous aussi, sur :<br>
-				○ Discord : https://discord.gg/Wmwf829<br>
-				○ Facebook : https://www.facebook.com/zordania2015/<br>
-				○ Twitter : https://twitter.com/Zordania<br>
+				<br>
+				Cette missive a été transportée par https://zordania.com <br>
+				Voici nos différentes tavernes :<br>
+				- Discord : https://discord.gg/Wmwf829<br>
+				- Facebook : https://www.facebook.com/zordania2015/<br>
+				- Twitter : https://twitter.com/Zordania<br>
 				
 				<p>---------------</p>
-				<A HREF="http://www.monsite.com/desabonnement.php?cle=XXXXXX">Me désabonner</A> (Ne marche pas du tout, tu as cru pouvoir nous éviter :D )
-				<p>Si ce mail ne vous est pas concerné, ignorez-le.</p>
+				
+				<p>Si ce billet ne vous est pas concerné, ignorez-le.</p>
 			</body>
 			</html>
 			';
-	//=====Création de la boundary
-		$boundary = "-----=".md5(rand());
-	//sujet
-		$sujet =  " Hello" ;
-	//en-tête
-		$header = "From: \"Zordania\"<webmaster@zordania.com>".$passage_ligne ;
-		$header.= "MIME-Version: 1.0".$passage_ligne;
-		$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
-	//=====Création du message.
-		$message = $passage_ligne."--".$boundary.$passage_ligne;
-		//=====Ajout du message au format texte.
-		$message.= "Content-Type: text/plain; charset=\"utf-8\"".$passage_ligne;
-		$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-		$message.= $passage_ligne.$message_txt.$passage_ligne;
-		//==========
-		$message.= $passage_ligne."--".$boundary.$passage_ligne;
-		//=====Ajout du message au format HTML
-		$message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
-		$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-		$message.= $passage_ligne.$message_html.$passage_ligne;
-		//==========
-		$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
-		$message.= $passage_ligne."--".$boundary."--".$passage_ligne;	
+	//=====Création de la boundary.
+            $boundary = "-----=".md5(rand());
+            $boundary_alt = "-----=".md5(rand());
+        //==========
+
+        //=====Définition du sujet.
+            $sujet = $objet;
+
+        //=====Création du header de l'e-mail.
+            $header = "From: \"Zordania\"<webmaster@zordania.com>".$passage_ligne;
+            $header.= "MIME-Version: 1.0".$passage_ligne;
+            $header.= "Content-Type: multipart/mixed;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+
+        //=====Création du message.
+            $message = $passage_ligne."--".$boundary.$passage_ligne;
+            $message.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary_alt\"".$passage_ligne;
+            $message.= $passage_ligne."--".$boundary_alt.$passage_ligne;
+        
+        //=====Ajout du message au format texte.
+            $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
+            $message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+            $message.= $passage_ligne.$message_txt.$passage_ligne;
+        //==========
+
+            $message.= $passage_ligne."--".$boundary_alt.$passage_ligne;
+
+        //=====Ajout du message au format HTML.
+            $message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
+            $message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+            $message.= $passage_ligne.$message_html.$passage_ligne;
+            //==========
+
+        //=====On ferme la boundary alternative.
+            $message.= $passage_ligne."--".$boundary_alt."--".$passage_ligne;
+        //==========
+            $message.= $passage_ligne."--".$boundary.$passage_ligne;	
+			
 	// Envoi du mail
-		mail($destinataire, $sujet, $message, $header) ; 
-if(	mail($destinataire, $sujet, $message, $header)) {
+	if(	mail($destinataire, utf8_decode($sujet),utf8_decode($message), $header)) {
 		// debug !
 		echo $mbr['mbr_ldate'].' - mail à '.$mbr['mbr_mail']." : $sujet\n";
 		if ($mid) echo "$txt\n";
@@ -130,9 +150,6 @@ if(	mail($destinataire, $sujet, $message, $header)) {
 	if($limit && $limit<=$nb) break;// limiter le nombre de mails à envoyer
 
 }
-
-
-
 
 		
 
