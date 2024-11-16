@@ -75,6 +75,7 @@
 	<li>Mai 2018 - 2.3 Nouveaux villages.</li>
 	<li>Juillet 2018 - 2.3.1 Changements Héros.</li>
 	<li>Janvier 2019 - Nouvel hébergeur: LWS.</li>
+	<li>20 Novembre 2024 - 20ans!</li>
 	</ul>
 </elseif>
 <elseif cond='{a_propos_act} == "boutons"'>
