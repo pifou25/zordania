@@ -18,7 +18,7 @@
 		<p class="error">Les emails sont différents.</p>
 	</elseif>
 	<elseif cond='isset({mbr_ok})'>
-		<p class="ok">Ok, compte créé ! Un Mail de Validation a été envoyé. Vous trouverez dans ce Mail toutes les informations nécessaires pour continuer.</p>
+		<p class="ok">Félicitations votre compte créé ! Mais celui-ci n'est pas encore initialisé ! Veuillez cliquer sur le lien ci-dessus, un Mail de Validation a été envoyé. Vous trouverez dans ce Mail toutes les informations nécessaires pour continuer.</p>
 	</elseif>
 	<elseif cond='isset({mbr_error})'>
 		<p class="error">Erreur. Ce Login ou cet email est déjà pris !</p>
