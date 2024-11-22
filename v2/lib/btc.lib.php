@@ -57,7 +57,7 @@ function add_btc($mid, $btc) {
 		else
 			$vie = get_conf("btc", $type, "vie");
 
-		$sql.= "(NULL, $mid, $type, $vie, $etat), ";
+		$sql.= "(NULL, $mid, $type, $vie, $etat, NOW()), ";
 	}
 	
 	$sql = substr($sql, 0, strlen($sql)-2);
@@ -180,8 +180,10 @@ function get_btc_gen($cond, $btc = array()) {
 			return $_sql->index_array($sql, 'btc_type');
 		else
 			return $_sql->make_array($sql);
-	} else
-		return $_sql->index_array($sql, 'btc_id');
+	} else{ 
+		$sql.= "ORDER BY btc_time ASC ";
+        return $_sql->index_array($sql, 'btc_id');
+    }
 }
 
 
