@@ -2,13 +2,8 @@
 require_once('secret_parameters.php');
 
 /* === Configuration Site === */
-
-
-/* Version */
 define('ZORD_VERSION',"2.3.1");
 define('ZORD_ANNEE',date('Y'));
-
-/* Vitesse */
 define('ZORD_SPEED_VFAST', 0.16667); // 1 Tour toutes les 30sec
 define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
 define('ZORD_SPEED_MEDIUM', 15); // 1 Tour toutes les 15 minutes
@@ -16,34 +11,25 @@ define('ZORD_SPEED_NORMAL', 30); // 1 Tour par demie heure
 define('ZORD_SPEED_SLOW',60); // 1 Tour par heures
 define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
 
-/* Quota */
 define('SITE_MAX_CONNECTED', 300);
 define('SITE_MAX_INSCRITS', 10000);
 
-/* Host - Dir */
 $host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "zordania.com";
 define('SITE_URL', "".$_SERVER['REQUEST_SCHEME']."://".$host."/");
 define('SITE_DIR', str_replace('conf','',dirname(__FILE__)));
 define('WWW_DIR', SITE_DIR . "www/");
 define('ZORDLOG_URL', 'zordania.free.fr'); // URL des archives
+
 define('SITE_WEBMASTER_MAIL', 'webmaster@zordania.com');
 define('SITE_CHARSET', 'utf-8'); // iso-8859-1, utf-8, ...
 
 define('GEN_LENGHT', 6); /* Taille des chaines générées aléatoirement (pass, etc ...) */
-
-/* SMTP */
-define('SMTP_DEBUG', 0);            // enables SMTP debug information (for testing)
-define('SMTP_AUTH', true);          // enable SMTP authentication
-define('SMTP_CHARSET', 'UTF-8');
-define('SMTP_ISHTML', false);        // Set email format to HTML
 
 /* ==== Utilisateurs === */
 define('SITE_FLOOD_TIME', 30); /* Temps en seconde pour écrire deux messages a la suite */
 define('TAILLE_MAX_LOGIN', 50); /* Nombre de caractères max d'un login : limité par les caractéristiques du champ correspondant dans la BDD */
 define('TAILLE_MAX_PSEUDO', 50); /* Nombre de caractères max d'un pseudo : limité par les caractéristiques du champ correspondant dans la BDD */
 define('TAILLE_MAX_MAIL', 50); /* Nombre de caractères max d'une adresse mail : limité par les caractéristiques du champ correspondant dans la BDD */
-
-
 
 /* === Configuration Jeu === */
 

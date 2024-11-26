@@ -9,7 +9,7 @@ function my_autoloader($classname){
 }
 spl_autoload_register('my_autoloader');
 /* Envoie un mail */
-/*function mailto($from, $to, $sujet, $message, $html=FALSE)
+function mailto($from, $to, $sujet, $message, $html=FALSE)
 {
 	if($html) {
 	  		$from ="From: Zordania <".$from."> \n"; 
@@ -19,55 +19,7 @@ spl_autoload_register('my_autoloader');
 		$from="From: $from <$from>";
 
 	return mail($to,$sujet,$message,$from);
-}*/
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-function mailto($from, $to, $sujet, $message, $html=SMTP_ISHTML){
-	require SITE_DIR ."lib/phpmailer/src/Exception.php";
-    require SITE_DIR ."lib/phpmailer/src/PHPMailer.php";
-    require SITE_DIR ."lib/phpmailer/src/SMTP.php";
-        
-    if($html) {
-	  		$from ="From: Zordania <".$from."> \n"; 
-	  		$from .= "MIME-Version: 1.0\n";
-			$from .= "Content-type: text/html; charset=utf-8\n";
-	 }else
-		$from="From: $from <$from>";
-    {
-            //phpmail
-            $mail = new PHPMailer();
-
-
-            // Settings
-            $mail->IsSMTP();
-            $mail->CharSet = SMTP_CHARSET;
-
-            $mail->Host       = SMTP_HOST;    
-            $mail->SMTPDebug  = SMTP_DEBUG;                     
-            $mail->SMTPAuth   = SMTP_AUTH;                  
-            $mail->Port       = SMTP_PORT;                   
-            $mail->Username   = SMTP_USER;            
-            $mail->Password   = SMTP_PASS;            
-
-            // Content
-            $mail->setFrom($from, "Barnabé le Tavernier");   
-            $mail->addAddress($to);
-            if ($cc != "") $mail->addCC($cc);
-
-            $mail->isHTML(SMTP_ISHTML);                       
-            $mail->Subject = $sujet;
-            $mail->Body    = '
-                                 
-                            '; 
-            $mail->AltBody =  $message;
-
-            $mail->send();
-    }    
-
-	return mail($to,$sujet,$message,$from);
 }
-
 /* mail en utf8 */
 function mail_utf8($to, $subject = '(No subject)', $message = '', $header = '') {
   $header_ = 'MIME-Version: 1.0' . "\r\n" . 'Content-type: text/plain; charset=UTF-8' . "\r\n";
