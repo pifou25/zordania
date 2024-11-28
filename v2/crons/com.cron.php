@@ -40,29 +40,56 @@ function glob_com() {
 		 * ajouter N ventes des matières premières au taux nominal COM_TAUX_MAX
 		 */
 		// ressources primaires à vendre = config
-		$res_array = array(2 ,3 ,4 ,5 ,6 ,8 ,9);
-		$nb_ventes_max = 5; // config
+		//config
+            $res_array = array(2, 3, 4, 5, 6, 8, 9);
+            $nb_ventes_max = 3; // Nb max de ventes par ressource/quantité
+            //3 niveaux de quantité spécifique
+            $res_nb_niv = [
+                4 => [100, 500, 1000],    // nourriture
+                8 => [5, 20, 50],          // acier
+                9 => [5, 10, 20],          // mithril
+            ];
+            // 3 niveaux de quantité par défaut
+            $res_nb_def = [10, 100, 200];
 
-		$vente_array = get_mch_by_mid(MBR_WELC);
-		$vente_nb = array();
-		foreach($vente_array as $row)
-			if(isset($vente_nb[$row['mch_type']]))
-				$vente_nb[$row['mch_type']]++;
-			else
-				$vente_nb[$row['mch_type']]=1;
+        // Récupération des ventes existantes
+        $vente_array = get_mch_by_mid(MBR_WELC);
+        $vente_nb = array(); 
 
-		$cours = mch_get_cours();
-		$cours = index_array($cours, 'mcours_res');
-		foreach($res_array as $res_type){
-			if(!isset($vente_nb[$res_type]))
-				$vente_nb[$res_type]=0;
-			// on calcule le nb de ressources à mettre en vente :
-			// pour qu'un joueur level1 puisse acheter
-			$res_nb = floor(COM_MAX_NB1 / $cours[$res_type]['mcours_cours'] / COM_TAUX_MAX);
-			// rajouter jusqu'à 5 ventes par ressources
-			for($i=$vente_nb[$res_type]; $i < $nb_ventes_max; $i++)
-				mch_vente(MBR_WELC, $res_type, $res_nb, $res_nb * $cours[$res_type]['mcours_cours'] * COM_TAUX_MAX);
-		}
+        foreach ($vente_array as $row) {
+            $type = $row['mch_type'];
+            $nb = $row['mch_nb']; // On récupére le nombre de vente
+            if (!isset($vente_nb[$type][$nb])) {
+                $vente_nb[$type][$nb] = 0;
+            }
+            $vente_nb[$type][$nb]++;
+        }
+
+        // Récupération des cours des ressources
+        $cours = mch_get_cours();
+        $cours = index_array($cours, 'mcours_res');
+
+        //insert
+        foreach ($res_array as $res_type) {
+            // si niveau spécifique, si non niveau par défaut
+            $res_nb_conf = isset($res_nb_niv[$res_type]) ? $res_nb_niv[$res_type] : $res_nb_def;
+
+            foreach ($res_nb_conf as $res_nb) {
+                if (!isset($vente_nb[$res_type][$res_nb])) {
+                    $vente_nb[$res_type][$res_nb] = 0;
+                }
+
+                // Créer des ventes jusqu'à atteindre le max pour cette quantité
+                for ($i = $vente_nb[$res_type][$res_nb]; $i < $nb_ventes_max; $i++) {
+                    mch_vente(
+                        MBR_WELC,
+                        $res_type,
+                        $res_nb,
+                        $res_nb * $cours[$res_type]['mcours_cours'] * COM_TAUX_MAX
+                    );
+                }
+            }
+        }
 	//} // fin de la vente auto pour le PNJ
 
 
