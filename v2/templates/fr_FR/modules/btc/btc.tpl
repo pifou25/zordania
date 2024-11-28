@@ -74,6 +74,8 @@
 		<br/>
 		Vous pouvez planifier jusqu'à {TODO_MAX_BTC} constructions simultanées.
 		<br/>
+		Toute annulation entrainera une taxe de 50%!
+		<br/>
 		Pour plus d'informations, lire le <a href="manual.html" title="Lire le Manuel">manuel</a>.
 	</div>
 	
