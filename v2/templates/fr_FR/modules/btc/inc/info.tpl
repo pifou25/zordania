@@ -86,7 +86,7 @@
 			</h4>
 			Production : {res_value}<br/>
 			Production Totale : <math oper="{res_value} * {btc_nb} " /><br/>
-			Production Journalière : <math oper="{res_value} * {btc_nb} * 24" /><br/>
+			Production Journalière : <math oper="{res_value} * {btc_nb} * 24 * (60/{ZORD_SPEED})" /><br/>
 			<br/>
 			<if cond="isset({res_utils_array[{res_type}]})">
 				Coût : 
