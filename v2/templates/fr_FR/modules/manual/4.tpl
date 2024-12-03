@@ -25,9 +25,9 @@
 <area shape="rect" coords="225,1013,332,1047" onmouseover="TagToTip('btc_23')" onmouseout="UnTip()"  alt="Autel Noir" />
 <area shape="rect" coords="21,1119,204,1193" onmouseover="TagToTip('btc_24')" onmouseout="UnTip()"  alt="Cité Noire" />
 <area shape="rect" coords="276,417,303,447" onmouseover="TagToTip('src_1')" onmouseout="UnTip()"  alt="Armes Niveau 1" />
-<area shape="rect" coords="275,504,303,533" onmouseover="TagToTip('src_2')" onmouseout="UnTip()"  alt="Armes Niveau 2" />
+<area shape="rect" coords="275,504,303,533" onmouseover="TagToTip('src_4')" onmouseout="UnTip()"  alt="Armes Niveau 2" />
 <area shape="rect" coords="351,417,379,447" onmouseover="TagToTip('src_3')" onmouseout="UnTip()"  alt="Défense Niveau 1" />
-<area shape="rect" coords="350,504,380,535" onmouseover="TagToTip('src_4')" onmouseout="UnTip()"  alt="Défense Niveau 2" />
+<area shape="rect" coords="350,504,380,535" onmouseover="TagToTip('src_2')" onmouseout="UnTip()"  alt="Défense Niveau 2" />
 <area shape="rect" coords="100,584,128,614" onmouseover="TagToTip('src_5')" onmouseout="UnTip()"  alt="Fortifications" />
 <area shape="rect" coords="183,361,212,391" onmouseover="TagToTip('src_6')" onmouseout="UnTip()"  alt="Fonte de l'Acier" />
 <area shape="rect" coords="402,613,429,642" onmouseover="TagToTip('src_7')" onmouseout="UnTip()"  alt="Dressage Niveau 1" />
