@@ -60,7 +60,9 @@
 	<hr/>
 	
 	<if cond='{vld_array}'>
-	<strong>Vous avez une action en cours de validation  ({vldacts[{vld_array[0][vld_act]}]}),
+	<strong>Vous avez une action en cours de validation 
+        <if cond='{vld_array[0][vld_act]} == "del"'> ({vldacts[{vld_array[0][vld_act]}]})</if>
+        <else>faites:  <a href="javascript:if(confirm('Etes vous sûr de vouloir initialiser votre compte?')) document.location.href='ini.html?key={vld_array[0][vld_rand]}'">, {vldacts[{vld_array[0][vld_act]}]}</a></else> ou
 	<a href="member-edit.html?sub=del_vld">Annuler</a>.</strong>
 	<hr/>
 	</if>
