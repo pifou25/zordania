@@ -3,7 +3,7 @@
 		<p class="error">Aucune unité sélectionnée.</p>
 	</if>
 	<elseif cond='isset({btc_no_nb})'>
-		<p class="infos">Il faut choisir un nombre d'unités à annuler.</p>
+		<p class="infos">Il faut choisir un nombre d'unités à annuler. Attention cette action ne rend pas l'entièreté des ressources!</p>
 		<form class="ajax" action="btc-use.html?btc_type={btc_id}&sub=cancel_unt&uid={btc_uid}" method="post">
 			<input type="number" min="0" name="nb" size="1" maxlength="2" style="width:3em" />
 			<input type="submit" value="Annuler" />
