@@ -76,6 +76,7 @@
 	<li>Juillet 2018 - 2.3.1 Changements Héros.</li>
 	<li>Janvier 2019 - Nouvel hébergeur: LWS.</li>
 	<li>20 Novembre 2024 - 20ans!</li>
+	<li>Décembre 2024 - 2.3.3 Lot de corrections</li>
 	</ul>
 </elseif>
 <elseif cond='{a_propos_act} == "boutons"'>

@@ -175,7 +175,7 @@ $this->res[R7_MITHRIL]=array(
 
 $this->res[R7_BOUCLIER_ROND]=array(
 		"prix_res"	=>	array(R7_BOIS => 1),
-		"need_src"	=>	array(S7_ARME_DEF, S7_FONTE_ACIER),
+		"need_src"	=>	array(S7_ARME_DEF),
 		"need_btc"	=>	B7_ARSENAL,
 		"group"	=>	1,
 );

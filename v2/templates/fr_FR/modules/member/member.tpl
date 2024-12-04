@@ -60,7 +60,9 @@
 	<hr/>
 	
 	<if cond='{vld_array}'>
-	<strong>Vous avez une action en cours de validation  ({vldacts[{vld_array[0][vld_act]}]}),
+	<strong>Vous avez une action en cours de validation:
+        <if cond='{vld_array[0][vld_act]} == "del"'><a href="javascript:if(confirm('Etes vous sûr de vouloir supprimer votre compte?')) document.location.href='member-del.html?key={vld_array[0][vld_rand]}'"> {vldacts[{vld_array[0][vld_act]}]}</a> </if>
+        <else><a href="javascript:if(confirm('Etes vous sûr de vouloir initialiser votre compte?')) document.location.href='ini.html?key={vld_array[0][vld_rand]}'"> {vldacts[{vld_array[0][vld_act]}]}</a></else> ou
 	<a href="member-edit.html?sub=del_vld">Annuler</a>.</strong>
 	<hr/>
 	</if>
@@ -89,7 +91,7 @@
 			<div class="error">Un autre changement est déjà en cours de validation ! Vous pouvez l'annuler via "Mon Compte".</div>
 		</if>
 		<else>
-			<p class="ok">Ok, un mail de confirmation a été envoyé pour confirmer la suppression du compte.</p>
+			<p class="ok">Ok, un mail de confirmation a été envoyé pour confirmer la suppression du compte, vous pouvez aussi vous rendre dans "Mon Compte".</p>
 		</else>
 	</if>
 	<else>
@@ -128,7 +130,7 @@
 	</elseif>
 	<elseif cond='{mbr_sub} == "reset"'>
 		<if cond='isset({mbr_edit})'>
-			<p class="infos">Un mail a été envoyé pour valider les changements.</p>
+			<p class="infos">Un mail a été envoyé pour valider les changements, vous pouvez aussi vous rendre dans "Mon Compte".</p>
 		</elseif>
 		<elseif cond='isset({mbr_another_valid})'>
 			<p class="error">Un autre changement est déjà en cours de validation, vous pouvez l'annuler dans "Mon Compte".</p>

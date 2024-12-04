@@ -242,6 +242,7 @@ div.block_forum p.author, div.block_forum p.author *{
 .signature, .signature *{
 	font-size: 12px;
 	font-style: italic;
+    clear: both;
 }
 .menu_module, .retour_module{
 	margin:2px;
