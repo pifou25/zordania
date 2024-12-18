@@ -136,16 +136,17 @@ var funcZrdFormulaire = function(event){
 		var output = $("#dialog-modal").html(data);
 		output.find("a.zrdPopUp").click(funcZrdPopup) ;// tous les liens restent dans la popup
 		output.dialog({ // popup
-			buttons: [{
-				text: "Fermer", // bouton annuler
-				click: function() {
-				$( this ).dialog( "close" );}
-			}],
-			resizable:false,
-			draggable:false,
-			title:'Opération terminée',
-			hide: {effect: "fadeOut", duration: 1000}
-		}, setTimeout(function(){$("#dialog-modal").dialog("close");},3000)
+            buttons: [{
+                text: "Fermer", // bouton annuler
+                click: function() {
+                    // $( this ).dialog( "close" ); // Suppression de la fermeture
+		}
+     }],
+            resizable: false,
+            draggable: false,
+            title: 'Opération terminée',
+            hide: {effect: "fadeOut", duration: 1000}
+		}, //setTimeout(function(){$("#dialog-modal").dialog("close");},3000)
 		);
 	});
 };
@@ -239,15 +240,16 @@ var funcZrdPopup = function(){ // au clic sur le lien
 			output.find("a.zrdPopUp").click(funcZrdPopup);
 			
 			output.dialog({ // popup
-				buttons: [{
-					text: "Fermer", // bouton annuler
-					click: function() {
-					$( this ).dialog( "close" );}
-				}],
-				resizable:false,
-				draggable:false,
-				width: 500,
-				closeText: ""
+                buttons: [{
+                    text: "Fermer", // bouton annuler
+                    click: function() {
+                        // $( this ).dialog( "close" ); // Suppression de la fermeture
+                    }
+                }],
+                resizable: false,
+                draggable: false,
+                width: 500,
+                closeText: ""
 			});
 			if(title){
 				output.dialog("option", "title", title);
