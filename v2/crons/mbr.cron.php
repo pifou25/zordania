@@ -83,6 +83,103 @@ function glob_mbr() {
 		}
 
 	}
+    
+    /* Saison point XP */
+   if($_c == "24h" && date('j') == 1 && (date('n') - 1) % SAIS_INTERVAL == 0) {
+       
+        /*-- Roi de zordania --*/
+        //si le roi de zordania est inactif on le détrone
+        $sql = "UPDATE ".$_sql->prebdd."mbr SET mbr_gid = ".GRP_JOUEUR." WHERE mbr_gid = ".GRP_KING." AND mbr_etat != " .MBR_ETAT_OK;
+        $_sql->query($sql);
+
+        //Trouver le joueur avec le maximum d xp
+        $sql = "SELECT mbr_xp, mbr_mid, mbr_race, mbr_sexe, mbr_etat, mbr_gid
+                FROM ".$_sql->prebdd."mbr
+                WHERE mbr_gid IN (".GRP_JOUEUR.",".GRP_KING.") AND mbr_etat = ".MBR_ETAT_OK."
+                ORDER BY mbr_xp DESC
+                LIMIT 1";
+        $xp = $_sql->make_array($sql);
+
+        if (!empty($xp)) {
+            $value = $xp[0];
+            $mid = $value['mbr_mid'];
+            $race = $value['mbr_race'];
+            $sexe = $value['mbr_sexe'];
+            $etat = $value['mbr_etat'];
+            $groupe = $value['mbr_gid'];
+            $rec_type = $race.$sexe; 
+
+            //si le gagnant n'est pas roi de zordania
+            if($groupe != GRP_KING){            
+                //est-il déjà roi de sa race? 
+                $sql = "SELECT rec_mid
+                        FROM ".$_sql->prebdd."rec
+                        WHERE rec_type = '".$rec_type."'
+                        LIMIT 1"; // Limite à un résultat
+                $mids = $_sql->make_array($sql);
+
+                //si non on garde le roi en place
+                if (!empty($mids) && $mid == $mids[0]['rec_mid']) {
+                    $sql = "UPDATE ".$_sql->prebdd."mbr SET mbr_gid = ".GRP_JOUEUR." WHERE mbr_gid = ".GRP_KING;
+                    $_sql->query($sql);
+
+                    $new = array('gid' => GRP_KING);
+                    edit_mbr($mid, $new);
+                }
+            }
+        }
+        
+        /*-- roi de chaque race visible --*/
+       
+        // Liste pour stocker les gagnants par race
+        $winners = [];
+
+        foreach ($_races as $race => $visible) {
+            if ($visible == true) {
+                // Sélection des meilleurs de chaque race
+                $sql = "SELECT mbr_mid, mbr_race, mbr_sexe 
+                        FROM ".$_sql->prebdd."mbr 
+                        WHERE mbr_race = '$race' AND mbr_etat = ".MBR_ETAT_OK." AND mbr_gid = ".GRP_JOUEUR."
+                        ORDER BY mbr_xp DESC 
+                        LIMIT 1";
+                $result = $_sql->make_array($sql);
+
+                // Ajouter les gagnants à la liste
+                if (!empty($result)) {
+                    $mbr_mid = $result[0]['mbr_mid'];
+                    $mbr_sexe = $result[0]['mbr_sexe'];
+                    $type = $race . $mbr_sexe;
+
+                    $winners[] = ['mbr_mid' => $mbr_mid, 'type' => $type];
+                }
+
+                // Suppression des rois/reines actuels
+                $sql = "DELETE FROM ".$_sql->prebdd."rec WHERE rec_type IN ('$race"."1', '$race"."2')";
+                $_sql->query($sql);
+            }
+        }
+
+        // Réinitialisation des XP pour tous les membres
+        $sql = "UPDATE ".$_sql->prebdd."mbr SET mbr_xp = 0 WHERE 1";
+        $_sql->query($sql);
+
+        // Ajout des nouveaux rois/reines
+        foreach ($winners as $winner) {
+            $mbr_mid = $winner['mbr_mid'];
+            $type = $winner['type'];
+
+            $sql = "INSERT INTO ".$_sql->prebdd."rec (rec_mid, rec_type, rec_nb) 
+                    VALUES ($mbr_mid, '$type', 1)";
+            $_sql->query($sql);
+
+            // Ajout du gain de XP pour le gagnant
+            $new = array('xp' => SAIS_GAIN);
+            edit_mbr($mbr_mid, $new);
+        }     
+        
+    }
+    
+    
 }
 
 function mbr_mbr( &$user) {

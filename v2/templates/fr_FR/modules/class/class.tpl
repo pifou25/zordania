@@ -91,7 +91,7 @@
 		<load file="race/{race_id}.descr.config" />
 	</foreach>
 	<h3>Classement Expérience</h3>
- 	<p class="infos">Concerne l'expérience acquise.</p>
+ 	<p class="infos">Concerne l'expérience de la saison en cours, ràz tous les {SAIS_INTERVAL} mois.</p>
   	<table class="liste">
   	<tr>
   	 <th></th>

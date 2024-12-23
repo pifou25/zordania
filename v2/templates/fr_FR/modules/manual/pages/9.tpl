@@ -46,7 +46,7 @@ L'explorateur est un bêta-testeur à l'activité normale.</dd>
 <img src="img/rec/41.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou Reine des Drows</br>
 <img src="img/rec/51.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou Reine des Elfes</br>
 <img src="img/rec/71.png" alt="{groupes[11]}" title="{groupes[11]}"/> Roi ou Reine des Gobelins</br></dt>
-<dd>Ces titres spéciaux sont attribués lors d'un tournoi où les prétendants s'affrontent physiquement, intellectuellement et culturellement. Ceci est remis en jeu chaque année!</dd>
+<dd>Ces titres spéciaux sont automatiquement attribués à la fin de la saison après vos nombreux combats physiques, intellectuels et culturels. Les meilleurs prétendants ayant obtenu le plus d'expérience se verront couronnés. Ceci est remis en jeu tous les {SAIS_INTERVAL} mois!</dd>
 
 
 <h3>Les Titres</h3>
@@ -142,7 +142,7 @@ Contrairement aux récompenses, les Titres ne sont pas de simples reconnaissance
 
 <dt><img src="img/groupes/18.png" alt="{groupes[18]}" title="{groupes[18]}"/> Roi de Zordania</dt>
 
-<dd>Titre attibué exceptionnellement lors d'une animation demandant une bravoure et un courage digne d'un tel couronnement! Donnant un accès VIP durant la période de reigne, ceci peut être remis en jeu à tout moment!</dd> 
+<dd>Titre automatiquement attibué lorsqu'un seigneur se trouve couronné deux fois d'affilé de sa race respective pour récompenser ce qui demandé bravoure et courage, digne d'un tel couronnement! Tant qu'il reste le meilleur, le trone lui revient, donnant un accès VIP durant la période de reigne, ceci est remis en jeu tous les {SAIS_INTERVAL} mois!</dd> 
 
 <p align="center" class="menu_module">
 <a href="manual.html?race={man_race}&page=23">Précédent : Egeria, Capitale de Zordania</a>
