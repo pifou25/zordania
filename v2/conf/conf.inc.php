@@ -117,6 +117,10 @@ define('HEROS_NRJ_MAX', 200);
 /* Butins */
 define('BUT_PILLAGE_COEF', 4); // On ne peux piller au maximum que le ($stock_d'une_ressource / BUT_PILLAGE_COEF)
 
+/*saison*/
+define('SAIS_INTERVAL', 2); //interval en mois pour une saison roi/reine
+define('SAIS_GAIN', 20); //avance en xp quand on est roi
+
 /* Mise en veille (en jours)
  * Conseillé : ZZZ_TRIGGER >= ZZZ_MIN
  */

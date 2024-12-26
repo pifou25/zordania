@@ -28,7 +28,7 @@
 			<else><a href="news.html" title="Voir les dernières news.">News</a></else>
 		</li>
 		<li><a href="alliances.html" title="Liste des Alliances.">Alliances</a></li>
-		
+		<if cond='{ses_admin} OR {_user[groupe]} == {GRP_SAGE} OR {_user[groupe]} == {GRP_NOBLE}'><li><a href="qst.html" title="Quêtes" >Quêtes</a></li></if>
 		<li>
 			<a href="member-liste.html" title="Liste des Joueurs.">Joueurs</a>
 			(<a href="member-liste_online.html" title="Joueurs connectés.">online</a>)

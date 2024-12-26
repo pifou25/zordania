@@ -245,8 +245,11 @@ define('ZORD_NEWS_FID',25); //news
 define('FORUM_PLAINTES_FID',30); //plaintes
 define('FORUM_SUGGEST_FID',6); //fid suggestion
 define('FORUM_BUG_FID',8); //fid bug
+define('FORUM_QUETES',30);
 
-define('FORUM_QUETES',9);
+/*Etat quetes*/
+define('QST_CFG_OFF',0); //quete hors ligne
+define('QST_CFG_ON',1); //quete en ligne
 
 /*Etat bug/suggestion*/
 define('REPORT_STATUT_NEW',0); //nouvellement reporté
