@@ -162,24 +162,24 @@ else{
                 $_tpl->set('req_qid', );
                 $_tpl->set('req_pts', );
                 $_tpl->set('req_pts_armee', );
-                $_tpl->set('req_btc', 1);
-                $_tpl->set('req_src', 1);
+                $_tpl->set('req_btc', );
+                $_tpl->set('req_src', );
                                 
-                $_tpl->set('btc_id_1', 1);
+                $_tpl->set('btc_id_1', );
                 $_tpl->set('btc_nb_1', 0);
-                $_tpl->set('btc_id_2', 1);
+                $_tpl->set('btc_id_2', );
                 $_tpl->set('btc_nb_2', 0);
-                $_tpl->set('unt_id_1', 1);
+                $_tpl->set('unt_id_1', );
                 $_tpl->set('unt_nb_1', 0);
-                $_tpl->set('unt_id_2', 1);
+                $_tpl->set('unt_id_2', );
                 $_tpl->set('unt_nb_2', 0);
-                $_tpl->set('res_id', 1);
+                $_tpl->set('res_id', );
                 $_tpl->set('res_nb', 0);
-                $_tpl->set('src_id', 1);
+                $_tpl->set('src_id', );
                                 
-                $_tpl->set('rec_1', 1);
+                $_tpl->set('rec_1', );
                 $_tpl->set('rec_val1',0);
-                $_tpl->set('rec_2', 1);
+                $_tpl->set('rec_2', );
                 $_tpl->set('rec_val2',0);
                 $_tpl->set('rec_xp',0);	
             }	

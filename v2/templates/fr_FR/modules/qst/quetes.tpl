@@ -77,6 +77,7 @@
             Force armée: <input name="req_pts_armee" id="req_pts_armee" type="Number" value="{req_pts_armee}" placeholder="Force armée" /><br/>  
             Bâtiments: 
             <select name="req_btc" id="req_btc">
+            <option value=0 <if cond="0 == {req_btc}">selected</if>>Aucun</option>
                 <foreach cond="{man_btc} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {req_btc}">selected</if>>{btc[{raceid}][alt][{obj_id}]}</option>
@@ -87,6 +88,7 @@
 
             Recherche: 
             <select name="req_src" id="req_src">
+            <option value=0 <if cond="0 == {req_src}">selected</if>>Aucune</option>
                 <foreach cond="{man_src} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {req_src}">selected</if>>{src[{raceid}][alt][{obj_id}]}</option>
@@ -99,6 +101,7 @@
         <h3>Objectifs:</h3>  
             Bâtiments: 
             <select name="btc_id_1" id="btc_id_1">
+            <option value=0 <if cond="0 == {btc_id_1}">selected</if>>Aucun</option>
                 <foreach cond="{man_btc} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {btc_id_1}">selected</if>>{btc[{raceid}][alt][{obj_id}]}</option>
@@ -108,6 +111,7 @@
             <input name="btc_nb_1" id="btc_nb_1" type="Number" value="{btc_nb_1}" placeholder="Valeur" /> 
 
             <select name="btc_id_2" id="btc_id_2">
+            <option value=0 <if cond="0 == {btc_id_2}">selected</if>>Aucun</option>
                 <foreach cond="{man_btc} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {btc_id_2}">selected</if>>{btc[{raceid}][alt][{obj_id}]}</option>
@@ -119,6 +123,7 @@
 
             Unités: 
             <select name="unt_id_1" id="unt_id_1">
+            <option value=0 <if cond="0 == {unt_id_1}">selected</if>>Aucune</option>
                 <foreach cond="{man_unt} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {unt_id_1}">selected</if>>{unt[{raceid}][alt][{obj_id}]}</option>
@@ -128,6 +133,7 @@
             <input name="unt_nb_1" id="unt_nb_1" type="Number" value="{unt_nb_1}" placeholder="Valeur" />
 
             <select name="unt_id_2" id="unt_id_2">
+            <option value=0 <if cond="0 == {unt_id_2}">selected</if>>Aucune</option>
                 <foreach cond="{man_unt} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {unt_id_2}">selected</if>>{unt[{raceid}][alt][{obj_id}]}</option>
@@ -139,6 +145,7 @@
 
             Ressources: 
             <select name="res_id" id="res_id">
+            <option value=0 <if cond="0 == {res_id}">selected</if>>Aucune</option>
                 <foreach cond="{man_res} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {res_id}">selected</if>>{res[{raceid}][alt][{obj_id}]}</option>
@@ -150,6 +157,7 @@
 
             Recherche: 
             <select name="src_id" id="src_id">
+            <option value=0 <if cond="0 == {src_id}">selected</if>>Aucune</option>
                 <foreach cond="{man_src} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {src_id}">selected</if>>{src[{raceid}][alt][{obj_id}]}</option>
@@ -161,6 +169,7 @@
 
         <h3> Récompenses:</h3> 
             <select name="rec_1" id="rec_1">
+            <option value=0 <if cond="0 == {rec_1}">selected</if>>Aucune</option>
                 <foreach cond="{man_res} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {rec_1}">selected</if>>{res[{raceid}][alt][{obj_id}]}</option>
@@ -171,6 +180,7 @@
             <br/>
 
             <select name="rec_2" id="rec_2">
+            <option value=0 <if cond="0 == {rec_2}">selected</if>>Aucune</option>
                 <foreach cond="{man_res} as {obj_id} => {obj_value}">
                     <if cond="{value} === true">
                     <option value="{obj_id}" <if cond="{obj_id} == {rec_2}">selected</if>>{res[{raceid}][alt][{obj_id}]}</option>
