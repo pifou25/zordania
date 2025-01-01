@@ -44,26 +44,46 @@ else{
         //paramètre défini?
             $param_1 = request("param", "string", "get");
             
-            if($param_1 != "") $_tpl->set('param_ok',true);
-            else $_tpl->set('param_ok',false);    
-            
+            if($race >= 0) $_tpl->set('param_ok',true);
+            else $_tpl->set('param_ok',false); 
             
         //post
         $qst_statut = request("qst_statut", "uint", "post");
+        $qst_com = request("qst_com", "uint", "post");
             
-        $objectif_1 = request("obj_1", "string", "post");
-        $obj_val_1 = request("obj_val1", "uint", "post"); 
+        $req_quest = request("req_qid", "uint", "post");     
+        $req_pts = request("req_pts", "uint", "post");    
+        $req_pts_armee = request("req_pts_armee", "uint", "post"); 
+        $req_btc = request("req_btc", "uint", "post"); 
+        $req_src = request("req_src", "uint", "post"); 
             
-        $req_quest = request("req_qid", "uint", "post");    
+        $btc_id_1 = request("btc_id_1", "uint", "post");
+        $btc_nb_1 = request("btc_nb_1", "uint", "post");    
+        $btc_id_2 = request("btc_id_2", "uint", "post");
+        $btc_nb_2 = request("btc_nb_2", "uint", "post");     
+        $unt_id_1 = request("unt_id_1", "uint", "post");
+        $unt_nb_1 = request("unt_nb_1", "uint", "post");     
+        $unt_id_2 = request("unt_id_2", "uint", "post");
+        $unt_nb_2 = request("unt_nb_2", "uint", "post");    
+        $res_id = request("res_id", "uint", "post");
+        $res_nb = request("res_nb", "uint", "post");    
+        $src_id = request("src_id", "uint", "post");
             
-        $recompense_1 = request("rec_1", "string", "post");
-        $rec_val_1 = request("rec_val1", "uint", "post");
-        $recompense_2 = request("rec_2", "string", "post");
-        $rec_val_2 = request("rec_val2", "uint", "post");                 
+        $rec_res_id1 = request("rec_1", "string", "post");
+        $rec_res_val1 = request("rec_val1", "uint", "post");
+        $rec_res_id2 = request("rec_2", "string", "post");
+        $rec_res_val2 = request("rec_val2", "uint", "post");                 
         $rec_xp = request("rec_xp", "uint", "post"); 
             
         $titre = request("pst_titre", "string", "post");
         $descr = request("pst_msg", "string", "post");
+            
+            
+        
+        $_tpl->set('man_btc', $_conf[$race]->btc);
+        $_tpl->set('man_unt', $_conf[$race]->unt);
+        $_tpl->set('man_res', $_conf[$race]->res);
+        $_tpl->set('man_src', $_conf[$race]->src);
 
 
         //gestion de la page
@@ -82,36 +102,50 @@ else{
                 $qst_array = $qst_array[0];
                 
                 $race = $qst_array['qst_race'];
-                $param_1 = $qst_array['qst_param_1'];
+                $param_1 = $qst_array['qst_common'];
                 
                 $_tpl->set('pst_titre', $qst_array['qst_title']);
                 $_tpl->set('pst_msg', unparse($qst_array['qst_descr']));
                 $_tpl->set('qst_statut', $qst_array['qst_statut']);
                 $_tpl->set('raceid', $qst_array['qst_race']);
+                $_tpl->set('qst_com', $qst_array['qst_common']);
+                
                 $_tpl->set('req_qid', $qst_array['qst_req_qid']);
-                if($param_1 != "") $_tpl->set('param_obj',$_conf[$race]->$param_1);
-                $_tpl->set('param', $param_1);
-                $_tpl->set('man_res', $_conf[$qst_array['qst_race']]->res);
-                $_tpl->set('obj_1',$qst_array['qst_obj_1']);
-                $_tpl->set('obj_val1',$qst_array['qst_obj_val1']);
-                $_tpl->set('rec_1',$qst_array['qst_recomp_cat1']);
-                $_tpl->set('rec_val1',$qst_array['qst_recomp_val1']);
-                $_tpl->set('rec_2',$qst_array['qst_recomp_cat2']);
-                $_tpl->set('rec_val2',$qst_array['qst_recomp_val2']);
-                $_tpl->set('rec_xp',$qst_array['qst_recomp_val3']);	
+                $_tpl->set('req_pts', $qst_array['qst_req_pts']);
+                $_tpl->set('req_pts_armee', $qst_array['qst_req_pts_armee']);
+                $_tpl->set('req_btc', $qst_array['qst_req_btc']);
+                $_tpl->set('req_src', $qst_array['qst_req_src']);
+                                
+                $_tpl->set('btc_id_1', $qst_array['qst_btc_id1']);
+                $_tpl->set('btc_nb_1', $qst_array['qst_btc_nb1']);
+                $_tpl->set('btc_id_2', $qst_array['qst_btc_id2']);
+                $_tpl->set('btc_nb_2', $qst_array['qst_btc_nb2']);
+                $_tpl->set('unt_id_1', $qst_array['qst_unt_id1']);
+                $_tpl->set('unt_nb_1', $qst_array['qst_unt_nb1']);
+                $_tpl->set('unt_id_2', $qst_array['qst_unt_id2']);
+                $_tpl->set('unt_nb_2', $qst_array['qst_unt_nb2']);
+                $_tpl->set('res_id', $qst_array['qst_res_id']);
+                $_tpl->set('res_nb', $qst_array['qst_res_nb']);
+                $_tpl->set('src_id', $qst_array['qst_src_id']);
+                                
+                $_tpl->set('rec_1',$qst_array['qst_rec_res1']);
+                $_tpl->set('rec_val1',$qst_array['qst_rec_val1']);
+                $_tpl->set('rec_2',$qst_array['qst_rec_res2']);
+                $_tpl->set('rec_val2',$qst_array['qst_rec_val2']);
+                $_tpl->set('rec_xp',$qst_array['qst_rec_xp']);	
                 
             } else
                 $_tpl->set('qst_bad_qid',true);
 
             if($titre && $descr)
-                $_tpl->set('qst_ok',edit_qst($qid, $_user['mid'], $titre, parse($descr), $qst_statut, $race, $req_quest, $param_1, $objectif_1, $obj_val_1, $recompense_1, $rec_val_1, $recompense_2, $rec_val_2, $rec_xp));
+                $_tpl->set('qst_ok',edit_qst($qid, $_user['mid'], $titre, parse($descr), $qst_statut, $race, $qst_com, $req_quest, $req_pts, $req_pts_armee,  $req_btc,  $req_src,  $btc_id_1, $btc_nb_1, $btc_id_2, $btc_nb_2, $unt_id_1, $unt_nb_1, $unt_id_2, $unt_nb_2, $res_id, $res_nb, $src_id, $rec_res_id1, $rec_res_val1, $rec_res_id2, $rec_res_val2, $rec_xp));
 
         }
         else{ // new
             $_tpl->set('qst_qid',0);
 
             if($titre && $descr)
-                $_tpl->set('qst_ok',add_qst($_user['mid'], $titre, parse($descr), $qst_statut, $race, $req_quest, $param_1, $objectif_1, $obj_val_1, $recompense_1, $rec_val_1, $recompense_2, $rec_val_2, $rec_xp ));
+                $_tpl->set('qst_ok',add_qst($_user['mid'], $titre, parse($descr), $qst_statut, $race, $qst_com, $req_quest, $req_pts, $req_pts_armee,  $req_btc,  $req_src,  $btc_id_1, $btc_nb_1, $btc_id_2, $btc_nb_2, $unt_id_1, $unt_nb_1, $unt_id_2, $unt_nb_2,  $res_id, $res_nb, $src_id, $rec_res_id1, $rec_res_val1, $rec_res_id2, $rec_res_val2, $rec_xp));
             else {
                 
                 $qst_array = get_qst(/*$_user['mid'],*/ 0);
@@ -124,15 +158,28 @@ else{
                 $_tpl->set('pst_msg',htmlspecialchars($descr));
                 $_tpl->set('qst_statut', QST_CFG_OFF);
                 $_tpl->set('raceid', $race);
-                $_tpl->set('req_qid', 0);
-                $_tpl->set('param', $param_1);
-                if($param_1 != "") $_tpl->set('param_obj',$_conf[$race]->$param_1);
-                $_tpl->set('man_res',$_conf[$race]->res);
-                $_tpl->set('obj_1',);
-                $_tpl->set('obj_val1',0);
-                $_tpl->set('rec_1',);
+                $_tpl->set('qst_com', 0);
+                $_tpl->set('req_qid', );
+                $_tpl->set('req_pts', );
+                $_tpl->set('req_pts_armee', );
+                $_tpl->set('req_btc', 1);
+                $_tpl->set('req_src', 1);
+                                
+                $_tpl->set('btc_id_1', 1);
+                $_tpl->set('btc_nb_1', 0);
+                $_tpl->set('btc_id_2', 1);
+                $_tpl->set('btc_nb_2', 0);
+                $_tpl->set('unt_id_1', 1);
+                $_tpl->set('unt_nb_1', 0);
+                $_tpl->set('unt_id_2', 1);
+                $_tpl->set('unt_nb_2', 0);
+                $_tpl->set('res_id', 1);
+                $_tpl->set('res_nb', 0);
+                $_tpl->set('src_id', 1);
+                                
+                $_tpl->set('rec_1', 1);
                 $_tpl->set('rec_val1',0);
-                $_tpl->set('rec_2',);
+                $_tpl->set('rec_2', 1);
                 $_tpl->set('rec_val2',0);
                 $_tpl->set('rec_xp',0);	
             }	
@@ -147,18 +194,30 @@ else{
                 $_tpl->set('pst_msg',$descr);
                 $_tpl->set('qst_statut', $qst_statut);
                 $_tpl->set('raceid', $race);
-                $_tpl->set('req_qid', $req_quest);
-                if($param_1 != "") $_tpl->set('param_obj',$_conf[$race]->$param_1);	
-                $_tpl->set('param', $param_1);	
-                $_tpl->set('obj_1',$objectif_1);
-                $_tpl->set('obj_val1',$obj_val_1);
-                $_tpl->set('rec_1',$recompense_1);
-                $_tpl->set('rec_val1',$rec_val_1);
-                $_tpl->set('rec_2',$recompense_2);
-                $_tpl->set('rec_val2',$rec_val_2);
+                $_tpl->set('qst_com', $qst_com);
+                $_tpl->set('req_pts', $req_pts);
+                $_tpl->set('req_pts_armee', $req_pts_armee);
+                $_tpl->set('req_btc', $req_btc);
+                $_tpl->set('req_src', $req_src);
+                                
+                $_tpl->set('btc_id_1', $btc_id_1);
+                $_tpl->set('btc_nb_1', $btc_nb_1);
+                $_tpl->set('btc_id_2', $btc_id_2);
+                $_tpl->set('btc_nb_2', $btc_nb_2);
+                $_tpl->set('unt_id_1', $unt_id_1);
+                $_tpl->set('unt_nb_1', $unt_nb_1);
+                $_tpl->set('unt_id_2', $unt_id_2);
+                $_tpl->set('unt_nb_2', $unt_nb_2);
+                $_tpl->set('res_id', $res_id);
+                $_tpl->set('res_nb', $res_nb);
+                $_tpl->set('src_id', $src_id);
+                                
+                $_tpl->set('rec_1',$rec_res_id1);
+                $_tpl->set('rec_val1',$rec_res_val1);
+                $_tpl->set('rec_2',$rec_res_id2);
+                $_tpl->set('rec_val2',$rec_res_val2);
                 $_tpl->set('rec_xp',$rec_xp);
                 
-                $_tpl->set('man_res',$_conf[$race]->res);
             }
 
         }
