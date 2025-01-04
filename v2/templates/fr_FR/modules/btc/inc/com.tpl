@@ -130,8 +130,9 @@
 				max: cours[rid]['max']*1000,
 				values: cours[rid]['moy'],
 				slide: function( event, ui ) {
-					$("#com_prix").val( $("#com_nb").val() * ui.value / 1000);
-					$("#resunit").html(ui.value / 1000);
+					var prix = Math.round($("#com_nb").val() * ui.value / 1000)
+					$("#com_prix").val(prix );
+					$("#resunit").html(prix/$("#com_nb").val());
 				}
 			});
 			$("#com_nb").attr('max', qte[rid]);
