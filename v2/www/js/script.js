@@ -3,7 +3,7 @@
 */
 
 
-/* Ou un lien dans la fenêtre qui a ouvert la page courante .. ouvre un lien dans la même fenêtre si c'est pas possible */
+/* Ou un lien dans la fenÃªtre qui a ouvert la page courante .. ouvre un lien dans la mÃªme fenÃªtre si c'est pas possible */
 function goOpener(url)
 {
 	if(window.opener)
@@ -18,7 +18,7 @@ function goOpener(url)
 
 
 /*
-* Récuperer l'objet xmlhttp
+* RÃ©cuperer l'objet xmlhttp
 */
 function getHTTPObject()
 {
@@ -92,3 +92,60 @@ function ajaxRequest(xmlhttp, method, url, data, callback)
 	return true;
 }
 
+function loadHtml2Canvas() {
+	return new Promise((resolve, reject) => {
+		if (window.html2canvas) {
+			resolve(window.html2canvas);
+		} else {
+			const script = document.createElement('script');
+			script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+			script.onload = () => resolve(window.html2canvas);
+			script.onerror = () => reject(new Error("Erreur lors du chargement de html2canvas."));
+			document.body.appendChild(script);
+		}
+	});
+}
+
+function screenShot(idToCapture, event, button) {
+	event.preventDefault();
+	loadHtml2Canvas().then(html2canvas => {
+		const captureZone = document.getElementById(idToCapture);
+		let bgColor = window.getComputedStyle(document.getElementById('module')).backgroundColor;
+		if(!bgColor || bgColor === "transparent" || bgColor === "rgba(0, 0, 0, 0)") {
+			bgColor = window.getComputedStyle(document.getElementById('contenu')).backgroundColor;
+		}
+		html2canvas(captureZone,{
+			allowTaint: true,
+			useCORS: true,
+			backgroundColor: bgColor 
+		}).then(canvas => {
+			canvas.toBlob(blob => {
+				if (blob) {
+					navigator.clipboard.write([
+						new ClipboardItem({ "image/png": blob })
+					]).then(() => {
+						button.textContent += ' \u2713';
+					}).catch(err => {
+						console.error("Erreur lors de la copie :", err);
+					});
+				}
+			});
+		});
+	}).catch(err => {
+		console.error("Erreur lors du chargement de html2canvas :", err);
+	});
+}
+
+function copyToClipboard(text) {
+	return new Promise((resolve, reject) => {
+		if (navigator.clipboard) {
+			navigator.clipboard.writeText(text).then(() => {
+				resolve(true);
+			}).catch(err => {
+				reject(false);
+			});
+		} else {
+			reject(false);
+		}
+	});
+  }
