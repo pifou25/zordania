@@ -247,9 +247,15 @@ define('FORUM_SUGGEST_FID',6); //fid suggestion
 define('FORUM_BUG_FID',8); //fid bug
 define('FORUM_QUETES',30);
 
-/*Etat quetes*/
+/*Quetes*/
 define('QST_CFG_OFF',0); //quete hors ligne
 define('QST_CFG_ON',1); //quete en ligne
+define('QST_CFG_NOTCOM',0); //quete hors ligne
+define('QST_CFG_COM',1); //quete en ligne
+define('QST_MBR_NEW',0);
+define('QST_MBR_START',1);
+define('QST_MBR_END',2);
+define('QST_MBR_VALID',3);
 
 /*Etat bug/suggestion*/
 define('REPORT_STATUT_NEW',0); //nouvellement reporté

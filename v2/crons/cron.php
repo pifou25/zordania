@@ -43,6 +43,7 @@ require_once(SITE_DIR . "lib/unt.lib.php");
 require_once(SITE_DIR . "lib/src.lib.php");
 require_once(SITE_DIR . "lib/btc.lib.php");
 require_once(SITE_DIR . "lib/rec.lib.php");
+require_once(SITE_DIR . "lib/qst.lib.php");
 mark('lib');
 
 $_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
@@ -160,6 +161,7 @@ require_once('unt.cron.php');
 require_once('pts.cron.php');
 require_once('map.cron.php');
 require_once('dpl.cron.php');
+require_once('qst.cron.php');
 
 
 mark('func');

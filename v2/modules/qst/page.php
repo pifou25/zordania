@@ -6,6 +6,7 @@ else{
     
     $_tpl->set('module_tpl', 'modules/qst/quetes.tpl');
     require_once("lib/qst.lib.php");
+    require_once("lib/member.lib.php");
     
     //smiley
     require_once('lib/parser.lib.php');
@@ -21,7 +22,7 @@ else{
     switch($_act) {
     case "del":
         //Effacer
-        if(del_qst(/*$_user['mid'],*/ $qid))
+        if(del_qst_cfg( $qid))
             $_tpl->set('qst_ok',true);
         else
             $_tpl->set('qst_bad_qid',true);
@@ -41,11 +42,6 @@ else{
                 if(!$value)
                     unset($_races[$key]);
             
-        //paramètre défini?
-            $param_1 = request("param", "string", "get");
-            
-            if($race >= 0) $_tpl->set('param_ok',true);
-            else $_tpl->set('param_ok',false); 
             
         //post
         $qst_statut = request("qst_statut", "uint", "post");
@@ -91,13 +87,13 @@ else{
             $_tpl->set('qst_qid',$qid);
             
             //liste des quetes
-            $qst_array = get_qst(0);
+            $qst_array = get_qst_cfg(0, "all");
             if($qst_array)
             $_tpl->set('qst_array',$qst_array);
                 else $_tpl->set('qst_array',false);
             
             //infos de la quête
-            $qst_array = get_qst(/*$_user['mid'],*/ $qid);
+            $qst_array = get_qst_cfg( $qid, "all");
             if($qst_array) {
                 $qst_array = $qst_array[0];
                 
@@ -138,17 +134,17 @@ else{
                 $_tpl->set('qst_bad_qid',true);
 
             if($titre && $descr)
-                $_tpl->set('qst_ok',edit_qst($qid, $_user['mid'], $titre, parse($descr), $qst_statut, $race, $qst_com, $req_quest, $req_pts, $req_pts_armee,  $req_btc,  $req_src,  $btc_id_1, $btc_nb_1, $btc_id_2, $btc_nb_2, $unt_id_1, $unt_nb_1, $unt_id_2, $unt_nb_2, $res_id, $res_nb, $src_id, $rec_res_id1, $rec_res_val1, $rec_res_id2, $rec_res_val2, $rec_xp));
+                $_tpl->set('qst_ok',edit_qst_cfg($qid, $_user['mid'], $titre, parse($descr), $qst_statut, $race, $qst_com, $req_quest, $req_pts, $req_pts_armee,  $req_btc,  $req_src,  $btc_id_1, $btc_nb_1, $btc_id_2, $btc_nb_2, $unt_id_1, $unt_nb_1, $unt_id_2, $unt_nb_2, $res_id, $res_nb, $src_id, $rec_res_id1, $rec_res_val1, $rec_res_id2, $rec_res_val2, $rec_xp));
 
         }
         else{ // new
             $_tpl->set('qst_qid',0);
 
             if($titre && $descr)
-                $_tpl->set('qst_ok',add_qst($_user['mid'], $titre, parse($descr), $qst_statut, $race, $qst_com, $req_quest, $req_pts, $req_pts_armee,  $req_btc,  $req_src,  $btc_id_1, $btc_nb_1, $btc_id_2, $btc_nb_2, $unt_id_1, $unt_nb_1, $unt_id_2, $unt_nb_2,  $res_id, $res_nb, $src_id, $rec_res_id1, $rec_res_val1, $rec_res_id2, $rec_res_val2, $rec_xp));
+                $_tpl->set('qst_ok',add_qst_cfg($_user['mid'], $titre, parse($descr), $qst_statut, $race, $qst_com, $req_quest, $req_pts, $req_pts_armee,  $req_btc,  $req_src,  $btc_id_1, $btc_nb_1, $btc_id_2, $btc_nb_2, $unt_id_1, $unt_nb_1, $unt_id_2, $unt_nb_2,  $res_id, $res_nb, $src_id, $rec_res_id1, $rec_res_val1, $rec_res_id2, $rec_res_val2, $rec_xp));
             else {
                 
-                $qst_array = get_qst(/*$_user['mid'],*/ 0);
+                $qst_array = get_qst_cfg( 0, "all");
             if($qst_array)
                // $qst_array = $qst_array[0];
             $_tpl->set('qst_array',$qst_array);
@@ -159,6 +155,7 @@ else{
                 $_tpl->set('qst_statut', QST_CFG_OFF);
                 $_tpl->set('raceid', $race);
                 $_tpl->set('qst_com', 0);
+                
                 $_tpl->set('req_qid', );
                 $_tpl->set('req_pts', );
                 $_tpl->set('req_pts_armee', );
@@ -185,7 +182,7 @@ else{
             }	
 
             if($titre || $descr) {
-                $qst_array = get_qst(/*$_user['mid'],*/ 0);
+                $qst_array = get_qst_cfg( 0, "all");
             if($qst_array)
                // $qst_array = $qst_array[0];
             $_tpl->set('qst_array',$qst_array);
@@ -193,8 +190,10 @@ else{
                 $_tpl->set('pst_titre',$titre);
                 $_tpl->set('pst_msg',$descr);
                 $_tpl->set('qst_statut', $qst_statut);
-                $_tpl->set('raceid', $race);
+                $_tpl->set('raceid', $race);                
                 $_tpl->set('qst_com', $qst_com);
+                
+                $_tpl->set('req_qid', $req_quest);
                 $_tpl->set('req_pts', $req_pts);
                 $_tpl->set('req_pts_armee', $req_pts_armee);
                 $_tpl->set('req_btc', $req_btc);
@@ -222,20 +221,90 @@ else{
 
         }
         break;
-    case "view":
+            
+    case "view_conf":
         //Voir
         if($qid) {
-            $qst_array = get_qst(/*$_user['mid'],*/ $qid);
+            $qst_array = get_qst_cfg($qid, "all");
             if($qst_array)
                 $qst_array = $qst_array[0];
+            
             $_tpl->set('qst_array',$qst_array);
         } else
             $_tpl->set('qst_bad_qid',true);
 
         break;
-    default:
-        $qst_array = get_qst($qid);
+            
+    case "conf":
+         //filtre conf
+            $selrace = request("selrace", "string", "get");
+            
+        $qst_array = get_qst_cfg($qid, $selrace);
         $_tpl->set('qst_array',$qst_array);
+        
+        $_tpl->set('selrace',$selrace);
+        break;
+            
+    case "view":  
+        if($qid) {
+            
+            $qst_array = get_qst($_user['mid'], $qid);
+            if($qst_array){
+                $qst_array = $qst_array[0];
+                $_tpl->set('qst_array',$qst_array);
+                
+                if ($qst_array['qst_mbr_statut'] == QST_MBR_NEW) qst_statut_update($_user['mid'], $qid, QST_MBR_START);
+
+                if ($qst_array['qst_mbr_statut'] == QST_MBR_END) {
+                    $_tpl->set('qst_valid',true);
+                }
+                else $_tpl->set('qst_valid',false);
+            }
+        } 
+        else
+            $_tpl->set('qst_bad_qid',true);
+
+        break; 
+            
+    case "valid":  
+        if($qid) {  
+            $qst_array = get_qst_cfg($qid, "all");
+            if($qst_array) {
+                $qst_array = $qst_array[0]; 
+                
+                $validRec1 = $validRec2 = $validRecxp = false;
+                
+                    if ($qst_array['qst_rec_res1'] > 0) {                        
+                        $validRec1 = (qst_add_rec($_user['mid'], $qst_array['qst_rec_res1'], $qst_array['qst_rec_val1']) != 1);
+                    }
+                    if ($qst_array['qst_rec_res2'] > 0 && !$validRec1) {
+                        $validRec2 = (qst_add_rec($_user['mid'], $qst_array['qst_rec_res2'], $qst_array['qst_rec_val2']) != 1);
+                    }
+                    if ($qst_array['qst_rec_xp'] > 0 && !$validRec1 && !$validRec2) {
+                        $new = array('xp' => $qst_array['qst_rec_xp'] );
+                        $validRecxp = (edit_mbr($_user['mid'], $new) != 1);
+                    }
+                            
+                if ($validRec1 || $validRec2 || $validRecxp){
+                    qst_add_rec($_user['mid'], -$qst_array['qst_rec_res1'], $qst_array['qst_rec_val1']);                                    
+                    $_tpl->set('rec_ok',false); 
+                }
+                else {
+                    qst_statut_update($_user['mid'], $qid, QST_MBR_VALID);
+                    $_tpl->set('rec_ok',true); 
+                }
+                
+            }
+        } 
+        else
+            $_tpl->set('qst_bad_qid',true);
+        break;   
+            
+    default:     
+               
+        $qst_array = get_qst($_user['mid'], $qid);
+        $_tpl->set('qst_array',$qst_array);
+        
         break;
     }
 
