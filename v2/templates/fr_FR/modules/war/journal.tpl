@@ -13,19 +13,18 @@
 </else>
 
 <script type="text/javascript">
-<!-- // requete ajax : copier journal vers bbcode ...
+// requete ajax : copier journal vers bbcode ...
 function GetAjaxResponse(xmlhttp, aid) {
 	if (xmlhttp.readyState == 4) {
 		if (xmlhttp.status == 200)
 			text = xmlhttp.responseText;
 		else
 			text = statusText;
-		if (copyToClipboard(text))
+		copyToClipboard(text).then(function() {
 			$('div#'+aid).html( '<p class="ok">Journal copié avec succès ! Ctrl+v ou menu \'coller\' pour le copier dans un forum, une note, un message privé ou sur la shootbox.</p>');
-		else if (navigator.mimeTypes ["application/x-shockwave-flash"] == undefined) /* FLASH pas installé */
+		}).catch(function() {
 		    $('div#'+aid).append ('<p class="error">Echec de copie dans le presse-papier. Copiez le bbcode ci dessous :</p>\n<textarea cols="60" rows="10">'+text+'</textarea>');
- 		else
-			$('div#'+aid).html( '<p class="ok">Cliquez ici pour copier : <object width="60" height="20"><PARAM NAME="FlashVars" VALUE="txtToCopy='+text+'"><param name="movie" value="flash/copyButton.swf"><embed src="flash/copyButton.swf" flashvars="txtToCopy='+text+'" width="60" height="20"></embed> <em>(nécessite flash)</em> ! Puis Ctrl+v ou menu \'coller\' dans la shoot ou le forum.</p>');
+		})
 	}
 }
 
@@ -40,16 +39,6 @@ function CopyJournalToBBCode(aid) {
 	return false; /* ne pas suivre le lien */
 }
 
-function copyToClipboard(s) {
-	if( window.clipboardData && clipboardData.setData )
-		clipboardData.setData("Text", s);
-	else {
-		/* à faire pour FF ou autre... */
-		return false;
-	}
-	return true;
-}
-
 $(document).ready(  function()
 {
 	$("div.bbcodeact").each( function(index)
@@ -62,11 +51,11 @@ $(document).ready(  function()
 
 <dl>
 <foreach cond="{atq_array} as {value}">
-
+<div id="atq-{value[atq_aid]}">
 	<dt>
 	<a href="war-histo.html?aid={value[atq_aid]}&amp;sub={war_sub}">Le {value[atq_date_formated]}</a>
 	<if cond="{value[atq_mid1]} == {_user[mid]}">
-		Vous attaquez <a href="member-<math oper="str2url({value[mbr_pseudo2]})"/>.html?mid={value[atq_mid2]}">{value[mbr_pseudo2]}</a>
+		Vous qaquez <a href="member-<math oper="str2url({value[mbr_pseudo2]})"/>.html?mid={value[atq_mid2]}">{value[mbr_pseudo2]}</a>
 	</if>
 	<elseif cond="{value[atq_mid2]} == {_user[mid]}">
 		Vous êtes attaqué par <a href="member-<math oper="str2url({value[atq_bilan][att][mbr_pseudo]})"/>.html?mid={value[atq_bilan][att][mbr_mid]}">{value[atq_bilan][att][mbr_pseudo]}</a>
@@ -153,10 +142,12 @@ $(document).ready(  function()
 	</foreach>
 	</div>
 	</dd>
+</div>
 
 <debug print="{value}" />
-	<div class="bbcodeact" id="{value[atq_aid]}"></div>
-
+	<div class="bbcodeact" id="{value[atq_aid]}">
+		<a href="#" onclick="screenShot('atq-{value[atq_aid]}', event, this);">Copier en image</a>
+	</div>
 
 </foreach>
 </dl>

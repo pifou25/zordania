@@ -33,7 +33,7 @@
 	</script>
 	<# script type="text/javascript" src="js/functionAddEvent.js"></script #>
 	<# script type="text/javascript" src="js/toolTipLib.js"></script #>
-	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/script.js?v=250104"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/jquery.zordania.js"></script>

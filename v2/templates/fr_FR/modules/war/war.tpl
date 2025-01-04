@@ -48,6 +48,7 @@
 		<div class="error">La légion ennemie est vide, attaque impossible !</div>
 	</elseif>
 	<else>
+		<div id="screenShotDiv">
 		<h3>Vous attaquez {mbr2_array[mbr_pseudo]}</h3>
 		<set name="race2" value="{mbr2_array[mbr_race]}" />
 		<dl id="atq_0">
@@ -272,6 +273,7 @@
 		</foreach>
 		</table>
 </if>
-
+</div>
+<a href="#" onclick="screenShot('screenShotDiv', event, this);">Copier en image</a>
 	</else>
 </elseif>
