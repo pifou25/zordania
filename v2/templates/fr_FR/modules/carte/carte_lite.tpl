@@ -145,8 +145,8 @@ $(document).ready(function(){
 </script>
 <form action="{url}" method="get">
 	<fieldset><legend>Aller à</legend>
-		<label for="map_x">X:</label><input type="text" name="map_x" id="map_x" size="6" />
-		<label for="map_y">Y:</label><input type="text" name="map_y" id="map_y" size="6" />
+		<label for="map_x">X:</label><input type="number" min="0" step="1" name="map_x" id="map_x" size="6" />
+		<label for="map_y">Y:</label><input type="number" min="0" step="1" name="map_y" id="map_y" size="6" />
 		<input type="submit" value="Aller"/>
 	</fieldset>
 	<fieldset>

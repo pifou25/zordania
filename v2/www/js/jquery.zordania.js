@@ -139,7 +139,7 @@ var funcZrdFormulaire = function(event){
             buttons: [{
                 text: "Fermer", // bouton annuler
                 click: function() {
-                    // $( this ).dialog( "close" ); // Suppression de la fermeture
+                    $( this ).dialog( "close" );
 		}
      }],
             resizable: false,
@@ -243,7 +243,7 @@ var funcZrdPopup = function(){ // au clic sur le lien
                 buttons: [{
                     text: "Fermer", // bouton annuler
                     click: function() {
-                        // $( this ).dialog( "close" ); // Suppression de la fermeture
+                        $( this ).dialog( "close" );
                     }
                 }],
                 resizable: false,
