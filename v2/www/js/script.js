@@ -3,7 +3,7 @@
 */
 
 
-/* Ou un lien dans la fen�tre qui a ouvert la page courante .. ouvre un lien dans la m�me fen�tre si c'est pas possible */
+/* Ou un lien dans la fenêtre qui a ouvert la page courante .. ouvre un lien dans la même fenêtre si c'est pas possible */
 function goOpener(url)
 {
 	if(window.opener)
@@ -18,7 +18,7 @@ function goOpener(url)
 
 
 /*
-* R�cuperer l'objet xmlhttp
+* Récuperer l'objet xmlhttp
 */
 function getHTTPObject()
 {
