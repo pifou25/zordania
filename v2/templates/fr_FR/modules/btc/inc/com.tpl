@@ -87,7 +87,7 @@
 			<span id="rescours">min / max</span> - prix unitaire = <strong><span id="resunit"></span></strong>
 			<div id="slider"></div>
 			<label for="com_prix">Prix de la transaction :</label>
-			<input type="text" min="0" value="00" id="com_prix" name="com_prix" style="width:5em" />
+			<input type="number" min="0" step="1" value="00" id="com_prix" name="com_prix" style="width:5em" onkeyup="updateSlider(this)" onchange="updateSlider(this)"/>
 			</p>
 
 			<p>
@@ -125,13 +125,14 @@
 			$("#resimg").attr('src', 'img/{_user[race]}/res/' + rid + '.png');
 			$("#reslabel").html(labels[rid]);
 			$( "#slider" ).slider({
-				range: true,
+				range: false,
 				min: cours[rid]['min']*1000,
 				max: cours[rid]['max']*1000,
 				values: cours[rid]['moy'],
-				change: function( event, ui ) {
-					$("#com_prix").val( $("#com_nb").val() * ui.value / 1000);
-					$("#resunit").html(ui.value / 1000);
+				slide: function( event, ui ) {
+					var prix = Math.round($("#com_nb").val() * ui.value / 1000)
+					$("#com_prix").val(prix );
+					$("#resunit").html(prix/$("#com_nb").val());
 				}
 			});
 			$("#com_nb").attr('max', qte[rid]);
@@ -139,7 +140,12 @@
 			$("#com_nb").focus();
 			
 		}
-		
+		function updateSlider(input){
+			var prix = (input.value/$("#com_nb").val()).toFixed(3);
+			$( "#slider" ).slider( "option", "value",prix*1000);
+			$("#resunit").html(prix);
+
+		}
 		</script>
 	</if>
 	<elseif cond='{btc_sub} =="choix_param"'>

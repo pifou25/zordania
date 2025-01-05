@@ -119,8 +119,8 @@
 				</foreach>
 				</if>
 			</select><br/>
-			<label for="unt_nb">nombre</label>
-			<input type="text" id="unt_nb" name="unt_nb" size="5" />
+			<label for="unt_nb">Nombre</label>
+			<input type="number" min="0" step="1" id="unt_nb" name="unt_nb" size="5" />
 			<input type="submit" value="Déplacer" />		
 		</form>
 		</fieldset><!-- fin formulaire de gestion -->
