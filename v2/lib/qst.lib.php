@@ -177,7 +177,7 @@ function get_qst($mid, $qid=0)
 	return  $_sql->make_array($sql);
 }
 
-function qst_add_rec($mid, $res, $nb)
+function add_qst_rec($mid, $res, $nb)
 {
 	global $_sql;
 	
@@ -190,30 +190,71 @@ function qst_add_rec($mid, $res, $nb)
 	return $_sql->affected_rows();
 }
 
-function qst_statut_update($mid, $qid, $statut)
+function edit_qst($mid, $qid, $new)
 {
 	global $_sql;
 	
 	$mid = protect($mid, "uint");
     $qid = protect($qid, "uint");
-    $statut = protect($statut, "uint");
+    $new = protect($new, "array");
     
-	$sql="UPDATE ".$_sql->prebdd."qst SET qst_mbr_statut = $statut WHERE qst_mbr_mid = $mid AND qst_mbr_qid =$qid" ;
+    $sql = "UPDATE ".$_sql->prebdd."qst SET ";
+		
+        if(isset($new['statut'])) {	
+			$edit = protect($new['statut'], "uint");
+			$sql.= "qst_mbr_statut='$edit'";
+            if($edit == QST_MBR_VALID) $sql.= ", qst_finished_at = now() ";
+		}
+    
+        if(isset($new['btc1'])) {	
+			$edit = protect($new['btc1'], "uint");
+			$sql.= "qst_etat_btc1='$edit'";
+		}
+    
+        if(isset($new['btc2'])) {	
+			$edit = protect($new['btc2'], "uint");
+			$sql.= "qst_etat_btc2='$edit'";
+		}
+    
+        if(isset($new['unt1'])) {	
+			$edit = protect($new['unt1'], "uint");
+			$sql.= "qst_etat_unt1='$edit'";
+		}
+    
+        if(isset($new['unt2'])) {	
+			$edit = protect($new['unt2'], "uint");
+			$sql.= "qst_etat_unt2='$edit'";
+		}
+    
+        if(isset($new['res'])) {	
+			$edit = protect($new['res'], "uint");
+			$sql.= "qst_etat_res='$edit'";
+		}
+    
+        if(isset($new['src'])) {	
+			$edit = protect($new['src'], "uint");
+			$sql.= "qst_etat_src='$edit'";
+		}
+    
+    
+    
+    $sql .= " WHERE qst_mbr_mid='$mid' AND qst_mbr_qid='$qid' ";
+    
+    /*$statut = protect($statut, "uint");
+    
+	$sql="UPDATE ".$_sql->prebdd."qst SET qst_mbr_statut = $statut WHERE qst_mbr_mid = $mid AND qst_mbr_qid =$qid" ;*/
 	$_sql->query($sql);
 	return $_sql->affected_rows();
 }
 
-/*
-function get_count()
+function add_qst($mid, $qid)
 {
 	global $_sql;
 	
-
-	$sql="SELECT count(qst_id) as cnt_tp";
-	$sql.=" FROM ".$_sql->prebdd."qst_cfg ";
-	$sql.=" WHERE 1";
-	//$sql.=" ORDER BY last_post DESC";
-
-	return $_sql->index_array($sql);
-}*/
+    $qid = protect($qid, "uint");
+	$mid = protect($mid, "uint");
+	
+	$sql = "INSERT INTO ".$_sql->prebdd."qst (`qst_mbr_qid`, `qst_mbr_mid`) VALUES ($qid,$mid)";
+	return $_sql->query($sql);
+}
 ?>

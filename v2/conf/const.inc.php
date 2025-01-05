@@ -245,17 +245,16 @@ define('ZORD_NEWS_FID',25); //news
 define('FORUM_PLAINTES_FID',30); //plaintes
 define('FORUM_SUGGEST_FID',6); //fid suggestion
 define('FORUM_BUG_FID',8); //fid bug
-define('FORUM_QUETES',30);
 
 /*Quetes*/
 define('QST_CFG_OFF',0); //quete hors ligne
 define('QST_CFG_ON',1); //quete en ligne
 define('QST_CFG_NOTCOM',0); //quete hors ligne
 define('QST_CFG_COM',1); //quete en ligne
-define('QST_MBR_NEW',0);
-define('QST_MBR_START',1);
-define('QST_MBR_END',2);
-define('QST_MBR_VALID',3);
+define('QST_MBR_NEW',0);//statut de la quête du joueur
+define('QST_MBR_START',1);//commencée
+define('QST_MBR_END',2);//terminée
+define('QST_MBR_VALID',3);//validée, récompenses reçues
 
 /*Etat bug/suggestion*/
 define('REPORT_STATUT_NEW',0); //nouvellement reporté

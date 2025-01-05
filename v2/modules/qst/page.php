@@ -253,12 +253,19 @@ else{
                 $qst_array = $qst_array[0];
                 $_tpl->set('qst_array',$qst_array);
                 
-                if ($qst_array['qst_mbr_statut'] == QST_MBR_NEW) qst_statut_update($_user['mid'], $qid, QST_MBR_START);
-
-                if ($qst_array['qst_mbr_statut'] == QST_MBR_END) {
-                    $_tpl->set('qst_valid',true);
+                if ($qst_array['qst_mbr_statut'] == QST_MBR_NEW) {
+                    $new = array('statut' => QST_MBR_START );
+                    edit_qst($_user['mid'], $qid, $new);
+                    $_tpl->set('qst_valid',QST_MBR_START);
                 }
-                else $_tpl->set('qst_valid',false);
+
+                elseif ($qst_array['qst_mbr_statut'] == QST_MBR_START) {
+                    $_tpl->set('qst_valid',QST_MBR_START);
+                }
+                elseif ($qst_array['qst_mbr_statut'] == QST_MBR_END) {
+                    $_tpl->set('qst_valid',QST_MBR_END);
+                }
+                else $_tpl->set('qst_valid',QST_MBR_VALID);
             }
         } 
         else
@@ -275,10 +282,10 @@ else{
                 $validRec1 = $validRec2 = $validRecxp = false;
                 
                     if ($qst_array['qst_rec_res1'] > 0) {                        
-                        $validRec1 = (qst_add_rec($_user['mid'], $qst_array['qst_rec_res1'], $qst_array['qst_rec_val1']) != 1);
+                        $validRec1 = (add_qst_rec($_user['mid'], $qst_array['qst_rec_res1'], $qst_array['qst_rec_val1']) != 1);
                     }
                     if ($qst_array['qst_rec_res2'] > 0 && !$validRec1) {
-                        $validRec2 = (qst_add_rec($_user['mid'], $qst_array['qst_rec_res2'], $qst_array['qst_rec_val2']) != 1);
+                        $validRec2 = (add_qst_rec($_user['mid'], $qst_array['qst_rec_res2'], $qst_array['qst_rec_val2']) != 1);
                     }
                     if ($qst_array['qst_rec_xp'] > 0 && !$validRec1 && !$validRec2) {
                         $new = array('xp' => $qst_array['qst_rec_xp'] );
@@ -286,11 +293,12 @@ else{
                     }
                             
                 if ($validRec1 || $validRec2 || $validRecxp){
-                    qst_add_rec($_user['mid'], -$qst_array['qst_rec_res1'], $qst_array['qst_rec_val1']);                                    
+                    add_qst_rec($_user['mid'], -$qst_array['qst_rec_res1'], $qst_array['qst_rec_val1']);                                    
                     $_tpl->set('rec_ok',false); 
                 }
                 else {
-                    qst_statut_update($_user['mid'], $qid, QST_MBR_VALID);
+                    $new = array('statut' => QST_MBR_VALID );
+                    edit_qst($_user['mid'], $qid, $new);
                     $_tpl->set('rec_ok',true); 
                 }
                 

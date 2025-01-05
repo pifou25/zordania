@@ -361,12 +361,16 @@
                 <br/>
                 <br/>
                 
-                <if cond="{qst_valid}">
-                    <p class="menu_module"><a href="qst-valid.html?qid={qst_array[qst_mbr_qid]}" title="Valider">Valider la quête</a></p>
+                <if cond="{qst_valid} == QST_MBR_VALID">
+                    <p class="infos"> Quête terminée et déjà validée.</p>
                 </if>
+                <elseif cond="{qst_valid}==QST_MBR_END">
+                    <p class="menu_module"><a href="qst-valid.html?qid={qst_array[qst_mbr_qid]}" title="Valider">Valider la quête</a></p>
+                </elseif>
                 <else>
-                    <p class="infos"> Vous n'avez pas terminé tous les objectifs.</p>
+                    <p class="infos"> Quête en cours, vous n'avez pas terminé tous les objectifs.</p>
                 </else>
+
                   
         </if>
     </else>
