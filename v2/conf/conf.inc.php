@@ -9,7 +9,9 @@ define('ZORD_SPEED_FAST', 5); // 1 Tour toutes les 5 minutes
 define('ZORD_SPEED_MEDIUM', 15); // 1 Tour toutes les 15 minutes
 define('ZORD_SPEED_NORMAL', 30); // 1 Tour par demie heure
 define('ZORD_SPEED_SLOW',60); // 1 Tour par heures
-define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
+
+if(SITE_DEBUG == true) define('ZORD_SPEED', ZORD_SPEED_FAST);
+else define('ZORD_SPEED', ZORD_SPEED_MEDIUM);
 
 define('SITE_MAX_CONNECTED', 300);
 define('SITE_MAX_INSCRITS', 10000);
