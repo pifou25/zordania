@@ -260,11 +260,13 @@ function get_count($mid)
 	return $_sql->index_array($sql);
 }
 	
-function cls_qst($mid) {
+function cls_qst($mid, $qid=0) {
 	global $_sql;
 
 	$sql = "DELETE FROM ".$_sql->prebdd."qst WHERE qst_mbr_mid = $mid ";
-	$res = $_sql->query($sql);
+        if($qid)
+    $sql.=" AND qst_mbr_qid = $qid ";
+	$_sql->query($sql);
 	return $_sql->affected_rows();
 }
 ?>

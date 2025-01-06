@@ -453,11 +453,23 @@ if($_act == "del") {
 			$mbr_array['pts']['unt']['pts'] = $pts_armee;
 			/* fin comptage des points */
             
-            $qst_array = get_qst($_user['mid'], 0);
-            if($qst_array){
+            
+            //quêtes
+            $qst_array = get_qst($mid, 0);
+            if(!empty($qst_array)){
                 
                 $_tpl->set('qst_array',$qst_array);
             }
+            else $_tpl->set('qst_array',0);
+            
+            $qid = request('qid','uint','get');
+			if($qid) {
+				if(!can_d(DROIT_ADM_EDIT)) { // admin seulement
+					$_tpl->set('act_interdit', true);
+				} else 
+                    
+                    if (!empty(cls_qst($mid, $qid))) $_tpl->set("del_qst_ok", true);
+				}
             
 		}
 	}

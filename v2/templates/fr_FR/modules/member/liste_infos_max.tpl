@@ -269,3 +269,52 @@
 	</tr>
 	</table>
 </div>
+
+<div class="content" id="infos_qst" style="display: none;">
+	<a name="qst"><h3>Quête :</h3></a>
+    
+	<if cond="isset({del_qst_ok})"><p class="ok">Quête enlevée.</p></if>
+	<if cond="{qst_array}">
+
+			<table class="liste">
+				<tr>
+                    <th>Titre</th>
+                    <th>Req Pts</th>
+                    <th>Req Pts armée</th>
+                    <th>Req Btc</th>
+                    <th>Req src</th>
+                    <th>Obj Bat</th>
+                    <th>Obj Unt</th>
+                    <th>Obj Res</th>
+                    <th>Obj Src</th>
+                    <th>Recomp.</th>
+                    <th>Rec XP</th>
+                    <th>Actions</th>
+				</tr>
+			<foreach cond="{qst_array} as {result}">
+                <load file="race/{result[qst_race]}.config" />
+				<tr>
+                    <td><if cond="{result[qst_common]} == 1"><img src="img/forum/0.png" title="Commune"/></if><else><img src="img/{result[qst_race]}/{result[qst_race]}.png" title="{race[{result[qst_race]}]}" /></else> <a href="qst-view_conf.html?qid={result[qst_id]}" title="Voir '{result[qst_title]}'">{result[qst_title]} - {qst_etat[{result[qst_mbr_statut]}]}</a></td>
+                    <td>{result[mbr_points]} / {result[qst_req_pts]}</td>
+                    <td>{result[mbr_pts_armee]} / {result[qst_req_pts_armee]}</td>
+                    <td><if cond="{result[qst_req_btc]} >0">{btc[{result[qst_race]}][alt][{result[qst_req_btc]}]}</if></td>
+                    <td><if cond="{result[qst_req_src]} >0"><img src="img/{result[qst_race]}/src/{result[qst_req_src]}.png" title="{src[{result[qst_race]}][alt][{result[qst_req_src]}]}" /></if></td>
+                    <td><if cond="{result[qst_btc_nb1]} >0">{result[qst_etat_btc1]} / {result[qst_btc_nb1]} {btc[{result[qst_race]}][alt][{result[qst_btc_id1]}]}</if><if cond="{result[qst_btc_nb2]} >0"> + {result[qst_etat_btc2]} / {result[qst_btc_nb2]} {btc[{result[qst_race]}][alt][{result[qst_btc_id2]}]}</if></td>
+                    <td><if cond="{result[qst_unt_nb1]} >0">{result[qst_etat_unt1]} / {result[qst_unt_nb1]} <img src="img/{result[qst_race]}/unt/{result[qst_unt_id1]}.png" title="{unt[{result[qst_race]}][alt][{result[qst_unt_id1]}]}" /></if><if cond="{result[qst_unt_nb2]} >0"> + {result[qst_etat_unt2]} /  {result[qst_unt_nb2]} <img src="img/{result[qst_race]}/unt/{result[qst_unt_id2]}.png" title="{unt[{result[qst_race]}][alt][{result[qst_unt_id2]}]}" /></if></td>
+                    <td><if cond="{result[qst_res_nb]} >0">{result[qst_etat_res]} / {result[qst_res_nb]} <img src="img/{result[qst_race]}/res/{result[qst_res_id]}.png" title="{res[{result[qst_race]}][alt][{result[qst_res_id]}]}" /></if></td>
+                    <td><if cond="{result[qst_src_id]} >0">{result[qst_etat_src]} / <img src="img/{result[qst_race]}/src/{result[qst_src_id]}.png" title="{src[{result[qst_race]}][alt][{result[qst_src_id]}]}" /></if></td>
+                    <td><if cond="{result[qst_rec_val1]} >0">{result[qst_rec_val1]} <img src="img/{result[qst_race]}/res/{result[qst_rec_res1]}.png" title="{res[{result[qst_race]}][alt][{result[qst_rec_res1]}]}" /></if>
+                    <if cond="{result[qst_rec_val2]} >0"> + {result[qst_rec_val2]} <img src="img/{result[qst_race]}/res/{result[qst_rec_res2]}.png" title="{res[{result[qst_race]}][alt][{result[qst_rec_res2]}]}" /></if></td>
+                    <td>{result[qst_rec_xp]}</td>
+                    <td><if cond='{_file}=="admin"'>
+                        <a href="admin-view.html?module=member&amp;mid={result[qst_mbr_mid]}&amp;qid={result[qst_mbr_qid]}"><img src="img/drop.png" title="Supprimer la quête de {result[mbr_pseudo]}!"/></a>
+                        </if>
+                    </td>
+				</tr>
+			</foreach>
+			</table>
+		</if>
+		<else>
+			<p class="infos">Aucune Quête.</p>
+		</else>
+</div>

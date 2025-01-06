@@ -167,6 +167,7 @@
 			<a href="#unt" class="tab" title="Unités" descr="infos_unt"> Unités </a>
 			<a href="#src" class="tab" title="Recherches" descr="infos_src"> Recherches </a>
 			<a href="#bat" class="tab" title="Bâtiments" descr="infos_btc"> Bâtiments </a>
+			<a href="#qst" class="tab" title="Quêtes" descr="infos_qst"> Quêtes </a>
 			<a href="admin-histo.html?mid={mbr_array[mbr_mid]}&amp;module=war" title="Journal de Guerre"> Journal </a>
 		</p>
 
