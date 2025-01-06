@@ -78,6 +78,7 @@ else if(!$_act) {
 			require_once("lib/war.lib.php");
 			require_once("lib/msg.lib.php");
 			require_once("lib/nte.lib.php");
+			require_once("lib/qst.lib.php");
 
 			cls_mbr($_user['mid'], $_user['mapcid'], $_user['race']);
 			$_tpl->set("mbr_cls", true);	

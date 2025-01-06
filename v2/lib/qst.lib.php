@@ -148,10 +148,6 @@ function del_qst_cfg($qid)
 	$_sql->query($sql);
 	return $_sql->affected_rows();
 }
-	
-function cls_qst_cfg($mid) {
-	return del_qst_cfg($mid);
-}
 
 
 /*-------------------------*/
@@ -262,5 +258,13 @@ function get_count($mid)
 	$sql.=" WHERE qst_mbr_mid ='$mid' AND qst_mbr_statut < ".QST_MBR_END;
 
 	return $_sql->index_array($sql);
+}
+	
+function cls_qst($mid) {
+	global $_sql;
+
+	$sql = "DELETE FROM ".$_sql->prebdd."qst WHERE qst_mbr_mid = $mid ";
+	$res = $_sql->query($sql);
+	return $_sql->affected_rows();
 }
 ?>

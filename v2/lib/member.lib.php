@@ -241,6 +241,7 @@ function reini_mbr($mid, $pseudo, $vlg, $race, $cid, $oldcid, $gid, $sexe=1) {
 	cls_atq($mid);
 	cls_histo($mid);
 	cls_vld($mid);
+	cls_qst($mid);
 
 	ini_mbr($mid, $pseudo, $vlg, $race, $cid, $gid, $sexe);
 }
@@ -262,6 +263,7 @@ function cls_mbr($mid, $cid, $race) {
 	cls_map($mid, $cid);
 	cls_nte($mid);
 	//cls_frm($mid);
+	cls_qst($mid);
 	
 	del_mbr($mid);
 }

@@ -23,6 +23,7 @@ require_once("lib/war.lib.php");
 require_once("lib/msg.lib.php");
 require_once("lib/vld.lib.php");
 require_once("lib/nte.lib.php");
+require_once("lib/qst.lib.php");
 
 $_tpl->set("module_tpl","modules/member/admin.tpl");
 if($_act == "del" || $_act == "edit") {
@@ -307,7 +308,8 @@ if($_act == "del") {
 			require_once("lib/unt.lib.php");
 			require_once("lib/trn.lib.php");
 			require_once("lib/src.lib.php");
-                        require_once("lib/heros.lib.php");
+            require_once("lib/heros.lib.php");
+            require_once("lib/qst.lib.php");
 
 			$legions = new legions(['mid'=>$mid,
                             //'etat' => [LEG_ETAT_VLG, LEG_ETAT_BTC, LEG_ETAT_GRN, LEG_ETAT_DPL, LEG_ETAT_ATQ]
@@ -450,6 +452,13 @@ if($_act == "del") {
 			$_tpl->set('unt_done', $unt_array);
 			$mbr_array['pts']['unt']['pts'] = $pts_armee;
 			/* fin comptage des points */
+            
+            $qst_array = get_qst($_user['mid'], 0);
+            if($qst_array){
+                
+                $_tpl->set('qst_array',$qst_array);
+            }
+            
 		}
 	}
 } else if($_act == "liste_ip") {

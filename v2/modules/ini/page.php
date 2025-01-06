@@ -135,6 +135,7 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 					require_once("lib/war.lib.php");
 					require_once("lib/msg.lib.php");
 					require_once("lib/heros.lib.php");
+					require_once("lib/qst.lib.php");
 
 					$_ses->set("race", $race); /* Il faut absolument changer la race ! */
 					$_ses->set("mapcid", $cid);
