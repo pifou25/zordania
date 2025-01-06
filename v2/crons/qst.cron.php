@@ -1,5 +1,10 @@
 <?php
 $log_qst = "Quetes";
+
+function glob_qst() {
+	global $_tpl,$_sql;
+
+
 /*recup des mid*/
 $sql = "SELECT mbr_mid, mbr_race, mbr_pseudo
         FROM ".$_sql->prebdd."mbr
@@ -139,8 +144,23 @@ if (!empty($mid_array)) {
                         $mbr_pts = $row['mbr_points']; 
                         $mbr_pts_armee = $row['mbr_pts_armee']; 
                         
-                        $ptsValid = ($qst_row['qst_req_pts'] == 0 || $mbr_pts > $row['qst_req_pts']);
-                        $ptsarmeeValid = ($qst_row['qst_req_pts_armee'] == 0 || $mbr_pts > $row['qst_req_pts_armee']);
+                        if ($qst_row['qst_req_pts'] > 0) {
+                            $btcValid = false; 
+                            
+                            if (!empty($mbr_pts)) {
+                                $ptsValid = ($mbr_pts > $qst_row['qst_req_pts']);
+                            }
+                        } 
+                        else $ptsValid = true; 
+                        
+                        if ($qst_row['qst_req_pts_armee'] > 0) {
+                            $ptsarmeeValid = false; 
+                            
+                            if (!empty($mbr_pts_armee)) {
+                                $ptsarmeeValid = ($mbr_pts_armee > $qst_row['qst_req_pts_armee']);
+                            }
+                        } 
+                        else $ptsarmeeValid = true; 
                         
                         //btc requis ok?
                         if ($qst_row['qst_req_btc'] > 0) {
@@ -165,10 +185,14 @@ if (!empty($mid_array)) {
                                 $srcValid = true;
                             }
                         } 
-                        else $srcValid = true;                        
+                        else $srcValid = true;  
+                        
+                        //quête en ligne
+                        $isOnline = ($qst_row['qst_statut'] == 1);
+                        
                         
                         //on insère
-                        if ($qstValid && $ptsValid && $ptsarmeeValid && $btcValid && $srcValid){
+                        if ($qstValid && $ptsValid && $ptsarmeeValid && $btcValid && $srcValid && $isOnline){
                             add_qst($mbr_mid, $qid);
                             /* envoyer la notif */                            
                             
@@ -189,5 +213,5 @@ if (!empty($mid_array)) {
 } else {
     echo "No members found matching the criteria.";
 }
-
+}
 ?>
