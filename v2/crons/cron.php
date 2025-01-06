@@ -201,9 +201,10 @@ case ZORD_SPEED_VFAST:
 	scl("15m", "glob", array("stats"));
 	break;
 case ZORD_SPEED_FAST:
-    scl("5m", "mbr", array("res", "unt", "btc", "src", "mbr"));
+    scl("5m", "mbr", array("unt", "btc", "src", "mbr"));
+    scl("10m", "mbr", array("res"));
 
-    scl("5m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl', "cache", "com"));
+    scl("5m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl', "cache", "com", "qst"));
     scl("6h", "glob", array("aly", "mbr", "pts"));
 
     scl("15m", "glob", array("stats"));
