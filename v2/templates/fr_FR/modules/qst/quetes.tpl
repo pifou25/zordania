@@ -1,7 +1,9 @@
 <p class="menu_module">
 <a href="qst.html" title="Quetes">Quêtes</a>
+<if cond='{ses_admin} OR {_user[groupe]} == {GRP_SAGE} OR {_user[groupe]} == {GRP_NOBLE}'>
 - <a href="qst-conf.html" title="Config">Config</a>
 - <a href="qst-edit.html?qid=0&race=1" title="Ajouter une Quête">Nouvelle Quête</a>
+</if>
 </p>
 
 		
@@ -15,7 +17,7 @@
         4) Définir les prérequis<br/>
         5) Définir les objectifs, au moins un<br/>
         6) Choisir les récompenses et la quantité<br/>   
-        8) c/c vos textes si vous voulez changer de race ou d'objectif!!!<br/> 
+        8) c/c vos textes si vous voulez changer de race !!!<br/> 
     </p>
         <br/> 
     

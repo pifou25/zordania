@@ -35,6 +35,7 @@ $_cache = new cache('global', true);
 $_error = array();
 set_error_handler("error_handler");
 
+require_once(SITE_DIR . "lib/msg.lib.php");
 require_once(SITE_DIR . "lib/member.lib.php");
 require_once(SITE_DIR . "lib/alliances.lib.php");
 require_once(SITE_DIR . "lib/res.lib.php");

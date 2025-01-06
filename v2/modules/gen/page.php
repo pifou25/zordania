@@ -12,6 +12,7 @@ require_once("lib/trn.lib.php");
 require_once("lib/mch.lib.php");
 require_once("lib/map.lib.php");
 require_once("lib/member.lib.php");
+require_once("lib/qst.lib.php");
 
 
 $_tpl->set('COM_ETAT_OK',COM_ETAT_OK);
@@ -228,5 +229,21 @@ $_tpl->set('dst_view_max', DST_VIEW_MAX);
 //ventes
 $vente_array = get_mch_by_mid($_user['mid']);
 $_tpl->set('vente_array',$vente_array);
+    
+//Quêtes
+$qst_count = get_count($_user['mid']);
+    if(!empty($qst_count)){
+        $qst_count = $qst_count[0];
+        $_tpl->set('qst_count', $qst_count['cnt_qst']);
+        
+        $qst_array = get_qst($_user['mid'], $qid=0);
+        if(!empty($qst_array)){
+            $_tpl->set('qst_array', $qst_array);
+        
+        }
+        else $_tpl->set('qst_array', 0);
+        
+    }
+    else $_tpl->set('qst_count', 0);
 }
 ?>

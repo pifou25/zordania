@@ -40,7 +40,23 @@
                 </li>
             </if>
 		</ul>
-        
+    
+ 
+	<h4>Quêtes en cours:</h4>
+        <if cond='{qst_count} > 0'>
+            <if cond='{qst_array}'>
+            <ul>
+                <foreach cond='{qst_array} as {result}'>
+                    <if cond='{result[qst_mbr_statut]} < QST_MBR_END'>
+                    <li>
+                        <a href="qst-view.html?qid={result[qst_mbr_qid]}" title="Voir '{result[qst_title]}'">{result[qst_title]}</a>
+                    </li>
+                    </if>
+                </foreach>
+            </ul>
+            </if>
+        </if>
+        <else>Vous n'avez pas de quête en cours</else>    
 
 	<h4>Ressources Principales :</h4>
 		<if cond='{res_array}'>
@@ -60,6 +76,7 @@
 			</foreach>
 		</ul>
 		</if>
+        
 	<h4>Terrains :</h4>
 		<if cond='{trn_array}'>
 		<ul>

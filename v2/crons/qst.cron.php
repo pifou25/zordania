@@ -1,7 +1,7 @@
 <?php
 $log_qst = "Quetes";
 /*recup des mid*/
-$sql = "SELECT mbr_mid, mbr_race
+$sql = "SELECT mbr_mid, mbr_race, mbr_pseudo
         FROM ".$_sql->prebdd."mbr
         WHERE mbr_gid >= ".GRP_JOUEUR." AND mbr_etat = ".MBR_ETAT_OK;
 
@@ -11,7 +11,8 @@ $mid_array = $_sql->make_array($sql);
 if (!empty($mid_array)) {
     foreach ($mid_array as $row) {
         $mbr_mid = $row['mbr_mid'] ?? null; 
-        $mbr_race = $row['mbr_race']; 
+        $mbr_race = $row['mbr_race'];
+        $mbr_pseudo = $row['mbr_pseudo'];  
         
         if ($mbr_mid !== null) {
             // recup des quêtes du joueur
@@ -169,6 +170,15 @@ if (!empty($mid_array)) {
                         //on insère
                         if ($qstValid && $ptsValid && $ptsarmeeValid && $btcValid && $srcValid){
                             add_qst($mbr_mid, $qid);
+                            /* envoyer la notif */                            
+                            
+                                $_tpl->set('pseudo',$mbr_pseudo);
+                                $_tpl->set('qid',$qst_row['qst_id']);
+                                $_tpl->set('titre',$qst_row['qst_title']);
+                            $msg = nl2br($_tpl->get("modules/qst/new.txt.tpl",1));
+                            $titre = "[Nouvelle quête] ".$qst_row['qst_title'];
+                            send_msg(MBR_WELC, $mbr_mid ,$titre, $msg,true);
+                            
                         }
                         
                     }

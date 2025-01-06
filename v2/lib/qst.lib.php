@@ -236,14 +236,9 @@ function edit_qst($mid, $qid, $new)
 			$sql.= "qst_etat_src='$edit'";
 		}
     
-    
-    
     $sql .= " WHERE qst_mbr_mid='$mid' AND qst_mbr_qid='$qid' ";
     
-    /*$statut = protect($statut, "uint");
-    
-	$sql="UPDATE ".$_sql->prebdd."qst SET qst_mbr_statut = $statut WHERE qst_mbr_mid = $mid AND qst_mbr_qid =$qid" ;*/
-	$_sql->query($sql);
+    $_sql->query($sql);
 	return $_sql->affected_rows();
 }
 
@@ -256,5 +251,16 @@ function add_qst($mid, $qid)
 	
 	$sql = "INSERT INTO ".$_sql->prebdd."qst (`qst_mbr_qid`, `qst_mbr_mid`) VALUES ($qid,$mid)";
 	return $_sql->query($sql);
+}
+
+function get_count($mid)
+{
+	global $_sql;
+
+	$sql="SELECT count(qst_mbr_id) as cnt_qst";
+	$sql.=" FROM ".$_sql->prebdd."qst ";
+	$sql.=" WHERE qst_mbr_mid ='$mid' AND qst_mbr_statut < ".QST_MBR_END;
+
+	return $_sql->index_array($sql);
 }
 ?>
