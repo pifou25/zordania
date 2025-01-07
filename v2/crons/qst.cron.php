@@ -6,7 +6,7 @@ function glob_qst() {
 
 
 /*recup des mid*/
-$sql = "SELECT mbr_mid, mbr_race, mbr_pseudo
+$sql = "SELECT mbr_mid, mbr_race, mbr_pseudo, mbr_points, mbr_pts_armee
         FROM ".$_sql->prebdd."mbr
         WHERE mbr_gid >= ".GRP_JOUEUR." AND mbr_etat = ".MBR_ETAT_OK;
 
@@ -116,10 +116,10 @@ if (!empty($mid_array)) {
             }
             
             // ajout des nouvelles quêtes pour le joueur
-            $qst_array = get_qst_cfg(0, $mbr_race); //recup des quêtes de sa race
+            $qst_array = get_qst_cfg(0, 0); //recup des quêtes de sa race
             if (!empty($qst_array)) { // Vérifier que $qst_array contient des quêtes
                 foreach ($qst_array as $qst_row) {//action pour chaque quete
-
+                if ( $qst_row['qst_common'] == 1 || $mbr_race == $qst_row['qst_race']){
                     $qid = $qst_row['qst_id']; // Récupérer l'ID de la quête
                     
                     //la quête n'existe pas chez le jouer?
@@ -206,6 +206,7 @@ if (!empty($mid_array)) {
                         }
                         
                     }
+                }
                 }
             }
         }

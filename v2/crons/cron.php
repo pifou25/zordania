@@ -192,7 +192,7 @@ $acts = array();
 
 switch(ZORD_SPEED) {
 case ZORD_SPEED_VFAST:
-	scl("1m", "mbr", array("res", "unt", "btc", "src", "mbr"));
+	scl("1m", "mbr", array("res", "unt", "btc", "src", "mbr", "qst"));
 
 	scl("5m", "glob", array("com"));
 	scl("1m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl', "cache", "pts"));
@@ -212,7 +212,7 @@ case ZORD_SPEED_FAST:
 case ZORD_SPEED_NORMAL:
 	scl("30m", "mbr", array("res", "unt", "btc", "src", "mbr"));
 
-	scl("5m", "glob", array("cache", "com"));
+	scl("5m", "glob", array("cache", "com", "qst"));
 	scl("30m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl'));
 	scl("6h", "glob", array("aly", "mbr", "pts"));
 
@@ -221,7 +221,7 @@ case ZORD_SPEED_NORMAL:
 case ZORD_SPEED_MEDIUM:
 	scl("15m", "mbr", array("res", "unt", "btc", "src", "mbr"));
 
-	scl("5m", "glob", array("cache", "com"));
+	scl("5m", "glob", array("cache", "com", "qst"));
 	scl("15m", "glob", array("leg", "res", "unt", "btc", "src","stats", 'dpl'));
 	scl("1h", "glob", array("aly", "mbr", "pts"));
 
@@ -231,7 +231,7 @@ default:
 case ZORD_SPEED_SLOW:
 	scl("1h", "mbr", array("res", "unt", "btc", "src", "mbr"));
 
-	scl("5m", "glob", array("cache", "com"));
+	scl("5m", "glob", array("cache", "com", "qst"));
 	scl("1h", "glob", array("stats", "leg", "res", "unt", "btc", "src","stats", 'dpl'));
 	scl("6h", "glob", array("mbr", "pts", "aly"));
 
