@@ -282,10 +282,10 @@ else{
                 
                 $validRec1 = $validRec2 = $validRecxp = false;
                 
-                    if ($qst_array['qst_rec_res1'] > 0) {                        
+                    if ($qst_array['qst_rec_val1'] > 0) {                        
                         $validRec1 = (add_qst_rec($_user['mid'], $qst_array['qst_rec_res1'], $qst_array['qst_rec_val1']) != 1);
                     }
-                    if ($qst_array['qst_rec_res2'] > 0 && !$validRec1) {
+                    if ($qst_array['qst_rec_val2'] > 0 && !$validRec1) {
                         $validRec2 = (add_qst_rec($_user['mid'], $qst_array['qst_rec_res2'], $qst_array['qst_rec_val2']) != 1);
                     }
                     if ($qst_array['qst_rec_xp'] > 0 && !$validRec1 && !$validRec2) {
@@ -294,7 +294,7 @@ else{
                     }
                             
                 if ($validRec1 || $validRec2 || $validRecxp){
-                    add_qst_rec($_user['mid'], -$qst_array['qst_rec_res1'], $qst_array['qst_rec_val1']);                                    
+                    add_qst_rec($_user['mid'], $qst_array['qst_rec_res1'], -$qst_array['qst_rec_val1']);                                    
                     $_tpl->set('rec_ok',false); 
                 }
                 else {

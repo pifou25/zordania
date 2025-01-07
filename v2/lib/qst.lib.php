@@ -169,6 +169,8 @@ function get_qst($mid, $qid=0)
     
     if($qid)
     $sql.=" AND qst_mbr_qid = $qid ";
+    else 
+	$sql.=" ORDER BY qst_mbr_statut ASC";
     
 	return  $_sql->make_array($sql);
 }
@@ -255,7 +257,7 @@ function get_count($mid)
 
 	$sql="SELECT count(qst_mbr_id) as cnt_qst";
 	$sql.=" FROM ".$_sql->prebdd."qst ";
-	$sql.=" WHERE qst_mbr_mid ='$mid' AND qst_mbr_statut < ".QST_MBR_END;
+	$sql.=" WHERE qst_mbr_mid ='$mid' AND qst_mbr_statut < ".QST_MBR_VALID;
 
 	return $_sql->index_array($sql);
 }

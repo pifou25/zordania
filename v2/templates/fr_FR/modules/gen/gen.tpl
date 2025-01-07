@@ -40,23 +40,7 @@
                 </li>
             </if>
 		</ul>
-    
- 
-	<h4>Quêtes en cours:</h4>
-        <if cond='{qst_count} > 0'>
-            <if cond='{qst_array}'>
-            <ul>
-                <foreach cond='{qst_array} as {result}'>
-                    <if cond='{result[qst_mbr_statut]} < QST_MBR_END'>
-                    <li>
-                        <a href="qst-view.html?qid={result[qst_mbr_qid]}" title="Voir '{result[qst_title]}'">{result[qst_title]}</a>
-                    </li>
-                    </if>
-                </foreach>
-            </ul>
-            </if>
-        </if>
-        <else>Vous n'avez pas de quête en cours</else>    
+       
 
 	<h4>Ressources Principales :</h4>
 		<if cond='{res_array}'>
@@ -103,6 +87,35 @@
 </if>
 <else><p>Compétence : <a href="manual.html?race={_user[race]}&amp;type=comp#comp_{_user[bonus]}"><zimgcomp race="{_user[race]}" type="{_user[bonus]}" /> {comp[{_user[race]}][alt][{_user[bonus]}]} </a></p>
 </else>
+
+
+ 
+<h4>Quêtes en cours:</h4>
+    <if cond='{qst_count} > 0'>
+        <if cond='{qst_array}'>
+        <ul>
+            <foreach cond='{qst_array} as {result}'>
+                <if cond='{result[qst_mbr_statut]} < QST_MBR_END'>
+                <li>
+                    <a href="qst-view.html?qid={result[qst_mbr_qid]}" title="Voir '{result[qst_title]}'"> {result[qst_title]} </a>
+                </li>
+                </if>
+            </foreach>
+        </ul>
+        <u><img style="width: 15px" src="img/1/comp/19.png" title="A valider" /> A valider</u>
+        <ul>
+            
+            <foreach cond='{qst_array} as {result}'>
+                <if cond='{result[qst_mbr_statut]} == QST_MBR_END'>
+                <li>
+                    <a href="qst-view.html?qid={result[qst_mbr_qid]}" title="Voir '{result[qst_title]}'">{result[qst_title]} </a>
+                </li>
+                </if>
+            </foreach>
+        </ul>
+        </if>
+    </if>
+    <else>Vous n'avez pas de quête en cours</else> 
 
 </if>
 
