@@ -294,7 +294,7 @@
 			<foreach cond="{qst_array} as {result}">
                 <load file="race/{result[qst_race]}.config" />
 				<tr>
-                    <td><if cond="{result[qst_common]} == 1"><img src="img/forum/0.png" title="Commune"/></if><else><img src="img/{result[qst_race]}/{result[qst_race]}.png" title="{race[{result[qst_race]}]}" /></else> <a href="qst-view_conf.html?qid={result[qst_id]}" title="Voir '{result[qst_title]}'">{result[qst_title]} - {qst_etat[{result[qst_mbr_statut]}]}</a></td>
+                    <td><if cond="{result[qst_common]} == 1"><img src="img/forum/0.png" title="Commune"/></if><else><img src="img/{result[qst_race]}/{result[qst_race]}.png" title="{race[{result[qst_race]}]}" /></else> {result[qst_title]} - {qst_etat[{result[qst_mbr_statut]}]}</td>
                     <td>{result[mbr_points]} / {result[qst_req_pts]}</td>
                     <td>{result[mbr_pts_armee]} / {result[qst_req_pts_armee]}</td>
                     <td><if cond="{result[qst_req_btc]} >0">{btc[{result[qst_race]}][alt][{result[qst_req_btc]}]}</if></td>
@@ -307,7 +307,7 @@
                     <if cond="{result[qst_rec_val2]} >0"> + {result[qst_rec_val2]} <img src="img/{result[qst_race]}/res/{result[qst_rec_res2]}.png" title="{res[{result[qst_race]}][alt][{result[qst_rec_res2]}]}" /></if></td>
                     <td>{result[qst_rec_xp]}</td>
                     <td><if cond='{_file}=="admin"'>
-                        <a href="admin-view.html?module=member&amp;mid={result[qst_mbr_mid]}&amp;qid={result[qst_mbr_qid]}"><img src="img/drop.png" title="Supprimer la quête de {result[mbr_pseudo]}!"/></a>
+                        <a href="javascript:if(confirm('Etes vous sûr de vouloir supprimer la quête?')) document.location.href='admin-view.html?module=member&amp;mid={result[qst_mbr_mid]}&amp;qid={result[qst_mbr_qid]}'"><img src="img/drop.png" title="Supprimer la quête de {result[mbr_pseudo]}!"/></a>
                         </if>
                     </td>
 				</tr>

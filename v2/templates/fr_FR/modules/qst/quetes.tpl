@@ -222,7 +222,7 @@
         Actions:
         <a href="qst-edit.html?qid={qst_array[qst_id]}&race={qst_array[qst_race]}"><img src="img/editer.png" alt="Editer" title="Editer" /></a>
         -
-        <a href="qst-del.html?qid={qst_array[qst_id]}"><img src="img/drop.png" alt="Supprimer" title="Supprimer" /></a><br/>
+        <a href="javascript:if(confirm('Etes vous sûr de vouloir supprimer la quête?')) document.location.href='qst-del.html?qid={qst_array[qst_id]}'"><img src="img/drop.png" alt="Supprimer" title="Supprimer" /></a><br/>
         Date: Le {qst_array[qst_date_formated]}<br/>
         Quête en ligne:  <if cond="{qst_array[qst_statut]} == QST_CFG_ON">Oui</if><else>Non</else><br/>
         Race: <img src="img/{qst_array[qst_race]}/{qst_array[qst_race]}.png" title="{race[{qst_array[qst_race]}]}" /><br/>
@@ -312,7 +312,7 @@
                          - 
                         <a href="index.php?file=qst&amp;act=edit&amp;qid={result[qst_id]}&race={result[qst_race]}"><img src="img/editer.png" alt="Editer" title="Editer" /></a>
                         -
-                        <a href="index.php?file=qst&amp;act=del&amp;qid={result[qst_id]}"><img src="img/drop.png" alt="Supprimer" title="Supprimer" /></a>
+                        <a href="javascript:if(confirm('Etes vous sûr de vouloir supprimer la quête?')) document.location.href='index.php?file=qst&amp;act=del&amp;qid={result[qst_id]}'"><img src="img/drop.png" alt="Supprimer" title="Supprimer" /></a>
                     </td>
 				</tr>
 			</foreach>
@@ -398,7 +398,7 @@
                 <load file="race/{result[qst_race]}.config" />
 				<tr>
 				    <td> <a href="qst-view.html?qid={result[qst_mbr_qid]}" title="Voir '{result[qst_title]}'">{result[qst_title]}</a></td>
-                    <td>{qst_etat[{result[qst_mbr_statut]}]} </td>
+                    <td><if cond="{result[qst_mbr_statut]} == QST_MBR_END"><img style="width: 25px" src="img/1/comp/19.png"  /></if>  {qst_etat[{result[qst_mbr_statut]}]} </td>
 				</tr>
 			</foreach>
 			</table>
