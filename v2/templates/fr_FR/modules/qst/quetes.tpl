@@ -252,8 +252,8 @@
                 <br/>
                 <br/>
             <h4>Récompenses: </h4>
-                <if cond="{qst_array[qst_rec_res1]} >0"> {qst_array[qst_rec_val1]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res1]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res1]}]}" /></if>  
-                <if cond="{qst_array[qst_rec_res2]} >0"> - {qst_array[qst_rec_val2]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res2]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res2]}]}" /></if>
+                <if cond="{qst_array[qst_rec_val1]} >0"> {qst_array[qst_rec_val1]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res1]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res1]}]}" /></if>  
+                <if cond="{qst_array[qst_rec_val2]} >0"> - {qst_array[qst_rec_val2]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res2]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res2]}]}" /></if>
                 <br/>    
                 <if cond="{qst_array[qst_rec_xp]} >0">Expérience: {qst_array[qst_rec_xp]} XP </if>
                 <br/>
@@ -265,8 +265,8 @@
 <elseif cond='{qst_act} == "conf"'> 
 
         <select name="filtre_race" onChange="location.href=''+this.options[this.selectedIndex].value+'';">
-            <option value="qst-conf.html?selrace=all" <if cond="{selrace} == {selrace}">selected</if>>Toutes</option>
-            <option value="qst-conf.html?selrace=com" <if cond="{selrace} == {selrace}">selected</if>>Commune</option>
+            <option value="qst-conf.html?selrace=all" <if cond="{selrace} == "all"">selected</if>>Toutes</option>
+            <option value="qst-conf.html?selrace=com" <if cond="{selrace} == "com"">selected</if>>Commune</option>
             <foreach cond="{_races} as {race_id} =>  {value}">
                 <if cond="{value} === true">
                 <option value="qst-conf.html?selrace={race_id}" <if cond="{race_id} == {selrace}">selected</if>>{race[{race_id}]}</option>
@@ -356,8 +356,8 @@
                 <br/>
                 <br/>
             <h4>Récompenses: </h4>
-                <if cond="{qst_array[qst_rec_res1]} > 0"> {qst_array[qst_rec_val1]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res1]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res1]}]}" /></if>  
-                <if cond="{qst_array[qst_rec_res2]} > 0"> - {qst_array[qst_rec_val2]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res2]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res2]}]}" /></if>
+                <if cond="{qst_array[qst_rec_val1]} > 0"> {qst_array[qst_rec_val1]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res1]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res1]}]}" /></if>  
+                <if cond="{qst_array[qst_rec_val2]} > 0"> - {qst_array[qst_rec_val2]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res2]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res2]}]}" /></if>
                 <br/>    
                 <if cond="{qst_array[qst_rec_xp]} >0">Expérience: {qst_array[qst_rec_xp]} XP </if>
                 <br/>
