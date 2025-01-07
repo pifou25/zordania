@@ -1,7 +1,7 @@
 <p class="menu_module">
 <a href="qst.html" title="Quetes">Quêtes</a>
 <if cond='{ses_admin} OR {_user[groupe]} == {GRP_SAGE} OR {_user[groupe]} == {GRP_NOBLE}'>
-- <a href="qst-conf.html" title="Config">Config</a>
+    - <a href="qst-conf.html<if cond='{qst_act} == "conf"'>?selrace={selrace}</if>" title="Config">Config</a>
 - <a href="qst-edit.html?qid=0&race=1" title="Ajouter une Quête">Nouvelle Quête</a>
 </if>
 </p>
@@ -343,21 +343,21 @@
 
 
              <h4>Avancement: </h4>
-                <if cond="{qst_array[qst_btc_nb1]} >0"> <span style="color:<if cond="{qst_array[qst_etat_btc1]} >= {qst_array[qst_btc_nb1]}">green</if><else>red</else>">{qst_array[qst_etat_btc1]}/{qst_array[qst_btc_nb1]}</span> <img src="img/{qst_array[qst_race]}/btc/{qst_array[qst_btc_id1]}.png" title="{unt[{qst_array[qst_race]}][alt][{qst_array[qst_btc_id1]}]}" /> {btc[{qst_array[qst_race]}][alt][{qst_array[qst_btc_id1]}]} </if> <br/>
-                <if cond="{qst_array[qst_btc_nb2]} >0"> <span style="color:<if cond="{qst_array[qst_etat_btc2]} >= {qst_array[qst_btc_nb2]}">green</if><else>red</else>">{qst_array[qst_etat_btc2]}/{qst_array[qst_btc_nb2]}</span> <img src="img/{qst_array[qst_race]}/btc/{qst_array[qst_btc_id2]}.png" title="{unt[{qst_array[qst_race]}][alt][{qst_array[qst_btc_id2]}]}" /> {btc[{qst_array[qst_race]}][alt][{qst_array[qst_btc_id2]}]}</if><br/>
+                <if cond="{qst_array[qst_btc_nb1]} > 0"> <span style="color:<if cond="{qst_array[qst_etat_btc1]} >= {qst_array[qst_btc_nb1]}">green</if><else>red</else>">{qst_array[qst_etat_btc1]}/{qst_array[qst_btc_nb1]}</span> <img src="img/{qst_array[qst_race]}/btc/{qst_array[qst_btc_id1]}.png" title="{unt[{qst_array[qst_race]}][alt][{qst_array[qst_btc_id1]}]}" /> {btc[{qst_array[qst_race]}][alt][{qst_array[qst_btc_id1]}]} </if> <br/>
+                <if cond="{qst_array[qst_btc_nb2]} > 0"> <span style="color:<if cond="{qst_array[qst_etat_btc2]} >= {qst_array[qst_btc_nb2]}">green</if><else>red</else>">{qst_array[qst_etat_btc2]}/{qst_array[qst_btc_nb2]}</span> <img src="img/{qst_array[qst_race]}/btc/{qst_array[qst_btc_id2]}.png" title="{unt[{qst_array[qst_race]}][alt][{qst_array[qst_btc_id2]}]}" /> {btc[{qst_array[qst_race]}][alt][{qst_array[qst_btc_id2]}]}</if><br/>
                 <br/>
-                <if cond="{qst_array[qst_unt_nb1]} >0"> <span style="color:<if cond="{qst_array[qst_etat_unt1]} >= {qst_array[qst_unt_nb1]}">green</if><else>red</else>">{qst_array[qst_etat_unt1]}/{qst_array[qst_unt_nb1]}</span> <img src="img/{qst_array[qst_race]}/unt/{qst_array[qst_unt_id1]}.png" title="{unt[{qst_array[qst_race]}][alt][{qst_array[qst_unt_id1]}]}" /> {unt[{qst_array[qst_race]}][alt][{qst_array[qst_unt_id1]}]}  </if>
-                <if cond="{qst_array[qst_unt_nb2]} >0"> et  <span style="color:<if cond="{qst_array[qst_etat_unt2]} >= {qst_array[qst_unt_nb2]}">green</if><else>red</else>">{qst_array[qst_etat_unt2]}/{qst_array[qst_unt_nb2]}</span> <img src="img/{qst_array[qst_race]}/unt/{qst_array[qst_unt_id2]}.png" title="{unt[{qst_array[qst_race]}][alt][{qst_array[qst_unt_id2]}]}" /> {unt[{qst_array[qst_race]}][alt][{qst_array[qst_unt_id2]}]}</if><br/>
+                <if cond="{qst_array[qst_unt_nb1]} > 0"> <span style="color:<if cond="{qst_array[qst_etat_unt1]} >= {qst_array[qst_unt_nb1]}">green</if><else>red</else>">{qst_array[qst_etat_unt1]}/{qst_array[qst_unt_nb1]}</span> <img src="img/{qst_array[qst_race]}/unt/{qst_array[qst_unt_id1]}.png" title="{unt[{qst_array[qst_race]}][alt][{qst_array[qst_unt_id1]}]}" /> {unt[{qst_array[qst_race]}][alt][{qst_array[qst_unt_id1]}]}  </if>
+                <if cond="{qst_array[qst_unt_nb2]} > 0"> et  <span style="color:<if cond="{qst_array[qst_etat_unt2]} >= {qst_array[qst_unt_nb2]}">green</if><else>red</else>">{qst_array[qst_etat_unt2]}/{qst_array[qst_unt_nb2]}</span> <img src="img/{qst_array[qst_race]}/unt/{qst_array[qst_unt_id2]}.png" title="{unt[{qst_array[qst_race]}][alt][{qst_array[qst_unt_id2]}]}" /> {unt[{qst_array[qst_race]}][alt][{qst_array[qst_unt_id2]}]}</if><br/>
                 <br/>
-                <if cond="{qst_array[qst_res_nb]} >0"> <span style="color:<if cond="{qst_array[qst_etat_res]} >= {qst_array[qst_res_nb]}">green</if><else>red</else>">{qst_array[qst_etat_res]}/{qst_array[qst_res_nb]}</span> <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_res_id]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_res_id]}]}" />{res[{qst_array[qst_race]}][alt][{qst_array[qst_res_id]}]} </if>
+                <if cond="{qst_array[qst_res_nb]} > 0"> <span style="color:<if cond="{qst_array[qst_etat_res]} >= {qst_array[qst_res_nb]}">green</if><else>red</else>">{qst_array[qst_etat_res]}/{qst_array[qst_res_nb]}</span> <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_res_id]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_res_id]}]}" />{res[{qst_array[qst_race]}][alt][{qst_array[qst_res_id]}]} </if>
                 <br/>
                 <br/>
-                <if cond="{qst_array[qst_src_id]} >0"><img src="img/{qst_array[qst_race]}/src/{qst_array[qst_src_id]}.png" title="{src[{qst_array[qst_race]}][alt][{qst_array[qst_src_id]}]}" /> <span style="color:<if cond="{qst_array[qst_etat_src]} ==0">red</if><else>green</else>">{src[{qst_array[qst_race]}][alt][{qst_array[qst_src_id]}]}</span></if>
+                <if cond="{qst_array[qst_src_id]} > 0"><img src="img/{qst_array[qst_race]}/src/{qst_array[qst_src_id]}.png" title="{src[{qst_array[qst_race]}][alt][{qst_array[qst_src_id]}]}" /> <span style="color:<if cond="{qst_array[qst_etat_src]} ==0">red</if><else>green</else>">{src[{qst_array[qst_race]}][alt][{qst_array[qst_src_id]}]}</span></if>
                 <br/>
                 <br/>
             <h4>Récompenses: </h4>
-                <if cond="{qst_array[qst_rec_res1]} >0"> {qst_array[qst_rec_val1]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res1]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res1]}]}" /></if>  
-                <if cond="{qst_array[qst_rec_res2]} >0"> - {qst_array[qst_rec_val2]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res2]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res2]}]}" /></if>
+                <if cond="{qst_array[qst_rec_res1]} > 0"> {qst_array[qst_rec_val1]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res1]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res1]}]}" /></if>  
+                <if cond="{qst_array[qst_rec_res2]} > 0"> - {qst_array[qst_rec_val2]} <img src="img/{qst_array[qst_race]}/res/{qst_array[qst_rec_res2]}.png" title="{res[{qst_array[qst_race]}][alt][{qst_array[qst_rec_res2]}]}" /></if>
                 <br/>    
                 <if cond="{qst_array[qst_rec_xp]} >0">Expérience: {qst_array[qst_rec_xp]} XP </if>
                 <br/>

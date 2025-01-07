@@ -238,6 +238,7 @@ else{
     case "conf":
          //filtre conf
             $selrace = request("selrace", "string", "get");
+            if(empty($selrace)) $selrace = $_user['race'];
             
         $qst_array = get_qst_cfg($qid, $selrace);
         $_tpl->set('qst_array',$qst_array);
