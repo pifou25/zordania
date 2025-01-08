@@ -29,7 +29,7 @@ if (!empty($mid_array)) {
                     
                     //On s'occupe des quêtes en cours
                     if($qst_row['qst_mbr_statut'] < QST_MBR_END) {
-
+                        /*-avancements-*/
                         //avancement des btc
                         if($qst_row['qst_btc_nb1'] > 0 ){
                             $get_btc = get_nb_btc_done($mbr_mid, array( $qst_row['qst_btc_id1']));
@@ -106,18 +106,16 @@ if (!empty($mid_array)) {
                             }    
                         }
 
-                        //est-ce que tout est validé
-                        $btcValid = ($qst_row['qst_btc_nb1'] == 0 || $etat_btc_1 >= $qst_row['qst_btc_nb1']) 
-                        && ($qst_row['qst_btc_nb2'] == 0 || $etat_btc_2 >= $qst_row['qst_btc_nb2']);
-
-                        $untValid = ($qst_row['qst_unt_nb1'] == 0 || $etat_unt_1 >= $qst_row['qst_unt_nb1']) 
-                            && ($qst_row['qst_unt_nb2'] == 0 || $etat_unt_2 >= $qst_row['qst_unt_nb2']);
-
-                        $resValid = ($qst_row['qst_res_nb'] == 0 || $etat_res >= $qst_row['qst_res_nb']);
+                        /*- est-ce que tout est validé -*/
+                        $btcValid1  = valid_qst($qst_row['qst_btc_nb1'], $etat_btc_1); 
+                        $btcValid2 = valid_qst($qst_row['qst_btc_nb2'], $etat_btc_2); 
+                        $untValid1  = valid_qst($qst_row['qst_unt_nb1'], $etat_unt_1); 
+                        $untValid2  = valid_qst($qst_row['qst_unt_nb2'], $etat_unt_2); 
+                        $resValid   = valid_qst($qst_row['qst_res_nb'], $etat_res); 
 
                         $srcValid = ($qst_row['qst_src_id'] == 0 || $etat_src >= 1);
 
-                        if ($btcValid && $untValid && $resValid && $srcValid) {
+                        if ($btcValid1 && $btcValid2 && $untValid1 && $untValid2 && $resValid && $srcValid) {
 
                             $new = array('statut' => QST_MBR_END );
                             edit_qst($mbr_mid, $qid, $new); //mettre la quête comme terminée
@@ -155,24 +153,9 @@ if (!empty($mid_array)) {
                         //pts et pts armée?                        
                         $mbr_pts = $row['mbr_points']; 
                         $mbr_pts_armee = $row['mbr_pts_armee']; 
-                        
-                        if ($qst_row['qst_req_pts'] > 0) {
-                            $btcValid = false; 
-                            
-                            if (!empty($mbr_pts)) {
-                                $ptsValid = ($mbr_pts > $qst_row['qst_req_pts']);
-                            }
-                        } 
-                        else $ptsValid = true; 
-                        
-                        if ($qst_row['qst_req_pts_armee'] > 0) {
-                            $ptsarmeeValid = false; 
-                            
-                            if (!empty($mbr_pts_armee)) {
-                                $ptsarmeeValid = ($mbr_pts_armee > $qst_row['qst_req_pts_armee']);
-                            }
-                        } 
-                        else $ptsarmeeValid = true; 
+                                                
+                        $ptsValid       = valid_qst($qst_row['qst_req_pts'], $mbr_pts);                         
+                        $ptsarmeeValid  = valid_qst($qst_row['qst_req_pts_armee'], $mbr_pts_armee); 
                         
                         //btc requis ok?
                         if ($qst_row['qst_req_btc'] > 0) {

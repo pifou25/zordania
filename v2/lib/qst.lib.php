@@ -251,6 +251,7 @@ function add_qst($mid, $qid)
 	return $_sql->query($sql);
 }
 
+
 function get_count($mid)
 {
 	global $_sql;
@@ -270,5 +271,18 @@ function cls_qst($mid, $qid=0) {
     $sql.=" AND qst_mbr_qid = $qid ";
 	$_sql->query($sql);
 	return $_sql->affected_rows();
+}
+
+function valid_qst($config, $etat)
+{
+    if ($config > 0) {
+        $valid = false; 
+
+        if (!empty($etat)) {
+            $valid = ($etat >= $config);
+        }
+    } 
+    else $valid = true; 
+	return $valid;
 }
 ?>

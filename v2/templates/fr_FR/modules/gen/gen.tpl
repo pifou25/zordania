@@ -90,7 +90,7 @@
 
 
  
-<h4>Quêtes en cours:</h4>
+<h4>Quêtes en cours: </h4>
     <if cond='{qst_count} > 0'>
         <if cond='{qst_array}'>
         <ul>
@@ -101,7 +101,7 @@
                 </li>
                 </if>
             </foreach>
-        </ul>
+        </ul> </br>
         <u><img style="width: 15px" src="img/1/comp/19.png" title="A valider" /> A valider</u>
         <ul>
             
@@ -116,7 +116,7 @@
         </if>
     </if>
     <else>Vous n'avez pas de quête en cours</else> 
-
+ </br>
 </if>
 
 		<if cond="!empty({comming_array})">
