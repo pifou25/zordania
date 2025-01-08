@@ -40,6 +40,8 @@ if (!empty($mid_array)) {
 
                                     $new = array('btc1' => $btc_nb);
                                     edit_qst($mbr_mid, $qid, $new);
+                                
+                                    $etat_btc_1 = $new['btc1'];
                             }
                         }                    
                         if($qst_row['qst_btc_nb2'] > 0 ){
@@ -51,6 +53,8 @@ if (!empty($mid_array)) {
 
                                     $new = array('btc2' => $btc_nb);
                                     edit_qst($mbr_mid, $qid, $new);
+                                    
+                                    $etat_btc_2 = $new['btc2'];
                             }
                         }
 
@@ -62,6 +66,8 @@ if (!empty($mid_array)) {
 
                                 $new = array('unt1' => $get_unt['unt_sum'] );
                                 edit_qst($mbr_mid, $qid, $new);
+                                
+                                $etat_unt_1 = $new['unt1'];
                             }
                         }                    
                         if($qst_row['qst_unt_nb2'] > 0 ){
@@ -71,6 +77,8 @@ if (!empty($mid_array)) {
 
                                 $new = array('unt2' => $get_unt['unt_sum'] );
                                 edit_qst($mbr_mid, $qid, $new);
+                                
+                                $etat_unt_2 = $new['unt2'];
                             }
                         }
 
@@ -82,6 +90,8 @@ if (!empty($mid_array)) {
 
                                 $new = array('res' => $get_res['res_type'.$qst_row['qst_res_id']] );
                                 edit_qst($mbr_mid, $qid, $new);
+                                
+                                $etat_res = $new['res'];
                             } 
                         }
 
@@ -91,19 +101,21 @@ if (!empty($mid_array)) {
 
                                 $new = array('src' => 1 );
                                 edit_qst($mbr_mid, $qid, $new);
+                                
+                                $etat_src = $new['src'];
                             }    
                         }
 
                         //est-ce que tout est validé
-                        $btcValid = ($qst_row['qst_btc_nb1'] == 0 || $qst_row['qst_etat_btc1'] >= $qst_row['qst_btc_nb1']) 
-                        && ($qst_row['qst_btc_nb2'] == 0 || $qst_row['qst_etat_btc2'] >= $qst_row['qst_btc_nb2']);
+                        $btcValid = ($qst_row['qst_btc_nb1'] == 0 || $etat_btc_1 >= $qst_row['qst_btc_nb1']) 
+                        && ($qst_row['qst_btc_nb2'] == 0 || $etat_btc_2 >= $qst_row['qst_btc_nb2']);
 
-                        $untValid = ($qst_row['qst_unt_nb1'] == 0 || $qst_row['qst_etat_unt1'] >= $qst_row['qst_unt_nb1']) 
-                            && ($qst_row['qst_unt_nb2'] == 0 || $qst_row['qst_etat_unt2'] >= $qst_row['qst_unt_nb2']);
+                        $untValid = ($qst_row['qst_unt_nb1'] == 0 || $etat_unt_1 >= $qst_row['qst_unt_nb1']) 
+                            && ($qst_row['qst_unt_nb2'] == 0 || $etat_unt_2 >= $qst_row['qst_unt_nb2']);
 
-                        $resValid = ($qst_row['qst_res_nb'] == 0 || $qst_row['qst_etat_res'] >= $qst_row['qst_res_nb']);
+                        $resValid = ($qst_row['qst_res_nb'] == 0 || $etat_res >= $qst_row['qst_res_nb']);
 
-                        $srcValid = ($qst_row['qst_src_id'] == 0 || $qst_row['qst_etat_src'] >= 1);
+                        $srcValid = ($qst_row['qst_src_id'] == 0 || $etat_src >= 1);
 
                         if ($btcValid && $untValid && $resValid && $srcValid) {
 

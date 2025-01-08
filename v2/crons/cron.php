@@ -192,20 +192,20 @@ $acts = array();
 
 switch(ZORD_SPEED) {
 case ZORD_SPEED_VFAST:
-	scl("1m", "mbr", array("res", "unt", "btc", "src", "mbr", "qst"));
+	scl("1m", "mbr", array("res", "unt", "btc", "src", "mbr"));
 
 	scl("5m", "glob", array("com"));
-	scl("1m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl', "cache", "pts"));
+	scl("1m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl', "cache", "pts", "qst"));
 	scl("1h", "glob", array("aly", "mbr"));
 
 	scl("15m", "glob", array("stats"));
 	break;
 case ZORD_SPEED_FAST:
-    scl("5m", "mbr", array("unt", "btc", "src", "mbr"));
-    scl("10m", "mbr", array("res"));
+    scl("5m", "mbr", array("res", "unt", "btc", "src", "mbr"));
+    //scl("10m", "mbr", array("res"));
 
     scl("5m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl', "cache", "com", "qst"));
-    scl("6h", "glob", array("aly", "mbr", "pts"));
+    scl("1h", "glob", array("aly", "mbr", "pts"));
 
     scl("15m", "glob", array("stats"));
     break;
@@ -213,7 +213,7 @@ case ZORD_SPEED_NORMAL:
 	scl("30m", "mbr", array("res", "unt", "btc", "src", "mbr"));
 
 	scl("5m", "glob", array("cache", "com", "qst"));
-	scl("30m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl'));
+	scl("30m", "glob", array("leg", "res", "unt", "btc", "src", 'dpl', "qst"));
 	scl("6h", "glob", array("aly", "mbr", "pts"));
 
 	scl("15m", "glob", array("stats"));
@@ -222,7 +222,7 @@ case ZORD_SPEED_MEDIUM:
 	scl("15m", "mbr", array("res", "unt", "btc", "src", "mbr"));
 
 	scl("5m", "glob", array("cache", "com", "qst"));
-	scl("15m", "glob", array("leg", "res", "unt", "btc", "src","stats", 'dpl'));
+	scl("15m", "glob", array("leg", "res", "unt", "btc", "src","stats", 'dpl', "qst"));
 	scl("1h", "glob", array("aly", "mbr", "pts"));
 
 	scl("24h", "glob", array("stats"));
@@ -232,7 +232,7 @@ case ZORD_SPEED_SLOW:
 	scl("1h", "mbr", array("res", "unt", "btc", "src", "mbr"));
 
 	scl("5m", "glob", array("cache", "com", "qst"));
-	scl("1h", "glob", array("stats", "leg", "res", "unt", "btc", "src","stats", 'dpl'));
+	scl("1h", "glob", array("stats", "leg", "res", "unt", "btc", "src","stats", 'dpl', "qst"));
 	scl("6h", "glob", array("mbr", "pts", "aly"));
 
 	scl("24h", "glob", array( "map"));
