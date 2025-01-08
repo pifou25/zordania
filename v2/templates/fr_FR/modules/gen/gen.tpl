@@ -87,7 +87,7 @@
 </if>
 <else><p>Compétence : <a href="manual.html?race={_user[race]}&amp;type=comp#comp_{_user[bonus]}"><zimgcomp race="{_user[race]}" type="{_user[bonus]}" /> {comp[{_user[race]}][alt][{_user[bonus]}]} </a></p>
 </else>
-
+</if>
 
  
 <h4>Quêtes en cours: </h4>
@@ -117,7 +117,6 @@
     </if>
     <else>Vous n'avez pas de quête en cours</else> 
  </br>
-</if>
 
 		<if cond="!empty({comming_array})">
 			<ul>
