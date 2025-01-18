@@ -154,7 +154,7 @@ function del_qst_cfg($qid)
 /*----  Lib Quest user  ---*/
 /*-------------------------*/
 
-function get_qst($mid, $qid=0)
+function get_qst($mid=0, $qid=0)
 {
 	global $_sql;
 	
@@ -165,7 +165,7 @@ function get_qst($mid, $qid=0)
 	$sql .=" FROM ".$_sql->prebdd."qst";
 	$sql .=" INNER JOIN ".$_sql->prebdd."qst_cfg ON qst_mbr_qid = qst_id";
 	$sql .=" INNER JOIN ".$_sql->prebdd."mbr ON qst_mbr_mid = mbr_mid";
-	$sql .=" WHERE qst_mbr_mid = $mid";
+	if($mid) $sql .=" WHERE qst_mbr_mid = $mid";
     
     if($qid)
     $sql.=" AND qst_mbr_qid = $qid ";

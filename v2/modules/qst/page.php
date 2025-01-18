@@ -254,6 +254,24 @@ else{
                 $qst_array = $qst_array[0];
                 $_tpl->set('qst_array',$qst_array);
                 
+                
+                //on revérifie les conditions
+                $btcValid1  = valid_qst($qst_array['qst_btc_nb1'], $qst_array['qst_etat_btc1']); 
+                $btcValid2 = valid_qst($qst_array['qst_btc_nb2'], $qst_array['qst_etat_btc2']); 
+                $untValid1  = valid_qst($qst_array['qst_unt_nb1'], $qst_array['qst_etat_unt1']); 
+                $untValid2  = valid_qst($qst_array['qst_unt_nb2'], $qst_array['qst_etat_unt2']); 
+                $resValid   = valid_qst($qst_array['qst_res_nb'], $qst_array['qst_etat_res']); 
+                $srcValid = ($qst_array['qst_src_id'] == 0 || $qst_array['qst_etat_src'] >= 1);
+
+                if ($btcValid1 && $btcValid2 && $untValid1 && $untValid2 && $resValid && $srcValid) {
+
+                    $new = array('statut' => QST_MBR_END );
+                    edit_qst($_user['mid'], $qid, $new); //mettre la quête comme terminée
+                    $qst_array['qst_mbr_statut'] = $new['statut'];
+                    
+                }
+                
+                //statut
                 if ($qst_array['qst_mbr_statut'] == QST_MBR_NEW) {
                     $new = array('statut' => QST_MBR_START );
                     edit_qst($_user['mid'], $qid, $new);
