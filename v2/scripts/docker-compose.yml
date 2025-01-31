@@ -1,0 +1,89 @@
+# https://zordania.com
+# le fichier .env contient les variables d'environnement
+# .env
+# MARIADB_ROOT_PASSWORD=admin
+# MARIADB_DATABASE=zordania
+# MARIADB_USER=zordania
+# MARIADB_PASSWORD=mypwd
+# TZ=Europe/Paris
+#
+
+services:
+  zordania:
+    # build depuis Dockerfile
+    build:
+      context: ../
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      # url du site: http://localhost:8088
+      - 8088:80
+    environment:
+      # variables du fichier .env
+      MARIADB_HOST: "mydb"
+      MARIADB_DATABASE: "${MARIADB_DATABASE}"
+      MARIADB_USER: "${MARIADB_USER}"
+      MARIADB_PASSWORD: "${MARIADB_PASSWORD}"
+    labels:
+      # label chadburn pour les "cron" : déclenche les tours
+      chadburn.enabled: "true"
+      chadburn.job-exec.zordania-cron.schedule: "@every 5m"
+      chadburn.job-exec.zordania-cron.command: "/var/www/html/scripts/cron.sh >> /var/www/html/log/cron.log 2>&1"
+    depends_on:
+      - mydb
+      - scheduler
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "1"
+
+
+  mydb:
+    image: mariadb:11 # for pi3/4: ghcr.io/linuxserver/mariadb
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - TZ=${TZ}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p${MARIADB_ROOT_PASSWORD}"]
+      interval: 1m30s
+      retries: 3
+      start_period: 40s
+      timeout: 20s
+    volumes:
+      # database filesystem
+      - ./volumes/db:/var/lib/mysql
+      # directory for init sql and scripts
+      - ../tools/zordania_base.sql:/docker-entrypoint-initdb.d/init.sql
+    labels:
+      # label chadburn : backup quotidien de la bdd
+      chadburn.enabled: "true"
+      chadburn.job-exec.zordania-backup.schedule: "@every 1d"
+      chadburn.job-exec.zordania-backup.command: "mysqldump -d${MARIADB_DATABASE} -u${MARIADB_USER} -p\"${MARIADB_PASSWORD}\"' > /backup/zordania.sql"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "1"
+
+
+  # Scheduler Service: déclenche les crons des autres services via leur labels
+  scheduler:
+    image: premoweb/chadburn
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: daemon
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "1"
+
+networks:
+  zrd_network:

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* 
  * constantes du jeu
  * ces constantes ne doivent en aucun cas être modifiées
