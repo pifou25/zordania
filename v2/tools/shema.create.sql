@@ -754,6 +754,7 @@ CREATE TABLE IF NOT EXISTS `zrd_mbr` (
   `mbr_numposts` int(11) NOT NULL DEFAULT '0',
   `mbr_sexe` smallint(6) DEFAULT NULL,
   `mbr_votes` int(11) DEFAULT NULL,
+  `mbr_rel_mail` int(10) NOT NULL,
   PRIMARY KEY (`mbr_mid`),
   UNIQUE KEY `mbr_mail` (`mbr_mail`),
   UNIQUE KEY `mbr_pseudo` (`mbr_pseudo`),

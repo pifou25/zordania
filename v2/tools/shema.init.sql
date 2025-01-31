@@ -248,6 +248,7 @@ CREATE TABLE `zrd_btc` (
   `btc_type` smallint(3) unsigned NOT NULL DEFAULT '0',
   `btc_vie` smallint(6) unsigned NOT NULL DEFAULT '0',
   `btc_etat` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `btc_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`btc_id`),
   KEY `btc_mid_type` (`btc_mid`,`btc_type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -937,6 +938,7 @@ CREATE TABLE `zrd_mbr` (
   `mbr_numposts` int(11) NOT NULL DEFAULT '0',
   `mbr_sexe` smallint(6) DEFAULT NULL,
   `mbr_votes` int(11) DEFAULT NULL,
+  `mbr_rel_mail` int(10) NOT NULL,
   PRIMARY KEY (`mbr_mid`),
   UNIQUE KEY `mbr_mail` (`mbr_mail`),
   UNIQUE KEY `mbr_pseudo` (`mbr_pseudo`),
