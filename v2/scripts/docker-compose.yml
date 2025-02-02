@@ -85,5 +85,14 @@ services:
         max-size: "10m"
         max-file: "1"
 
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+
 networks:
   zrd_network:
