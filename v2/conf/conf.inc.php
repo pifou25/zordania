@@ -101,7 +101,7 @@ $_limite_grenier = array(
 	 );
 
 /* Attaques */
-define('ATQ_MAX_NB24H', 5);
+define('ATQ_MAX_NB24H', 3);
 define('ATQ_PTS_DIFF', 3200);  /* Trop de points de différences */
 define('ATQ_PTS_MIN', 50);  /* Pas assez de points armée pour attaquer */
 define('ATQ_LIM_DIFF', 24000); /* Arène  =>  dépends des points armée */
@@ -127,7 +127,7 @@ define('SAIS_GAIN', 20); //avance en xp quand on est roi
  * Conseillé : ZZZ_TRIGGER >= ZZZ_MIN
  */
 define('ZZZ_TRIGGER',7); // Temps de mise en veille automatique
-define('ZZZ_MIN',6); // Durée minimale de mise en veille
+define('ZZZ_MIN',3); // Durée minimale de mise en veille
 
 /* Limites de points pour afficher un donjon ou une forteresse */
 define('MAP_REGIONS', 9); /* Divisé en 9 */
