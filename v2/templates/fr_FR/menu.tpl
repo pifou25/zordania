@@ -76,18 +76,19 @@
 <div class="menu_gauche">
 <h2><label for="menu3">Liens</label></h2>
 <input id="menu3" name="menu" type="radio" />
-<ul>
-	<li>
-		<a href="https://twitter.com/Zordania" title="Twittes pour Zordania!">Twitter</a>
-	</li>
-	<li>
-		<a href="https://fr-fr.facebook.com/zordania2015" title="Facebook">Facebook</a>
-	</li>
+<ul>	
+	<li><a href="a_propos-roi.html" title="Rois et Reines">Rois et Reines</a></li>
+	<li><a href="a_propos-le_site.html" title="A propos!">A propos!</a></li>
+	<li><a href="https://twitter.com/Zordania" title="Twittes pour Zordania!">Twitter</a></li>
+	<li><a href="https://fr-fr.facebook.com/zordania2015" title="Facebook">Facebook</a></li>
+    
+<!--     
 	<li>
 		<a href="http://www.tourdejeu.net/annu/fichejeu.php?id=9167" title="tourdejeu">tourdejeu.net</a>
 	</li>
 	<li>
 		<a href="http://www.jeux-web.com/" title="La communauté des joueurs de jeux en ligne alternatifs">Jeux-Web.com</a>
 	</li>
+ -->
 </ul>
 </div>
