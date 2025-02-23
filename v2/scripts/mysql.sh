@@ -2,5 +2,5 @@
 
 thedate=`/bin/date +%D | /usr/bin/tr ./. .-.`
 cd /home/zordania/backup/
-/usr/bin/mysqldump -hlocalhost -u zordania -pqima06 zordv2  > zordv2.dump.$thedate
-gzip zordv2.dump.$thedate
+/usr/bin/mysqldump -u USER -pPASSWORD DBNAME  > zordania.dump.$thedate
+gzip zordania.dump.$thedate
