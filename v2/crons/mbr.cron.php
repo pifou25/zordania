@@ -83,9 +83,35 @@ function glob_mbr() {
 		}
 
 	}
-    
-    /* Saison point XP */
-   if($_c == "24h" && date('j') == 1 && (date('n') - 1) % SAIS_INTERVAL == 0) {
+     
+}
+
+function mbr_mbr( &$user) {
+	global $_sql;
+	// soigner le heros s'il est au village
+	if (isset($user['hro']) && $user['hro']['leg_cid'] == $user['mbr_mapcid']) {
+		$vie_max = get_conf_gen($user['mbr_race'], 'unt', $user['hro']['hro_type'], 'vie');
+		// s'il n'est pas mort et qu'il n'est pas au max
+		if ($user['hro']['hro_vie'] < $vie_max && $user['hro']['hro_vie'] > 0) {
+			$addvie = 5; // soigner le heros de +5PDV
+
+			if ($user['hro']['hro_bonus'] == CP_REGENERATION || $user['hro']['hro_bonus'] == CP_REGENERATION_ORC )
+			{ // compétence régénération
+				$bonus = get_conf_gen($user['mbr_race'], 'comp', $user['hro']['hro_bonus'], 'bonus');
+				$addvie = $addvie * (1 + $bonus / 100);
+			}
+
+			$vie = $user['hro']['hro_vie'] + $addvie; // soigner le heros de +5PDV
+			if ($vie > $vie_max) $vie = $vie_max;
+			$sql = 'UPDATE '.$_sql->prebdd."hero SET hro_vie = $vie WHERE hro_lid = ".$user['hro']['hro_lid'];
+			$_sql->query($sql);
+		}
+	}
+}
+
+ /* Saison point XP */   
+    //tous les premier des mois impairs
+    if( date('H') == 00 && date('d') == 1 && in_array(date('m'), [1,3,5,7,9,11]) ) {
        
         /*-- Roi de zordania --*/
         //si le roi de zordania est inactif on le détrone
@@ -178,31 +204,5 @@ function glob_mbr() {
         }     
         
     }
-    
-    
-}
-
-function mbr_mbr( &$user) {
-	global $_sql;
-	// soigner le heros s'il est au village
-	if (isset($user['hro']) && $user['hro']['leg_cid'] == $user['mbr_mapcid']) {
-		$vie_max = get_conf_gen($user['mbr_race'], 'unt', $user['hro']['hro_type'], 'vie');
-		// s'il n'est pas mort et qu'il n'est pas au max
-		if ($user['hro']['hro_vie'] < $vie_max && $user['hro']['hro_vie'] > 0) {
-			$addvie = 5; // soigner le heros de +5PDV
-
-			if ($user['hro']['hro_bonus'] == CP_REGENERATION || $user['hro']['hro_bonus'] == CP_REGENERATION_ORC )
-			{ // compétence régénération
-				$bonus = get_conf_gen($user['mbr_race'], 'comp', $user['hro']['hro_bonus'], 'bonus');
-				$addvie = $addvie * (1 + $bonus / 100);
-			}
-
-			$vie = $user['hro']['hro_vie'] + $addvie; // soigner le heros de +5PDV
-			if ($vie > $vie_max) $vie = $vie_max;
-			$sql = 'UPDATE '.$_sql->prebdd."hero SET hro_vie = $vie WHERE hro_lid = ".$user['hro']['hro_lid'];
-			$_sql->query($sql);
-		}
-	}
-}
 
 ?>
