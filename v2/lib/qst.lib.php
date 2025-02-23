@@ -35,7 +35,7 @@ function add_qst_cfg($mid, $titre, $descr, $qst_statut, $race, $qst_com, $req_qu
     $rec_res_val1 = protect($rec_res_val1, "uint");
     $rec_res_id2 = protect($rec_res_id2, "uint");
     $rec_res_val2 = protect($rec_res_val2, "uint");
-    $rec_xp = protect($req_pts_armee, "uint");
+    $rec_xp = protect($rec_xp, "uint");
 	
 	$sql = "INSERT INTO ".$_sql->prebdd."qst_cfg (`qst_mid`, `qst_title`, `qst_descr`, `qst_statut`, `qst_race`, `qst_common`, `qst_req_qid`, `qst_req_pts`, `qst_req_pts_armee`, `qst_req_btc`, `qst_req_src`, `qst_btc_id1`, `qst_btc_nb1`, `qst_btc_id2`, `qst_btc_nb2`, `qst_unt_id1`, `qst_unt_nb1`, `qst_unt_id2`, `qst_unt_nb2`,`qst_res_id`, `qst_res_nb`, `qst_src_id`, `qst_rec_res1`, `qst_rec_val1`, `qst_rec_res2`, `qst_rec_val2`, `qst_rec_xp`) VALUES ($mid,'$titre','$descr','$qst_statut','$race','$qst_com','$req_quest','$req_pts','$req_pts_armee','$req_btc','$req_src','$btc_id_1','$btc_nb_1','$btc_id_2','$btc_nb_2','$unt_id_1','$unt_nb_1','$unt_id_2','$unt_nb_2','$res_id','$res_nb','$src_id','$rec_res_id1','$rec_res_val1','$rec_res_id2','$rec_res_val2','$rec_xp')";
 	return $_sql->query($sql);
@@ -127,7 +127,7 @@ function edit_qst_cfg($qid, $mid, $titre, $descr, $qst_statut, $race, $qst_com, 
     $rec_res_val1 = protect($rec_res_val1, "uint");
     $rec_res_id2 = protect($rec_res_id2, "uint");
     $rec_res_val2 = protect($rec_res_val2, "uint");
-    $rec_xp = protect($req_pts_armee, "uint");
+    $rec_xp = protect($rec_xp, "uint");
 	
 	$sql="UPDATE ".$_sql->prebdd."qst_cfg SET qst_title = '$titre', qst_descr = '$descr', qst_statut = '$qst_statut', qst_race = '$race', qst_common = '$qst_com', qst_req_qid = '$req_quest', qst_req_pts = '$req_pts', qst_req_pts_armee = '$req_pts_armee', qst_req_btc = '$req_btc', qst_req_src = '$req_src', qst_btc_id1 = '$btc_id_1', qst_btc_nb1 = '$btc_nb_1', qst_btc_id2 = '$btc_id_2', qst_btc_nb2 = '$btc_nb_2', qst_unt_id1 = '$unt_id_1', qst_unt_nb1 = '$unt_nb_1', qst_unt_id2 = '$unt_id_2', qst_unt_nb2 = '$unt_nb_2', qst_res_id = '$res_id', qst_res_nb = '$res_nb' , qst_src_id = '$src_id' , qst_rec_res1 = '$rec_res_id1' , qst_rec_val1 = '$rec_res_val1' , qst_rec_res2 = '$rec_res_id2' , qst_rec_val2 = '$rec_res_val2' , qst_rec_xp = '$rec_xp' WHERE qst_id = $qid" ;
 	$_sql->query($sql);
