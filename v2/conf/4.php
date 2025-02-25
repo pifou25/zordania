@@ -589,9 +589,10 @@ class config4
 
         $this->unt[U4_ASSASSIN] = array(
             "def"    =>    6,
-            "vie"        =>    16,
-            "atq_unt"    =>    11,
-            "vit"        =>    9,
+            "vie"        =>    18,
+            "atq_unt"    =>    12,
+            "vit"        =>    10,
+            "bonus" => array('vie' => 1),
             "prix_res"        =>    array(R4_HACHE => 1),
             "need_btc"    =>    array(B4_MAISON_LAMES),
             "in_btc"        =>    array(B4_MAISON_LAMES),
@@ -601,144 +602,42 @@ class config4
             "rang" => 2,
         );
 
-        $this->unt[U4_OMBRE] = array(
+        $this->unt[U4_W_GUERRIER] = array(
             "def"    =>    10,
             "vie"        =>    18,
-            "atq_unt"    =>    17,
-            "vit"        =>    7,
-            "prix_res"        =>    array(R4_HACHE => 1, R4_BOUCLIER => 1, R4_ACIER => 1),
-            "need_btc"    =>    array(B4_MAISON_LAMES),
-            "in_btc"        =>    array(B4_MAISON_LAMES),
-            "prix_unt"        =>    array(U4_CONVOQUE => 1),
-            "group"        =>    9,
-            "role"        =>    TYPE_UNT_INFANTERIE,
-            "rang" => 3,
-        );
-
-        $this->unt[U4_BRIGAND] = array(
-            "def"    =>    7,
-            "vie"        =>    15,
-            "atq_unt"    =>    10,
-            "vit"        =>    9,
-            "prix_res"        =>    array(R4_ARC => 1),
-            "need_btc"    =>    array(B4_MAISON_LAMES),
-            "in_btc"        =>    array(B4_MAISON_LAMES),
-            "prix_unt"        =>    array(U4_CONVOQUE => 1),
-            "group"        =>    11,
-            "role"        =>    TYPE_UNT_DISTANCE,
-            "rang" => 15,
-        );
-
-        $this->unt[U4_CAPUCHE_NOIRE] = array(
-            "def"    =>    17,
-            "vie"        =>    18,
-            "atq_unt"    =>    16,
-            "vit"        =>    7,
-            "prix_res"        =>    array(R4_ARC => 1, R4_BOUCLIER => 1, R4_ACIER => 1),
-            "need_btc"    =>    array(B4_MAISON_LAMES),
-            "in_btc"        =>    array(B4_MAISON_LAMES),
-            "prix_unt"        =>    array(U4_CONVOQUE => 1),
-            "group"        =>    11,
-            "role"        =>    TYPE_UNT_DISTANCE,
-            "rang" => 12,
-        );
-
-        $this->unt[U4_HALLEBARDIER_NOIR] = array(
-            "def"    =>    16,
-            "vie"        =>    20,
-            "atq_unt"    =>    29,
-            "vit"        =>    12,
-            "need_src" =>    array(S4_ARMEE_3),
-            "prix_res"        =>    array(R4_WORGS => 1, R4_BOUCLIER => 1, R4_HALLEBARDE => 1),
-            "need_btc"    =>    array(B4_G_LAMES),
-            "in_btc"        =>    array(B4_G_LAMES),
-            "prix_unt"        =>    array(U4_CONVOQUE => 1),
-            "group"        =>    13,
-            "role"        =>    TYPE_UNT_INFANTERIE,
-            "rang" => 8,
-        );
-
-        $this->unt[U4_ARBLALETRIER_NOIR] = array(
-            "def"    =>    18,
-            "vie"        =>    13,
-            "atq_unt"    =>    13,
-            "vit"        =>    8,
+            "atq_unt"    =>    11,
+            "vit"        =>    11,
             "bonus" => array('vie' => 1),
-            "need_src" =>    array(S4_ARMEE_3),
-            "prix_res"        =>    array(R4_WORGS => 1, R4_ARBALETE => 1, R4_C_NOIR => 1, R4_OR => 6),
-            "need_btc"    =>    array(B4_G_LAMES),
-            "in_btc"        =>    array(B4_G_LAMES),
-            "prix_unt"        =>    array(U4_CONVOQUE => 1),
-            "group"        =>    13,
-            "role"        =>    TYPE_UNT_DISTANCE,
-            "rang" => 13,
-        );
-
-        $this->unt[U4_GEANT_ROCHE] = array(
-            "def"    =>    20,
-            "vie"        =>    28,
-            "atq_unt"    =>    20,
-
-            "vit"        =>    7,
-            "need_src" =>    array(S4_ARMEE_3),
-            "prix_res"        =>    array(R4_NOURITURE => 200, R4_MASSUE => 1, R4_ACIER => 2, R4_C_MITHRIL => 1),
-            "need_btc"    =>    array(B4_G_LAMES),
-            "in_btc"        =>    array(B4_G_LAMES),
-            "prix_unt"        =>    array(U4_DRESSEUR => 1),
-            "group"        =>    13,
-            "role"        =>    TYPE_UNT_INFANTERIE,
-            "rang" => 4,
-        );
-
-        $this->unt[U4_AILES_NOCTURNES] = array(
-            "def"    =>    3,
-            "vie"        =>    12,
-            "atq_unt"    =>    7,
-            "vit"        =>    20,
-            "prix_res"        =>    array(R4_NOURITURE => 50),
-            "need_btc"    =>    array(B4_AIRE_DRESSAGE),
-            "in_btc"        =>    array(B4_AIRE_DRESSAGE),
-            "prix_unt"        =>    array(U4_DRESSEUR => 1),
-            "group"        =>    16,
-            "role"        =>    TYPE_UNT_INFANTERIE,
-            "rang" => 9,
-        );
-
-        $this->unt[U4_A_TISSEUSE] = array(
-            "def"    =>    25,
-            "vie"        =>    20,
-            "atq_unt"    =>    18,
-            "vit"        =>    8,
-            "prix_res"        =>    array(R4_NOURITURE => 200, R4_ACIER => 4),
-            "need_btc"    =>    array(B4_AIRE_DRESSAGE),
-            "in_btc"        =>    array(B4_AIRE_DRESSAGE),
-            "prix_unt"        =>    array(U4_DRESSEUR => 1),
-            "group"        =>    16,
-            "role"        =>    TYPE_UNT_INFANTERIE,
-            "rang" => 6,
-        );
-
-        $this->unt[U4_W_GUERRIER] = array(
-            "def"    =>    12,
-            "vie"        =>    16,
-            "atq_unt"    =>    18,
-            "atq_btc"    =>    3,
-            "vit"        =>    12,
             "prix_res"        =>    array(R4_NOURITURE => 300, R4_ACIER => 2),
             "need_btc"    =>    array(B4_G_DRESSEURS),
             "in_btc"        =>    array(B4_G_DRESSEURS),
             "prix_unt"        =>    array(U4_DRESSEUR => 1),
             "group"        =>    18,
             "role"        =>    TYPE_UNT_INFANTERIE,
-            "rang" => 7,
+            "rang" => 3,
+        );
+
+        $this->unt[U4_A_TISSEUSE] = array(
+            "def"    =>    15,
+            "vie"        =>    24,
+            "atq_unt"    =>    10,
+            "vit"        =>    8,
+            "bonus" => array('vie' => 1),
+            "prix_res"        =>    array(R4_NOURITURE => 200, R4_ACIER => 4),
+            "need_btc"    =>    array(B4_AIRE_DRESSAGE),
+            "in_btc"        =>    array(B4_AIRE_DRESSAGE),
+            "prix_unt"        =>    array(U4_DRESSEUR => 1),
+            "group"        =>    16,
+            "role"        =>    TYPE_UNT_INFANTERIE,
+            "rang" => 4,
         );
 
         $this->unt[U4_A_GUERRIERE] = array(
-            "def"    =>    5,
-            "vie"        =>    16,
-            "atq_unt"    =>    16,
-            "atq_btc"    =>    7,
-            "vit"        =>    8,
+            "def"    =>    12,
+            "vie"        =>    24,
+            "atq_unt"    =>    13,
+            "vit"        =>    9,
+            "bonus" => array('vie' => 1),
             "prix_res"        =>    array(R4_NOURITURE => 300, R4_ACIER => 3, R4_OR => 3),
             "need_btc"    =>    array(B4_G_DRESSEURS),
             "in_btc"        =>    array(B4_G_DRESSEURS),
@@ -748,36 +647,125 @@ class config4
             "rang" => 5,
         );
 
-        $this->unt[U4_BASILIC] = array(
-            "def"    =>    14,
-            "vie"        =>    18,
-            "atq_unt"    =>    5,
-            "atq_btc"    =>    13,
-            "vit"        =>    6,
-            "need_src" =>    array(S4_DRESSAGE_3),
-            "prix_res"        =>    array(R4_NOURITURE => 200, R4_PIERRE => 10, R4_ACIER => 5, R4_MITHRIL => 3),
-            "need_btc"    =>    array(B4_G_DRESSEURS),
-            "in_btc"        =>    array(B4_G_DRESSEURS),
-            "prix_unt"        =>    array(U4_DRESSEUR => 1),
-            "group"        =>    18,
-            "role"        =>    TYPE_UNT_MACHINE,
-            "rang" => 18,
+        $this->unt[U4_OMBRE] = array(
+            "def"    =>    9,
+            "vie"        =>    24,
+            "atq_unt"    =>    16,
+            "vit"        =>    8,
+            "bonus" => array('vie' => 1),
+            "prix_res"        =>    array(R4_HACHE => 1, R4_BOUCLIER => 1, R4_ACIER => 1),
+            "need_btc"    =>    array(B4_MAISON_LAMES),
+            "in_btc"        =>    array(B4_MAISON_LAMES),
+            "prix_unt"        =>    array(U4_CONVOQUE => 1),
+            "group"        =>    9,
+            "role"        =>    TYPE_UNT_INFANTERIE,
+            "rang" => 6,
         );
 
-        $this->unt[U4_PRETRESSE_DLN] = array(
-            "def"    =>    15,
-            "bonus"        =>    array('def' => 1),
-            "vie"        =>    12,
-            "atq_unt"    =>    11,
-            "vit"        =>    7,
-            "need_src" =>    array(S4_PRETRESSE_DLN),
-            "prix_res"        =>    array(R4_C_NOIR => 1, R4_MITHRIL => 1, R4_OR => 10),
-            "need_btc"    =>    array(B4_TEMPLE),
-            "in_btc"        =>    array(B4_TEMPLE),
+        $this->unt[U4_GUARDIENNE] = array(
+            "def"    =>    26,
+            "vie"        =>    16,
+            "atq_unt"    =>    14,
+            "vit"        =>    9,
+            "prix_res"        =>    array(R4_C_MITHRIL => 1, R4_ARBALETE => 1, R4_BOUCLIER => 1),
+            "need_btc"    =>    array(B4_AUTEL),
+            "in_btc"        =>    array(B4_AUTEL),
             "prix_unt"        =>    array(U4_CONVOQUE => 1),
-            "group"        =>    21,
-            "role"        =>    TYPE_UNT_MAGIQUE,
-            "rang" => 17,
+            "group"        =>    23,
+            "role"        =>    TYPE_UNT_DISTANCE,
+            "rang" => 7,
+        );
+
+        $this->unt[U4_MAITRE_LAME] = array(
+            "def"    =>    20,
+            "vie"        =>    14,
+            "atq_unt"    =>    22,
+            "vit"        =>    13,
+            "prix_res"        =>    array(R4_C_MITHRIL => 1, R4_HACHE => 1, R4_BOUCLIER => 1, R4_WORGS => 1),
+            "need_btc"    =>    array(B4_G_FORGERONS),
+            "in_btc"        =>    array(B4_G_FORGERONS),
+            "prix_unt"        =>    array(U4_CONVOQUE => 1),
+            "group"        =>    23,
+            "role"        =>    TYPE_UNT_CAVALERIE,
+            "rang" => 8,
+        );
+
+        $this->unt[U4_AILES_NOCTURNES] = array(
+            "def"    =>    12,
+            "vie"        =>    12,
+            "atq_unt"    =>    15,
+            "vit"        =>    15,
+            "prix_res"        =>    array(R4_NOURITURE => 50),
+            "need_btc"    =>    array(B4_AIRE_DRESSAGE),
+            "in_btc"        =>    array(B4_AIRE_DRESSAGE),
+            "prix_unt"        =>    array(U4_DRESSEUR => 1),
+            "group"        =>    16,
+            "role"        =>    TYPE_UNT_INFANTERIE,
+            "rang" => 9,
+        );
+
+        $this->unt[U4_HALLEBARDIER_NOIR] = array(
+            "def"    =>    12,
+            "vie"        =>    15,
+            "atq_unt"    =>    29,
+            "vit"        =>    11,
+            "need_src" =>    array(S4_ARMEE_3),
+            "prix_res"        =>    array(R4_WORGS => 1, R4_BOUCLIER => 1, R4_HALLEBARDE => 1),
+            "need_btc"    =>    array(B4_G_LAMES),
+            "in_btc"        =>    array(B4_G_LAMES),
+            "prix_unt"        =>    array(U4_CONVOQUE => 1),
+            "group"        =>    13,
+            "role"        =>    TYPE_UNT_INFANTERIE,
+            "rang" => 10,
+        );
+
+        $this->unt[U4_CAPUCHE_NOIRE] = array(
+            "def"    =>    15,
+            "vie"        =>    15,
+            "atq_unt"    =>    8,
+            "vit"        =>    9,
+            'atq_salve' => 2,
+            'def_salve' => 3.75,
+            "prix_res"        =>    array(R4_ARC => 1, R4_BOUCLIER => 1, R4_ACIER => 1),
+            "need_btc"    =>    array(B4_MAISON_LAMES),
+            "in_btc"        =>    array(B4_MAISON_LAMES),
+            "prix_unt"        =>    array(U4_CONVOQUE => 1),
+            "group"        =>    11,
+            "role"        =>    TYPE_UNT_DISTANCE,
+            "rang" => 11,
+        );
+
+        $this->unt[U4_ARBLALETRIER_NOIR] = array(
+            "def"    =>    7,
+            "vie"        =>    15,
+            "atq_unt"    =>    16,
+            "vit"        =>    10,
+            'atq_salve' => 4,
+            'def_salve' => 1.75,
+            "need_src" =>    array(S4_ARMEE_3),
+            "prix_res"        =>    array(R4_WORGS => 1, R4_ARBALETE => 1, R4_C_NOIR => 1, R4_OR => 6),
+            "need_btc"    =>    array(B4_G_LAMES),
+            "in_btc"        =>    array(B4_G_LAMES),
+            "prix_unt"        =>    array(U4_CONVOQUE => 1),
+            "group"        =>    13,
+            "role"        =>    TYPE_UNT_DISTANCE,
+            "rang" => 12,
+        );
+
+        $this->unt[U4_BRIGAND] = array(
+            "def"    =>    11,
+            "vie"        =>    14,
+            "atq_unt"    =>    13,
+            "vit"        =>    10,
+            'atq_salve' => 3.75,
+            'def_salve' => 2.75,
+            "prix_res"        =>    array(R4_ARC => 1),
+            "need_btc"    =>    array(B4_MAISON_LAMES),
+            "in_btc"        =>    array(B4_MAISON_LAMES),
+            "prix_unt"        =>    array(U4_CONVOQUE => 1),
+            "group"        =>    11,
+            "role"        =>    TYPE_UNT_DISTANCE,
+            "rang" => 13,
         );
 
         $this->unt[U4_CLERC_DLN] = array(
@@ -793,36 +781,55 @@ class config4
             "prix_unt"        =>    array(U4_CONVOQUE => 1),
             "group"        =>    21,
             "role"        =>    TYPE_UNT_MAGIQUE,
+            "rang" => 14,
+        );
+
+        $this->unt[U4_PRETRESSE_DLN] = array(
+            "def"    =>    15,
+            "bonus"        =>    array('def' => 1),
+            "vie"        =>    12,
+            "atq_unt"    =>    11,
+            "vit"        =>    7,
+            "need_src" =>    array(S4_PRETRESSE_DLN),
+            "prix_res"        =>    array(R4_C_NOIR => 1, R4_MITHRIL => 1, R4_OR => 10),
+            "need_btc"    =>    array(B4_TEMPLE),
+            "in_btc"        =>    array(B4_TEMPLE),
+            "prix_unt"        =>    array(U4_CONVOQUE => 1),
+            "group"        =>    21,
+            "role"        =>    TYPE_UNT_MAGIQUE,
+            "rang" => 15,
+        );
+
+        $this->unt[U4_GEANT_ROCHE] = array(
+            "def"    =>    10,
+            "vie"        =>    20,
+            "atq_unt"    =>    10,
+            "atq_btc"    =>    4,
+            "vit"        =>    6,
+            "need_src" =>    array(S4_ARMEE_3),
+            "prix_res"        =>    array(R4_NOURITURE => 200, R4_MASSUE => 1, R4_ACIER => 2, R4_C_MITHRIL => 1),
+            "need_btc"    =>    array(B4_G_LAMES),
+            "in_btc"        =>    array(B4_G_LAMES),
+            "prix_unt"        =>    array(U4_DRESSEUR => 1),
+            "group"        =>    13,
+            "role"        =>    TYPE_UNT_INFANTERIE,
             "rang" => 16,
         );
 
-        $this->unt[U4_MAITRE_LAME] = array(
-            "def"    =>    20,
-            "vie"        =>    22,
-            "atq_unt"    =>    22,
-            "vit"        =>    15,
-            "prix_res"        =>    array(R4_C_MITHRIL => 1, R4_HACHE => 1, R4_BOUCLIER => 1, R4_WORGS => 1),
-            "need_btc"    =>    array(B4_G_FORGERONS),
-            "in_btc"        =>    array(B4_G_FORGERONS),
-            "prix_unt"        =>    array(U4_CONVOQUE => 1),
-            "group"        =>    23,
-            "role"        =>    TYPE_UNT_CAVALERIE,
-            "rang" => 10,
-        );
-
-        $this->unt[U4_GUARDIENNE] = array(
-            "def"    =>    13,
-            "vie"        =>    12,
-            "atq_unt"    =>    18,
-            "vit"        =>    9,
-            "bonus" => array('vie' => 1),
-            "prix_res"        =>    array(R4_C_MITHRIL => 1, R4_ARBALETE => 1, R4_BOUCLIER => 1),
-            "need_btc"    =>    array(B4_AUTEL),
-            "in_btc"        =>    array(B4_AUTEL),
-            "prix_unt"        =>    array(U4_CONVOQUE => 1),
-            "group"        =>    23,
-            "role"        =>    TYPE_UNT_DISTANCE,
-            "rang" => 14,
+        $this->unt[U4_BASILIC] = array(
+            "def"    =>    5,
+            "vie"        =>    20,
+            "atq_unt"    =>    5,
+            "atq_btc"    =>    9,
+            "vit"        =>    4,
+            "need_src" =>    array(S4_DRESSAGE_3),
+            "prix_res"        =>    array(R4_NOURITURE => 200, R4_PIERRE => 10, R4_ACIER => 5, R4_MITHRIL => 3),
+            "need_btc"    =>    array(B4_G_DRESSEURS),
+            "in_btc"        =>    array(B4_G_DRESSEURS),
+            "prix_unt"        =>    array(U4_DRESSEUR => 1),
+            "group"        =>    18,
+            "role"        =>    TYPE_UNT_MACHINE,
+            "rang" => 17,
         );
 
         $this->unt[U4_ENVOYE_LOLTH] = array(

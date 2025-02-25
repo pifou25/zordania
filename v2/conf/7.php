@@ -242,14 +242,14 @@ class config7
         //</trn>
 
         /*
-*	Batiment
-*	Nom			Type				Fonction
-*	bonusdef		uint				Bonus de d?ence
-*	vie			uint				Points de vie du btc
-*	population		uint				Cr�e x places
-*	tours			uint				Met x tour a �tre construit
-*	com			array()				Recherche => array(quantit�e, vente)
-*/
+        *	Batiment
+        *	Nom			Type				Fonction
+        *	bonusdef		uint				Bonus de d?ence
+        *	vie			uint				Points de vie du btc
+        *	population		uint				Cr�e x places
+        *	tours			uint				Met x tour a �tre construit
+        *	com			array()				Recherche => array(quantit�e, vente)
+        */
 
         //<btc>
         //<btc-1>
@@ -622,27 +622,6 @@ class config7
         );
         //</unt-8>
 
-
-        //<unt-10>
-        $this->unt[U7_GOB_FRONDEUR] = array(
-            'vie' => 5,
-            'group' => 9,
-            'role' => TYPE_UNT_DISTANCE,
-            'prix_res' => array(R7_FRONDE => 2,),
-            'need_btc' => array(B7_HONNEUR,),
-            'in_btc' => array(B7_HONNEUR,),
-            'def' => 6,
-            'atq_unt' => 4,
-            'vit' => 6,
-            'prix_unt' => array(U7_GOB_BRIG => 1,),
-            'rang' => 9,
-            'bonus' => array(
-                'vie' => 1
-            ),
-        );
-        //</unt-10>
-
-        //<unt-11>
         $this->unt[U7_HOB_GOB] = array(
             'vie' => 5,
             'group' => 9,
@@ -654,174 +633,166 @@ class config7
             'atq_unt' => 7,
             'vit' => 8,
             'prix_unt' => array(U7_GOB_BRIG => 1,),
-            'rang' => 8,
+            'rang' => 1,
         );
-        //</unt-11>
 
-        //<unt-9>
-        $this->unt[U7_GOB_SOLDAT] = array(
-            'vie' => 7,
-            'group' => 10,
-            'role' => TYPE_UNT_DISTANCE,
-            'prix_res' => array(R7_LANCE => 1, R7_BRIGANDINE => 1, R7_BOUCLIER_ROND => 1,),
-            'need_btc' => array(B7_HONNEUR,),
-            'in_btc' => array(B7_HONNEUR,),
-            'need_src' => array(S7_ARMES_DIST,),
-            'def' => 6,
-            'atq_unt' => 12,
-            'vit' => 9,
-            'prix_unt' => array(U7_GOB_BRIG => 1,),
-            'rang' => 7,
-            'bonus' => array(
-                'vie' => 1
-            ),
-        );
-        //</unt-9>
-
-        //<unt-13>
-        $this->unt[U7_SEMI_OGRE] = array(
-            'vie' => 13,
-            'group' => 1,
-            'role' => TYPE_UNT_MACHINE,
-            'prix_res' => array(R7_CIMETERRE => 2, R7_ACIER => 4, R7_BOIS => 6,),
-            'need_btc' => array(B7_CANYON_PROF,),
-            'in_btc' => array(B7_CANYON_PROF,),
-            'need_src' => array(S7_DRESSAGE,),
-            'def' => 9,
-            'atq_unt' => 5,
-            'atq_btc' => 8,
-            'vit' => 6,
-            'prix_unt' => array(U7_DRESSEUR => 1,),
-            'rang' => 4,
-        );
-        //</unt-13>
-
-        //<unt-12>
-        $this->unt[U7_OGRE] = array(
-            'vie' => 14,
-            'group' => 1,
-            'role' => TYPE_UNT_INFANTERIE,
-            'prix_res' => array(R7_BATON => 1, R7_BRIGANDINE => 1, R7_ACIER => 2,),
-            'need_btc' => array(B7_CANYON_PROF,),
-            'in_btc' => array(B7_CANYON_PROF,),
-            'need_src' => array(S7_DRESSAGE,),
-            'def' => 12,
-            'atq_unt' => 16,
-            'vit' => 6,
-            'prix_unt' => array(U7_DRESSEUR => 1,),
-            'rang' => 2,
-        );
-        //</unt-12>
-
-
-        //<unt-14>
         $this->unt[U7_CERBERE] = array(
-            'vie' => 10,
+            'vie' => 18,
             'group' => 10,
             'role' => TYPE_UNT_CAVALERIE,
             'prix_res' => array(R7_LICHEN => 200, R7_ACIER => 3,),
             "need_btc"    =>    array(B7_MINE_PROF),
             'in_btc' => array(B7_MINE_PROF),
             'need_src' => array(S7_EXPLO_AQUA,),
-            'def' => 17,
-            'atq_unt' => 9,
-            'vit' => 13,
+            'def' => 11,
+            'atq_unt' => 7,
+            'vit' => 9,
             'prix_unt' => array(U7_DRESSEUR => 2,),
-            'rang' => 11,
+            "bonus" => array('vie' => 1),
+            'rang' => 2,
         );
-        //</unt-14>
 
-        //<unt-15>
+        $this->unt[U7_SEMI_OGRE] = array(
+            'vie' => 18,
+            'group' => 1,
+            'role' => TYPE_UNT_MACHINE,
+            'prix_res' => array(R7_CIMETERRE => 2, R7_ACIER => 4, R7_BOIS => 6,),
+            'need_btc' => array(B7_CANYON_PROF,),
+            'in_btc' => array(B7_CANYON_PROF,),
+            'need_src' => array(S7_DRESSAGE,),
+            'def' => 8,
+            'atq_unt' => 10,
+            'vit' => 11,
+            'prix_unt' => array(U7_DRESSEUR => 1,),
+            "bonus" => array('vie' => 1),
+            'rang' => 4,
+        );
+
+        $this->unt[U7_OGRE] = array(
+            'vie' => 18,
+            'group' => 1,
+            'role' => TYPE_UNT_INFANTERIE,
+            'prix_res' => array(R7_BATON => 1, R7_BRIGANDINE => 1, R7_ACIER => 2,),
+            'need_btc' => array(B7_CANYON_PROF,),
+            'in_btc' => array(B7_CANYON_PROF,),
+            'need_src' => array(S7_DRESSAGE,),
+            'def' => 6,
+            'atq_unt' => 12,
+            'vit' => 8,
+            'prix_unt' => array(U7_DRESSEUR => 1,),
+            "bonus" => array('vie' => 1),
+            'rang' => 3,
+        );
+
+        $this->unt[U7_FREMLIN] = array(
+            'vie' => 14,
+            'group' => 18,
+            'role' => TYPE_UNT_INFANTERIE,
+            'prix_res' => array(R7_CIMETERRE => 1, R7_LICHEN => 30, R7_ACIER => 2,),
+            'need_btc' => array(B7_LAC_SOUT),
+            'in_btc' => array(B7_LAC_SOUT),
+            'def' => 18,
+            'atq_unt' => 8,
+            'vit' => 8,
+            'prix_unt' => array(U7_DRESSEUR => 1,),
+            'rang' => 5,
+        );
+
+        $this->unt[U7_GOBLOURS] = array(
+            'vie' => 15,
+            'group' => 17,
+            'role' => TYPE_UNT_MAGIQUE,
+            'prix_res' => array(R7_OR => 6, R7_LICHEN => 30, R7_ACIER => 2, R7_MITHRIL => 1,),
+            'need_btc' => array(B7_LAC_SOUT,),
+            'in_btc' => array(B7_LAC_SOUT,),
+            'def' => 12,
+            'atq_unt' => 13,
+            'vit' => 10,
+            'prix_unt' => array(U7_DRESSEUR => 1,),
+            'rang' => 6,
+        );
+
+        $this->unt[U7_TYRAN] = array(
+            'vie' => 15,
+            'group' => 10,
+            'role' => TYPE_UNT_CAVALERIE,
+            'prix_res' => array(R7_CIMETERRE => 1, R7_COTTE_MITHRIL => 1, R7_CASQUE => 1, R7_TORTUE => 1,),
+            'need_btc' => array(B7_HONNEUR,),
+            'in_btc' => array(B7_HONNEUR,),
+            'need_src' => array(S7_DRESSAGE,),
+            'def' => 6,
+            'atq_unt' => 20,
+            'vit' => 9,
+            'prix_unt' => array(U7_GOB_BRIG => 1,),
+            'rang' => 7,
+        );
+
         $this->unt[U7_GNOME_PROF] = array(
-            'vie' => 2,
+            'vie' => 12,
             'group' => 15,
             'role' => TYPE_UNT_INFANTERIE,
             'prix_res' => array(R7_CIMETERRE => 2, R7_BOIS => 1, R7_TORTUE => 1,),
             'need_btc' => array(B7_CANYON_PROF,),
             'in_btc' => array(B7_CANYON_PROF,),
             'def' => 3,
-            'atq_unt' => 21,
+            'atq_unt' => 15,
 
-            'vit' => 15,
+            'vit' => 14,
             'prix_unt' => array(U7_GOB_BRIG => 1,),
-            'rang' => 12,
+            'rang' => 8,
         );
-        //</unt-15>
 
-        //<unt-16>
-        $this->unt[U7_ZEPPELIN] = array(
-            'vie' => 7,
-            'group' => 16,
-            'role' => TYPE_UNT_MACHINE,
-            'prix_res' => array(R7_GRANIT => 9, R7_BOIS => 11, R7_ACIER => 8,),
-            'need_btc' => array(B7_INGE,),
-            'in_btc' => array(B7_INGE,),
+        $this->unt[U7_GOB_SOLDAT] = array(
+            'vie' => 12,
+            'group' => 10,
+            'role' => TYPE_UNT_DISTANCE,
+            'prix_res' => array(R7_LANCE => 1, R7_BRIGANDINE => 1, R7_BOUCLIER_ROND => 1,),
+            'need_btc' => array(B7_HONNEUR,),
+            'in_btc' => array(B7_HONNEUR,),
+            'need_src' => array(S7_ARMES_DIST,),
             'def' => 5,
-            'atq_unt' => 0,
-            'atq_btc' => 12,
-            'vit' => 15,
-            'prix_unt' => array(U7_INGENIEUR => 2,),
-            'rang' => 13,
-        );
-        //</unt-16>
-
-        //<unt-17>
-        $this->unt[U7_GOBLOURS] = array(
-            'vie' => 5,
-            'group' => 17,
-            'role' => TYPE_UNT_MAGIQUE,
-            'prix_res' => array(R7_OR => 6, R7_LICHEN => 30, R7_ACIER => 2, R7_MITHRIL => 1,),
-            'need_btc' => array(B7_LAC_SOUT,),
-            'in_btc' => array(B7_LAC_SOUT,),
-            'def' => 8,
             'atq_unt' => 11,
-            'vit' => 6,
-            'prix_unt' => array(U7_DRESSEUR => 1,),
-            'rang' => 18,
-            'bonus' => array(
-                'atq' => 1.5
-            ),
+            'vit' => 8,
+            'atq_salve' => 2.75,
+            'def_salve' => 1.25,
+            'prix_unt' => array(U7_GOB_BRIG => 1,),
+            'rang' => 9,
         );
-        //</unt-17>
 
-        //<unt-18>
         $this->unt[U7_BATRASOG] = array(
-            'vie' => 5,
+            'vie' => 12,
             'group' => 17,
             'role' => TYPE_UNT_MAGIQUE,
             'prix_res' => array(R7_OR => 6, R7_LICHEN => 30, R7_ACIER => 2, R7_MITHRIL => 1,),
             'need_btc' => array(B7_LAC_SOUT,),
             'in_btc' => array(B7_LAC_SOUT,),
-            'def' => 11,
+            'def' => 7,
             'atq_unt' => 8,
-            'vit' => 6,
+            'vit' => 9,
+            'atq_salve' => 2,
+            'def_salve' => 1.75,
             'prix_unt' => array(U7_DRESSEUR => 1,),
-            'rang' => 17,
-            'bonus' => array(
-                'def' => 1.5
-            ),
+            'rang' => 10,
         );
-        //</unt-18>
 
-        //<unt-19>
-        $this->unt[U7_FREMLIN] = array(
-            'vie' => 5,
-            'group' => 18,
-            'role' => TYPE_UNT_INFANTERIE,
-            'prix_res' => array(R7_CIMETERRE => 1, R7_LICHEN => 30, R7_ACIER => 2,),
-            'need_btc' => array(B7_LAC_SOUT),
-            'in_btc' => array(B7_LAC_SOUT),
-            'def' => 20,
+        $this->unt[U7_GOB_FRONDEUR] = array(
+            'vie' => 12,
+            'group' => 9,
+            'role' => TYPE_UNT_DISTANCE,
+            'prix_res' => array(R7_FRONDE => 2,),
+            'need_btc' => array(B7_HONNEUR,),
+            'in_btc' => array(B7_HONNEUR,),
+            'def' => 10,
             'atq_unt' => 6,
             'vit' => 8,
-            'prix_unt' => array(U7_DRESSEUR => 1,),
-            'rang' => 14,
+            'atq_salve' => 1.5,
+            'def_salve' => 2.5,
+            'prix_unt' => array(U7_GOB_BRIG => 1,),
+            'rang' => 11,
         );
-        //</unt-19>
 
-        //<unt-20>
         $this->unt[U7_MAGE_GOB] = array(
-            'vie' => 6,
+            'vie' => 12,
             'group' => 20,
             'role' => TYPE_UNT_MAGIQUE,
             'prix_res' => array(R7_LICHEN => 30, R7_OR => 3, R7_ACIER => 2,),
@@ -831,16 +802,14 @@ class config7
             'atq_unt' => 5,
             'vit' => 9,
             'prix_unt' => array(U7_GOB_BRIG => 1,),
-            'rang' => 15,
+            'rang' => 12,
             'bonus' => array(
-                'atq' => 0.75
+                'atq' => 1
             ),
         );
-        //</unt-20>
 
-        //<unt-21>
         $this->unt[U7_DRUIDE] = array(
-            'vie' => 6,
+            'vie' => 12,
             'group' => 20,
             'role' => TYPE_UNT_MAGIQUE,
             'prix_res' => array(R7_LICHEN => 30, R7_OR => 3, R7_ACIER => 2,),
@@ -848,49 +817,45 @@ class config7
             'in_btc' => array(B7_TOUR_SAGE,),
             'def' => 5,
             'atq_unt' => 3,
-            'vit' => 9,
+            'vit' => 8,
             'prix_unt' => array(U7_GOB_BRIG => 1,),
-            'rang' => 16,
+            'rang' => 13,
             'bonus' => array(
-                'def' => 0.75
+                "def" => 1
             ),
         );
-        //</unt-21>
 
-        //<unt-22>
+        $this->unt[U7_ZEPPELIN] = array(
+            'vie' => 15,
+            'group' => 16,
+            'role' => TYPE_UNT_MACHINE,
+            'prix_res' => array(R7_GRANIT => 9, R7_BOIS => 11, R7_ACIER => 8,),
+            'need_btc' => array(B7_INGE,),
+            'in_btc' => array(B7_INGE,),
+            'def' => 7,
+            'atq_unt' => 7,
+            'atq_btc' => 3,
+            'vit' => 7,
+            'prix_unt' => array(U7_INGENIEUR => 2,),
+            'rang' => 14,
+        );
+
         $this->unt[U7_KAMIKAZE] = array(
-            'vie' => 1,
+            'vie' => 15,
             'group' => 16,
             'role' => TYPE_UNT_MACHINE,
             'prix_res' => array(R7_BOIS => 15, R7_GRANIT => 13, R7_ACIER => 9,),
             'need_btc' => array(B7_INGE,),
             'in_btc' => array(B7_INGE,),
             'need_src' => array(S7_COM_2,),
-            'def' => 5,
-            'atq_unt' => 6,
-            'atq_btc' => 18,
-            'vit' => 2,
+            'def' => 4,
+            'atq_unt' => 4,
+            'atq_btc' => 5,
+            'vit' => 4,
             'prix_unt' => array(U7_INGENIEUR => 2,),
-            'rang' => 3,
+            'rang' => 15,
         );
-        //</unt-22>
 
-        //<unt-23>
-        $this->unt[U7_TYRAN] = array(
-            'vie' => 8,
-            'group' => 10,
-            'role' => TYPE_UNT_CAVALERIE,
-            'prix_res' => array(R7_CIMETERRE => 1, R7_COTTE_MITHRIL => 1, R7_CASQUE => 1, R7_TORTUE => 1,),
-            'need_btc' => array(B7_HONNEUR,),
-            'in_btc' => array(B7_HONNEUR,),
-            'need_src' => array(S7_DRESSAGE,),
-            'def' => 8,
-            'atq_unt' => 22,
-            'vit' => 8,
-            'prix_unt' => array(U7_GOB_BRIG => 1,),
-            'rang' => 6,
-        );
-        //</unt-23>
 
         //<unt-24>
         $this->unt[U7_HOBGOB_OFF] = array(

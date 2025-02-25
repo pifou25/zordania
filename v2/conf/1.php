@@ -125,14 +125,14 @@ class config1
         $this->trn = array();
 
         /*
-*	Ressources
-*	Nom			Type				Fonction
-*	need_btc		uint				Batiment requis
-*	need_src		uint				A besoin de la recherche
-*	prix_res		array(uint=>uint)		Prix type => nombre
-*	group			uint				groupe d'affichage (page de formation)
-*	cron			bool				est produit par un cron
-*/
+        *	Ressources
+        *	Nom			Type				Fonction
+        *	need_btc		uint				Batiment requis
+        *	need_src		uint				A besoin de la recherche
+        *	prix_res		array(uint=>uint)		Prix type => nombre
+        *	group			uint				groupe d'affichage (page de formation)
+        *	cron			bool				est produit par un cron
+        */
 
         //<res>
         $this->res[R1_OR] = array(
@@ -479,8 +479,8 @@ class config1
         //</btc>
 
         /*
-* Unt
-*/
+        * Unt
+        */
         //<unt>
         $this->unt[U1_TRAVAILLEUR] = array(
             "vie"    =>    1,
@@ -559,42 +559,12 @@ class config1
             "in_btc"    =>    array(B1_CASERNE),
         );
 
-        $this->unt[U1_ARCHER] = array(
-            "vie"    =>    11,
-            "def"    =>    19,
-            "atq_unt"    =>    17,
-            "vit"    =>    10,
-            "group"    =>    9,
-            "bonus" => array('vie' => 1),
-            "role"    =>    TYPE_UNT_DISTANCE,
-            "rang" => 7,
-            "prix_res"    =>    array(R1_ARC => 1, R1_COTTE_MAILLE => 1),
-            "prix_unt"    =>    array(U1_RECRUE => 1),
-            "need_btc"    =>    array(B1_CASERNE),
-            "in_btc"    =>    array(B1_CASERNE),
-        );
-
-        $this->unt[U1_ARBALETRIER] = array(
-            "def"    =>    17,
-            "vie"    =>    13,
-            "atq_unt"    =>    20,
+        $this->unt[U1_FANTASSIN] = array(
+            "def"    =>    11,
+            "vie"    =>    20,
+            "atq_unt"    =>    12,
             "vit"    =>    9,
             "bonus" => array('vie' => 1),
-            "group"    =>    9,
-            "rang" => 8,
-            "role"    =>    TYPE_UNT_DISTANCE,
-            "prix_res"    =>    array(R1_ARBALETE => 1, R1_COTTE_MAILLE => 1, R1_OR => 5),
-            "prix_unt"    =>    array(U1_RECRUE => 1),
-            "need_src"    =>    array(S1_ARMEE_2),
-            "need_btc"    =>    array(B1_CASERNE),
-            "in_btc"    =>    array(B1_CASERNE),
-        );
-
-        $this->unt[U1_FANTASSIN] = array(
-            "def"    =>    7,
-            "vie"    =>    14,
-            "atq_unt"    =>    9,
-            "vit"    =>    10,
             "group"    =>    11,
             "role"    =>    TYPE_UNT_INFANTERIE,
             "rang" => 2,
@@ -605,10 +575,11 @@ class config1
         );
 
         $this->unt[U1_FANTASSIN_XP] = array(
-            "def"    =>    22,
+            "def"    =>    14,
             "vie"    =>    25,
-            "atq_unt"    =>    22,
-            "vit"    =>    9,
+            "atq_unt"    =>    15,
+            "vit"    =>    7,
+            "bonus" => array('vie' => 1),
             "group"    =>    11,
             "role"    =>    TYPE_UNT_INFANTERIE,
             "rang" => 3,
@@ -620,10 +591,10 @@ class config1
         );
 
         $this->unt[U1_CHEVALIER] = array(
-            "def"    =>    8,
-            "vie"    =>    17,
-            "atq_unt"    =>    12,
-            "vit"    =>    16,
+            "def"    =>    14,
+            "vie"    =>    15,
+            "atq_unt"    =>    17,
+            "vit"    =>    15,
             "group"    =>    13,
             "role"    =>    TYPE_UNT_CAVALERIE,
             "rang" => 4,
@@ -633,10 +604,25 @@ class config1
             "in_btc"    =>    array(B1_CASERNE),
         );
 
+        $this->unt[U1_MAGICIEN] = array(
+            "def"    =>    26,
+            "vie"    =>    10,
+            "atq_unt"    =>    7,
+            "vit"    =>    7,
+            "group"    =>    20,
+            "role"    =>    TYPE_UNT_MAGIQUE,
+            "rang" => 12,
+            "prix_res"    =>    array(R1_NOURRITURE => 30, R1_OR => 5, R1_ACIER => 2, R1_MITHRIL => 2),
+            "prix_unt"    =>    array(U1_RECRUE => 1),
+            "need_src"    =>    array(S1_MAGIE_BL),
+            "need_btc"    =>    array(B1_ECOLE_MAGIE),
+            "in_btc"    =>    array(B1_ECOLE_MAGIE),
+        );
+
         $this->unt[U1_CHEVALIER_XP] = array(
-            "def"    =>    25,
-            "vie"    =>    19,
-            "atq_unt"    =>    19,
+            "def"    =>    17,
+            "vie"    =>    16,
+            "atq_unt"    =>    20,
             "vit"    =>    13,
             "group"    =>    13,
             "role"    =>    TYPE_UNT_CAVALERIE,
@@ -648,41 +634,90 @@ class config1
             "in_btc"    =>    array(B1_CASERNE),
         );
 
-        $this->unt[U1_CATAPULTE] = array(
+        $this->unt[U1_PALADIN] = array(
+            "def"    =>    20,
+            "vie"    =>    17,
+            "atq_unt"    =>    23,
+            "vit"    =>    11,
+            "group"    =>    23,
+            "role"    =>    TYPE_UNT_CAVALERIE,
+            "rang" => 6,
+            "prix_res"    =>    array(R1_EPEE_LON => 1, R1_COTTE_MITHRIL => 1, R1_B_ACIER => 1, R1_CHEVAUX => 1),
+            "prix_unt"    =>    array(7 => 1),
+            "need_src"     =>    array(S1_ARMEE_3),
+            "need_btc"    =>    array(B1_CASERNE),
+            "in_btc"    =>    array(B1_CASERNE),
+        );
+
+        $this->unt[U1_SORCIER] = array(
             "def"    =>    5,
-            "vie"    =>    14,
-            "atq_unt"    =>    10,
-            "atq_btc"    =>    7,
-            "vit"    =>    5,
-            "group"    =>    15,
+            "vie"    =>    15,
+            "atq_unt"    =>    28,
+            "vit"    =>    8,
+            "group"    =>    20,
+            "role"    =>    TYPE_UNT_MAGIQUE,
+            "rang" => 11,
+            "prix_res"    =>    array(R1_NOURRITURE => 30, R1_OR => 5, R1_ACIER => 2, R1_MITHRIL => 2),
+            "prix_unt"    =>    array(U1_RECRUE => 1),
+            "need_src"    =>    array(S1_MAGIE_NR),
+            "need_btc"    =>    array(B1_ECOLE_MAGIE),
+            "in_btc"    =>    array(B1_ECOLE_MAGIE),
+        );
+
+        $this->unt[U1_CANON] = array(
+            "def"    =>    12,
+            "vie"    =>    16,
+            "atq_unt"    =>    7,
+            "vit"    =>    6,
+            "group"    =>    19,
+            'atq_salve' => 1.75,
+            'def_salve' => 3,
             "role"    =>    TYPE_UNT_MACHINE,
-            "rang" => 13,
-            "prix_res"    =>    array(R1_PIERRE => 10, R1_BOIS => 10, R1_ACIER => 5),
-            "prix_unt"    =>    array(U1_RECRUE => 2),
-            "need_btc"    =>    array(B1_ATELIER),
+            "rang" => 15,
+            "prix_res"    =>    array(R1_FER => 15, R1_CHARBON => 15, R1_ACIER => 12),
+            "prix_unt"    =>    array(U1_RECRUE => 1),
+            "need_btc"    =>    array(B1_ATELIER, B1_POUDRIERE),
             "in_btc"    =>    array(B1_ATELIER),
         );
 
-        $this->unt[U1_BELIER] = array(
-            "def"    =>    12,
+        $this->unt[U1_ARCHER] = array(
+            "vie"    =>    14,
+            "def"    =>    10,
+            "atq_unt"    =>    11,
+            "vit"    =>    10,
+            "group"    =>    9,
+            'atq_salve' => 2.75,
+            'def_salve' => 2.5,
+            "role"    =>    TYPE_UNT_DISTANCE,
+            "rang" => 7,
+            "prix_res"    =>    array(R1_ARC => 1, R1_COTTE_MAILLE => 1),
+            "prix_unt"    =>    array(U1_RECRUE => 1),
+            "need_btc"    =>    array(B1_CASERNE),
+            "in_btc"    =>    array(B1_CASERNE),
+        );
+
+        $this->unt[U1_ARBALETRIER] = array(
+            "def"    =>    7,
             "vie"    =>    15,
-            "atq_unt"    =>    0,
-            "atq_btc"    =>    6,
-            "vit"    =>    2,
-            "group"    =>    15,
-            "role"    =>    TYPE_UNT_MACHINE,
-            "rang" => 14,
-            "prix_res"    =>    array(R1_PIERRE => 7, R1_BOIS => 7, R1_ACIER => 4),
-            "prix_unt"    =>    array(U1_RECRUE => 2),
-            "need_btc"    =>    array(B1_ATELIER),
-            "in_btc"    =>    array(B1_ATELIER),
+            "atq_unt"    =>    13,
+            "vit"    =>    8,
+            'atq_salve' => 3.75,
+            'def_salve' => 1.75,
+            "group"    =>    9,
+            "rang" => 8,
+            "role"    =>    TYPE_UNT_DISTANCE,
+            "prix_res"    =>    array(R1_ARBALETE => 1, R1_COTTE_MAILLE => 1, R1_OR => 5),
+            "prix_unt"    =>    array(U1_RECRUE => 1),
+            "need_src"    =>    array(S1_ARMEE_2),
+            "need_btc"    =>    array(B1_CASERNE),
+            "in_btc"    =>    array(B1_CASERNE),
         );
 
         $this->unt[U1_MOINE] = array(
-            "def"    =>    14,
-            "bonus"    =>    array("atq" => 0.75),
+            "def"    =>    9,
+            "bonus"    =>    array("atq" => 1),
             "vie"    =>    12,
-            "atq_unt"    =>    15,
+            "atq_unt"    =>    10,
             "vit"    =>    9,
             "group"    =>    17,
             "role"    =>    TYPE_UNT_MAGIQUE,
@@ -695,11 +730,11 @@ class config1
         );
 
         $this->unt[U1_PRETRE] = array(
-            "def"    =>    15,
-            "bonus"    => array('def' => 0.75),
-            "vie"    =>    12,
-            "atq_unt"    =>    14,
-            "vit"    =>    10,
+            "def"    =>    10,
+            "bonus"    => array('def' => 1),
+            "vie"    =>    15,
+            "atq_unt"    =>    9,
+            "vit"    =>    8,
             "group"    =>    17,
             "role"    =>    TYPE_UNT_MAGIQUE,
             "rang" => 10,
@@ -710,58 +745,26 @@ class config1
             "in_btc"    =>    array(B1_EGLISE),
         );
 
-        $this->unt[U1_CANON] = array(
-            "def"    =>    5,
-            "vie"    =>    16,
+        $this->unt[U1_BELIER] = array(
+            "def"    =>    10,
+            "vie"    =>    20,
             "atq_unt"    =>    10,
-            "atq_btc"    =>    8,
+            "atq_btc"    =>    4,
             "vit"    =>    6,
-            "group"    =>    19,
+            "group"    =>    15,
             "role"    =>    TYPE_UNT_MACHINE,
-            "rang" => 15,
-            "prix_res"    =>    array(R1_FER => 15, R1_CHARBON => 15, R1_ACIER => 12),
-            "prix_unt"    =>    array(U1_RECRUE => 1),
-            "need_btc"    =>    array(B1_ATELIER, B1_POUDRIERE),
+            "rang" => 14,
+            "prix_res"    =>    array(R1_PIERRE => 7, R1_BOIS => 7, R1_ACIER => 4),
+            "prix_unt"    =>    array(U1_RECRUE => 2),
+            "need_btc"    =>    array(B1_ATELIER),
             "in_btc"    =>    array(B1_ATELIER),
         );
 
-        $this->unt[U1_MAGICIEN] = array(
-            "def"    =>    6,
-            "bonus"    => array('def' => 1.5),
-            "vie"    =>    10,
-            "atq_unt"    =>    7,
-            "vit"    =>    4,
-            "group"    =>    20,
-            "role"    =>    TYPE_UNT_MAGIQUE,
-            "rang" => 12,
-            "prix_res"    =>    array(R1_NOURRITURE => 30, R1_OR => 5, R1_ACIER => 2, R1_MITHRIL => 2),
-            "prix_unt"    =>    array(U1_RECRUE => 1),
-            "need_src"    =>    array(S1_MAGIE_BL),
-            "need_btc"    =>    array(B1_ECOLE_MAGIE),
-            "in_btc"    =>    array(B1_ECOLE_MAGIE),
-        );
-
-        $this->unt[U1_SORCIER] = array(
-            "def"    =>    7,
-            "bonus"    => array('atq' => 1.5),
-            "vie"    =>    9,
-            "atq_unt"    =>    6,
-            "vit"    =>    5,
-            "group"    =>    20,
-            "role"    =>    TYPE_UNT_MAGIQUE,
-            "rang" => 11,
-            "prix_res"    =>    array(R1_NOURRITURE => 30, R1_OR => 5, R1_ACIER => 2, R1_MITHRIL => 2),
-            "prix_unt"    =>    array(U1_RECRUE => 1),
-            "need_src"    =>    array(S1_MAGIE_NR),
-            "need_btc"    =>    array(B1_ECOLE_MAGIE),
-            "in_btc"    =>    array(B1_ECOLE_MAGIE),
-        );
-
         $this->unt[U1_TREBUCHET] = array(
-            "def"    =>    14,
-            "vie"    =>    12,
-            "atq_unt"    =>    10,
-            "atq_btc"    =>    11,
+            "def"    =>    5,
+            "vie"    =>    20,
+            "atq_unt"    =>    5,
+            "atq_btc"    =>    8,
             "vit"    =>    3,
             "group"    =>    19,
             "role"    =>    TYPE_UNT_MACHINE,
@@ -773,20 +776,21 @@ class config1
             "in_btc"    =>    array(B1_ATELIER),
         );
 
-        $this->unt[U1_PALADIN] = array(
-            "def"    =>    20,
-            "vie"    =>    20,
-            "atq_unt"    =>    30,
-            "vit"    =>    11,
-            "group"    =>    23,
-            "role"    =>    TYPE_UNT_CAVALERIE,
-            "rang" => 6,
-            "prix_res"    =>    array(R1_EPEE_LON => 1, R1_COTTE_MITHRIL => 1, R1_B_ACIER => 1, R1_CHEVAUX => 1),
-            "prix_unt"    =>    array(7 => 1),
-            "need_src"     =>    array(S1_ARMEE_3),
-            "need_btc"    =>    array(B1_CASERNE),
-            "in_btc"    =>    array(B1_CASERNE),
-        );
+        // $this->unt[U1_CATAPULTE] = array(
+        // 	"def"	=>	5,
+        // 	"vie"	=>	14,
+        // 	"atq_unt"	=>	10,
+        // 	"atq_btc"	=>	7,
+        // 	"vit"	=>	5,
+        // 	"group"	=>	15,
+        // 	"role"	=>	TYPE_UNT_MACHINE,
+        // 	"rang" => 13,
+        // 	"prix_res"	=>	array(R1_PIERRE => 10, R1_BOIS => 10, R1_ACIER => 5),
+        // 	"prix_unt"	=>	array(U1_RECRUE => 2),
+        // 	"need_btc"	=>	array(B1_ATELIER),
+        // 	"in_btc"	=>	array(B1_ATELIER),
+        // );
+
 
         $this->unt[U1_GRIFFON] = array(
             "def"    =>    130,
@@ -1148,16 +1152,16 @@ class config1
         //</comp>
 
         /*
-*	Config de la race
-*	'primary_res'	Ressources les plus importantes, affich�es en haut a gauche
-*	'second_res'	Ressources importantes, affich�es dans le donjon
-*	'primary_btc'	B�timent les plus importants, affich�s dans le menu
-*	'bonus_res'	Coef pour calculer combien de bonus en fonction des points .. en pratique, seul celui
-*				de l'or est cens� �tre utilis�
-*	'modif_pts_btc'	Coef pour determiner combien les b�timents rapportent de points
-*	'debut'		Trucs a donner au d�but
-*	'trn'		Terrains a donner en fonction de la carte
-*/
+        *	Config de la race
+        *	'primary_res'	Ressources les plus importantes, affich�es en haut a gauche
+        *	'second_res'	Ressources importantes, affich�es dans le donjon
+        *	'primary_btc'	B�timent les plus importants, affich�s dans le menu
+        *	'bonus_res'	Coef pour calculer combien de bonus en fonction des points .. en pratique, seul celui
+        *				de l'or est cens� �tre utilis�
+        *	'modif_pts_btc'	Coef pour determiner combien les b�timents rapportent de points
+        *	'debut'		Trucs a donner au d�but
+        *	'trn'		Terrains a donner en fonction de la carte
+        */
 
         $this->race_cfg = array(
             'res_nb'    =>    count($this->res),

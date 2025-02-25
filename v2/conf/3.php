@@ -564,7 +564,6 @@ class config3
             "vie" => 20,
             "atq_unt" => 3,
             "vit" => 12,
-            "bonus" => array('salve' => 1),
             "prix_res" => array(R3_HACHE => 1),
             "need_btc" => array(B3_CASERNE),
             "in_btc" => array(B3_CASERNE),
@@ -575,10 +574,11 @@ class config3
         );
 
         $this->unt[U3_MILICIEN] = array(
-            "def" => 7,
-            "vie" => 21,
-            "atq_unt" => 7,
-            "vit" => 4,
+            "def" => 12,
+            "vie" => 20,
+            "atq_unt" => 13,
+            "vit" => 9,
+            "bonus" => array('vie' => 1),
             "prix_res" => array(R3_MASSUE => 1),
             "need_btc" => array(B3_CASERNE),
             "in_btc" => array(B3_CASERNE),
@@ -588,54 +588,42 @@ class config3
             "rang" => 2,
         );
 
-        $this->unt[U3_COMBATTANT] = array(
-            "def" => 10,
-            "vie" => 24,
-            "atq_unt" => 18,
-            "vit" => 7,
-            "prix_res" => array(R3_HACHE_COMBAT => 1, R3_C_MAILLE => 1),
-            "need_btc" => array(B3_ECOLE_MILITAIRE),
-            "in_btc" => array(B3_ECOLE_MILITAIRE),
-            "prix_unt" => array(U3_VETERAN => 1),
-            "group" => 12,
-            "role" => TYPE_UNT_INFANTERIE,
-            "rang" => 3,
-        );
-
         $this->unt[U3_DEFENSEUR] = array(
-            "def" => 19,
-            "vie" => 24,
+            "def" => 14,
+            "vie" => 23,
             "atq_unt" => 11,
-            "vit" => 6,
+            "vit" => 7,
+            "bonus" => array('vie' => 1),
             "prix_res" => array(R3_MARTEAU => 1, R3_C_MAILLE => 1),
             "need_btc" => array(B3_ECOLE_MILITAIRE),
             "in_btc" => array(B3_ECOLE_MILITAIRE),
             "prix_unt" => array(R3_ACIER => 1),
             "group" => 12,
             "role" => TYPE_UNT_INFANTERIE,
-            "rang" => 4,
+            "rang" => 3,
         );
 
-        $this->unt[U3_GUERRIER] = array(
-            "def" => 17,
-            "vie" => 25,
-            "atq_unt" => 28,
-            "vit" => 6,
-            "need_src" => array(S3_GUERRIERS),
-            "prix_res" => array(R3_HACHE_GUERRE => 1, R3_C_MITHRIL => 1),
+        $this->unt[U3_COMBATTANT] = array(
+            "def" => 10,
+            "vie" => 23,
+            "atq_unt" => 15,
+            "vit" => 7,
+            "bonus" => array('vie' => 1),
+            "prix_res" => array(R3_HACHE_COMBAT => 1, R3_C_MAILLE => 1),
             "need_btc" => array(B3_ECOLE_MILITAIRE),
             "in_btc" => array(B3_ECOLE_MILITAIRE),
             "prix_unt" => array(U3_VETERAN => 1),
-            "group" => 14,
+            "group" => 12,
             "role" => TYPE_UNT_INFANTERIE,
-            "rang" => 6,
+            "rang" => 4,
         );
 
         $this->unt[U3_PROTECTEUR] = array(
-            "def" => 26,
+            "def" => 16,
             "vie" => 27,
-            "atq_unt" => 19,
-            "vit" => 5,
+            "atq_unt" => 9,
+            "vit" => 6,
+            "bonus" => array('vie' => 1),
             "need_src" => array(S3_GUERRIERS),
             "prix_res" => array(R3_MARTEAU_GUERRE => 1, R3_C_MITHRIL => 1),
             "need_btc" => array(B3_ECOLE_MILITAIRE),
@@ -646,44 +634,27 @@ class config3
             "rang" => 5,
         );
 
-        $this->unt[U3_P_MURANG] = array(
-            "def" => 10,
-            "bonus" => array('atq' => 1),
-            "vie" => 13,
-            "atq_unt" => 13,
-            "vit" => 5,
-            "need_src" => array(S3_MURANG),
-            "prix_res" => array(R3_ACIER => 5, R3_C_MITHRIL => 1, R3_MITHRIL => 1),
-            "need_btc" => array(B3_TEMPLE),
-            "in_btc" => array(B3_TEMPLE),
+        $this->unt[U3_GUERRIER] = array(
+            "def" => 8,
+            "vie" => 27,
+            "atq_unt" => 17,
+            "vit" => 6,
+            "bonus" => array('vie' => 1),
+            "need_src" => array(S3_GUERRIERS),
+            "prix_res" => array(R3_HACHE_GUERRE => 1, R3_C_MITHRIL => 1),
+            "need_btc" => array(B3_ECOLE_MILITAIRE),
+            "in_btc" => array(B3_ECOLE_MILITAIRE),
             "prix_unt" => array(U3_VETERAN => 1),
-            "group" => 16,
-            "role" => TYPE_UNT_MAGIQUE,
-            "rang" => 10,
-        );
-
-        $this->unt[U3_P_TRARKOS] = array(
-            "def" => 13,
-            "bonus" => array('def' => 1),
-            "vie" => 13,
-            "atq_unt" => 10,
-            "vit" => 5,
-            "need_src" => array(S3_TRARKOS),
-            "prix_res" => array(R3_ACIER => 5, R3_C_MITHRIL => 1, R3_MITHRIL => 1),
-            "need_btc" => array(B3_TEMPLE),
-            "in_btc" => array(B3_TEMPLE),
-            "prix_unt" => array(U3_VETERAN => 1),
-            "group" => 16,
-            "role" => TYPE_UNT_MAGIQUE,
-            "rang" => 9,
+            "group" => 14,
+            "role" => TYPE_UNT_INFANTERIE,
+            "rang" => 6,
         );
 
         $this->unt[U3_GRAVEUR_R] = array(
-            "def" => 23,
+            "def" => 29,
             "vie" => 16,
-            "atq_unt" => 15,
-            "vit" => 4,
-            "bonus" => array('vie' => 1),
+            "atq_unt" => 13,
+            "vit" => 6,
             "need_src" => array(S3_GRAVURE_RUNIQUE),
             "prix_res" => array(R3_OR => 8, R3_MITHRIL => 4, R3_C_MITHRIL => 1),
             "need_btc" => array(B3_ECOLE_RUNIQUE),
@@ -695,11 +666,10 @@ class config3
         );
 
         $this->unt[U3_LANCEUR_R] = array(
-            "def" => 15,
-            "vie" => 14,
-            "atq_unt" => 24,
+            "def" => 11,
+            "vie" => 16,
+            "atq_unt" => 31,
             "vit" => 6,
-            "bonus" => array('vie' => 1),
             "need_src" => array(S3_ECRITURE_RUNIQUE),
             "prix_res" => array(R3_OR => 8, R3_MITHRIL => 4, R3_C_MITHRIL => 1),
             "need_btc" => array(B3_ECOLE_RUNIQUE),
@@ -711,11 +681,12 @@ class config3
         );
 
         $this->unt[U3_CATAPULTE] = array(
-            "def" => 6,
+            "def" => 7,
             "vie" => 16,
-            "atq_unt" => 8,
-            "atq_btc" => 9,
-            "vit" => 4,
+            "atq_unt" => 15,
+            "vit" => 5,
+            'atq_salve' => 3.75, 
+            'def_salve' => 1.75,
             "need_src" => array(S3_MACHINE_2),
             "prix_res" => array(R3_BOIS => 10, R3_PIERRE => 20, R3_CHEVAUX => 1, R3_ACIER => 10),
             "need_btc" => array(B3_ATELIER),
@@ -723,15 +694,65 @@ class config3
             "prix_unt" => array(U3_RECRUE => 1),
             "group" => 20,
             "role" => TYPE_UNT_MACHINE,
+            "rang" => 9,
+        );
+
+        //Baliste,
+        $this->unt[U3_BALISTE] = array(
+            "def" => 14,
+            "vie" => 16,
+            "atq_unt" => 8,
+            "vit" => 4,
+            'atq_salve' => 2, 
+            'def_salve' => 3.5,
+            "need_src" => array(S3_MACHINE_1),
+            "prix_res" => array(R3_ACIER => 10, R3_BOIS => 20, R3_MITHRIL => 3),
+            "need_btc" => array(B3_ATELIER),
+            "in_btc" => array(B3_ATELIER),
+            "prix_unt" => array(U3_VETERAN => 1),
+            "group" => 22,
+            "role" => TYPE_UNT_MACHINE,
+            "rang" => 10,
+        );
+
+        $this->unt[U3_P_TRARKOS] = array(
+            "def" => 14,
+            "bonus" => array('def' => 1),
+            "vie" => 13,
+            "atq_unt" => 11,
+            "vit" => 5,
+            "need_src" => array(S3_TRARKOS),
+            "prix_res" => array(R3_ACIER => 5, R3_C_MITHRIL => 1, R3_MITHRIL => 1),
+            "need_btc" => array(B3_TEMPLE),
+            "in_btc" => array(B3_TEMPLE),
+            "prix_unt" => array(U3_VETERAN => 1),
+            "group" => 16,
+            "role" => TYPE_UNT_MAGIQUE,
             "rang" => 11,
         );
 
+        $this->unt[U3_P_MURANG] = array(
+            "def" => 11,
+            "bonus" => array('atq' => 1),
+            "vie" => 13,
+            "atq_unt" => 14,
+            "vit" => 5,
+            "need_src" => array(S3_MURANG),
+            "prix_res" => array(R3_ACIER => 5, R3_C_MITHRIL => 1, R3_MITHRIL => 1),
+            "need_btc" => array(B3_TEMPLE),
+            "in_btc" => array(B3_TEMPLE),
+            "prix_unt" => array(U3_VETERAN => 1),
+            "group" => 16,
+            "role" => TYPE_UNT_MAGIQUE,
+            "rang" => 12,
+        );
+
         $this->unt[U3_BELIER] = array(
-            "def" => 2,
-            "vie" => 16,
-            "atq_unt" => 0,
-            "atq_btc" => 7,
-            "vit" => 3,
+            "def" => 10,
+            "vie" => 20,
+            "atq_unt" => 10,
+            "atq_btc" => 4,
+            "vit" => 8,
             "need_src" => array(S3_MACHINE_2),
             "prix_res" => array(R3_PIERRE => 10, R3_BOIS => 20, R3_ACIER => 5, R3_CHEVAUX => 1),
             "need_btc" => array(B3_ATELIER),
@@ -739,14 +760,14 @@ class config3
             "prix_unt" => array(U3_RECRUE => 2),
             "group" => 20,
             "role" => TYPE_UNT_MACHINE,
-            "rang" => 12,
+            "rang" => 13,
         );
 
         $this->unt[U3_BELIER_TETE_MORT] = array(
             "def" => 5,
-            "vie" => 18,
-            "atq_unt" => 0,
-            "atq_btc" => 15,
+            "vie" => 20,
+            "atq_unt" => 5,
+            "atq_btc" => 8,
             "vit" => 2,
             "need_src" => array(S3_MACHINE_3),
             "prix_res" => array(R3_PIERRE => 50, R3_MITHRIL => 5, R3_ACIER => 10, R3_BOIS => 40),
@@ -755,31 +776,13 @@ class config3
             "prix_unt" => array(U3_RECRUE => 2),
             "group" => 22,
             "role" => TYPE_UNT_MACHINE,
-            "rang" => 13,
-        );
-
-        //Baliste,
-        $this->unt[U3_BALISTE] = array(
-            "def" => 5,
-            "vie" => 13,
-            "atq_unt" => 10,
-            "atq_btc" => 5,
-            "vit" => 3,
-            "bonus" => array('salve' => 1),
-            "need_src" => array(S3_MACHINE_1),
-            "prix_res" => array(R3_ACIER => 10, R3_BOIS => 20, R3_MITHRIL => 3),
-            "need_btc" => array(B3_ATELIER),
-            "in_btc" => array(B3_ATELIER),
-            "prix_unt" => array(U3_VETERAN => 1),
-            "group" => 22,
-            "role" => TYPE_UNT_MACHINE,
             "rang" => 14,
         );
 
         $this->unt[U3_TRANSPORT] = array(
-            "def" => 5,
-            "vie" => 10,
-            "vit" => 10,
+            "def" => 0,
+            "vie" => 20,
+            "vit" => 8,
             "carry" => 20,
             "atq_unt" => 0,
             "need_src" => array(S3_MACHINE_3),
@@ -791,6 +794,8 @@ class config3
             "role" => TYPE_UNT_MACHINE,
             "rang" => 15,
         );
+
+
 
         $this->unt[U3_GOLEM] = array(
             "def" => 155,

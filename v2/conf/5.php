@@ -102,6 +102,9 @@ define("S5_FIDELITE_CORELLON", 22);
 define("S5_SANG", 23);
 define("S5_INCANT_TRANSPOR", 24);
 
+/**
+ * Elfe
+ */
 class config5
 {
     var $res = array();
@@ -574,6 +577,16 @@ class config5
             "group" => 7,
             "role" => TYPE_UNT_CIVIL,
         );
+        //Druide
+        $this->unt[U5_DRUIDE] = array(
+            "prix_res" => array(R5_OR => 2),
+            "vie" => 1,
+            "need_btc" => array(B5_BOSQUET),
+            "in_btc" => array(B5_COLONIE, B5_CITE),
+            "group" => 16,
+            "role" => TYPE_UNT_CIVIL,
+        );
+
 
         //Eclaireur
         $this->unt[U5_ECLAIREUR] = array(
@@ -590,28 +603,14 @@ class config5
             "rang" => 1,
         );
 
-        //Patrouilleur
-        $this->unt[U5_PATROUILLEUR] = array(
-            "def" => 5,
-            "vie" => 8,
-            "atq_unt" => 6,
+        //Lancier
+        $this->unt[U5_LANCIER] = array(
+            "def" => 13,
+            "vie" => 19,
+            "atq_unt" => 8,
             "vit" => 8,
-            "prix_res" => array(R5_ARC_COURT => 1),
-            "need_btc" => array(B5_AIRE_ENTRAINEMENT),
-            "in_btc" => array(B5_AIRE_ENTRAINEMENT),
-            "prix_unt" => array(U5_ACOLYTE => 1),
-            "group" => 8,
-            "role" => TYPE_UNT_DISTANCE,
-            "rang" => 8,
-        );
-
-        //R�deur
-        $this->unt[U5_RODEUR] = array(
-            "def" => 8,
-            "vie" => 17,
-            "atq_unt" => 10,
-            "vit" => 8,
-            "prix_res" => array(R5_RONDACHE => 1, R5_LAME => 1, R5_A_CUIR => 1),
+            "bonus" => array('vie' => 1),
+            "prix_res" => array(R5_RONDACHE => 1, R5_PIQUE => 1, R5_A_CUIR => 1),
             "need_btc" => array(B5_CASERNE),
             "in_btc" => array(B5_CASERNE),
             "prix_unt" => array(U5_ACOLYTE => 1),
@@ -620,13 +619,14 @@ class config5
             "rang" => 2,
         );
 
-        //Lancier
-        $this->unt[U5_LANCIER] = array(
-            "def" => 10,
-            "vie" => 18,
-            "atq_unt" => 10,
+        //Rodeur
+        $this->unt[U5_RODEUR] = array(
+            "def" => 7,
+            "vie" => 19,
+            "atq_unt" => 14,
             "vit" => 8,
-            "prix_res" => array(R5_RONDACHE => 1, R5_PIQUE => 1, R5_A_CUIR => 1),
+            "bonus" => array('vie' => 1),
+            "prix_res" => array(R5_RONDACHE => 1, R5_LAME => 1, R5_A_CUIR => 1),
             "need_btc" => array(B5_CASERNE),
             "in_btc" => array(B5_CASERNE),
             "prix_unt" => array(U5_ACOLYTE => 1),
@@ -635,28 +635,14 @@ class config5
             "rang" => 3,
         );
 
-        //Archer
-        $this->unt[U5_ARCHER] = array(
-            "def" => 16,
-            "vie" => 12,
-            "atq_unt" => 15,
-            "vit" => 10,
-            "prix_res" => array(R5_ARC_COURT => 1, R5_A_CUIR => 1),
-            "need_btc" => array(B5_CASERNE),
-            "in_btc" => array(B5_CASERNE),
-            "prix_unt" => array(U5_ACOLYTE => 1),
-            "group" => 10,
-            "role" => TYPE_UNT_DISTANCE,
-            "rang" => 9,
-        );
-
-        //Ep�iste
-        $this->unt[U5_EPEISTE] = array(
-            "def" => 18,
-            "vie" => 25,
-            "atq_unt" => 19,
-            "vit" => 10,
-            "prix_res" => array(R5_PAVOIS => 1, R5_LAME => 1, R5_A_CUIR => 1),
+        //Piquier
+        $this->unt[U5_PIQUIER] = array(
+            "def" => 15,
+            "vie" => 24,
+            "atq_unt" => 9,
+            "vit" => 9,
+            "bonus" => array('vie' => 1),
+            "prix_res" => array(R5_PAVOIS => 1, R5_PIQUE => 1, R5_A_CUIR => 1),
             "need_btc" => array(B5_CASERNE),
             "in_btc" => array(B5_CASERNE),
             "prix_unt" => array(U5_ACOLYTE => 1),
@@ -665,13 +651,14 @@ class config5
             "rang" => 4,
         );
 
-        //Piquier
-        $this->unt[U5_PIQUIER] = array(
-            "def" => 25,
-            "vie" => 19,
-            "atq_unt" => 20,
-            "vit" => 9,
-            "prix_res" => array(R5_PAVOIS => 1, R5_PIQUE => 1, R5_A_CUIR => 1),
+        //Epeiste
+        $this->unt[U5_EPEISTE] = array(
+            "def" => 8,
+            "vie" => 24,
+            "atq_unt" => 16,
+            "vit" => 10,
+            "bonus" => array('vie' => 1),
+            "prix_res" => array(R5_PAVOIS => 1, R5_LAME => 1, R5_A_CUIR => 1),
             "need_btc" => array(B5_CASERNE),
             "in_btc" => array(B5_CASERNE),
             "prix_unt" => array(U5_ACOLYTE => 1),
@@ -680,86 +667,12 @@ class config5
             "rang" => 5,
         );
 
-        //Garde
-        $this->unt[U5_GARDE] = array(
-            "def" => 14,
-            "vie" => 10,
-            "atq_unt" => 15,
-            "vit" => 10,
-            "bonus" => array('vie' => 1),
-            "prix_res" => array(R5_ARC_COMPOSITE => 1, R5_A_CUIR => 1, R5_RONDACHE => 1),
-            "need_btc" => array(B5_CASERNE),
-            "in_btc" => array(B5_CASERNE),
-            "prix_unt" => array(U5_ACOLYTE => 1),
-            "group" => 13,
-            "role" => TYPE_UNT_DISTANCE,
-            "rang" => 10,
-        );
-
-        //Druide
-        $this->unt[U5_DRUIDE] = array(
-            "prix_res" => array(R5_OR => 2),
-            "vie" => 1,
-            "need_btc" => array(B5_BOSQUET),
-            "in_btc" => array(B5_COLONIE, B5_CITE),
-            "group" => 16,
-            "role" => TYPE_UNT_CIVIL,
-        );
-
-        //Nymphe
-        $this->unt[U5_NYMPHE] = array(
-            "def" => 16,
-            "vie" => 21,
-            "atq_unt" => 22,
-            "vit" => 14,
-            "prix_res" => array(R5_OR => 20, R5_MITHRIL => 2),
-            "need_btc" => array(B5_BOSQUET),
-            "in_btc" => array(B5_BOSQUET),
-            "prix_unt" => array(U5_DRUIDE => 1),
-            "group" => 17,
-            "role" => TYPE_UNT_INFANTERIE,
-            "rang" => 6,
-        );
-
-        //V�n�rable
-        $this->unt[U5_VENERABLE] = array(
-            "def" => 12,
-            "vie" => 20,
-            "atq_unt" => 14,
-            "atq_btc" => 8,
-            "vit" => 4,
-            "prix_res" => array(R5_BOIS => 200, R5_BAIES => 200, R5_BOIS_IF => 20, R5_CUIR => 20),
-            "need_btc" => array(B5_ANTRE),
-            "in_btc" => array(B5_ANTRE),
-            "prix_unt" => array(U5_DRUIDE => 2),
-            "group" => 18,
-            "role" => TYPE_UNT_MACHINE,
-            "rang" => 15,
-        );
-
-        //Commandant
-        $this->unt[U5_COMMANDANT] = array(
-            "def" => 17,
-            "vie" => 19,
-            "atq_unt" => 28,
-            "vit" => 11,
-            "need_src"       =>      array(S5_MAITRISE_OFFENSIVE),
-            "prix_res" => array(R5_CHEVAUX => 1, R5_PAVOIS => 1, R5_PIQUE => 1, R5_A_MITHRIL => 1),
-            "need_btc" => array(B5_FORT),
-            "in_btc" => array(B5_FORT),
-            "prix_unt" => array(U5_NOBLE => 1),
-            "group" => 19,
-            "role" => TYPE_UNT_CAVALERIE,
-            "rang" => 7,
-        );
-
-        //Garde d'�lite
+        //Garde d'elite
         $this->unt[U5_GARDE_ELITE] = array(
-            "def" => 18,
-            "vie" => 13,
-            "atq_unt" => 19,
+            "def" => 27,
+            "vie" => 16,
+            "atq_unt" => 13,
             "vit" => 11,
-            "bonus" => array('vie' => 1),
             "need_src"       =>      array(S5_MAITRISE_DEFENSIVE),
             "prix_res" => array(R5_CHEVAUX => 1, R5_ARC_COMPOSITE => 1, R5_A_MITHRIL => 1),
             "need_btc" => array(B5_FORT),
@@ -767,13 +680,95 @@ class config5
             "prix_unt" => array(U5_NOBLE => 1),
             "group" => 20,
             "role" => TYPE_UNT_DISTANCE,
+            "rang" => 6,
+        );
+
+        //Nymphe
+        $this->unt[U5_NYMPHE] = array(
+            "def" => 19,
+            "vie" => 16,
+            "atq_unt" => 21,
+            "vit" => 14,
+            "prix_res" => array(R5_OR => 20, R5_MITHRIL => 2),
+            "need_btc" => array(B5_BOSQUET),
+            "in_btc" => array(B5_BOSQUET),
+            "prix_unt" => array(U5_DRUIDE => 1),
+            "group" => 17,
+            "role" => TYPE_UNT_INFANTERIE,
+            "rang" => 7,
+        );
+
+        //Commandant
+        $this->unt[U5_COMMANDANT] = array(
+            "def" => 12,
+            "vie" => 15,
+            "atq_unt" => 29,
+            "vit" => 12,
+            "need_src"       =>      array(S5_MAITRISE_OFFENSIVE),
+            "prix_res" => array(R5_CHEVAUX => 1, R5_PAVOIS => 1, R5_PIQUE => 1, R5_A_MITHRIL => 1),
+            "need_btc" => array(B5_FORT),
+            "in_btc" => array(B5_FORT),
+            "prix_unt" => array(U5_NOBLE => 1),
+            "group" => 19,
+            "role" => TYPE_UNT_CAVALERIE,
+            "rang" => 8,
+        );
+
+        //Garde
+        $this->unt[U5_GARDE] = array(
+            "def" => 17,
+            "vie" => 14,
+            "atq_unt" => 9,
+            "vit" => 9,
+            'atq_salve' => 2.75, 
+            'def_salve' => 4.25,
+            "prix_res" => array(R5_ARC_COMPOSITE => 1, R5_A_CUIR => 1, R5_RONDACHE => 1),
+            "need_btc" => array(B5_CASERNE),
+            "in_btc" => array(B5_CASERNE),
+            "prix_unt" => array(U5_ACOLYTE => 1),
+            "group" => 13,
+            "role" => TYPE_UNT_DISTANCE,
+            "rang" => 9,
+        );
+
+        //Patrouilleur
+        $this->unt[U5_PATROUILLEUR] = array(
+            "def" => 13,
+            "vie" => 13,
+            "atq_unt" => 14,
+            "vit" => 10,
+            'atq_salve' => 3.5, 
+            'def_salve' => 3.25,
+            "prix_res" => array(R5_ARC_COURT => 1),
+            "need_btc" => array(B5_AIRE_ENTRAINEMENT),
+            "in_btc" => array(B5_AIRE_ENTRAINEMENT),
+            "prix_unt" => array(U5_ACOLYTE => 1),
+            "group" => 8,
+            "role" => TYPE_UNT_DISTANCE,
+            "rang" => 10,
+        );
+
+        //Archer
+        $this->unt[U5_ARCHER] = array(
+            "def" => 8,
+            "vie" => 14,
+            "atq_unt" => 18,
+            "vit" => 9,
+            'atq_salve' => 4.5, 
+            'def_salve' => 2,
+            "prix_res" => array(R5_ARC_COURT => 1, R5_A_CUIR => 1),
+            "need_btc" => array(B5_CASERNE),
+            "in_btc" => array(B5_CASERNE),
+            "prix_unt" => array(U5_ACOLYTE => 1),
+            "group" => 10,
+            "role" => TYPE_UNT_DISTANCE,
             "rang" => 11,
         );
 
         //Mage
         $this->unt[U5_MAGE] = array(
             "def" => 10,
-            "vie" => 8,
+            "vie" => 12,
             "atq_unt" => 12,
             "vit" => 8,
             "bonus"         =>      array('atq' => 1),
@@ -789,7 +784,7 @@ class config5
         //Gardien
         $this->unt[U5_GARDIEN] = array(
             "def" => 12,
-            "vie" => 8,
+            "vie" => 12,
             "atq_unt" => 10,
             "vit" => 10,
             "bonus"         =>      array('def' => 1),
@@ -800,6 +795,38 @@ class config5
             "group" => 21,
             "role" => TYPE_UNT_MAGIQUE,
             "rang" => 13,
+        );
+
+        $this->unt[U5_AIGLE] = array(
+            "def" => 10,
+            "vie" => 20,
+            "atq_unt" => 10,
+            "atq_btc" => 4,
+            "vit" => 8,
+            "need_src" => array(S5_CONNAISSANCES_2),
+            "prix_res" => array(R5_BAIES => 200, R5_MITHRIL => 5, R5_BOIS_IF => 50, R5_CUIR => 50),
+            "need_btc" => array(B5_ANTRE),
+            "in_btc" => array(B5_ANTRE),
+            "group" => 25,
+            "prix_unt" => array(U5_DRUIDE => 2),
+            "role" => TYPE_UNT_MACHINE,
+            "rang" => 14,
+        );
+
+        //Vénérable
+        $this->unt[U5_VENERABLE] = array(
+            "def" => 5,
+            "vie" => 20,
+            "atq_unt" => 5,
+            "atq_btc" => 7,
+            "vit" => 4,
+            "prix_res" => array(R5_BOIS => 200, R5_BAIES => 200, R5_BOIS_IF => 20, R5_CUIR => 20),
+            "need_btc" => array(B5_ANTRE),
+            "in_btc" => array(B5_ANTRE),
+            "prix_unt" => array(U5_DRUIDE => 2),
+            "group" => 18,
+            "role" => TYPE_UNT_MACHINE,
+            "rang" => 15,
         );
 
         //Avatar de Corellon Larethian
@@ -833,22 +860,6 @@ class config5
             "group" => 24,
             "role" => TYPE_UNT_HEROS,
             "rang" => 17,
-        );
-
-        $this->unt[U5_AIGLE] = array(
-            "def" => 5,
-            "vie" => 13,
-            "atq_unt" => 0,
-            "atq_btc" => 13,
-            "vit" => 9,
-            "need_src" => array(S5_CONNAISSANCES_2),
-            "prix_res" => array(R5_BAIES => 200, R5_MITHRIL => 5, R5_BOIS_IF => 50, R5_CUIR => 50),
-            "need_btc" => array(B5_ANTRE),
-            "in_btc" => array(B5_ANTRE),
-            "group" => 25,
-            "prix_unt" => array(U5_DRUIDE => 2),
-            "role" => TYPE_UNT_MACHINE,
-            "rang" => 14,
         );
 
         $this->unt[U5_DRAGON] = array(
