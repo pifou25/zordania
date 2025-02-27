@@ -80,7 +80,7 @@
 <area shape="rect" coords="159,318,186,350" onmouseover="TagToTip('unt_12')" onmouseout="UnTip()"  alt="Fantassin Expérimenté" />
 <area shape="rect" coords="201,283,226,316" onmouseover="TagToTip('unt_13')" onmouseout="UnTip()"  alt="Chevalier" />
 <area shape="rect" coords="188,318,216,350" onmouseover="TagToTip('unt_14')" onmouseout="UnTip()"  alt="Chevalier Expérimenté" />
-<area shape="rect" coords="190,673,228,698" onmouseover="TagToTip('unt_15')" onmouseout="UnTip()"  alt="Catapulte" />
+<!-- <area shape="rect" coords="190,673,228,698" onmouseover="TagToTip('unt_15')" onmouseout="UnTip()"  alt="Catapulte" /> -->
 <area shape="rect" coords="230,673,273,698" onmouseover="TagToTip('unt_16')" onmouseout="UnTip()"  alt="Bélier" />
 <area shape="rect" coords="519,783,543,819" onmouseover="TagToTip('unt_17')" onmouseout="UnTip()"  alt="Moine" />
 <area shape="rect" coords="448,784,475,818" onmouseover="TagToTip('unt_18')" onmouseout="UnTip()"  alt="Prêtre" />

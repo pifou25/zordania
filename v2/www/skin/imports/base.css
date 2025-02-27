@@ -55,7 +55,8 @@ img {
     border-color: #226622; color: #226622;
 }
 
-.red, .bad {
+.red, .bad, .error {
+	background-color: unset;
     color: #FF0000;
 }
 .good {
@@ -75,7 +76,7 @@ img {
 .center{display: block; text-align: center; left-margin: auto; right-margin: auto;}
 .right{float: right;}
 
-/* Permet de faire des espaces, utilisé sur la page des bâtiments et sur l'index */
+/* Permet de faire des espaces, utilisï¿½ sur la page des bï¿½timents et sur l'index */
 .cleaner { clear: both; height: 10px; visibility: hidden; }
 
 .clickable { cursor: pointer;}
@@ -192,7 +193,7 @@ div#actbar li:nth-child(1){
 @media only screen and (min-width:801px) {
 	#bp_desktop { display:block; }
 }
-/*barre énergie*/
+/*barre ï¿½nergie*/
 .barre_jaune {
 	background-repeat: repeat-x;
 	color: #CCCCCC;
@@ -202,4 +203,8 @@ div#actbar li:nth-child(1){
 
 .barre_jaune {
 	background-image: url(img/yellow.png);
+}
+
+.dash-between {
+	span:not(:empty) + span:not(:empty)::before { content: ' - '; }
 }

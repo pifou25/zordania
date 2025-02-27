@@ -66,24 +66,24 @@
 <area shape="rect" coords="344,53,364,86" onmouseover="TagToTip('unt_5')" onmouseout="UnTip()"  alt="Gobelin Mineur" />
 <area shape="rect" coords="366,53,387,86" onmouseover="TagToTip('unt_6')" onmouseout="UnTip()"  alt="Tête" />
 <area shape="rect" coords="199,285,222,319" onmouseover="TagToTip('unt_7')" onmouseout="UnTip()"  alt="Soldat" />
-<area shape="rect" coords="126,293,152,327" onmouseover="TagToTip('unt_8')" onmouseout="UnTip()"  alt="Trancheur" />
+<!-- <area shape="rect" coords="126,293,152,327" onmouseover="TagToTip('unt_8')" onmouseout="UnTip()"  alt="Trancheur" /> -->
 <area shape="rect" coords="127,549,153,584" onmouseover="TagToTip('unt_9')" onmouseout="UnTip()"  alt="Epéiste" />
 <area shape="rect" coords="126,708,152,741" onmouseover="TagToTip('unt_10')" onmouseout="UnTip()"  alt="Champion Epéiste"  />
-<area shape="rect" coords="154,293,184,327" onmouseover="TagToTip('unt_11')" onmouseout="UnTip()"  alt="Tireur" />
+<!-- <area shape="rect" coords="154,293,184,327" onmouseover="TagToTip('unt_11')" onmouseout="UnTip()"  alt="Tireur" /> -->
 <area shape="rect" coords="155,549,184,584" onmouseover="TagToTip('unt_12')" onmouseout="UnTip()"  alt="Archer" />
 <area shape="rect" coords="153,707,184,742" onmouseover="TagToTip('unt_13')" onmouseout="UnTip()"  alt="Champion Archer" />
-<area shape="rect" coords="126,329,153,362" onmouseover="TagToTip('unt_14')" onmouseout="UnTip()"  alt="Perceur" />
+<!-- <area shape="rect" coords="126,329,153,362" onmouseover="TagToTip('unt_14')" onmouseout="UnTip()"  alt="Perceur" /> -->
 <area shape="rect" coords="127,586,153,619" onmouseover="TagToTip('unt_15')" onmouseout="UnTip()"  alt="Lancier" />
 <area shape="rect" coords="126,743,152,778" onmouseover="TagToTip('unt_16')" onmouseout="UnTip()"  alt="Champion Lancier" />
-<area shape="rect" coords="155,329,184,362" onmouseover="TagToTip('unt_17')" onmouseout="UnTip()"  alt="Fendeur" />
+<!-- <area shape="rect" coords="155,329,184,362" onmouseover="TagToTip('unt_17')" onmouseout="UnTip()"  alt="Fendeur" /> -->
 <area shape="rect" coords="155,586,184,619" onmouseover="TagToTip('unt_18')" onmouseout="UnTip()"  alt="Porte-Hache" />
 <area shape="rect" coords="154,744,184,778" onmouseover="TagToTip('unt_19')" onmouseout="UnTip()"  alt="Champion Porte-Hache" />
-<area shape="rect" coords="190,339,218,380" onmouseover="TagToTip('unt_20')" onmouseout="UnTip()"  alt="Dresseur" />
+<!-- <area shape="rect" coords="190,339,218,380" onmouseover="TagToTip('unt_20')" onmouseout="UnTip()"  alt="Dresseur" /> -->
 <area shape="rect" coords="191,596,218,637" onmouseover="TagToTip('unt_21')" onmouseout="UnTip()"  alt="Cavalier" />
 <area shape="rect" coords="191,755,218,796" onmouseover="TagToTip('unt_22')" onmouseout="UnTip()"  alt="Chevaucheur" />
 <area shape="rect" coords="157,824,189,850" onmouseover="TagToTip('unt_23')" onmouseout="UnTip()"  alt="Catapulte" />
 <area shape="rect" coords="191,824,223,850" onmouseover="TagToTip('unt_24')" onmouseout="UnTip()"  alt="Baliste" />
-<area shape="rect" coords="225,824,268,850" onmouseover="TagToTip('unt_25')" onmouseout="UnTip()"  alt="Bélier" />
+<!-- <area shape="rect" coords="225,824,268,850" onmouseover="TagToTip('unt_25')" onmouseout="UnTip()"  alt="Bélier" /> -->
 <area shape="rect" coords="270,825,332,850" onmouseover="TagToTip('unt_26')" onmouseout="UnTip()"  alt="Bélier Brise-Crâne" />
 <area shape="rect" coords="429,774,450,809" onmouseover="TagToTip('unt_27')" onmouseout="UnTip()"  alt="Shaman" />
 <area shape="rect" coords="491,773,520,809" onmouseover="TagToTip('unt_28')" onmouseout="UnTip()"  alt="Cogneur" />

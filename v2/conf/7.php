@@ -804,7 +804,7 @@ class config7
             'prix_unt' => array(U7_GOB_BRIG => 1,),
             'rang' => 12,
             'bonus' => array(
-                'atq' => 1
+                'atq' => 0.5
             ),
         );
 
@@ -821,7 +821,7 @@ class config7
             'prix_unt' => array(U7_GOB_BRIG => 1,),
             'rang' => 13,
             'bonus' => array(
-                "def" => 1
+                "def" => 0.5
             ),
         );
 

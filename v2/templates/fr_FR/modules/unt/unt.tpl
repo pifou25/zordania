@@ -41,7 +41,7 @@
         <if cond='isset({unt_dispo[conf][role]}) && {unt_dispo[conf][role]} == {TYPE_UNT_HEROS}'>
             <if cond="{_user[hro_id]}">Vous avez déjà un héros.</if>
             <else>
-                <a href="leg-hero.html?sub=form&id_hro={unt_type}" title="Former un héros !" />Former un héros !</a>
+                <a href="leg-hero.html?sub=form&id_hro={unt_type}" title="Former un héros !">Former un héros !</a>
             </else>
         </if>
 
@@ -97,33 +97,39 @@
     <div id="output"></div>
     <p class="infos">Les unités "disponibles" sont celles qui ne travaillent pas dans un bâtiment et qui ne sont pas dans une légion, "Total" indique la somme des unités disponibles et de celles qui ne le sont pas.</p> 
     <table class="liste">
-        <tr>
-            <th>Type</th>
-            <th>Dispo</th>
-            <th>Infos</th>
-        </tr>
         <tbody>
-        <foreach cond='{unt_dispo} as {unt_type} => {unt_array}'>
             <tr>
-                <td>
-
-                    <a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}" class="zrdPopUp">
-                        <zimgunt race="{_user[race]}" type="{unt_type}"  />
-                        {unt[{_user[race]}][alt][{unt_type}]}</a>
-                </td>
-                <td>{unt_done[vlg][{unt_type}]} / {unt_done[tot][{unt_type}]}</td>
-                <td>
-                    {roles[{unt_array[conf][role]}]}
-
-            <if cond='isset({unt_array[conf][atq_unt]}) OR isset({unt_array[conf][atq_btc]}) OR isset({unt_array[conf][def]})'>
-                [ <if cond='isset({unt_array[conf][atq_unt]})'>{unt_array[conf][atq_unt]} <img src="img/{_user[race]}/div/atq.png" alt="Attaque Unité" /></if>
-                <if cond="isset({unt_array[conf][atq_btc]})"> - {unt_array[conf][atq_btc]} <img src="img/{_user[race]}/div/atq_btc.png" alt="Attaque Bâtiment" /></if>
-                <if cond="isset({unt_array[conf][def]})">  - {unt_array[conf][def]} <img src="img/{_user[race]}/div/def.png" alt="Défense" /></if> ]
-            </if>
-            </td>
+                <th>Type</th>
+                <th>Dispo</th>
+                <th>Infos</th>
             </tr>
-            </tbody>
-        </foreach>
+            <foreach cond='{unt_dispo} as {unt_type} => {unt_array}'>
+                <tr>
+                    <td>
+                        <a href="unt.html?unt_type={unt_type}" title="Gérer les {unt[{_user[race]}][alt][{unt_type}]}" class="zrdPopUp">
+                            <zimgunt race="{_user[race]}" type="{unt_type}"  />
+                            {unt[{_user[race]}][alt][{unt_type}]}</a>
+                    </td>
+                    <td>{unt_done[vlg][{unt_type}]} / {unt_done[tot][{unt_type}]}</td>
+                    <td>
+                        {roles[{unt_array[conf][role]}]}
+                        <if cond="{unt_array[conf][role]} != TYPE_UNT_CIVIL">
+                        [<span class="dash-between">
+                            <if cond="isset({unt_array[conf][vie]})"><span>{unt_array[conf][vie]} <img src="img/{_user[race]}/div/vie.png" alt="Vie" /></span></if>
+                            <if cond="isset({unt_array[conf][atq_unt]})"><span>{unt_array[conf][atq_unt]} <img src="img/{_user[race]}/div/atq.png" alt="Attaque Unité" /></span></if>
+                            <if cond="isset({unt_array[conf][atq_btc]})"><span>{unt_array[conf][atq_btc]} <img src="img/{_user[race]}/div/atq_btc.png" alt="Attaque Bâtiment" /></span></if>
+                            <if cond="isset({unt_array[conf][def]})"><span>{unt_array[conf][def]} <img src="img/{_user[race]}/div/def.png" alt="Défense" /></span></if> 
+                            <if cond="isset({unt_array[conf][atq_salve]})"><span>{unt_array[conf][atq_salve]} <img src="img/{_user[race]}/div/atq_salve.png" alt="Salve d'attaque" /></span></if>
+                            <if cond="isset({unt_array[conf][def_salve]})"><span>{unt_array[conf][def_salve]} <img src="img/{_user[race]}/div/def_salve.png" alt="Salve de défence" /></span></if> 
+                            <!-- <if cond="isset({unt_array[conf][bonus][vie]})"><span>{unt_array[conf][bonus][vie]} <img src="img/{_user[race]}/div/tir.png" alt="Abri" /></span></if>-->
+                            <if cond="isset({unt_array[conf][bonus][def]})"><span>{unt_array[conf][bonus][def]}%<img src="img/{_user[race]}/div/def.png" alt="Bonus def" /></span></if>
+                            <if cond="isset({unt_array[conf][bonus][atq]})"><span>{unt_array[conf][bonus][atq]}%<img src="img/{_user[race]}/div/atq.png" alt="Benos off" /></span></if> 
+                        ]</span>
+                    </if>
+                    </td>
+                </tr>
+            </foreach>
+        </tbody>
     </table>
     <div class="retour_module"><a href="unt.html" title="Retour">Retour</a></div>
 </if>
