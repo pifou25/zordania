@@ -1111,9 +1111,9 @@ class config5
 
         $this->comp[CP_VOLEE_DE_FLECHES] = array(
             'heros'        => array(U5_DRAGON),
-            'tours'        => 24,
+            'tours'        => 12,
             'bonus'        => 5,
-            'prix_xp'    => 50,
+            'prix_xp'    => 80,
             'type'        => 1
         );
 
@@ -1129,20 +1129,20 @@ class config5
 
         $this->comp[CP_BOOST_DEF] = array(
             'heros'        => array(U5_AVATAR_CORELLON),
-            'tours'        => 8,
-            'bonus'        => 8,
+            'tours'        => 12,
+            'bonus'        => 10,
             'prix_xp'    => 40,
             'type'        => 2
         );
 
         $this->comp[CP_RESISTANCE] = array(
             'heros'        => array(U5_AVATAR_CORELLON),
-            'tours'        => 6,
+            'tours'        => 12,
             'bonus'        => 15,
             'prix_xp'    => 60,
             'type'        => 2
         );
-
+/*
         $this->comp[CP_REGENERATION] = array(
             'heros'        => array(U5_AVATAR_CORELLON),
             'tours'        => 24,
@@ -1150,10 +1150,10 @@ class config5
             'prix_xp'    => 50,
             'type'        => 2
         );
-
+*/
         $this->comp[CP_FLECHES_SALVATRICES] = array(
             'heros'        => array(U5_AVATAR_CORELLON),
-            'tours'        => 24,
+            'tours'        => 6,
             'bonus'        => 8,
             'prix_xp'    => 50,
             'type'        => 2
@@ -1172,7 +1172,7 @@ class config5
         $this->comp[CP_GENIE_COMMERCIAL] = array(
             'heros'        => array(U5_AVATAR_AERDRIE),
             'tours'        => 24,
-            'bonus'        => 10,
+            'bonus'        => 20,
             'prix_xp'    => 50,
             'type'        => 3
         );
@@ -1180,15 +1180,15 @@ class config5
         $this->comp[CP_GUERISON] = array(
             'heros'        => array(U5_AVATAR_AERDRIE),
             'tours'        => 24,
-            'bonus'        => 10,
-            'prix_xp'    => 50,
+            'bonus'        => 20,
+            'prix_xp'    => 80,
             'type'        => 3
         );
 
         $this->comp[CP_COLLABORATION] = array(
             'heros'        => array(U5_AVATAR_AERDRIE),
             'tours'        => 24,
-            'bonus'        => 10,
+            'bonus'        => 30,
             'prix_xp'    => 50,
             'type'        => 3
         );

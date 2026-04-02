@@ -1068,9 +1068,9 @@ class config1
 
         $this->comp[CP_VOLEE_DE_FLECHES] = array(
             'heros'        => array(U1_GENERAL),
-            'tours'        => 24,
+            'tours'        => 12,
             'bonus'        => 5,
-            'prix_xp'    => 50,
+            'prix_xp'    => 80,
             'type'        => 1
         );
 
@@ -1078,7 +1078,7 @@ class config1
             'heros'        => array(U1_GENERAL),
             'tours'        => 24,
             'bonus'        => 10,
-            'prix_xp'    => 180,
+            'prix_xp'    => 160,
             'type'        => 1
         );
 
@@ -1086,20 +1086,20 @@ class config1
 
         $this->comp[CP_BOOST_DEF] = array(
             'heros'        => array(U1_GRIFFON),
-            'tours'        => 8,
-            'bonus'        => 8,
+            'tours'        => 12,
+            'bonus'        => 10,
             'prix_xp'    => 40,
             'type'        => 2
         );
 
         $this->comp[CP_RESISTANCE] = array(
             'heros'        => array(U1_GRIFFON),
-            'tours'        => 6,
+            'tours'        => 12,
             'bonus'        => 15,
             'prix_xp'    => 60,
             'type'        => 2
         );
-
+/*
         $this->comp[CP_REGENERATION] = array(
             'heros'        => array(U1_GRIFFON),
             'tours'        => 24,
@@ -1107,11 +1107,11 @@ class config1
             'prix_xp'    => 50,
             'type'        => 2
         );
-
+*/
         $this->comp[CP_COLLABORATION] = array(
             'heros'        => array(U1_GRIFFON),
             'tours'        => 24,
-            'bonus'        => 50,
+            'bonus'        => 30,
             'prix_xp'    => 50,
             'type'        => 2
         );
@@ -1129,7 +1129,7 @@ class config1
         $this->comp[CP_GENIE_COMMERCIAL] = array(
             'heros'        => array(U1_INGENIEUR_GNOME),
             'tours'        => 24,
-            'bonus'        => 10,
+            'bonus'        => 20,
             'prix_xp'    => 50,
             'type'        => 3
         );
@@ -1145,8 +1145,8 @@ class config1
         $this->comp[CP_GUERISON] = array(
             'heros'        => array(U1_INGENIEUR_GNOME),
             'tours'        => 24,
-            'bonus'        => 50,
-            'prix_xp'    => 50,
+            'bonus'        => 20,
+            'prix_xp'    => 80,
             'type'        => 3
         );
         //</comp>
