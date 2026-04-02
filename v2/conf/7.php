@@ -1141,9 +1141,9 @@ class config7
 
         $this->comp[CP_VOLEE_DE_FLECHES] = array(
             'heros'        => array(U7_HOBGOB_OFF),
-            'tours'        => 24,
+            'tours'        => 12,
             'bonus'        => 5,
-            'prix_xp'    => 50,
+            'prix_xp'    => 80,
             'type'        => 1
         );
 
@@ -1151,7 +1151,7 @@ class config7
             'heros'        => array(U7_HOBGOB_OFF),
             'tours'        => 24,
             'bonus'        => 10,
-            'prix_xp'    => 180,
+            'prix_xp'    => 160,
             'type'        => 1
         );
 
@@ -1159,20 +1159,20 @@ class config7
 
         $this->comp[CP_BOOST_DEF] = array(
             'heros'        => array(U7_MEDUSA),
-            'tours'        => 8,
-            'bonus'        => 8,
+            'tours'        => 12,
+            'bonus'        => 10,
             'prix_xp'    => 40,
             'type'        => 2
         );
 
         $this->comp[CP_RESISTANCE] = array(
             'heros'        => array(U7_MEDUSA),
-            'tours'        => 6,
+            'tours'        => 12,
             'bonus'        => 15,
             'prix_xp'    => 60,
             'type'        => 2
         );
-
+/*
         $this->comp[CP_REGENERATION] = array(
             'heros'        => array(U7_MEDUSA),
             'tours'        => 24,
@@ -1180,7 +1180,7 @@ class config7
             'prix_xp'    => 50,
             'type'        => 2
         );
-
+*/
         $this->comp[CP_APPEL_CREATURE] = array(
             'heros'        => array(U7_MEDUSA),
             'tours'        => 24,
@@ -1202,11 +1202,11 @@ class config7
         $this->comp[CP_GENIE_COMMERCIAL] = array(
             'heros'        => array(U7_CHEVAUCH_TORT),
             'tours'        => 24,
-            'bonus'        => 10,
+            'bonus'        => 20,
             'prix_xp'    => 50,
             'type'        => 3
         );
-
+/*
         $this->comp[CP_INGE_ACCRUE] = array(
             'heros'        => array(U7_CHEVAUCH_TORT),
             'tours'        => 24,
@@ -1214,12 +1214,12 @@ class config7
             'prix_xp'    => 50,
             'type'        => 3
         );
-
+*/
         $this->comp[CP_GUERISON] = array(
             'heros'        => array(U7_CHEVAUCH_TORT),
             'tours'        => 24,
-            'bonus'        => 50,
-            'prix_xp'    => 50,
+            'bonus'        => 35,
+            'prix_xp'    => 80,
             'type'        => 3
         );
         //</comp>

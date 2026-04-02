@@ -1117,15 +1117,15 @@ class config3
 
         $this->comp[CP_VOLEE_DE_FLECHES] = array(
             'heros' => array(U3_SEIGNEUR_DE_GUERRE),
-            'tours' => 24,
+            'tours' => 12,
             'bonus' => 5,
-            'prix_xp' => 50,
+            'prix_xp' => 80,
             'type' => 1
         );
         
         $this->comp[CP_VITESSE]=array(
             'heros' => array(U3_SEIGNEUR_DE_GUERRE),
-            'tours' => 24,
+            'tours' => 12,
             'bonus' => 50,
             'prix_xp' => 50,
             'type' => 1
@@ -1135,20 +1135,20 @@ class config3
 
         $this->comp[CP_BOOST_DEF] = array(
             'heros' => array(U3_GOLEM),
-            'tours' => 8,
-            'bonus' => 8,
+            'tours' => 12,
+            'bonus' => 10,
             'prix_xp' => 40,
             'type' => 2
         );
 
         $this->comp[CP_RESISTANCE] = array(
             'heros' => array(U3_GOLEM),
-            'tours' => 6,
+            'tours' => 12,
             'bonus' => 15,
             'prix_xp' => 60,
             'type' => 2
         );
-
+/*
         $this->comp[CP_REGENERATION] = array(
             'heros' => array(U3_GOLEM),
             'tours' => 24,
@@ -1156,7 +1156,7 @@ class config3
             'prix_xp' => 50,
             'type' => 2
         );
-
+*/
         $this->comp[CP_INVULNERABILITE] = array(
             'heros' => array(U3_GOLEM),
             'tours' => 24,
@@ -1178,7 +1178,7 @@ class config3
         $this->comp[CP_GENIE_COMMERCIAL] = array(
             'heros' => array(U3_TAUREN),
             'tours' => 24,
-            'bonus' => 10,
+            'bonus' => 20,
             'prix_xp' => 50,
             'type' => 3
         );
@@ -1186,8 +1186,8 @@ class config3
         $this->comp[CP_GUERISON] = array(
             'heros' => array(U3_TAUREN),
             'tours' => 24,
-            'bonus' => 10,
-            'prix_xp' => 50,
+            'bonus' => 20,
+            'prix_xp' => 80,
             'type' => 3
         );
 
@@ -1195,7 +1195,7 @@ class config3
             'heros' => array(U3_TAUREN),
             'tours' => 0,
             'bonus' => 0,
-            'prix_xp' => 180,
+            'prix_xp' => 160,
             'type' => 3
         );
 

@@ -1079,9 +1079,9 @@ class config2
 
         $this->comp[CP_VOLEE_DE_FLECHES] = array(
             'heros'        => array(U2_SEIGNEUR_ORC_SUR_SANGLIER),
-            'tours'        => 24,
+            'tours'        => 12,
             'bonus'        => 5,
-            'prix_xp'    => 50,
+            'prix_xp'    => 80,
             'type'        => 1
         );
 
@@ -1097,20 +1097,20 @@ class config2
 
         $this->comp[CP_BOOST_DEF] = array(
             'heros'        => array(U2_TROLL),
-            'tours'        => 8,
-            'bonus'        => 8,
+            'tours'        => 12,
+            'bonus'        => 10,
             'prix_xp'    => 40,
             'type'        => 2
         );
 
         $this->comp[CP_RESISTANCE] = array(
             'heros'        => array(U2_TROLL),
-            'tours'        => 6,
+            'tours'        => 12,
             'bonus'        => 15,
             'prix_xp'    => 60,
             'type'        => 2
         );
-
+/*
         $this->comp[CP_REGENERATION] = array(
             'heros'        => array(U2_TROLL),
             'tours'        => 24,
@@ -1118,7 +1118,7 @@ class config2
             'prix_xp'    => 50,
             'type'        => 2
         );
-
+*/
         $this->comp[CP_DEFENSE_EPIQUE] = array(
             'heros'        => array(U2_TROLL),
             'tours'        => 24,
@@ -1140,7 +1140,7 @@ class config2
         $this->comp[CP_GENIE_COMMERCIAL] = array(
             'heros'        => array(U2_PORTE_ETENDARD),
             'tours'        => 24,
-            'bonus'        => 10,
+            'bonus'        => 20,
             'prix_xp'    => 50,
             'type'        => 3
         );
@@ -1148,8 +1148,8 @@ class config2
         $this->comp[CP_GUERISON] = array(
             'heros'        => array(U2_PORTE_ETENDARD),
             'tours'        => 24,
-            'bonus'        => 10,
-            'prix_xp'    => 50,
+            'bonus'        => 20,
+            'prix_xp'    => 80,
             'type'        => 3
         );
 
