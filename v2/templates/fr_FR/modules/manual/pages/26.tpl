@@ -169,7 +169,7 @@ Pour regagner des points de vie, votre héros doit impérativement être dans vo
 </td>
 </tr>
 
-
+<!-- 
 <tr>
 <td><a href="manual.html?race=1&type=comp#comp_7"><img src="img/1/comp/7.png" alt="Récupération" title="Récupération" /></a>
 </td>
@@ -185,6 +185,7 @@ Pour regagner des points de vie, votre héros doit impérativement être dans vo
 </td>	
 </tr>
 <tr>
+ -->
 
 <td><a href="manual.html?race=1&type=comp#comp_16"><img src="img/1/comp/16.png" alt="Défense groupée" title="Défense groupée" /></a>
 </td>
@@ -210,10 +211,12 @@ Pour regagner des points de vie, votre héros doit impérativement être dans vo
 <td><a href="manual.html?race=5&type=comp#comp_20"><img src="img/5/comp/20.png" alt="Volée de flèches salvatrice" title="Volée de flèches salvatrice" /></a>
 </td><td></td>
 	
+<!-- 
 </tr>
 <tr><td></td><td></td><td></td><td></td><td></td>
 <td><a href="manual.html?race=7&type=comp#comp_23"><img src="img/7/comp/20.png" alt="Appel de créatures" title="Appel de créatures" /></a>
 </td>
+ -->
 	
 </tr>
 
