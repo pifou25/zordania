@@ -263,7 +263,7 @@ else{
                 $resValid   = valid_qst($qst_array['qst_res_nb'], $qst_array['qst_etat_res']); 
                 $srcValid = ($qst_array['qst_src_id'] == 0 || $qst_array['qst_etat_src'] >= 1);
 
-                if ($btcValid1 && $btcValid2 && $untValid1 && $untValid2 && $resValid && $srcValid) {
+                if ($btcValid1 && $btcValid2 && $untValid1 && $untValid2 && $resValid && $srcValid && $qst_array['qst_mbr_statut'] != QST_MBR_END) {
 
                     $new = array('statut' => QST_MBR_END );
                     edit_qst($_user['mid'], $qid, $new); //mettre la quête comme terminée
