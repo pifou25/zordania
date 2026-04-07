@@ -1122,14 +1122,14 @@ class config3
             'prix_xp' => 50,
             'type' => 1
         );
-        /*
+        
         $this->comp[CP_VITESSE]=array(
             'heros' => array(U3_SEIGNEUR_DE_GUERRE),
             'tours' => 24,
             'bonus' => 50,
             'prix_xp' => 50,
             'type' => 1
-        );*/
+        );
 
         /* ### Def ### */
 
