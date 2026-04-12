@@ -43,14 +43,18 @@ case "edit":
 		} else
 			$_tpl->set('nte_bad_nid',true);
 
-		if($titre && $texte)
+		if($titre && $texte){
 			$_tpl->set('nte_ok',edit_nte($_user['mid'], $nid, $titre, parse($texte), $import));
+			header('Location: notes-view.html?nid='.$nid);
+		}
 
 	}else{ // new
 		$_tpl->set('nte_nid',0);
 
-		if($titre && $texte)
+		if($titre && $texte){
 			$_tpl->set('nte_ok',add_nte($_user['mid'], $titre, parse($texte), $import));
+			header('Location: notes.html');
+		}
 		else {
 			$_tpl->set('nte_titre',htmlspecialchars($titre));
 			$_tpl->set('nte_texte',htmlspecialchars($texte));
