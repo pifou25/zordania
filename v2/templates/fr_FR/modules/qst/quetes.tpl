@@ -155,7 +155,7 @@
                     </if>
                 </foreach>
             </select>            
-            <input name="res_nb" id="res_nb" type="Number" value="{res_nb}" placeholder="Valeur" />
+            <input name="res_nb" id="res_nb" type="Number" value="{res_nbr}" placeholder="Valeur" />
             <br/>  
 
             Recherche: 
