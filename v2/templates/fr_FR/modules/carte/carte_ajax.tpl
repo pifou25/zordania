@@ -240,8 +240,8 @@ var mapLib = {
 			var title = "";
 			var infos = this.cases[x][y];
 			if(infos["map_type"] == 7) {
-				title = "Village de " + infos["mbr_array"]["mbr_pseudo"] + "<br/>";
-				title+= "Points: " + infos["mbr_array"]["mbr_points"] + " Race: " + this.races[infos["mbr_array"]["mbr_race"]] + "<br/>";
+				title = "Village de " + infos["mbr_array"]["mbr_pseudo"] + " ~ ";
+				title+= "Points: " + infos["mbr_array"]["mbr_points"] + " Race: " + this.races[infos["mbr_array"]["mbr_race"]] + " ~ ";
 				title+= " X:"+x+" Y:"+y;
 			} else {
 				title = " X:"+x+" Y:"+y;

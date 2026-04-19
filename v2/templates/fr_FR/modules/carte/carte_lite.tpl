@@ -78,12 +78,12 @@ setTimeout("showMapInfo({map_cid})",500);
 	<foreach cond='{map_array} as {map_y} => {result_x}'>
 	<foreach cond='{result_x} as {map_x} => {result}'>
 		<if cond='{result[map_type]} != {MAP_VILLAGE}'>
-			<set name='case_title' value='Type: {carte[alt][{result[map_climat]}][{result[map_type]}]} <br/> X:{map_x}  Y:{map_y}' />
+			<set name='case_title' value='Type: {carte[alt][{result[map_climat]}][{result[map_type]}]} ~ X:{map_x}  Y:{map_y}' />
 			<set name='case_img' value='{result[map_climat]}/{result[map_type]}/{result[map_rand]}' />
 		</if>
 		<else>
 			<set name="mbr_array" value="{result[members][0]}" />
-			<set name='case_title' value='Village de {mbr_array[mbr_pseudo]} <br/> Points: {mbr_array[mbr_points]} Race: {race[{mbr_array[mbr_race]}]} <br/>  X:{map_x} Y:{map_y}' />
+			<set name='case_title' value='Village de {mbr_array[mbr_pseudo]} ~ Points: {mbr_array[mbr_points]} Race: {race[{mbr_array[mbr_race]}]} ~  X:{map_x} Y:{map_y}' />
 			<if cond='{mbr_array[mbr_points]} > {MBR_NIV_2}'><set name="etat_mbr" value="3" /></if>
 			<elseif cond='{mbr_array[mbr_points]} > {MBR_NIV_1}'><set name="etat_mbr" value="2" /></elseif>
 			<else><set name="etat_mbr" value="1" /></else>
