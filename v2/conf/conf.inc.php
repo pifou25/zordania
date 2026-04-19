@@ -182,7 +182,7 @@ define('PARRAIN_GRD3', 50);
 define('PARRAIN_BONUS_PRC', 5);
 
 /* coefficient de defense groupee: modules/war/page.php */
-$cst_ratio_def = array(0 => 1, 1 => 0.5, 2 => 0.33);
+$cst_ratio_def = array(0 => 1, 1 => 0.5, 2 => 0.33); // ajout ou supp ratio pour modif nbr en def
 
 /* Langues disponibles */
 $_langues = array('unknown' => 'fr_FR', 'fr' => 'fr_FR');
