@@ -104,7 +104,7 @@
 			<label for="to_leg">Ajouter dans</label>
 			<select name="to_leg" id="to_leg">
 				<foreach cond="{leg_array} as {value}">
-					<if cond='{value[leg_etat]} != {LEG_ETAT_VLG} && {_user[mapcid]} == {value[leg_cid]}'>
+					<if cond='{value[leg_etat]} != {LEG_ETAT_VLG} && {_user[mapcid]} == {value[leg_cid]} && {value[leg_etat]} == {LEG_ETAT_GRN}'>
 						<option value="{value[leg_id]}">{value[leg_name]}</option>
 					</if>
 				</foreach>
