@@ -142,7 +142,7 @@ function get_atq_gen($cond) { /* mid = attaquant, mid2 = defenseur */
 	if($count)
 		$sql = "SELECT COUNT(*) AS nbatq ";
 	else {
-		$sql = "SELECT atq_aid, _DATE_FORMAT(atq_date) as atq_date_formated, ";
+		$sql = "SELECT atq_aid, atq_date, _DATE_FORMAT(atq_date) as atq_date_formated, ";
 		if(!$lite)
 			$sql.= " atq_bilan, atq_cid, ";
 		$sql.= " atq_mid1, atq_lid1, ";

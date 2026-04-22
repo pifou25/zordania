@@ -128,6 +128,7 @@ define('SAIS_GAIN', 20); //avance en xp quand on est roi
  */
 define('ZZZ_TRIGGER',7); // Temps de mise en veille automatique
 define('ZZZ_MIN',3); // Durée minimale de mise en veille
+define('ZZZ_ATQ_DELAY',6); // nbr de tour après retour d'attaque
 
 /* Limites de points pour afficher un donjon ou une forteresse */
 define('MAP_REGIONS', 9); /* Divisé en 9 */

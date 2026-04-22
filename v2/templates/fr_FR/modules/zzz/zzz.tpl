@@ -22,6 +22,11 @@
 		Il a été mis en veille le {zzz_date} et la durée minimale de mise en veille est {ZZZ_MIN} jours.</div>
 	</else>
 </elseif>
+<elseif cond='{zzz_act} == "cant_sleep"'>
+<p>
+Vous avez récemment effectué une attaque sur un autre seigneur, afin de lui permettre de répondre à cet affront, vous ne pouvez vous mettre en veille que {ZZZ_ATQ_DELAY} tours après le retour de votre armée, soit le {zzz_date_canSleep}.
+</p>
+</elseif>
 <elseif cond='{zzz_act} == "rien"'>
 <p>
 Vous pouvez mettre en veille votre compte à partir de cette page.
