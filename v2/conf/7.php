@@ -272,7 +272,7 @@ class config7
             'prix_res' => array(R7_BOIS => 5, R7_GRANIT => 6,),
             'prix_trn' => array(T7_MONTAGNE => 1,),
             'prix_unt' => array(U7_RESCAPE => 1,),
-            'prod_res_auto' => array(R7_GRANIT => 4,),
+            'prod_res_auto' => array(R7_GRANIT => 2,),
             'need_btc' => array(B7_RUINE_OUBLIEE,),
         );
         //</btc-2>
@@ -284,7 +284,7 @@ class config7
             'prix_res' => array(R7_BOIS => 5, R7_GRANIT => 8,),
             'prix_trn' => array(T7_FORET => 1,),
             'prix_unt' => array(U7_COLLECTEUR => 1,),
-            'prod_res_auto' => array(R7_BOIS => 2,),
+            'prod_res_auto' => array(R7_BOIS => 1,),
             'need_btc' => array(B7_RUINE_OUBLIEE,),
         );
         //</btc-3>
