@@ -268,7 +268,7 @@ class config4
             "tours"        =>    5,
             "prix_trn"        =>    array(T4_FORET => 1),
             "need_btc"    =>    array(B4_NID),
-            "prod_res_auto"    =>    array(R4_BOIS => 1),
+            "prod_res_auto"    =>    array(R4_BOIS => 2),
             "prix_unt"    =>    array(U4_BUCHERON => 1),
         );
 
