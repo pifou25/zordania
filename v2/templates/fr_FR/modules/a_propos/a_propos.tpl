@@ -77,6 +77,7 @@
 	<li>Janvier 2019 - Nouvel hébergeur: LWS.</li>
 	<li>20 Novembre 2024 - 20ans!</li>
 	<li>Décembre 2024 - 2.3.3 Lot de corrections</li>
+	<li>Mai 2025 - 2.4 Quêtes de départ.</li>
 	</ul>
 </elseif>
 <elseif cond='{a_propos_act} == "boutons"'>

@@ -60,12 +60,10 @@
 	<hr/>
 	
 	<if cond='{vld_array}'>
-	<strong>Vous avez une action en cours de validation:
-        <if cond='{vld_array[0][vld_act]} == "del"'><a href="javascript:if(confirm('Etes vous sûr de vouloir supprimer votre compte?')) document.location.href='member-del.html?key={vld_array[0][vld_rand]}'"> {vldacts[{vld_array[0][vld_act]}]}</a> </if>
-        <else><a href="javascript:if(confirm('Etes vous sûr de vouloir initialiser votre compte?')) document.location.href='ini.html?key={vld_array[0][vld_rand]}'"> {vldacts[{vld_array[0][vld_act]}]}</a></else> ou
-	<a href="member-edit.html?sub=del_vld">Annuler</a>.</strong>
-	<hr/>
-	</if>
+        <strong>Vous avez une action en cours de validation ({vldacts[{vld_array[0][vld_act]}]}),
+        <a href="member-edit.html?sub=del_vld">Annuler</a>.</strong>
+        <hr/>
+    </if>
 
 	<h4>Description</h4>
 	<p>
