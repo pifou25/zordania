@@ -142,8 +142,7 @@ function glob_leg() {
 		$lid = $value['leg_id'];
 		$diffx = ($x1 < $x2) ? 1 : -1;
 		$diffy = ($y1 < $y2) ? 1 : -1;
-		//vitesse avec compétence?
-		$vit = (isset($_user['hro']) && $_user['hro']['hro_bonus'] == CP_VITESSE) ? floor($value['leg_vit'] * (1+get_conf_gen($race, 'comp', $_user['hro']['hro_bonus'], 'bonus')/100 )) : $value['leg_vit'];
+		$vit = $value['leg_vit'];
 
 		$mid = $value['leg_mid'];
 		while($vit && ($x1 != $x2 || $y1 != $y2)) {
