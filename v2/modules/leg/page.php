@@ -276,10 +276,10 @@ case "hero":
 					if($res) {
                         //recalcule de la vitesse si CP_VITESSE ON/OFF
                         if ($bid == CP_VITESSE || $_user['bonus'] == CP_VITESSE){
-                        $_ses->update_heros(); //reload ses
-                        $legions = new legions($cond, true, true);
-                        $new = array('vit' => $legions->legs[$_user['hro_lid']]->vitesse());
-					    $legions->legs[$_user['hro_lid']]->edit($new);
+                            $_ses->update_heros(); //reload ses
+                            $legions = new legions($cond, true, true);
+                            $new = array('vit' => $legions->legs[$_user['hro_lid']]->vitesse());
+                            $legions->legs[$_user['hro_lid']]->edit($new);
                         }
 						// ajouter un évenement
 						$_histo->add($_user['mid'], $_user['mid'], HISTO_HRO_CP, $cp);
