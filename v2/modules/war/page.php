@@ -549,7 +549,7 @@ case 'make_atq':
 		$leg = $legions->legs[$lid];
 		if ($lid == $lid1) { // retour à la maison
 			$new = ['etat' => LEG_ETAT_RET,
-                            'vit' => $leg_1->calc_vit(),
+                            'vit' => $legions->legs[$lid1]->vitesse(),
                             'dest' => $_user['mapcid']];
                         $leg->setHro('vie', $bilan['att']['pertes']['hro_reste']);
                         $leg->addHro('nrj',$bilan['att']['xp_won']);

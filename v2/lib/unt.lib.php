@@ -310,9 +310,9 @@ class legion {
 						$this->bonus['cpt']['vit'] = $bonus;
 				}
 				// calculer la vitesse
-				if($this->etat == LEG_ETAT_DPL)
+				/*if($this->etat == LEG_ETAT_DPL)
 					$this->stats['vit'] = $this->infos['leg_vit'];
-				else
+				else*/
 					$this->stats['vit'] = $this->calc_vit();
 			}
 			$this->stats = $this->stats;
