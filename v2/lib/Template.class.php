@@ -1,8 +1,9 @@
 <?php
-
+#[AllowDynamicProperties]
 class Template
 {
-	function __construct() //constructeur
+	//public $var;
+    function __construct() //constructeur
 	{
 		$this->var = new stdClass();
 		$this->var->tpl = new stdClass();
@@ -55,7 +56,7 @@ class Template
 	
 	function set_dir($dir)
 	{
-		if ($dir{strlen($dir)-1} != '/')
+		if ($dir[strlen($dir)-1] != '/')
 			$dir .= '/';
 		$this->var->tpl->dir = $dir;
 	}
@@ -64,7 +65,7 @@ class Template
 	{
 		if(!is_dir($dir))
 			if(!mkdir($dir, 0700, true)) echo "Echec création rep $dir";
-		if ($dir{strlen($dir)-1} != '/')
+		if ($dir[strlen($dir)-1] != '/')
 		$dir .= '/';
 		$this->tmpdir = $dir;
 	}
@@ -74,7 +75,7 @@ class Template
 		$this->var->_get = &$_GET;
 		$this->var->_post = &$_POST;
 		$this->var->_server = &$_SERVER;
-		$this->var->_globals = &$GLOBALS;
+		$this->var->_globals = $GLOBALS; 
 		$this->var->_cookie = &$_COOKIE;
 		$this->var->_session = &$_SESSION;
 		$this->var->_env = &$_ENV;
@@ -191,9 +192,10 @@ class Template
 			preg_match_all('#([a-z]+)=(\\\\\'|")(.*?)\\2#', $var[0], $out);
 
 			foreach($out[1] as $num=>$key)
-				if ($key == 'cache' or $key == 'file') // variables nécessaires
-					${$key} = $out[3][$num];
-				else // autre variable facultative = affectation d'un paramère pour l'include
+				if ($key == 'cache' or $key == 'file') { // variables nécessaires
+					if ($key === 'cache') $cache = $out[3][$num];
+					if ($key === 'file')  $file  = $out[3][$num];
+				} else // autre variable facultative = affectation d'un paramère pour l'include
 					$return .= "';\n\$this->var->{'$key'} = '{$out[3][$num]}';\n\$data .= '";
 			return $return . "'.\$this->get('$file', '$cache').'";
 

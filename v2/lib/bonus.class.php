@@ -7,7 +7,7 @@ class bonus
 	var $errstr;
 	var $sql;
 	
-	function bonus(&$sql)
+	function __construct(&$sql)
 	{
 		$this->sql = &$sql;
 	}
@@ -74,7 +74,7 @@ class bonus
 		$recall = protect($recall, "string");
 		
 		$sql="SELECT COUNT(*) FROM ".$this->sql->prebdd."bon WHERE `bon_ok` LIKE '%OK%' AND `bon_ok` NOT LIKE '%NOK%' AND bon_code='$recall' AND bon_date > (NOW() - INTERVAL 1 DAY)";
-		return mysql_result($this->sql->query($sql), 0);
+		return $this->sql->result($this->sql->query($sql), 0);
 	}
 	
 	function log($mid, $recall, $ok, $type, $nb)

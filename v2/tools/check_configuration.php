@@ -82,7 +82,7 @@ check(class_exists('XSLTProcessor'), 'XSL module is installed', 'Install and ena
 check(function_exists('token_get_all'), 'The token_get_all() function is available', 'Install and enable the Tokenizer extension (highly recommended)', false);
 check(function_exists('mb_strlen'), 'The mb_strlen() function is available', 'Install and enable the mbstring extension', false);
 check(function_exists('iconv'), 'The iconv() function is available', 'Install and enable the iconv extension', false);
-check(function_exists('utf8_decode'), 'The utf8_decode() is available', 'Install and enable the XML extension', false);
+// utf8_decode() supprimée en PHP 8.2 - remplacée par mb_convert_encoding()
 check(function_exists('posix_isatty'), 'The posix_isatty() is available', 'Install and enable the php_posix extension (used to colorized the CLI output)', false);
 
 $accelerator = 
@@ -95,11 +95,11 @@ $accelerator =
 check($accelerator, 'A PHP accelerator is installed', 'Install a PHP accelerator like APC (highly recommended)', false);
 
 check(!ini_get('short_open_tag'), 'php.ini has short_open_tag set to off', 'Set it to off in php.ini', false);
-check(!ini_get('magic_quotes_gpc'), 'php.ini has magic_quotes_gpc set to off', 'Set it to off in php.ini', false);
-check(!ini_get('register_globals'), 'php.ini has register_globals set to off', 'Set it to off in php.ini', false);
+// magic_quotes_gpc supprimé en PHP 8 - vérification inutile
+// register_globals supprimé en PHP 5.4 - vérification inutile
 check(!ini_get('session.auto_start'), 'php.ini has session.auto_start set to off', 'Set it to off in php.ini', false);
 
-check(version_compare(phpversion(), '5.2.9', '!='), 'PHP version is not 5.2.9', 'PHP 5.2.9 broke array_unique() and sfToolkit::arrayDeepMerge(). Use 5.2.10 instead [Ticket #6211]', false);
+check(version_compare(phpversion(), '8.0.0', '>='), 'PHP version >= 8.0', 'PHP 8.0 minimum requis pour Zordania v2', false);
 
 if (!is_cli())
 {

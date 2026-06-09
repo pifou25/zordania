@@ -137,7 +137,7 @@ foreach($mbr_array as $mbr){
             $message.= $passage_ligne."--".$boundary.$passage_ligne;	
 			
 	// Envoi du mail
-	if(	mail($destinataire, utf8_decode($sujet),utf8_decode($message), $header)) {
+	if(	mail($destinataire, mb_convert_encoding($sujet, 'ISO-8859-1', 'UTF-8'),mb_convert_encoding($message, 'ISO-8859-1', 'UTF-8'), $header)) {
 		// debug !
 		echo $mbr['mbr_ldate'].' - mail à '.$mbr['mbr_mail']." : $sujet\n";
 		if ($mid) echo "$txt\n";

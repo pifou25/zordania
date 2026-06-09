@@ -1,4 +1,4 @@
-FROM arm32v7/php:7.3-apache
+FROM php:8.5-apache
 
 # add url rewriting module
 RUN a2enmod rewrite && \

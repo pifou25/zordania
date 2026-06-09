@@ -292,7 +292,7 @@ function get_nb_race($race = 0)
 }
 
 // vérifier sur chaque membre de $mbr_array s'il peut attaquer / défendre qq1
-function can_atq_lite($mbr_array, $points, $mid, $groupe, $alaid, $dpl_array = false, $ambr_aetat)
+function can_atq_lite($mbr_array, $points, $mid, $groupe, $alaid, $ambr_aetat, $dpl_array = false)
 {
 	$mid = protect($mid, "uint");
 	$points = protect($points, "uint");

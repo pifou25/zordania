@@ -10,7 +10,7 @@ require_once("../lib/unt.lib.php");
 
 
 
-$_sql = new mysql(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
+$_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 $_sql->set_debug(SITE_DEBUG);
 

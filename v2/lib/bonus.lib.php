@@ -22,7 +22,7 @@ function bonus_verify_in_log($mid, $recall)
 
 	$sql = "SELECT COUNT(*) FROM ".$_sql->prebdd."bon ";
 	$sql.= "WHERE `bon_ok` = 1 AND bon_code='$code' AND bon_date > (NOW() - INTERVAL 1 DAY)";
-	return mysql_result($_sql->query($sql), 0);
+	return $_sql->result($_sql->query($sql), 0);
 }
 
 function bonus_log($mid, $code, $ok, $type, $nb)

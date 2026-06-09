@@ -221,7 +221,7 @@ function mch_update_cours($res,$cours)
 	$sql="UPDATE ".$_sql->prebdd."mch_cours SET mcours_cours = '$cours' WHERE mcours_res = $res";
 	$_sql->query($sql);
 	
-	return mysql_affected_rows();
+	return $_sql->affected_rows();
 }
 
 function cls_com($mid) {

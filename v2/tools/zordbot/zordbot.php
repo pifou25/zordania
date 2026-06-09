@@ -12,10 +12,10 @@ function normaliser($string)
 { 
         $a = 'âäàéèëêîïûüç-';
         $b = 'aaaeeeeiiuuc '; 
-        $string = utf8_decode($string);     
-        $string = strtr($string, utf8_decode($a), $b); 
+        $string = mb_convert_encoding(\$string, 'ISO-8859-1', 'UTF-8');     
+        $string = strtr($string, mb_convert_encoding(\$a, 'ISO-8859-1', 'UTF-8'), $b); 
         $string = strtolower($string); 
-        return utf8_encode($string); 
+        return mb_convert_encoding(\$string, 'UTF-8', 'ISO-8859-1'); 
 }
 
 

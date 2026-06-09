@@ -10,7 +10,7 @@ date_default_timezone_set("Europe/Paris");
 
 
 /* BDD */
-$_sql = new mysql(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
+$_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 $_sql->set_debug(SITE_DEBUG);
 
@@ -32,10 +32,10 @@ function normaliser($string)
 { 
         $a = 'âäàéèëêîïûüç-';
         $b = 'aaaeeeeiiuuc '; 
-        $string = utf8_decode($string);     
-        $string = strtr($string, utf8_decode($a), $b); 
+        $string = mb_convert_encoding(\$string, 'ISO-8859-1', 'UTF-8');     
+        $string = strtr($string, mb_convert_encoding(\$a, 'ISO-8859-1', 'UTF-8'), $b); 
         $string = strtolower(trim($string)); 
-        return utf8_encode($string); 
+        return mb_convert_encoding(\$string, 'UTF-8', 'ISO-8859-1'); 
 }
 
 // fonction pour rechercher un msg au hasard du forum d'après un mot

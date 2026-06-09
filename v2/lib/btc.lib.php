@@ -103,7 +103,7 @@ function get_nb_btc_todo($mid) {
 	$sql.="WHERE btc_mid = $mid AND btc_etat = ". BTC_ETAT_TODO;
 	
 	$res = $_sql->query($sql);
-	return mysql_result($res, 0);
+	return $_sql->result($res, 0);
 }
 
 function get_nb_btc_done($mid, $btc = array()) {

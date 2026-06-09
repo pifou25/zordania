@@ -776,7 +776,7 @@ class Mbr {
 		$sql.= "FROM ".self::$__sql->prebdd."mbr ";
 	
 		$res = self::$__sql->query($sql);
-		return  mysql_result($res, 0);
+		return  self::$__sql->result($res, 0);
 	}
 
 	static function calc_dst($x1, $y1, $x2, $y2) {

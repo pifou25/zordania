@@ -229,7 +229,7 @@ class commerce {
 		$sql="UPDATE ".$_sql->prebdd."mch_cours SET mcours_cours = '$cours' WHERE mcours_res = $res";
 		$_sql->query($sql);
 	
-		return mysql_affected_rows();
+		return $_sql->affected_rows();
 	}
 
 	/* supprimer les transactions d'un joueur */

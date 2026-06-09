@@ -148,7 +148,7 @@ class mysqliext
 		
 		if($this->debug AND $explain)
 		{
-			if(stripos($req,'SELECT') !== false AND is_resource($res))
+			if(stripos($req,'SELECT') !== false AND $res instanceof mysqli_result)
 				$num = $res->num_rows;
 			else
 				$num = 0;

@@ -11,7 +11,7 @@ for($i = 1; $i <= 5; ++$i) {
 	$conf[$i] = new $name();
 }
 
-$_sql = new mysql(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
+$_sql = new mysqliext(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_BASE);
 $_sql->set_prebdd(MYSQL_PREBDD);
 $_sql->set_debug(SITE_DEBUG);
 
@@ -80,7 +80,7 @@ $_sql->query("TRUNCATE zrd_mch_sem");
 for($i = 0; $i < 7; ++$i) {
 	for($j = 2; $j <= 17; ++$j) {
 		$sql = "SELECT mcours_cours FROM zrd_mch_cours WHERE mcours_res = $j";
-		$cours = mysql_result($_sql->query($sql), 0, 'mcours_cours');
+		$cours = $_sql->result($_sql->query($sql), 0, 'mcours_cours');
 
 		$sql = "INSERT INTO zrd_mch_sem VALUES ($j, NOW() - INTERVAL $i DAY, $cours)";
 		$_sql->query($sql);

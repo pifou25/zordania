@@ -88,7 +88,7 @@ function array_utf8_encode($data) {
     }
     return $data;
   } else if (is_string($data))
-    return utf8_encode($data);
+    return mb_convert_encoding($data, 'UTF-8', 'ISO-8859-1');
   else
     return $data;
 }
@@ -104,7 +104,7 @@ function safe_unserialize($str)
     $data = @unserialize($str);
   }
   if (!$data) {
-    $str = utf8_decode($str);
+    $str = mb_convert_encoding($str, 'ISO-8859-1', 'UTF-8');
     $data = @unserialize($str);
     $data = array_utf8_encode($data);
   }
@@ -269,8 +269,6 @@ function request($name, $type, $method, $default = false)
 		case 'string':
 			foreach($var as $key => $value){
 				$var[$key] = (string) $value;
-				if(get_magic_quotes_gpc())
-					$var[$key] = stripslashes($var[$key]);
 			}
 			break;
 		}
@@ -296,8 +294,6 @@ function request($name, $type, $method, $default = false)
 			break;
 		case "string":
 			$var = (string) $var;
-			if(get_magic_quotes_gpc())
-				$var = stripslashes($var);
 			break;
 		case "raw":
 		default:
@@ -600,7 +596,7 @@ function array_to_json( $array ){
 
  
 /* Gestion des erreurs */
-function error_handler($errno, $errstr, $errfile, $errline, $errcontext)
+function error_handler($errno, $errstr, $errfile, $errline, $errcontext = null)
 {
 	global $_error;
 	
