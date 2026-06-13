@@ -1,7 +1,7 @@
 <?php
 session_start();
 ignore_user_abort();
-error_reporting (E_ALL | E_STRICT | E_RECOVERABLE_ERROR);
+error_reporting (E_ALL | E_RECOVERABLE_ERROR);  // E_STRICT supprimé en PHP 8.4
 date_default_timezone_set("Europe/Paris");
 
 /* Fonctions de Bench */
