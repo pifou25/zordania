@@ -181,7 +181,7 @@ function mch_get_cours($res = 0)
 	return $_sql->make_array($sql);
 }
 	
-function mch_get_cours_sem($res = 0, $jours) // cours entre J et J+7
+function mch_get_cours_sem($jours, $res = 0) // cours entre J et J+7
 {
 	global $_sql;
 

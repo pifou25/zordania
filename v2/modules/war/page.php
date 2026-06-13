@@ -97,7 +97,7 @@ case 'make_atq':
 	$aetat = get_aetat_mid($_user['mid']);
 	$ambr_aetat= $aetat[0]['ambr_etat'];
 	/* gestion de qui qu'on peut attaquer ou pas, atq vs def principal */
-	$mbr_def_array = can_atq_lite($mbr_def_array, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $pactes_atq_array,$ambr_aetat); 
+	$mbr_def_array = can_atq_lite($mbr_def_array, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $ambr_aetat, $pactes_atq_array); 
 	$mbr_def_array = $mbr_def_array[0];
 	$mid_def = $mbr_def_array['mbr_mid'];
 

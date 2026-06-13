@@ -91,14 +91,14 @@ if($_act == "view") {
 			$map_cid = get_cid($map_x,$map_y);
 	}
 
-	$leg_array = leg_can_atq_lite(get_square_leg($map_cid), $_user['pts_arm'], $_user['mid'], $_user["groupe"], $_user['alaid'], $dpl_atq_arr,$ambr_aetat);
+	$leg_array = leg_can_atq_lite(get_square_leg($map_cid), $_user['pts_arm'], $_user['mid'], $_user["groupe"], $_user['alaid'], $ambr_aetat, $dpl_atq_arr);
 	$_tpl->set("leg_array", $leg_array);
 
 	$map_array = get_square($map_cid,true);
 
 	if (isset($map_array['mbr_mid']) && $map_array['mbr_mid']) {
 		$mbr = get_mbr_by_mid_full($map_array['mbr_mid']);
-		$mbr = can_atq_lite($mbr,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr,$ambr_aetat); 
+		$mbr = can_atq_lite($mbr,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $ambr_aetat, $dpl_atq_arr); 
 		$mbr = $mbr[0];
 		$map_array['can_atq'] = $mbr['can_atq'];
 		$map_array['can_pro'] = $mbr['can_def'];

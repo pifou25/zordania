@@ -77,7 +77,7 @@ case "move":
 			$ambr_aetat = 0;
 		}
 
-		$mbr_cible = can_atq_lite($mbr_cible,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $pactes_array,$ambr_aetat); 
+		$mbr_cible = can_atq_lite($mbr_cible,$_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $ambr_aetat, $pactes_array); 
 		$mbr_cible = $mbr_cible[0];
 		if ($mbr_cible['pna'])
 			$sub = 'pna';

@@ -31,7 +31,7 @@ if($_act == "cours") {
 		foreach($res_value as $res_id => $res_cours)
 			mch_update_cours_sem($res_id,$res_cours,$res_jour); 
 	
-	$tmp = mch_get_cours_sem(0,7);
+	$tmp = mch_get_cours_sem(7,0);
 	foreach($tmp as $result)
 		$mch_cours[$result['msem_res']][] = $result;
 		

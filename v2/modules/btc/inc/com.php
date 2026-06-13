@@ -299,14 +299,14 @@ elseif($_sub == "cours_sem")
 	
 	if(!$com_type)
 	{
-		$tmp = mch_get_cours_sem(0,$diff);
+		$tmp = mch_get_cours_sem($diff, 0);
 		$mch_cours = array();
 		foreach($tmp as $result)
 			$mch_cours[$result['msem_res']][] = $result;
 			
 		$_tpl->set('mch_cours',$mch_cours);
 	} else {	
-		$tmp = mch_get_cours_sem($com_type,$diff);
+		$tmp = mch_get_cours_sem($diff, $com_type);
 		$mch_cours = array();
 		foreach($tmp as $result)
 			$mch_cours[$com_type][] = $result;

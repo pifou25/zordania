@@ -192,7 +192,7 @@ class commerce {
 	}
 
 	/* historique des cours entre J et J+7 */
-	function mch_get_cours_sem($res = 0, $jours)
+	function mch_get_cours_sem($jours, $res = 0)
 	{
 		$res = protect($res, "uint");
 		$debut = protect($jours, "uint");

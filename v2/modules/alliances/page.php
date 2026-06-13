@@ -73,7 +73,7 @@ case 'view': // vue d'une alliance
 	foreach($al_mbr as $key => $value) {
 		$al_mbr[$key]['mbr_dst'] = calc_dst($_user['map_x'], $_user['map_y'], $value['map_x'], $value['map_y']);
 	}
-	$al_mbr = can_atq_lite($al_mbr, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $dpl_atq_arr, $ambr_aetat);
+	$al_mbr = can_atq_lite($al_mbr, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $ambr_aetat, $dpl_atq_arr);
 
 	$_tpl->set('al_mbr',$al_mbr);
 	break;

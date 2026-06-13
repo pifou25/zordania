@@ -41,7 +41,7 @@ function add_qst_cfg($mid, $titre, $descr, $qst_statut, $race, $qst_com, $req_qu
 	return $_sql->query($sql);
 }
 	
-function get_qst_cfg($qid=0, $selrace)
+function get_qst_cfg($selrace, $qid=0)
 {
 	global $_sql;
     

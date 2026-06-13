@@ -87,13 +87,13 @@ else{
             $_tpl->set('qst_qid',$qid);
             
             //liste des quetes
-            $qst_array = get_qst_cfg(0, "all");
+            $qst_array = get_qst_cfg("all", 0);
             if($qst_array)
             $_tpl->set('qst_array',$qst_array);
                 else $_tpl->set('qst_array',false);
             
             //infos de la quête
-            $qst_array = get_qst_cfg( $qid, "all");
+            $qst_array = get_qst_cfg( "all", $qid);
             if($qst_array) {
                 $qst_array = $qst_array[0];
                 
@@ -148,7 +148,7 @@ else{
             }
             else {
                 
-                $qst_array = get_qst_cfg( 0, "all");
+                $qst_array = get_qst_cfg("all", 0);
             if($qst_array)
                // $qst_array = $qst_array[0];
             $_tpl->set('qst_array',$qst_array);
@@ -186,7 +186,7 @@ else{
             }	
 
             if($titre || $descr) {
-                $qst_array = get_qst_cfg( 0, "all");
+                $qst_array = get_qst_cfg( "all", 0);
             if($qst_array)
                // $qst_array = $qst_array[0];
             $_tpl->set('qst_array',$qst_array);
@@ -230,7 +230,7 @@ else{
     case "view_conf":
         //Voir
         if($qid) {
-            $qst_array = get_qst_cfg($qid, "all");
+            $qst_array = get_qst_cfg("all", $qid);
             if($qst_array)
                 $qst_array = $qst_array[0];
             
@@ -245,7 +245,7 @@ else{
             $selrace = request("selrace", "string", "get");
             if(empty($selrace)) $selrace = $_user['race'];
             
-        $qst_array = get_qst_cfg($qid, $selrace);
+        $qst_array = get_qst_cfg($selrace, $qid);
         $_tpl->set('qst_array',$qst_array);
         
         $_tpl->set('selrace',$selrace);
@@ -299,7 +299,7 @@ else{
             
     case "valid":  
         if($qid) {  
-            $qst_array = get_qst_cfg($qid, "all");
+            $qst_array = get_qst_cfg("all", $qid);
             if($qst_array) {
                 $qst_array = $qst_array[0]; 
                 

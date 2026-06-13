@@ -50,7 +50,7 @@ else {
 	$ambr_aetat = 0;
 }
 if($type != 5 && $type != 6)
-	$tab_class = can_atq_lite($tab_class, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $dpl_atq_arr,$ambr_aetat);
+	$tab_class = can_atq_lite($tab_class, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $ambr_aetat, $dpl_atq_arr);
 	
 $_tpl->set("class_array", $tab_class);
 ?>
