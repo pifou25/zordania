@@ -76,15 +76,17 @@
 			</else>
 			<strong><label for="region{region_id}">{regions[{region_id}][coord]}: {regions[{region_id}][name]}</label></strong>
 			<br/>Quotas: 
-			<foreach cond="{quotas} as {race} => {perc}">
-				<if cond="isset({_races[{race}]}) and {perc}!=0"><img src="img/{race}/{race}.png" alt="{race[{race}]}" /> {perc}%
-				</if>
+			<foreach cond="{quotas} as {race_quota} => {perc}">
+			    <if cond="isset({_races[{race_quota}]}) and {perc}!=0">
+			        <img src="img/{race_quota}/{race_quota}.png" alt="{race[{race_quota}]}" /> {perc}%
+			    </if>
 			</foreach>
 			<br/>
 			Places: 
-			<foreach cond="{regions_infos[libre][{region_id}]} as {race} => {nb}">
-				<if cond="isset({_races[{race}]}) and {quotas[{race}]}!=0"><img src="img/{race}/{race}.png" alt="{race[{race}]}" /> {nb}
-				</if>
+			<foreach cond="{regions_infos[libre][{region_id}]} as {race_quota} => {nb}">
+			    <if cond="isset({_races[{race_quota}]}) and {quotas[{race_quota}]}!=0">
+			        <img src="img/{race_quota}/{race_quota}.png" alt="{race[{race_quota}]}" /> {nb}
+			    </if>
 			</foreach>
 			</td>
 <# nouvelle colonne sur module 2 #>

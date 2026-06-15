@@ -77,7 +77,8 @@ if($reini || $ini) { /* N'importe qui ne peut pas venir ici */
 	$_tpl->set("mbr_reini", $reini);
 	$_tpl->set("mbr_pseudo", $pseudo);
 	$_tpl->set("mbr_vlg", $vlg);
-	$_tpl->set("mbr_race",$race);
+	$_tpl->set("mbr_race", $race);
+	$_tpl->set("race", $_races); // s'assurer que {race} reste le tableau des races
 	$_tpl->set("mbr_region",$region);
 	$_tpl->set("mbr_key",$key);
 	$_tpl->set("mbr_sexe",$sexe);
