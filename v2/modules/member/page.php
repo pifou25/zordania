@@ -171,7 +171,7 @@ else if(!$_act) {
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 	/*mon état dans l'alliance*/
 	$aetat = get_aetat_mid($_user['mid']);
-	$ambr_aetat= $aetat[0]['ambr_etat'];
+	$ambr_aetat = $aetat[0]['ambr_etat'] ?? ALL_ETAT_NULL;
 	
 	$mbr_array = get_liste_mbr($cond, $limite_mysql, $limite_page, $order_by);
 	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $ambr_aetat, $dpl_atq_arr);
@@ -205,7 +205,7 @@ elseif($_act == "liste_online")
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 	/*mon état dans l'alliance*/
 	$aetat = get_aetat_mid($_user['mid']);
-	$ambr_aetat= $aetat[0]['ambr_etat'];
+	$ambr_aetat = $aetat[0]['ambr_etat'] ?? ALL_ETAT_NULL;
 
 	$mbr_array = get_liste_online($limite_mysql,$limite_page);
 	$mbr_array = can_atq_lite($mbr_array, $_user['pts_arm'],$_user['mid'],$_user['groupe'], $_user['alaid'], $ambr_aetat, $dpl_atq_arr);
@@ -371,7 +371,7 @@ elseif($mid) //elseif($_act == "view" && $mid)
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 	/*mon état dans l'alliance*/
 	$aetat = get_aetat_mid($_user['mid']);
-	$ambr_aetat= $aetat[0]['ambr_etat'];
+	$ambr_aetat = $aetat[0]['ambr_etat'] ?? ALL_ETAT_NULL;
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
 
 	//Infos sur un type

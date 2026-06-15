@@ -70,7 +70,7 @@ case "move":
 			$pactes_array = $pactes->actuels();
 			/*mon état dans l'alliance*/
 			$aetat = get_aetat_mid($_user['mid']);
-			$ambr_aetat= $aetat[0]['ambr_etat'];
+			$ambr_aetat = $aetat[0]['ambr_etat'] ?? ALL_ETAT_NULL;
 		}
 		else{
 			$pactes_array = array();

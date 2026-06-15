@@ -67,7 +67,7 @@ case 'view': // vue d'une alliance
 	$_tpl->set('al_logo',$ally->getLogo());
 	/*mon état dans l'alliance*/
 	$aetat = get_aetat_mid($_user['mid']);
-	$ambr_aetat= $aetat[0]['ambr_etat'];
+	$ambr_aetat = $aetat[0]['ambr_etat'] ?? ALL_ETAT_NULL;
 	
 	$al_mbr = $ally->getMembers();
 	foreach($al_mbr as $key => $value) {

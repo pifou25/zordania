@@ -81,7 +81,7 @@ if($_act == "view") {
 	$dpl_atq_arr = $dpl_atq->actuels(); // les pactes actifs en tableau
 	/*mon état dans l'alliance*/
 	$aetat = get_aetat_mid($_user['mid']);
-	$ambr_aetat= $aetat[0]['ambr_etat'];
+	$ambr_aetat = $aetat[0]['ambr_etat'] ?? ALL_ETAT_NULL;
 
 	$map_cid = request("map_cid", "uint", "get");
 	if(!$map_cid){ // chercher map_cid

@@ -43,7 +43,7 @@ if($_user['alaid']) {
 	$_tpl->set('mbr_dpl',$dpl_atq_arr);
 	/*mon état dans l'alliance*/	
 	$aetat = get_aetat_mid($_user['mid']);
-	$ambr_aetat= $aetat[0]['ambr_etat'];
+	$ambr_aetat = $aetat[0]['ambr_etat'] ?? ALL_ETAT_NULL;
 }
 else {
 	$dpl_atq_arr = array();

@@ -95,7 +95,7 @@ case 'make_atq':
 	$pactes_atq_array = $pactes_atq->actuels(); // les pactes actifs en tableau
 	/*mon état dans l'alliance*/
 	$aetat = get_aetat_mid($_user['mid']);
-	$ambr_aetat= $aetat[0]['ambr_etat'];
+	$ambr_aetat = $aetat[0]['ambr_etat'] ?? ALL_ETAT_NULL;
 	/* gestion de qui qu'on peut attaquer ou pas, atq vs def principal */
 	$mbr_def_array = can_atq_lite($mbr_def_array, $_user['pts_arm'], $_user['mid'], $_user['groupe'], $_user['alaid'], $ambr_aetat, $pactes_atq_array); 
 	$mbr_def_array = $mbr_def_array[0];
