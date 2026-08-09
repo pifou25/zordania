@@ -133,7 +133,7 @@ if(SITE_TRAVAUX && !can_d(DROIT_ADM_TRAV))
 {
 	//die( "DROIT $_file $_act $cron_lock");
 	$_ses->logout();
-	$_tpl->set('sv_site_debug', false);
+	$_tpl->set('sv_site_debug', SITE_DEBUG);
 	$_tpl->set("cfg_url",SITE_URL);
 	$_tpl->set_lang('all');
 	$_tpl->set('page','tests.tpl');

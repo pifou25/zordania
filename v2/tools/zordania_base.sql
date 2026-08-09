@@ -196,6 +196,7 @@ CREATE TABLE IF NOT EXISTS `zrd_btc` (
   `btc_type` smallint(3) UNSIGNED NOT NULL DEFAULT '0',
   `btc_vie` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
   `btc_etat` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `btc_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`btc_id`),
   KEY `btc_mid_type` (`btc_mid`,`btc_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12942 DEFAULT CHARSET=utf8;
