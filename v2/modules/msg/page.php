@@ -173,7 +173,7 @@ case "send":
 	break;
 
 // signalement des messages
-case "sign";
+case "sign":
 	$msgid = request("msgid", "uint", "get");
 	$com = '<em>'.$_user['pseudo'] .' le '.date("d/m/Y H:i:s")."</em><br/>\n".parse(request("com", "string", "post"));
 	if(isset($msgid) && !is_surv($msgid) && isset($com)){
@@ -186,7 +186,7 @@ case "sign";
 		$_tpl->set("no_msg",false);}
 	break;
 
-case "fsign";
+case "fsign":
 	$msgid = request("msgid", "uint", "get");
 	if(isset($msgid) && !is_surv($msgid)){
 		$_tpl->set('msgid',$msgid);}
@@ -194,7 +194,7 @@ case "fsign";
 		$_tpl->set("no_msg",false);}
 	break;
 
-case "send_massif"; // spam = message à un groupe de joueurs
+case "send_massif": // spam = message à un groupe de joueurs
 	$texte = request("pst_msg", "string", "post");
 	$titre = request("pst_titre", "string", "post");
 	$groupes = request("groupes", "array", "post");
