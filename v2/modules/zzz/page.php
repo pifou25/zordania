@@ -18,21 +18,26 @@ $passmd5 = $_ses->crypt($_user['login'],request("mbr_pass", "string", "post"));
      //quelle est la dernière attaque + infos
     $cond['mid'] = $_user['mid'];
     $atq_array = get_atq_gen( $cond);
-    $lid = $atq_array[0]['atq_lid1']; //id de la légion
-    $atq_date_time = strtotime($atq_array[0]['atq_date']); //date de l'atq
-    
-    $cond = array();
-	$cond['leg'] = array($lid);
-	$cond['mid'] = $_user['mid'];
-    $leg_array = get_leg_gen($cond);
-    
-    $leg_etat = $leg_array[0]['leg_etat']; //état
-    $leg_stop_time = strtotime($leg_array[0]['leg_stop']); //h d'arrivée
-        
-    //calcul
-    $time_can_sleep = $leg_stop_time + 3600 * (ZZZ_ATQ_DELAY / (60/ZORD_SPEED));    
-    $cantSleep = ( $leg_etat == LEG_ETAT_RET || $time_can_sleep < $atq_date_time);
-    
+
+    $cantSleep = false;
+    if($atq_array) {
+	    $lid = $atq_array[0]['atq_lid1']; //id de la légion
+	    $atq_date_time = strtotime($atq_array[0]['atq_date']); //date de l'atq
+	    
+	    $cond = array();
+		$cond['leg'] = array($lid);
+		$cond['mid'] = $_user['mid'];
+	    $leg_array = get_leg_gen($cond);
+	    
+	     if($leg_array) {
+		    $leg_etat = $leg_array[0]['leg_etat']; //état
+		    $leg_stop_time = strtotime($leg_array[0]['leg_stop']); //h d'arrivée
+		        
+		    //calcul
+		    $time_can_sleep = $leg_stop_time + 3600 * (ZZZ_ATQ_DELAY / (60/ZORD_SPEED));    
+		    $cantSleep = ( $leg_etat == LEG_ETAT_RET || $time_can_sleep < $atq_date_time);
+	    }
+    }
 
 if($_act == "ronflz" && $_user['etat'] == MBR_ETAT_OK && $_user['pass'] == $passmd5) {
 	edit_mbr($_user['mid'], array('etat' => 3,'ldate' => true));
