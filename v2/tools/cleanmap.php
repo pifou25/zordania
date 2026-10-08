@@ -67,7 +67,7 @@ for($i = 1; $i <= 5; ++$i) {
 	foreach($conf[$i]->race_cfg['debut']['trn'] as $type => $nb) {
 		$set[] = "trn_type".$type." = trn_type".$type." + ".$nb;
 	}
-	$sql .= implode($set, ",");
+	$sql .= implode(",", $set);
 	$sql .= " WHERE trn_mid IN (SELECT mbr_mid FROM zrd_mbr WHERE mbr_race = ".$i.")";
 	$_sql->query($sql);
 }
