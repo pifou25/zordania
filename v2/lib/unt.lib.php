@@ -1461,7 +1461,7 @@ function get_leg_nb($mid, $etat = array()) {
 	$sql.= "WHERE leg_mid = $mid ";
 	if($etat) {
 		$sql.= "AND leg_etat IN (";
-		$sql.= implode($etat, ",");
+		$sql.= implode(",", $etat);
 		$sql.= ")";
 	}
 	$res = $_sql->query($sql);
