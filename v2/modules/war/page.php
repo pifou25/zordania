@@ -503,7 +503,7 @@ case 'make_atq':
 		if ($coef_fake >= 100) $coef_fake = 100; // avec un maximum de 100% => coef à 1
 		
 		if ($res_def[GAME_RES_PRINC] != 0) { // s'il a de l'or
-			$gain_or = round(max(1, rand(1, $res_def[GAME_RES_PRINC] / BUT_PILLAGE_COEF) * ($coef_fake / 100))); // on gagne aléatoirement un nombre d'or entre 1 et 25% du total de l'or du défenseur principal
+			$gain_or = round(max(1, rand(1, (int)max(1, $res_def[GAME_RES_PRINC] / BUT_PILLAGE_COEF)) * ($coef_fake / 100))); // on gagne aléatoirement un nombre d'or entre 1 et 25% du total de l'or du défenseur principal
 			if(!isset($bilan['butin']['att'][GAME_RES_PRINC]))
 				$bilan['butin']['att'][GAME_RES_PRINC] = 0;
 			$bilan['butin']['att'][GAME_RES_PRINC] += $gain_or; // ajout des ressources au butin
@@ -516,7 +516,7 @@ case 'make_atq':
 		}
 		$res_pillee = array_rand($res_def, 1); //on sélectionne une clé au hasard dans res_def
 		if($res_pillee != 0){ // On vérifie que le défenseur possède des ressources (pas toutes à 0)
-			$gain_res =  round(max(1, rand(1, $res_def[$res_pillee] / BUT_PILLAGE_COEF) * ($coef_fake / 100))); // on récupére au minimum 1 et au maximum 25% du total de la ressource
+			$gain_res =  round(max(1, rand(1, (int)max(1, $res_def[$res_pillee] / BUT_PILLAGE_COEF)) * ($coef_fake / 100))); // on récupére au minimum 1 et au maximum 25% du total de la ressource
 			if(!isset($bilan['butin']['att'][$res_pillee]));
 				$bilan['butin']['att'][$res_pillee] = 0;
 			$bilan['butin']['att'][$res_pillee] += $gain_res; // on ajoute les ressources au butin
@@ -524,6 +524,7 @@ case 'make_atq':
 		}
 	}
 
+        
 	/* REPARTITION DE L'XP */
 	$coeff_xp = min($att['fin'],$def_tot) / max($att['fin'],$def_tot);
 	$xp_def = ceil( $def_tot * $coeff_xp / 45 );

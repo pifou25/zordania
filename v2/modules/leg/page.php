@@ -395,9 +395,13 @@ if($_display == "ajax") print_r($_POST);
 				}
 			}
 
-			mod_res($_user['mid'], $tmp, -1);
-			$legions->legs[$lid]->mod_res($tmp);
-			$_tpl->set("lres_ok", true);
+			if (!empty($tmp)) {  //ne pas appeler mod_res si rien à transférer
+                mod_res($_user['mid'], $tmp, -1);
+                $legions->legs[$lid]->mod_res($tmp);
+            }
+            $_tpl->set("lres_ok", true);
+            //re-setter res_array après modification
+            $_tpl->set("res_array", $legions->legs[$lid]->get_res());
 			break;
 		case "res":// modifier les ressources de la légion
 			$factor = request("factor", "int", "post");
