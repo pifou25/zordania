@@ -106,6 +106,7 @@ function cls_histo($mid) {
 
 function del_old_histo($time, $mid = 0)
 {
+	global $_sql;
 	$mid = protect($mid, "uint");
 	$time= protect($time, "uint");
 		
