@@ -282,7 +282,7 @@ case "hero":
                             $legions->legs[$_user['hro_lid']]->edit($new);
                         }
 						// ajouter un évenement
-						$_histo->add($_user['mid'], $_user['mid'], HISTO_HRO_CP, $cp);
+						$_histo->add($_user['mid'], $_user['mid'], HISTO_HRO_CP, is_array($cp) ? $cp : array('cpid' => 0));
 						$_tpl->set("ok_bonus",$bid);
 					} else
 						$_tpl->set("error_form",true);
