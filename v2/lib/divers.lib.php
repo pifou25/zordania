@@ -96,19 +96,19 @@ function array_utf8_encode($data) {
 function safe_unserialize($str)
 {
   $str64 = base64_decode($str, true);
-  $data = false;
-  if ($str64 !== false)
-	  $data = @unserialize($str64);
-  if (!$data or $str64 === false){ /* wasn't base64 data */
-	//echo "<pre>$str\n</pre>";
-    $data = @unserialize($str);
+  if ($str64 !== false) {
+    $data = @unserialize($str64);
+    if ($data !== false || $str64 === 'b:0;')
+      return $data; // valide, y compris array() et false
   }
-  if (!$data) {
-    $str = mb_convert_encoding($str, 'ISO-8859-1', 'UTF-8');
-    $data = @unserialize($str);
-    $data = array_utf8_encode($data);
-  }
-  return $data;
+
+  $data = @unserialize($str);
+  if ($data !== false || $str === 'b:0;')
+    return $data;
+
+  $str = mb_convert_encoding($str, 'ISO-8859-1', 'UTF-8');
+  $data = @unserialize($str);
+  return is_array($data) ? array_utf8_encode($data) : $data;
 }
 
 function calc_key($str1, $str2, $len = GEN_LENGHT) // ex: $_file + pseudo
