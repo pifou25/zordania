@@ -257,8 +257,12 @@ function make_aly_thumb($alid,$owidth,$oheight)
 	
 	$image_p = imagecreatetruecolor($width, $height);
 	$image = imagecreatefrompng($logo);
-	$col = imagecolorallocatealpha($image_p, 255,255,255,255);
-	imagecolortransparent($image_p, $col);
+
+	imagealphablending($image_p, false);
+	imagesavealpha($image_p, true);
+	$col = imagecolorallocatealpha($image_p, 255,255,255,127);
+	imagefilledrectangle($image_p, 0, 0, $width, $height, $col);
+	
 	imagecopyresampled($image_p, $image, 0, 0, 0, 0,$width, $height, $owidth, $oheight);
 	return imagepng($image_p, ALL_LOGO_DIR.$alid.'-thumb.png');	
 }
