@@ -15,7 +15,7 @@
 
 <elseif cond='{war_act} == "make_atq"'>
 	<if cond="isset({atq_no_leg})">
-		<div class="error">Cette légion n'éxiste pas.<div>
+		<div class="error">Cette légion n'éxiste pas.</div>
 	</if>
 	<elseif cond="isset({atq_no_mbr})">
 		<div class="error">Les légions ne peuvent attaquer que dans les villages.</div>
@@ -193,16 +193,16 @@
 
 	<dt>Votre Butin :</dt>
 	<dd>
-	<foreach cond="{bilan[butin][att]} as {res} => {nb}">
-		{nb} <zimgres type="{res}" race="{_user[race]}" />
+	<foreach cond="{bilan[butin][att]} as {res_id} => {nb}">
+		{nb} <zimgres type="{res_id}" race="{_user[race]}" />
 	</foreach>
 	</dd>
 
 
 	<dt>Butin concédé à l'ennemi :</dt>
 	<dd>
-	<foreach cond="{bilan[butin][def]} as {res} => {nb}">
-		{nb} <zimgres type="{res}" race="{_user[race]}" />
+	<foreach cond="{bilan[butin][def]} as {res_id} => {nb}">
+		{nb} <zimgres type="{res_id}" race="{_user[race]}" />
 	</foreach>
 	</dd>
 

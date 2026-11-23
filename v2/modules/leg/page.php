@@ -143,6 +143,7 @@ case "edit": // déplacer des unités du village vers la légion
 	$nb = request("unt_nb", "uint", "post");
 
 	// unités (légion) du village
+	$vlg_array = array();
 	if($legions->vlg_lid != 0)
 		$vlg_array = $legions->legs[$legions->vlg_lid]->get_unt();
 
@@ -415,7 +416,7 @@ if($_display == "ajax") print_r($_POST);
 
 				$res_ok = false;
 				if($factor > 0) {
-					if($have_res[$res_type] >= $res_nb && $res_type = GAME_RES_BOUF) {
+					if($have_res[$res_type] >= $res_nb && $res_type == GAME_RES_BOUF) {
 						$res_ok = true;
 					}
 				} else if(isset($res_array[$res_type]) && $res_array[$res_type] >= $res_nb) {

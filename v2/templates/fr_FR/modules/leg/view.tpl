@@ -127,10 +127,10 @@
 				<th>Nombre</th>
 			</thead>
 			<tbody>
-				<foreach cond="{res_array} as {res} => {nb}">
+				<foreach cond="{res_array} as {res_id} => {nb}">
 				<if cond="{nb}">
 				<tr>
-					<td><zimgres type="{res}" race="{_user[race]}" /> {res[{_user[race]}][alt][{res}]} </td>
+					<td><zimgres type="{res_id}" race="{_user[race]}" /> {res[{_user[race]}][alt][{res_id}]} </td>
 					<td> {nb} </td>
 				</tr>
 				</if>
